@@ -1,0 +1,384 @@
+<!-- @dsCard group="Agencia — Faro Digital" -->
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Faro Digital — Proyecto de muestra: Aura Skincare (CRO de landing)</title>
+<meta name="description" content="Proyecto de muestra: una landing de producto pensada desde el CRO, donde cada elemento de la primera pantalla responde una duda del comprador, en orden.">
+<link rel="canonical" href="https://faro-digital.netlify.app/portfolio/caso-2-ecommerce-spec">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Faro Digital">
+<meta property="og:url" content="https://faro-digital.netlify.app/portfolio/caso-2-ecommerce-spec">
+<meta property="og:title" content="Faro Digital — Proyecto de muestra: Aura Skincare (CRO de landing)">
+<meta property="og:description" content="Proyecto de muestra: una landing de producto pensada desde el CRO, donde cada elemento de la primera pantalla responde una duda del comprador, en orden.">
+<meta property="og:image" content="https://faro-digital.netlify.app/portfolio/assets/aura/card-thumb-480.jpg">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Faro Digital — Proyecto de muestra: Aura Skincare (CRO de landing)">
+<meta name="twitter:description" content="Proyecto de muestra: una landing de producto pensada desde el CRO, donde cada elemento de la primera pantalla responde una duda del comprador, en orden.">
+<meta name="twitter:image" content="https://faro-digital.netlify.app/portfolio/assets/aura/card-thumb-480.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://faro-digital.netlify.app/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Portfolio",
+      "item": "https://faro-digital.netlify.app/portfolio/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Aura Skincare",
+      "item": "https://faro-digital.netlify.app/portfolio/caso-2-ecommerce-spec"
+    }
+  ]
+}
+</script>
+<style>
+:root{
+  --charcoal:#2B2A26; --charcoal-deep:#1D1C19; --cream:#F6F0E3; --white:#FAF7F0;
+  --ink:#22271F; --ink-soft:#5B6155; --line:#E5DDCA; --line-soft:#EFE9D9;
+  --blush:#C98A7C; --blush-deep:#A5695C;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:var(--white); color:var(--ink); font-family:Helvetica,Arial,sans-serif; font-size:16px; line-height:1.65;}
+h1,h2,h3,h4{font-family:Georgia,'Times New Roman',serif; color:var(--charcoal); margin:0;}
+p{margin:0;}
+img{max-width:100%; display:block;}
+.wrap{max-width:880px; margin:0 auto; padding:0 32px;}
+
+.cover{background:linear-gradient(155deg, var(--charcoal-deep), var(--charcoal) 140%); color:#F3F1EE; padding:76px 32px 64px;}
+.cover-inner{max-width:880px; margin:0 auto;}
+.kicker{font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--blush); font-weight:700;}
+.cover h1{color:#FDFAF3; font-size:clamp(32px,5vw,46px); margin-top:14px; line-height:1.12; max-width:20ch;}
+.cover .meta{color:#DAD6D1; font-size:14.5px; margin-top:16px;}
+.disclaimer{background:rgba(253,250,243,.08); border:1px solid rgba(253,250,243,.22); border-radius:10px; padding:16px 20px; font-size:13.5px; color:#E9E5E1; margin-top:26px; max-width:70ch;}
+.disclaimer b{color:var(--blush);}
+.tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:22px;}
+.tag{background:rgba(253,250,243,.1); border:1px solid rgba(253,250,243,.25); border-radius:999px; padding:6px 14px; font-size:12.5px; color:#F3F6F1;}
+
+.toc{background:var(--cream); border-bottom:1px solid var(--line);}
+.toc-inner{max-width:880px; margin:0 auto; padding:22px 32px; display:flex; gap:22px; flex-wrap:wrap; font-size:13px;}
+.toc a{color:var(--charcoal); text-decoration:none; font-weight:600; border-bottom:1px dotted var(--charcoal);}
+
+section{padding:56px 0;}
+section.alt{background:var(--cream);}
+.s-kicker{font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--blush-deep); font-weight:700;}
+h2{font-size:26px; margin-top:8px; margin-bottom:18px;}
+p.lead{font-size:17px; color:var(--ink); max-width:70ch;}
+p.body-text{font-size:15.5px; color:var(--ink-soft); margin-top:12px; max-width:70ch;}
+ul.clean{padding-left:20px; margin:14px 0 0; max-width:68ch;}
+ul.clean li{font-size:15px; color:var(--ink-soft); margin-bottom:8px;}
+ul.clean b{color:var(--ink);}
+
+table.audit{width:100%; border-collapse:collapse; margin-top:22px; font-size:14px;}
+table.audit th{text-align:left; padding:10px 12px; background:var(--charcoal-deep); color:#F3F1EE; font-weight:700; font-size:12.5px; text-transform:uppercase; letter-spacing:.04em;}
+table.audit td{padding:12px; border-bottom:1px solid var(--line); vertical-align:top; color:var(--ink-soft);}
+table.audit tr:nth-child(even) td{background:var(--cream);}
+table.audit .sev{display:inline-block; font-size:11px; font-weight:700; padding:3px 10px; border-radius:999px;}
+
+/* 🔴 La tabla de diagnóstico se desborda en móvil. El español es más largo que
+   el inglés — «Gravedad» por «Severity», «Hallazgo» por «Finding» — y al
+   traducir estas páginas el 2026-08-20 las tablas pasaron a salirse: hasta
+   121 px de ancho en un móvil de 320. Dos de los cuatro casos ya se salían en
+   inglés; los otros dos los rompió la traducción.
+   Una tabla ancha no se encoge: SE DESPLAZA DENTRO DE SÍ MISMA. Encogerla más
+   haría ilegible el contenido, que es lo que la tabla existe para enseñar. */
+@media (max-width:860px){
+  /* La sombra del borde derecho no es adorno: sin ella nadie sabe que hay una
+     tercera columna, y una tabla cuya ultima columna nadie descubre es una
+     tabla a la que le falta un tercio del contenido. Una linea, cero JS. */
+  table.audit{ display:block; width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch;
+               box-shadow:inset -14px 0 14px -14px rgba(0,0,0,.28); }
+  table.audit tbody, table.audit thead{ display:table; width:100%; min-width:520px; }
+}
+.sev-alta{background:#F1DCD3; color:var(--blush-deep);}
+.sev-media{background:#E8E4DF; color:#615B52;}
+
+.wireframe{background:#fff; border:2px dashed #C7C0AD; border-radius:12px; padding:22px; margin-top:24px;}
+.wf-row{display:flex; gap:10px; margin-bottom:10px;}
+.wf-box{background:#EDE9DC; border:1px solid #D8D1BC; border-radius:6px; color:#9C947E; font-size:11px; display:flex; align-items:center; justify-content:center; text-align:center; padding:8px;}
+.wf-nav{height:34px; flex:1;}
+.wf-hero{height:130px; flex:1;}
+.wf-block{height:70px; flex:1;}
+.wf-caption{text-align:center; font-size:12px; color:var(--ink-soft); margin-top:14px; font-style:italic;}
+
+.mockup-frame{border-radius:14px; box-shadow:0 24px 50px -20px rgba(30,28,26,.3); border:1px solid var(--line); margin-top:24px;}
+.mockup-frame img{width:100%; display:block; border-radius:13px;}
+.mockup-caption{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:12px; font-style:italic;}
+
+.compare-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:22px;}
+.compare-col{border-radius:12px; padding:22px;}
+.compare-col.before{background:#EFEAE0; border:1px dashed #B9B29C;}
+.compare-col.after{background:var(--charcoal-deep); color:#F3F1EE;}
+.compare-col h4{font-size:12.5px; text-transform:uppercase; letter-spacing:.1em; margin-bottom:12px;}
+.compare-col.before h4{color:var(--blush-deep);}
+.compare-col.after h4{color:var(--blush);}
+.compare-col ul{padding-left:18px; margin:0; font-size:14px;}
+.compare-col.before li{color:#6b6450; margin-bottom:8px;}
+.compare-col.after li{color:#E9E5E1; margin-bottom:8px;}
+@media (max-width:640px){ .compare-grid{grid-template-columns:1fr;} }
+
+.brand-row{display:flex; gap:16px; margin-top:20px; flex-wrap:wrap;}
+.swatch{flex:1; min-width:150px; border-radius:12px; padding:20px; color:#fff; font-size:13px;}
+.swatch b{display:block; font-family:Georgia,serif; font-size:15px; margin-bottom:4px;}
+.swatch.light{color:var(--ink); border:1px solid var(--line);}
+
+.proj-note{background:var(--cream); border-left:4px solid var(--blush); padding:14px 18px; font-size:13.5px; color:var(--ink-soft); margin-top:20px; border-radius:0 8px 8px 0;}
+.proj-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:20px;}
+.proj-card{background:#fff; border:1px solid var(--line); border-radius:12px; padding:20px;}
+.proj-card .metric{font-family:Georgia,serif; font-weight:700; font-size:22px; color:var(--charcoal);}
+.proj-card .bar{height:7px; background:var(--line-soft); border-radius:4px; margin-top:10px; overflow:hidden;}
+.proj-card .bar-fill{height:100%; background:linear-gradient(90deg, var(--blush-deep), var(--blush));}
+.proj-card .lbl{font-size:12.5px; color:var(--ink-soft); margin-top:8px;}
+@media (max-width:640px){ .proj-grid{grid-template-columns:1fr;} }
+
+.quote-block{background:var(--charcoal-deep); color:#F3F1EE; border-radius:14px; padding:34px 36px; margin-top:24px;}
+.quote-block p{font-family:Georgia,serif; font-style:italic; font-size:18px; line-height:1.55;}
+.quote-block .who{font-size:13px; color:var(--blush); margin-top:14px; font-style:normal;}
+
+footer{padding:40px 32px; text-align:center; font-size:13px; color:var(--ink-soft); border-top:1px solid var(--line);}
+footer b{color:var(--charcoal);}
+
+/* ---- print / PDF: avoid cutting tables, images and blocks across pages ---- */
+@media print{
+  @page{ size:A4; margin:15mm 14mm; }
+  a{ text-decoration:none; }
+  .cover, .toc{ break-inside:avoid; }
+  h2, .s-kicker{ break-after:avoid; break-inside:avoid; }
+  p.lead{ break-before:avoid; }
+  table.audit{ break-inside:avoid; }
+  .wireframe{ break-inside:avoid; }
+  .mockup-frame{ break-inside:avoid; }
+  .mockup-frame img{ max-height:195mm; width:auto; max-width:100%; margin:0 auto; }
+  .mockup-caption{ break-before:avoid; break-inside:avoid; }
+  .compare-grid, .compare-col{ break-inside:avoid; }
+  .brand-row, .swatch{ break-inside:avoid; }
+  .proj-grid, .proj-card, .proj-note{ break-inside:avoid; }
+  .quote-block{ break-inside:avoid; }
+  footer{ break-inside:avoid; }
+}
+
+/* ---- breadcrumbs ---- */
+.crumbs{background:var(--white); font-size:12px; color:var(--ink-soft);}
+.crumbs .wrap{padding:14px 32px 0; display:flex; gap:6px; flex-wrap:wrap; align-items:center;}
+.crumbs a{color:var(--ink-soft); text-decoration:none;}
+.crumbs a:hover{color:var(--forest);}
+.crumbs .current{color:var(--ink); font-weight:600;}
+
+/* ---- explore more ---- */
+.explore{padding:56px 0; background:var(--cream); border-top:1px solid var(--line);}
+.explore h2{font-size:22px;}
+.explore-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:24px;}
+@media (max-width:900px){ .explore-grid{grid-template-columns:1fr 1fr;} }
+@media (max-width:560px){ .explore-grid{grid-template-columns:1fr;} }
+.explore-card{background:#fff; border:1px solid var(--line); border-radius:12px; overflow:hidden; text-decoration:none; display:block; transition:transform .15s ease, box-shadow .15s ease;}
+.explore-card:hover{transform:translateY(-2px); box-shadow:0 16px 32px -18px rgba(20,30,20,.3);}
+.explore-thumb{aspect-ratio:16/10; background-size:cover; background-position:center; background-color:var(--forest-deep);}
+.explore-card .ec-body{padding:12px 14px 14px;}
+.explore-card .ec-body .ec-idx{font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--clay-deep); font-weight:700;}
+.explore-card .ec-body h4{font-size:13.5px; color:var(--ink); margin-top:4px; line-height:1.32; font-family:Georgia,serif; font-weight:700;}
+.explore-more-link{display:block; text-align:center; margin-top:26px; font-size:13.5px; font-weight:700; color:var(--forest); text-decoration:none;}
+.explore-more-link:hover{text-decoration:underline;}
+@media print{ .crumbs, .explore{ display:none; } }
+</style>
+<style>
+/* Accesibilidad — pasada de Fase A, 2026-08-19. Hay personas a las que el
+   movimiento les provoca mareo de verdad. Ver Sistema-Web-Capacidades.md 7.4. */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-inner">
+    <div class="kicker">Proyecto de muestra · E-commerce y CRO</div>
+    <h1>Rediseñar una página de producto alrededor de una sola decisión</h1>
+    <div class="meta">Aura Skincare · Marca ficticia de venta directa · Landing + CRO + identidad ligera</div>
+    <div class="disclaimer"><b>Caso 100 % ficticio.</b> «Aura Skincare» no existe como negocio real — se creó para enseñar cómo pensamos el CRO y cómo diseñamos una landing de e-commerce, con el mismo detalle que un proyecto real. Ninguna cifra de tráfico, conversión o ventas corresponde a datos reales.</div>
+    <div class="tags">
+      <span class="tag">Landing</span>
+      <span class="tag">CRO</span>
+      <span class="tag">Identidad ligera</span>
+      <span class="tag">E-commerce</span>
+    </div>
+  </div>
+</div>
+
+<div class="crumbs"><div class="wrap"><a href="/">Inicio</a><span>/</span><a href="index.html">Portfolio</a><span>/</span><span class="current">Aura Skincare</span></div></div>
+
+<div class="toc">
+  <div class="toc-inner">
+    <a href="#escenario">1. Escenario</a>
+    <a href="#diagnostico">2. Diagnóstico CRO</a>
+    <a href="#proceso">3. Proceso</a>
+    <a href="#diseno">4. Diseño</a>
+    <a href="#marca">5. Identidad</a>
+    <a href="#resultados">6. Resultados proyectados</a>
+  </div>
+</div>
+
+<section id="escenario">
+  <div class="wrap">
+    <div class="s-kicker">01 · El escenario</div>
+    <h2>Tráfico de pago que aterriza en una página que no vende</h2>
+    <p class="lead">Una marca de cosmética en venta directa invierte en tráfico de pago (Meta e Instagram Ads) hacia una página de producto genérica: una foto, un precio, un botón de «Añadir al carrito» — y poco más. Sin un motivo claro para comprar <em>ahora</em>, sin señales de confianza visibles, y un proceso de pago que te pide crear una cuenta antes de pedirte la tarjeta.</p>
+    <p class="body-text">El resultado: un coste por clic razonable, pero una tasa de conversión que no cubre la inversión publicitaria. El problema no es el tráfico: es lo que pasa después del clic.</p>
+  </div>
+</section>
+
+<section class="alt" id="diagnostico">
+  <div class="wrap">
+    <div class="s-kicker">02 · Diagnóstico CRO</div>
+    <h2>Cuatro fugas concretas en la página actual</h2>
+    <table class="audit">
+      <tr><th>Elemento</th><th>Problema</th><th>Impacto</th></tr>
+      <tr><td>Portada</td><td>Imagen genérica sin promesa clara — no responde a «¿esto qué me da a mí?» en los primeros 3 segundos.</td><td><span class="sev sev-alta">Alto</span></td></tr>
+      <tr><td>Prueba social</td><td>Hay reseñas (4,8★/1.240), pero enterradas por debajo del primer scroll — invisibles justo en el momento de decidir.</td><td><span class="sev sev-alta">Alto</span></td></tr>
+      <tr><td>Urgencia</td><td>Ningún motivo para comprar hoy en vez de «más tarde» — y en e-commerce «más tarde» casi nunca llega.</td><td><span class="sev sev-media">Medio</span></td></tr>
+      <tr><td>Proceso de pago</td><td>Obliga a crear cuenta antes de pagar — la fricción clásica que dispara el abandono del carrito.</td><td><span class="sev sev-alta">Alto</span></td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="proceso">
+  <div class="wrap">
+    <div class="s-kicker">03 · Proceso</div>
+    <h2>Una página, tres preguntas que responder en orden</h2>
+    <p class="lead">Antes de tocar el diseño visual definimos qué pregunta responde cada bloque y en qué orden — la misma lógica del Mapa de Oportunidades (Atracción → Conversión → Retención) que aplicamos a cualquier cliente real.</p>
+    <div class="wireframe">
+      <div class="wf-row"><div class="wf-box wf-nav">NAVEGACIÓN + BOTÓN DE COMPRA</div></div>
+      <div class="wf-row"><div class="wf-box wf-hero">PORTADA — UNA PROMESA + PRECIO + VALORACIÓN VISIBLE</div></div>
+      <div class="wf-row"><div class="wf-box wf-block">BARRA DE CONFIANZA — GARANTÍA · ENVÍO · TESTADO</div></div>
+      <div class="wf-row"><div class="wf-box wf-block">3 AFIRMACIONES CLAVE, TODAS DEMOSTRABLES</div></div>
+      <div class="wf-row"><div class="wf-box wf-block">PRODUCTO + GARANTÍA SIN LETRA PEQUEÑA</div></div>
+      <div class="wf-row"><div class="wf-box wf-block">BOTÓN FIJO — SIEMPRE VISIBLE, COMPRA SIN CUENTA</div></div>
+    </div>
+    <p class="wf-caption">Cada bloque responde una sola duda del comprador: qué me da a mí, puedo fiarme, por qué ahora.</p>
+  </div>
+</section>
+
+<section class="alt" id="diseno">
+  <div class="wrap">
+    <div class="s-kicker">04 · Diseño final</div>
+    <h2>La promesa, la prueba y el precio — en el primer scroll</h2>
+    <div class="mockup-frame"><img src="assets/aura/card-thumb-480.jpg" width="1200" height="750" alt="Maqueta de la landing de Aura Skincare"></div>
+    <p class="mockup-caption">Portada partida: promesa + valoración + botón a la izquierda, producto real a la derecha — nada compitiendo por la atención.</p>
+    <p class="body-text" style="margin-top:26px;">Las decisiones de esta página, explicadas:</p>
+    <ul class="clean">
+      <li><b>El 4,8★ junto al precio</b>, no al final de la página — la prueba social decide antes de que el comprador siga bajando.</li>
+      <li><b>Barra de confianza fija</b> con garantía, envío y testado — responde las tres objeciones más comunes antes de que las formulen.</li>
+      <li><b>Garantía de 30 días explicada sin letra pequeña</b> — baja el riesgo percibido de comprar sin haber probado el producto.</li>
+      <li><b>Compra sin cuenta como opción por defecto</b> — elimina la fricción de la cuenta obligatoria que detectó el diagnóstico.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="marca">
+  <div class="wrap">
+    <div class="s-kicker">05 · Identidad ligera</div>
+    <h2>Una paleta que hace el trabajo del texto</h2>
+    <p class="lead">Sin rehacer la marca de cero, la paleta se redujo a tres tonos — rosa, gris y blanco — para reforzar el posicionamiento de «calma para piel reactiva»: nada agresivo y mucho espacio en blanco.</p>
+    <div class="brand-row">
+      <div class="swatch" style="background:var(--blush);"><b>Blush</b>Calidez, cercanía, acento principal</div>
+      <div class="swatch" style="background:var(--charcoal);"><b>Charcoal</b>Contraste y autoridad en el botón</div>
+      <div class="swatch light" style="background:var(--white);"><b>Blanco cálido</b>Espacio y foco en el producto</div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="s-kicker">CRO — antes / después</div>
+    <h2>Qué cambia de verdad</h2>
+    <div class="compare-grid">
+      <div class="compare-col before">
+        <h4>Antes</h4>
+        <ul>
+          <li>Imagen genérica, sin promesa clara</li>
+          <li>Hay reseñas, pero enterradas</li>
+          <li>Ni urgencia ni motivo para actuar hoy</li>
+          <li>El pago obliga a crear cuenta primero</li>
+        </ul>
+      </div>
+      <div class="compare-col after">
+        <h4>Después (propuesta)</h4>
+        <ul>
+          <li>Portada con el único resultado del producto</li>
+          <li>Valoración y número de reseñas justo debajo del precio</li>
+          <li>Barra de garantía y envío en la primera pantalla</li>
+          <li>Compra sin cuenta como flujo por defecto</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="resultados">
+  <div class="wrap">
+    <div class="s-kicker">06 · Resultados proyectados</div>
+    <h2>Qué está construido para conseguir este rediseño</h2>
+    <div class="proj-note">Objetivos calculados a partir de referencias públicas de CRO para e-commerce de venta directa — no resultados medidos de una tienda real.</div>
+    <div class="proj-grid">
+      <div class="proj-card"><div class="metric">+15–25%</div><div class="bar"><div class="bar-fill" style="width:60%;"></div></div><div class="lbl">Mejora estimada de la conversión en página de producto</div></div>
+      <div class="proj-card"><div class="metric">–20%</div><div class="bar"><div class="bar-fill" style="width:45%;"></div></div><div class="lbl">Reducción esperada del abandono de carrito con la compra sin cuenta</div></div>
+      <div class="proj-card"><div class="metric">Objetivo</div><div class="bar"><div class="bar-fill" style="width:70%;"></div></div><div class="lbl">Mejor retorno publicitario por visita, sin subir la inversión</div></div>
+    </div>
+    <div class="quote-block">
+      <p>«El tráfico ya se estaba pagando. El problema nunca fue conseguir visitas: fue lo que la página hacía con ellas.»</p>
+      <div class="who">Zyad Bennani · Fundador de Faro Digital</div>
+    </div>
+  </div>
+</section>
+
+<section class="explore">
+  <div class="wrap">
+    <div class="s-kicker">Sigue explorando</div>
+    <h2>Más proyectos</h2>
+    <div class="explore-grid">
+      <a class="explore-card" href="/portfolio/caso-1-salon-belleza-verbena">
+        <div class="explore-thumb" style="background-image:url('assets/verbena/card-thumb-480.jpg');"></div>
+        <div class="ec-body"><div class="ec-idx">Caso 01</div><h4>De un local con encanto y cero visibilidad, a una marca con dos motivos para reservar</h4></div>
+      </a>
+      <a class="explore-card" href="/portfolio/caso-3-dashboard-datos">
+        <div class="explore-thumb"></div>
+        <div class="ec-body"><div class="ec-idx">Caso 03</div><h4>Cuatro tiendas, cuatro hojas de cálculo distintas — y ninguna decisión compartida</h4></div>
+      </a>
+      <a class="explore-card" href="/portfolio/caso-4-corporativo-meridian">
+        <div class="explore-thumb" style="background-image:url('assets/meridian/card-thumb-480.jpg');"></div>
+        <div class="ec-body"><div class="ec-idx">Caso 04</div><h4>Una web anticuada que hacía parecer poco fiable a una consultora solvente</h4></div>
+      </a>
+      <a class="explore-card" href="/portfolio/caso-5-hosteleria-brasa-sal">
+        <div class="explore-thumb" style="background-image:url('assets/brasa/card-thumb-480.jpg');"></div>
+        <div class="ec-body"><div class="ec-idx">Caso 05</div><h4>Tres restaurantes excelentes, compitiendo entre ellos en Google sin querer</h4></div>
+      </a>
+    </div>
+    <a class="explore-more-link" href="index.html">Ver el portfolio completo (5 casos) →</a>
+  </div>
+</section>
+
+<footer>
+  <b>Faro Digital</b> — sistemas de marketing digital con datos · Este mismo enfoque de CRO sirve para cualquier página de conversión, no solo para e-commerce.
+</footer>
+
+<script src="/assets/medicion.js" defer></script>
+</body>
+</html>

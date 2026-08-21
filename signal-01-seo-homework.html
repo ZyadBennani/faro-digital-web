@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<!-- 2026-08-20 · La newsletter en ingles esta CONGELADA (Sprint 1, tabla D):
+     Faro vende en espanol a negocio local. Se deja publicada y accesible por si
+     alguien tiene el enlace, pero fuera del indice: tres paginas en ingles
+     indexadas bajo un sitio en espanol confunden a Google y al visitante.
+     Para revertirlo: quitar esta linea y devolver las URL al sitemap. -->
+<meta name="robots" content="noindex,follow">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Faro Signal — Issue 1: We didn't have our own SEO in order</title>
+
+<meta name="description" content="A marketing agency with no meta description, no Open Graph and no structured data on its own site. What we found, what we fixed, and the checklist we run now.">
+<link rel="canonical" href="https://faro-digital.netlify.app/signal-01-seo-homework.html">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Faro Digital">
+<meta property="og:url" content="https://faro-digital.netlify.app/signal-01-seo-homework.html">
+<meta property="og:title" content="The Faro Signal — Issue 1: We didn't have our own SEO in order">
+<meta property="og:description" content="A marketing agency with no meta description, no Open Graph and no structured data on its own site. What we found, what we fixed, and the checklist we run now.">
+<meta property="og:image" content="https://faro-digital.netlify.app/assets/logo-og.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Faro Signal — Issue 1: We didn't have our own SEO in order">
+<meta name="twitter:description" content="A marketing agency with no meta description, no Open Graph and no structured data on its own site. What we found, what we fixed, and the checklist we run now.">
+<meta name="twitter:image" content="https://faro-digital.netlify.app/assets/logo-og.png">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article",
+ "headline":"We didn't have our own SEO in order — here's what that taught us",
+ "description":"An agency audits its own website with the same method it sells, and finds it failing.",
+ "datePublished":"2026-08-01",
+ "inLanguage":"en",
+ "isPartOf":{"@type":"Blog","name":"The Faro Signal","url":"https://faro-digital.netlify.app/signal.html"},
+ "author":{"@type":"Person","name":"Zyad Bennani"},
+ "publisher":{"@type":"Organization","name":"Faro Digital","url":"https://faro-digital.netlify.app/",
+   "logo":{"@type":"ImageObject","url":"https://faro-digital.netlify.app/assets/logo-og.png"}},
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://faro-digital.netlify.app/signal-01-seo-homework.html"}}
+</script>
+
+<style>
+:root{
+  --forest:#1E3A2E; --forest-deep:#12291F; --sand:#C9A667; --cream:#F5EFE4; --white:#E2D9C6;
+  --ink:#17211C; --ink-soft:#5B6155; --line:#E2D9C6; --clay:#9C5A3C; --clay-deep:#743F28;
+}
+*{box-sizing:border-box;}
+body{margin:0; background:var(--cream); color:var(--ink); font-family:'Work Sans',Helvetica,Arial,sans-serif; font-size:16px; line-height:1.65;}
+h1,h2{font-family:'Frank Ruhl Libre',Georgia,'Times New Roman',serif; color:var(--forest); margin:0;}
+p{margin:0;}
+a{color:var(--clay-deep);}
+.wrap{max-width:600px; margin:0 auto; padding:0 24px;}
+
+header{background:var(--forest-deep); padding:28px 24px; text-align:center;}
+header .brand{color:var(--sand); font-size:13px; letter-spacing:.14em; text-transform:uppercase; font-weight:700;}
+header .issue{color:#D8E3DA; font-size:12px; margin-top:4px;}
+
+.card{background:#fff; margin-top:0;}
+.hero{padding:38px 24px 8px;}
+.hero .kicker{font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--clay-deep); font-weight:700;}
+.hero h1{font-size:26px; margin-top:10px; line-height:1.28;}
+
+.body-copy{padding:20px 24px 8px;}
+.body-copy p{font-size:15px; color:var(--ink-soft); margin-bottom:14px;}
+.body-copy p b{color:var(--ink);}
+.body-copy ul{padding-left:20px; margin:0 0 14px;}
+.body-copy li{font-size:15px; color:var(--ink-soft); margin-bottom:8px;}
+
+.case-box{margin:10px 24px 24px; background:var(--cream); border-radius:12px; padding:20px 22px;}
+.case-box .lbl{font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--clay-deep); font-weight:700;}
+.case-box h3{font-size:16px; margin-top:8px; line-height:1.35;}
+.case-box p{font-size:13.5px; color:var(--ink-soft); margin-top:8px;}
+.case-box a.btn{display:inline-block; margin-top:12px; font-size:13px; font-weight:700; color:var(--forest);}
+
+.cta-box{margin:0 24px 32px; background:var(--forest-deep); border-radius:12px; padding:26px 24px; text-align:center;}
+.cta-box p{color:#EDE7D6; font-size:14.5px;}
+.cta-box a.btn{display:inline-block; margin-top:14px; background:var(--sand); color:#1D1404; font-weight:700; font-size:14px; padding:11px 24px; border-radius:999px; text-decoration:none;}
+
+footer{padding:24px; text-align:center; font-size:11.5px; color:var(--ink-soft);}
+footer a{color:var(--ink-soft);}
+</style>
+<link rel="stylesheet" href="assets/fuentes.css">
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="brand">The Faro Signal</div>
+  <div class="issue">Issue 1 · August 2026</div>
+</header>
+
+<div class="card">
+  <div class="hero">
+    <div class="kicker">This month's lesson</div>
+    <h1>We didn't have our own SEO in order — here's what that taught us</h1>
+  </div>
+
+  <div class="body-copy">
+    <p>Here's an uncomfortable thing to admit as a marketing agency: until this week, our own website had none of the technical SEO we recommend to clients. No meta description, no Open Graph tags, no structured data, not even verified in Google Search Console.</p>
+    <p>It's an easy gap to fall into — you're heads-down building for clients, and "our own site" keeps getting pushed to next week. But it's also exactly the kind of gap we'd flag in five minutes on someone else's site.</p>
+    <p><b>So this week we fixed it.</b> Concretely: meta description and Open Graph tags (so links look right when shared), <code>schema.org</code> structured data describing who we are and what we do, and verification in both Google Search Console and Bing Webmaster Tools — the two free tools that show what's actually happening in search, instead of guessing.</p>
+    <p><b>Three things worth checking on your own site this week</b> (all free, all under 15 minutes each):</p>
+    <ul>
+      <li><b>Does your homepage have a real meta description?</b> View source, search for <code>name="description"</code>. If it's missing, Google writes one for you — usually badly.</li>
+      <li><b>Is your site verified in Google Search Console?</b> If not, you're flying blind on what people actually search to find you.</li>
+      <li><b>Does your business description read the same everywhere</b> — your site, Google Business Profile, social bios? AI assistants like ChatGPT and Google's AI Overview trust consistency, not a single well-written page.</li>
+    </ul>
+  </div>
+
+  <div class="case-box">
+    <div class="lbl">Related case study</div>
+    <h3>An outdated website that made a credible firm look unreliable</h3>
+    <p>Meridian Advisory Group's case covers this exact gap in more depth — technical SEO and GEO for a B2B firm whose site hadn't been touched since 2015.</p>
+    <a class="btn" href="https://faro-digital.netlify.app/portfolio/caso-4-corporativo-meridian">Read the case study →</a>
+  </div>
+
+  <div class="cta-box">
+    <p>Curious what a 15-minute look at your own site would surface? It's free, and based only on what's already public — no access needed.</p>
+    <a class="btn" href="https://faro-digital.netlify.app/#contacto">Get a free preliminary look</a>
+  </div>
+</div>
+
+<footer>
+  Faro Digital — data-driven digital marketing systems<br>
+  <a href="https://faro-digital.netlify.app">faro-digital.netlify.app</a>
+</footer>
+
+</div>
+<script src="/assets/medicion.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,646 @@
+<!doctype html>
+<!--
+  ============================================================================
+  LEVELS — los cuatro niveles de web de Faro, con demos que funcionan.
+  Iniciativa 18 del roadmap. 2026-08-20.
+
+  DECISION DE FONDO, y conviene dejarla escrita.
+  La especificacion decia "hay 13 webs producidas, solo hay que clasificarlas".
+  Al clasificarlas de verdad salio esto: 19 son N1 y CERO son N2, N3 o N4.
+  (Correccion del mismo dia: la web del cliente real se habia contado como N2 por tener 14
+  transiciones CSS, pero NO tiene lo que define N2 — el contenido apareciendo
+  al bajar. Una senal tecnica no es un nivel; ya paso con position:sticky.)
+
+  ACTUALIZADO EL 2026-08-20, MISMO DIA Y POR TRABAJO REAL:
+  esto ya no es cierto y la pagina lo decia igualmente. Comprobado contra las
+  dos webs PUBLICADAS, no contra los archivos fuente:
+    · faro-digital.netlify.app        -> avance() x2, scrollLeft x4, webgl x1
+    · la portada del cliente (preview) -> animation-timeline x7, scrollLeft x4
+  O sea: la portada del cliente es N2 de verdad (el contenido aparece al bajar)
+  y las dos portadas llevan componentes N3 en produccion.
+  Recuento verificado: 18 paginas N1 · 1 portada N2 · 2 portadas con N3.
+  🔴 La leccion no es el numero: es que una cifra correcta caduca sin avisar.
+  Si esta pagina afirma un recuento, hay que volver a medirlo cada vez que se
+  toca una web — y medirlo en la web publicada, no en el archivo local.
+  Un portfolio por niveles literal serian 18 cajas en una columna y tres
+  columnas vacias.
+  Asi que la pagina no promete un portfolio que no existe: promete los cuatro
+  niveles como decision, con una demo que se puede abrir y usar en cada uno
+  —  que si existen— y dice sin adornos en cual se ha entregado y en cual no.
+  Eso encaja con el posicionamiento de Faro (anti-hype, con datos) mucho mejor
+  que un portfolio inflado, y es lo unico que se puede sostener.
+
+  POR QUE ESTA MAQUETADO ASI.
+  La columna izquierda es un indice pegajoso que sigue el scroll; la derecha
+  son los cuatro bloques, SIEMPRE visibles. Se descarto el patron de "un panel
+  a la vez" —  mas espectacular—  porque esconde tres cuartas partes del texto
+  detras de una capa visual. La regla rectora del sistema no se salta ni en la
+  web propia: el contenido que vende va en el DOM, y aqui esta entero, sin
+  opacidad 0 ni pointer-events:none.
+  ============================================================================
+-->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Los cuatro niveles de web que construimos — Faro Digital</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Cuatro niveles de web, del limpio sin librerías al WebGL experimental. Cada uno con una demo que puedes abrir, y cifras medidas de peso y de para qué sirve.">
+<link rel="canonical" href="https://faro-digital.netlify.app/levels.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Faro Digital">
+<meta property="og:url" content="https://faro-digital.netlify.app/levels.html">
+<meta property="og:title" content="Los cuatro niveles de web que construimos">
+<meta property="og:description" content="Del limpio sin librerías al WebGL experimental — con una demo por nivel, y cifras medidas de peso y de encaje.">
+<meta property="og:image" content="https://faro-digital.netlify.app/assets/logo-og.png">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Los cuatro niveles de web que construimos">
+<meta name="twitter:description" content="Del limpio sin librerías al WebGL experimental — con una demo por nivel y cifras medidas.">
+<meta name="twitter:image" content="https://faro-digital.netlify.app/assets/logo-og.png">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage",
+ "name":"Los cuatro niveles de web que construimos",
+ "description":"Cuatro niveles de producción web, cada uno con una demo en vivo y el peso de página medido.",
+ "url":"https://faro-digital.netlify.app/levels.html",
+ "inLanguage":"es",
+ "isPartOf":{"@type":"WebSite","name":"Faro Digital","url":"https://faro-digital.netlify.app/"},
+ "publisher":{"@type":"Organization","name":"Faro Digital","url":"https://faro-digital.netlify.app/",
+   "logo":{"@type":"ImageObject","url":"https://faro-digital.netlify.app/assets/logo-og.png"}}}
+</script>
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Ccircle cx='150' cy='150' r='150' fill='%23F6F0E3'/%3E%3Cline x1='150' y1='123' x2='100' y2='92' stroke='%23C9A667' stroke-width='9' stroke-linecap='round'/%3E%3Cline x1='150' y1='123' x2='200' y2='92' stroke='%23C9A667' stroke-width='9' stroke-linecap='round'/%3E%3Cpath d='M150 133 L168 175 L132 175 Z' fill='%231E3A2E'/%3E%3Cpath d='M141 175 L159 175 L169 238 L131 238 Z' fill='%231E3A2E'/%3E%3Crect x='122' y='238' width='56' height='12' rx='2' fill='%231E3A2E'/%3E%3Ccircle cx='150' cy='123' r='10' fill='%23C9A667'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/fuentes.css">
+
+<style>
+:root{
+  --forest:#1E3A2E; --forest-deep:#12291F; --sand:#C9A667; --cream:#F5EFE4;
+  --white:#E2D9C6; --ink:#17211C; --ink-soft:#5B6155; --line:#E2D9C6;
+  /* Tokens de movimiento de la Fase B — no se inventa ninguna curva. */
+  --curva-salida:cubic-bezier(0.23, 1, 0.32, 1);
+  --dur-entrada:600ms; --escalonado:60ms;
+}
+*{box-sizing:border-box}
+body{margin:0; font-family:'Work Sans',Helvetica,Arial,sans-serif; color:var(--ink);
+     background:var(--cream); line-height:1.55; -webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'Frank Ruhl Libre',Georgia,'Times New Roman',serif;
+         color:var(--forest); margin:0; font-weight:500; line-height:1.15}
+p{margin:0}
+a{color:var(--forest)}
+.wrap{max-width:1180px; margin:0 auto; padding:0 28px}
+.kicker{color:var(--sand); letter-spacing:3px; font-size:12px; text-transform:uppercase; font-weight:700}
+
+/* --- cabecera --------------------------------------------------------- */
+header{background:var(--forest-deep); padding:18px 0}
+header .nav{display:flex; align-items:center; justify-content:space-between; gap:20px}
+header .brand{display:flex; align-items:center; gap:11px; text-decoration:none; color:var(--cream);
+  font-family:'Frank Ruhl Libre',Georgia,serif; font-size:17px; letter-spacing:.5px}
+header .brand svg{width:30px; height:30px; display:block}
+header a.volver{color:rgb(245 239 228/.8); text-decoration:none; font-size:14px}
+header a.volver:hover{color:var(--sand)}
+
+/* --- hero ------------------------------------------------------------- */
+.hero{background:var(--forest-deep); color:var(--cream); padding:74px 0 82px}
+.hero h1{color:var(--cream); font-size:clamp(2.2rem, 1.3rem + 3.4vw, 3.6rem); max-width:19ch; margin-top:14px}
+.hero p{margin-top:20px; max-width:56ch; font-size:clamp(1.02rem, .98rem + .3vw, 1.16rem); color:rgb(245 239 228/.82)}
+.hero .aviso{margin-top:26px; padding:15px 18px; border-left:3px solid var(--sand);
+  background:rgb(201 166 103/.09); max-width:60ch; font-size:.95rem; color:rgb(245 239 228/.9)}
+
+/* --- el cuerpo: indice pegajoso + bloques ------------------------------ */
+.niveles{padding:76px 0 20px}
+.rejilla{display:grid; grid-template-columns:250px 1fr; gap:60px; align-items:start}
+
+.indice{position:sticky; top:34px}
+.indice .titulo{font-size:12px; letter-spacing:2px; text-transform:uppercase;
+  color:var(--ink-soft); font-weight:700; margin-bottom:16px}
+.indice ol{list-style:none; margin:0; padding:0; border-left:2px solid var(--line)}
+.indice li a{display:block; padding:11px 0 11px 18px; margin-left:-2px;
+  border-left:2px solid transparent; text-decoration:none; color:var(--ink-soft);
+  font-size:.95rem; transition:color 200ms var(--curva-salida), border-color 200ms var(--curva-salida)}
+.indice li a b{display:block; font-family:'Frank Ruhl Libre',Georgia,serif;
+  font-size:1.05rem; color:inherit; font-weight:500}
+.indice li a:hover{color:var(--forest)}
+.indice li a[aria-current="true"]{color:var(--forest); border-left-color:var(--sand)}
+
+/* El medidor: traduce el nivel a algo que se ve. Los números son MEDIDOS. */
+.medidor{margin-top:26px; padding-top:22px; border-top:1px solid var(--line)}
+.medidor .etiqueta{font-size:11px; letter-spacing:2px; text-transform:uppercase;
+  color:var(--ink-soft); font-weight:700}
+.medidor .cifra{font-family:'Frank Ruhl Libre',Georgia,serif; font-size:2.1rem;
+  color:var(--forest); line-height:1.1; margin-top:6px}
+.medidor .barra{height:5px; background:var(--line); border-radius:3px; margin-top:11px; overflow:hidden}
+.medidor .barra i{display:block; height:100%; width:8%; background:var(--sand); border-radius:3px;
+  transition:width var(--dur-entrada) var(--curva-salida)}
+.medidor .pie{font-size:.82rem; color:var(--ink-soft); margin-top:9px}
+
+/* --- un bloque por nivel ---------------------------------------------- */
+.nivel{padding:0 0 84px; scroll-margin-top:26px}
+/* ═══ N4 · la escena real, 2026-08-20 ═══════════════════════════════════
+   ⭐ CONTENIDA EN UNA CAJA, no a pantalla completa. Misma regla que C30:
+   el coste se queda donde está el efecto. Esta página puede permitírselo
+   porque su trabajo ES demostrar niveles; la home no, porque su trabajo es
+   convertir a alguien que llega desde Google en un móvil.
+   🔴 Y C24 desde la primera línea: todo lo que dice la escena está también
+   en .n4-reserva, que es texto real del DOM. Sin eso, un buscador ve un
+   <canvas> vacío — que es exactamente el problema que este bloque describe. */
+.n4-escena{position:relative; margin-top:22px; border-radius:10px; overflow:hidden;
+  background:#0A1410; aspect-ratio:16/10; border:1px solid rgb(226 217 198/.14)}
+.n4-escena canvas{display:block; width:100%; height:100%}
+.n4-escena .n4-fallback{position:absolute; inset:0; z-index:1; display:flex; flex-direction:column;
+  justify-content:flex-end; padding:28px 30px; background:
+  radial-gradient(120% 90% at 50% 12%, rgb(201 166 103/.20), transparent 60%), #0A1410;
+  color:var(--cream)}
+.n4-escena.viva .n4-fallback{opacity:0; pointer-events:none; transition:opacity .5s ease}
+.n4-fallback .n4-t{font-family:'Frank Ruhl Libre',Georgia,serif; font-size:clamp(1.2rem,.9rem + 1.1vw,1.7rem);
+  max-width:24ch; line-height:1.2}
+.n4-fallback .n4-s{margin-top:8px; font-size:.9rem; color:rgb(226 217 198/.6)}
+/* Las palabras que el haz revela. Son TEXTO DEL DOM sobre el canvas, no
+   píxeles dibujados: se seleccionan, Ctrl+F las encuentra y Google las lee.
+   Es la regla rectora del sistema aplicada al nivel más extremo — si el
+   revelado se dibujara dentro del shader, este bloque sería el error que
+   el propio bloque denuncia. */
+/* z-index 2: la reserva visual (.n4-fallback) lleva fondo opaco y va
+   después en el DOM, así que sin esto pinta ENCIMA de las palabras y
+   las tapa justo en el caso en que más falta hacen — cuando la escena
+   no arranca. Visto en captura con prefers-reduced-motion. */
+.n4-palabras{position:absolute; inset:0; pointer-events:none; z-index:2}
+.n4-palabras span{position:absolute; transform:translate(-50%,-50%);
+  font-family:'Frank Ruhl Libre',Georgia,serif; font-size:clamp(.95rem,.7rem + .8vw,1.35rem);
+  letter-spacing:.04em; color:#F5EFE4; white-space:nowrap;
+  opacity:.10; transition:opacity .18s linear; text-shadow:0 0 26px rgb(201 166 103/.55)}
+/* 🔴 Si la escena NO arranca — sin WebGL, o con prefers-reduced-motion —
+   las palabras se quedarían al 10 % y serían invisibles: apagar el efecto
+   habría BORRADO contenido real. Es exactamente el fallo que se corrigió
+   en C27 esta misma tarde y que aquí se repitió. La clase `viva` solo la
+   pone el script cuando ha pintado de verdad, así que esta regla cubre
+   TODOS los caminos de fallo con una sola línea. */
+.n4-escena:not(.viva) .n4-palabras span{opacity:.92}
+.n4-pie{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  margin-top:10px; font-size:.82rem; color:var(--ink-soft)}
+.n4-pie b{color:var(--forest)}
+.sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+  clip:rect(0 0 0 0); white-space:nowrap; border:0}
+
+.nivel .cabeza{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap}
+.nivel .num{font-family:'Frank Ruhl Libre',Georgia,serif; font-size:2.6rem; color:var(--sand); line-height:1}
+.nivel h2{font-size:clamp(1.6rem, 1.2rem + 1.5vw, 2.2rem)}
+.nivel .definicion{margin-top:14px; font-size:1.08rem; max-width:60ch}
+.nivel .dato{margin-top:22px; padding:16px 18px; background:#fff; border:1px solid var(--line);
+  border-radius:4px; max-width:60ch}
+.nivel .dato .cifra{font-family:'Frank Ruhl Libre',Georgia,serif; font-size:1.5rem; color:var(--forest)}
+.nivel .dato p{font-size:.92rem; color:var(--ink-soft); margin-top:5px}
+.nivel .dos{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:26px; max-width:64ch}
+.nivel .dos div h3{font-size:.95rem; letter-spacing:1px; text-transform:uppercase; color:var(--ink-soft)}
+.nivel .dos div ul{margin:9px 0 0; padding-left:18px; font-size:.95rem}
+.nivel .dos div li{margin-bottom:5px}
+.nivel .acciones{margin-top:28px; display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+.boton{display:inline-block; background:var(--forest); color:var(--cream); text-decoration:none;
+  padding:11px 20px; border-radius:3px; font-size:.94rem; font-weight:600;
+  transition:background 200ms var(--curva-salida)}
+.boton:hover{background:var(--forest-deep)}
+.boton.hueco{background:transparent; color:var(--forest); border:1px solid var(--forest)}
+.boton.hueco:hover{background:var(--forest); color:var(--cream)}
+.entregado{margin-top:24px; font-size:.93rem; color:var(--ink-soft); max-width:60ch;
+  padding-left:14px; border-left:2px solid var(--line)}
+.entregado b{color:var(--forest)}
+.entregado.ninguno{border-left-color:var(--sand)}
+
+/* --- tabla comparativa ------------------------------------------------ */
+.comparar{background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  padding:66px 0; margin-top:30px}
+.comparar h2{font-size:clamp(1.5rem,1.2rem + 1.2vw,2rem)}
+.comparar p.intro{margin-top:12px; max-width:62ch; color:var(--ink-soft)}
+.tabla{overflow-x:auto; margin-top:28px}
+table{border-collapse:collapse; width:100%; min-width:640px; font-size:.94rem}
+th,td{text-align:left; padding:13px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+thead th{font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--ink-soft);
+  border-bottom:2px solid var(--line)}
+tbody th{font-family:'Frank Ruhl Libre',Georgia,serif; font-weight:500; color:var(--forest); font-size:1.02rem}
+
+/* Visible solo para lectores de pantalla: la tabla necesita un resumen, y el
+   resumen no debe repetirse en pantalla porque ya está en el titular. */
+.sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0}
+
+/* --- cierre ----------------------------------------------------------- */
+.cierre{padding:70px 0 84px; text-align:center}
+.cierre h2{font-size:clamp(1.6rem,1.2rem + 1.4vw,2.2rem); max-width:22ch; margin:0 auto}
+.cierre p{margin:16px auto 0; max-width:52ch; color:var(--ink-soft)}
+.cierre .acciones{margin-top:26px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+footer{background:var(--forest-deep); color:rgb(245 239 228/.7); padding:26px 0; font-size:.88rem}
+footer a{color:rgb(245 239 228/.9)}
+
+/* --- aparición al entrar (N2 nativo, sin librería) --------------------- */
+.js-revelar .nivel{opacity:0; transform:translateY(16px)}
+.nivel.visible{opacity:1; transform:none;
+  transition:opacity var(--dur-entrada) var(--curva-salida), transform var(--dur-entrada) var(--curva-salida)}
+
+@media (max-width:900px){
+  /* 🔴 `min-width:0` en los hijos de la rejilla. Sin esto un hijo de grid vale
+     `min-width:auto`, asi que la columna se ENSANCHA hasta caber su contenido
+     mas ancho — el indice horizontal de aqui abajo — en vez de dejar que se
+     desplace. Resultado: la pagina desbordaba 157 px a lo ancho en un movil de
+     390 px y el texto se cortaba a media linea.
+     Estaba asi desde antes de traducirla (desbordaba 105 px en ingles); el
+     espanol, mas largo, solo lo hizo mas visible. Y lo encontro una captura,
+     no el validador: el HTML y el CSS eran correctos los dos. */
+  .rejilla{grid-template-columns:1fr; gap:32px}
+  .rejilla > *{min-width:0}
+  .indice{position:static; border-bottom:1px solid var(--line); padding-bottom:20px}
+  .indice ol{display:flex; gap:6px; overflow-x:auto; border-left:none; border-top:2px solid var(--line)}
+  .indice li a{border-left:none; border-top:2px solid transparent; margin:-2px 0 0; padding:11px 14px 0 0; white-space:nowrap}
+  .indice li a[aria-current="true"]{border-top-color:var(--sand); border-left-color:transparent}
+  .medidor{display:none}
+  .nivel .dos{grid-template-columns:1fr}
+}
+
+/* Sin movimiento: todo estático y todo legible. No se pierde ni una palabra,
+   porque nunca hubo nada escondido detrás del movimiento. */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important; transition-duration:.01ms!important;
+    scroll-behavior:auto!important}
+  .js-revelar .nivel{opacity:1; transform:none}
+}
+</style>
+</head>
+<body id="top">
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/">
+      <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="150" cy="150" r="150" fill="#F5EFE4"/>
+        <line x1="150" y1="123" x2="100" y2="92" stroke="#C9A667" stroke-width="9" stroke-linecap="round"/>
+        <line x1="150" y1="123" x2="200" y2="92" stroke="#C9A667" stroke-width="9" stroke-linecap="round"/>
+        <path d="M150 133 L168 175 L132 175 Z" fill="#1E3A2E"/>
+        <path d="M141 175 L159 175 L169 238 L131 238 Z" fill="#1E3A2E"/>
+        <rect x="122" y="238" width="56" height="12" rx="2" fill="#1E3A2E"/>
+        <circle cx="150" cy="123" r="10" fill="#C9A667"/>
+      </svg>
+      FARO DIGITAL
+    </a>
+    <a class="volver" href="/">← Volver al sitio</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="kicker">Cómo construimos webs</div>
+    <h1>Cuatro formas de construir la misma página. La pregunta es cuál necesita tu negocio.</h1>
+    <p>Casi todas las agencias venden un solo tipo de web y le suben o le bajan el precio. Nosotros construimos cuatro, y el nivel es una decisión sobre <b>qué tiene que hacer la página</b> — no sobre lo bien que queda en un portfolio.</p>
+    <p style="margin-top:18px;font-size:.92rem;color:rgb(245 239 228/.62);max-width:56ch">
+      Esto son <b>niveles de construcción</b> — cómo se hace un sitio. No son los tramos de
+      colaboración (<a style="color:rgb(245 239 228/.85)" href="/#precios">Diagnóstico&nbsp;+&nbsp;Plan, o continuo</a>),
+      que van de cómo trabajamos juntos. Cualquier nivel de construcción cabe en cualquiera de los dos tramos.
+    </p>
+    <div class="aviso">
+      Cada cifra de esta página está <b>medida sobre una página que funciona</b>, no estimada. Cada nivel tiene una demo que puedes abrir ahora mismo. Y donde todavía no hemos entregado a ese nivel, lo dice.
+    </div>
+  </div>
+</section>
+
+<section class="niveles">
+  <div class="wrap rejilla">
+
+    <!-- ÍNDICE PEGAJOSO — sigue el scroll, y el medidor traduce el nivel a peso real -->
+    <nav class="indice" aria-label="Los cuatro niveles de construcción">
+      <div class="titulo">Los cuatro niveles</div>
+      <ol>
+        <li><a href="#n1" data-nivel="n1" aria-current="true"><b>01</b>Premium limpio</a></li>
+        <li><a href="#n2" data-nivel="n2"><b>02</b>Premium + motion</a></li>
+        <li><a href="#n3" data-nivel="n3"><b>03</b>Experiencial</a></li>
+        <li><a href="#n4" data-nivel="n4"><b>04</b>Experimental</a></li>
+      </ol>
+      <div class="medidor" aria-hidden="true">
+        <div class="etiqueta">Peso de página medido</div>
+        <div class="cifra" id="cifra">21 KB</div>
+        <div class="barra"><i id="barra"></i></div>
+        <div class="pie" id="pie">Cero librerías. Cero peticiones externas.</div>
+      </div>
+    </nav>
+
+    <div>
+      <!-- ============================ NIVEL 1 ============================ -->
+      <article class="nivel" id="n1">
+        <div class="cabeza"><span class="num" aria-hidden="true">01</span><h2>Premium limpio</h2></div>
+        <p class="definicion">Tipografía, espacio y contención. Sin librerías, sin efectos de scroll, sin nada que tenga que cargar antes de que la página sirva. Todo lo que da este nivel son decisiones de diseño, no código.</p>
+
+        <div class="dato">
+          <div class="cifra">21 KB · cero peticiones externas</div>
+          <p>Medido sobre nuestra construcción de referencia, funcionando. Las tipografías se sirven desde nuestro propio dominio, así que la página no hace ni una petición a Google — que es también una decisión de RGPD, no solo de velocidad.</p>
+        </div>
+
+        <div class="dos">
+          <div>
+            <h3>Cuándo sí</h3>
+            <ul>
+              <li>Tu tráfico llega sobre todo desde el móvil, con datos</li>
+              <li>La página tiene un solo trabajo: una llamada, una reserva, un formulario</li>
+              <li>Tu producto es un servicio, no un espectáculo</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Cuándo no</h3>
+            <ul>
+              <li>Tu producto <i>es</i> lo visual — moda, interiorismo, gastronomía</li>
+              <li>Compites contra marcas que se perciben más caras que tú</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="acciones">
+          <a class="boton" href="/portfolio/">Ver los casos →</a>
+          <a class="boton hueco" href="/check">Revisa tu web actual gratis →</a>
+        </div>
+
+        <p class="entregado"><b>Entregado a este nivel:</b> 18 páginas — las cinco páginas de servicio de un salón de dos casas, tres conceptos de negocio local, cuatro maquetas de muestra y casi todo este sitio. <b>Contadas sobre los sitios publicados</b>, no sobre los archivos: esta semana dos portadas subieron de nivel y esta cifra se movió con ellas.</p>
+      </article>
+
+      <!-- ============================ NIVEL 2 ============================ -->
+      <article class="nivel" id="n2">
+        <div class="cabeza"><span class="num" aria-hidden="true">02</span><h2>Premium + motion</h2></div>
+        <p class="definicion">La misma contención, más el movimiento que el navegador hace de forma nativa: contenido que aparece según llegas a él, con tiempos y curvas sacados de un sistema documentado en vez de inventados en cada proyecto.</p>
+
+        <div class="dato">
+          <div class="cifra">23,9 KB — de los cuales 17 KB son una sola librería</div>
+          <p>Esa única librería de scroll suave es <b>el 71 % de la página</b>. Que es justo por lo que la tratamos como opcional: compra una sola cosa, una rueda de ratón más suave, y un móvil no tiene rueda de ratón.</p>
+        </div>
+
+        <div class="dos">
+          <div>
+            <h3>Cuándo sí</h3>
+            <ul>
+              <li>Compites por percepción de calidad</li>
+              <li>Tus clientes llegan desde ordenador, con tiempo</li>
+              <li>Tienes una historia que se despliega, no una sola oferta</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Cuándo no</h3>
+            <ul>
+              <li>El 70–80 % de tu tráfico es móvil — ahí el efecto no se ve</li>
+              <li>La página existe para que la encuentren y actúen en diez segundos</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="acciones">
+          <a class="boton" href="/dashboard-demo.html">Abrir una construcción en vivo →</a>
+        </div>
+
+        <p class="entregado"><b>Entregado a este nivel:</b> una portada — un salón de dos casas en Barcelona. <b>Hasta esta semana era nivel&nbsp;1</b>, y esta página lo decía. Ahora su contenido llega según bajas, con <code>animation-timeline: view()</code> — CSS, ni una librería, así que los 17 KB de arriba compran todavía menos de lo que creíamos.</p>
+      </article>
+
+      <!-- ============================ NIVEL 3 ============================ -->
+      <article class="nivel" id="n3">
+        <div class="cabeza"><span class="num" aria-hidden="true">03</span><h2>Experiencial</h2></div>
+        <p class="definicion">El scroll conduce la página: una sección que se queda quieta mientras su historia avanza, una galería que arrastras con peso e inercia, una portada pintada fotograma a fotograma. El mensaje sigue viviendo en HTML normal por debajo — esa regla no se dobla a este nivel.</p>
+
+        <div class="dato">
+          <div class="cifra">Nueve componentes, los nueve construidos, los nueve sin dependencias</div>
+          <p>Una sección fijada que cuenta una historia, una galería de arrastre con física real, una portada con shader, 3D confinado a una caja, vídeo enmascarado dentro de un titular, una distorsión de lente al pasar el cursor, un escenario de scroll horizontal, una ilustración de marca animada y la reserva semántica que mantiene todo eso legible para Google. <b>Dábamos por hecho que seis necesitarían una librería externa. Medido: ninguno la necesitó.</b> Ni GSAP, ni three.js, ni Lottie.</p>
+        </div>
+
+        <div class="dos">
+          <div>
+            <h3>Cuándo sí</h3>
+            <ul>
+              <li>El sitio <i>es</i> el portfolio — estudios, producto, marcas premium</li>
+              <li>Necesitas que alguien perciba la calidad antes de leer una palabra</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Cuándo no</h3>
+            <ul>
+              <li>Esta es la página que tiene que convertir — alarga el camino</li>
+              <li>Nadie va a mantenerlo después del lanzamiento</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="acciones">
+          <a class="boton" href="/audit">Hablar de una web de nivel 3 →</a>
+        </div>
+
+        <!-- 🔴 ESTA CIFRA SE QUEDÓ VIEJA EN UN DÍA. Decía «cuatro componentes» y el
+     2026-08-21, al añadir C27 y C28 a la portada, pasaron a ser seis. Lo
+     detectó volver a medir la rúbrica, no leer la página.
+     Es exactamente lo que este bloque avisa dos párrafos más abajo: una
+     cifra correcta caduca sin avisar, y hay que volver a contarla en las
+     webs publicadas cada vez que se toca una. Contado en vivo el 21-ago:
+     Faro 5 (C22, C23, C25, C27, C28) + el salón 1 (fila de arrastre). -->
+        <p class="entregado"><b>Entregado a este nivel:</b> seis componentes repartidos en dos portadas — <b>la de este sitio</b> (portada con shader, sección fijada, galería de arrastre, el logo que se dibuja solo y la luz que cruza el titular) y la de un salón (una fila de arrastre). <b>En total hay nueve construidos</b>, cada uno como demo aislada con sus propias cifras y su propio plan B. Los cinco que no están entregados no han encontrado todavía un proyecto que los necesitara, y preferimos decirlo a inventarnos uno.</p>
+      </article>
+
+      <!-- ============================ NIVEL 4 ============================ -->
+      <article class="nivel" id="n4">
+        <div class="cabeza"><span class="num" aria-hidden="true">04</span><h2>Experimental</h2></div>
+        <p class="definicion">WebGL completo — el nivel en el que la página entera se dibuja en vez de maquetarse. Es el nivel del que todo el mundo hace captura y que casi nadie necesita.</p>
+
+        <div class="dato">
+          <div class="cifra">150 KB+ antes de un solo píxel de tu contenido</div>
+          <p>Y un problema de fondo: cuando una página se dibuja en vez de escribirse, los buscadores no encuentran nada que leer. Solo funciona con una versión en texto completa por detrás — si no, has construido algo precioso que nadie puede encontrar.</p>
+        </div>
+
+
+        <!-- ═══ N4 · escena real ═══════════════════════════════════════════
+             El haz barre y revela el texto a su paso. No es decoración: es
+             literalmente lo que Faro vende — hacer visible lo que ya existe.
+             Y el gesto es el del propio logo. -->
+        <figure class="n4-escena" id="n4Escena">
+          <canvas id="n4Lienzo" aria-hidden="true"></canvas>
+          <div class="n4-palabras" id="n4Palabras">
+            <span style="left:20%; top:36%">tus reseñas</span>
+            <span style="left:50%; top:13%">tu horario</span>
+            <span style="left:80%; top:40%">tus precios</span>
+          </div>
+          <div class="n4-fallback">
+            <div class="n4-t">Un faro, dibujado píxel a píxel</div>
+            <div class="n4-s">Tu navegador está mostrando la versión fija — la escena necesita WebGL.</div>
+          </div>
+        </figure>
+
+        <!-- 🔴 C24 · LA RESERVA SEMÁNTICA. Obligatoria desde la primera línea,
+             no añadida al final. Todo lo que la escena comunica está aquí como
+             texto real: si esto no existiera, este bloque sería exactamente el
+             error que el propio bloque denuncia. -->
+        <p class="sr-only">
+          Demostración de nivel 4: una escena WebGL en tiempo real con el faro de Faro de noche.
+          Su haz barre el encuadre y va encendiendo tres palabras a su paso, y con el ratón encima el haz sigue al cursor, así que quien mira decide qué palabra se ilumina —
+          tus reseñas, tu horario, tus precios. Esas tres palabras son texto real de la página,
+          no píxeles dibujados dentro del lienzo: se pueden seleccionar y se pueden buscar. Son
+          la misma idea que vende Faro, hacer visible lo que un negocio ya tiene. La escena se dibuja
+          en un lienzo con unas 120 líneas de WebGL escrito a mano, sin ninguna librería de 3D, y
+          está confinada a una caja en vez de cubrir la página, así que el resto de esta página
+          sigue siendo rápida. Todo lo que dice la escena está también escrito aquí en texto, que
+          es la condición que hace que el nivel 4 sea utilizable siquiera.
+        </p>
+
+        <div class="n4-pie">
+          <span><b>WebGL escrito a mano</b> · sin three.js, sin librería</span>
+          <span><b>Confinado a una caja</b> · la página se lee igual sin él</span>
+          <span><b>Versión en texto por debajo</b> · siempre</span>
+          <span><b>Unos 10 KB</b>, no 150 · eso es lo que compra «confinado a una caja».
+            Los 150 KB de arriba son lo que cuesta una <i>página entera</i> construida así, con una
+            librería de 3D cargada antes de tu primera palabra. Esta escena es un shader sobre un
+            rectángulo, y la página de alrededor sigue siendo HTML normal.</span>
+        </div>
+
+        <div class="dos">
+          <div>
+            <h3>Cuándo sí</h3>
+            <ul>
+              <li>El trabajo del sitio es una reputación, no un cliente</li>
+              <li>Hay presupuesto para el mantenimiento, no solo para construirlo</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Cuándo no</h3>
+            <ul>
+              <li>Casi siempre, para un negocio que necesita clientes</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="entregado"><b>Entregado a este nivel: una escena, en dos sitios.</b> Esta, y el hero de la portada — <b>solo a partir de 1100 px de ancho</b>. Por debajo ni se monta ni se descarga: una página que tiene que convertir a alguien que llega de Google desde el móvil no paga un shader que allí no arregla nada. Y es el mismo archivo en los dos, no una copia. <b>Seguimos sin venderte un sitio construido así</b> salvo que el trabajo de tu sitio sea una reputación y no un cliente — pero «no lo hacemos» y «no lo recomendamos» son frases distintas, y solo la segunda fue verdad alguna vez.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="comparar">
+  <div class="wrap">
+    <div class="kicker">Uno al lado del otro</div>
+    <h2>Los mismos cuatro niveles, en cifras</h2>
+    <p class="intro">Los pesos están medidos sobre construcciones que funcionan, no sacados de la documentación. Nos equivocamos una vez — una librería documentada como «unos 3 KB» resultó pesar 16,4 — así que ahora lo pesamos todo nosotros.</p>
+
+    <div class="tabla">
+      <table>
+        <caption class="sr-only">Comparativa de los cuatro niveles de web</caption>
+        <thead>
+          <tr><th scope="col">Nivel</th><th scope="col">Peso medido</th><th scope="col">Librerías</th><th scope="col">Mejor para</th><th scope="col">Entregado</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">1 · Premium limpio</th><td>21 KB</td><td>Ninguna</td><td>Negocio local, páginas de servicio, tráfico móvil</td><td>18 páginas</td></tr>
+          <tr><th scope="row">2 · Premium + motion</th><td>23,9 KB<br><small>17 KB de ellos opcionales</small></td><td>Ninguna necesaria</td><td>Marcas que compiten por percepción de calidad</td><td>1 portada</td></tr>
+          <tr><th scope="row">3 · Experiencial</th><td>13–20 KB por componente</td><td>Ninguna</td><td>Portfolios, producto, marcas premium</td><td>6 en vivo · 9 construidos</td></tr>
+          <tr><th scope="row">4 · Experimental</th><td>150 KB+</td><td>Pesadas</td><td>Piezas de reputación con presupuesto de mantenimiento</td><td>No se ofrece</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="cierre">
+  <div class="wrap">
+    <h2>¿No sabes qué nivel necesitas?</h2>
+    <p>Para eso está la auditoría: el nivel tiene que salir de qué tiene que hacer tu web, de qué está haciendo tu competencia y de dónde viene tu tráfico. No de una lista de precios.</p>
+    <div class="acciones">
+      <a class="boton" href="/audit">Empezar por una auditoría 360° gratuita →</a>
+      <a class="boton hueco" href="/check">O revisa tu web en 10 segundos →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a href="/">Faro Digital</a> · Sistemas de marketing digital con datos ·
+    <a href="/portfolio/">Portfolio</a> ·
+    <a href="/check">Revisión instantánea gratis</a>
+  </div>
+</footer>
+
+<script>
+/* ===========================================================================
+   Dos cosas, y las dos nativas: marcar el nivel activo en el indice mientras
+   se baja, y traducir ese nivel al medidor de peso.
+
+   NADA de esto esconde contenido. Si el JavaScript no llega a ejecutarse, la
+   pagina se lee entera igual: los cuatro bloques ya estan en el HTML.
+   =========================================================================== */
+(function () {
+  "use strict";
+  var quieto = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var enlaces = [].slice.call(document.querySelectorAll('.indice a[data-nivel]'));
+  var bloques = enlaces.map(function (a) { return document.getElementById(a.dataset.nivel); });
+
+  /* Los numeros del medidor son los MEDIDOS, no una escala inventada. */
+  var MEDIDOR = {
+    n1: { cifra: "21 KB",     ancho: 12,  pie: "Cero librerías. Cero peticiones externas." },
+    n2: { cifra: "23.9 KB",   ancho: 16,  pie: "17 KB son una librería opcional — el 71 %." },
+    n3: { cifra: "13–20 KB",  ancho: 30,  pie: "Por componente. Y siguen sin dependencias." },
+    n4: { cifra: "150 KB+",   ancho: 100, pie: "Antes de un solo píxel de tu contenido." }
+  };
+  var cifra = document.getElementById("cifra");
+  var barra = document.getElementById("barra");
+  var pie = document.getElementById("pie");
+
+  function activar(id) {
+    for (var i = 0; i < enlaces.length; i++) {
+      var esta = enlaces[i].dataset.nivel === id;
+      if (esta) enlaces[i].setAttribute("aria-current", "true");
+      else enlaces[i].removeAttribute("aria-current");
+    }
+    var m = MEDIDOR[id];
+    if (m && cifra) { cifra.textContent = m.cifra; barra.style.width = m.ancho + "%"; pie.textContent = m.pie; }
+  }
+
+  /* Cual es el bloque que domina la pantalla ahora mismo. Se calcula en el
+     evento de scroll y no con un observador: ya nos ha pasado dos veces esta
+     semana que un observador exista, no de error y no llame nunca. */
+  var pendiente = false;
+  function mirar() {
+    pendiente = false;
+    var mejor = null, mejorDist = Infinity;
+    var referencia = innerHeight * 0.34;
+    for (var i = 0; i < bloques.length; i++) {
+      if (!bloques[i]) continue;
+      var d = Math.abs(bloques[i].getBoundingClientRect().top - referencia);
+      if (d < mejorDist) { mejorDist = d; mejor = bloques[i].id; }
+    }
+    if (mejor) activar(mejor);
+  }
+  addEventListener("scroll", function () {
+    if (!pendiente) { pendiente = true; requestAnimationFrame(mirar); }
+  }, { passive: true });
+  mirar();
+  activar("n1");
+
+  /* Aparicion al entrar. Con la preferencia de menos movimiento ni se enciende:
+     no se oculta y se muestra despues, directamente no se oculta nunca. */
+  if (!quieto && "IntersectionObserver" in window) {
+    var raiz = document.documentElement;
+    raiz.classList.add("js-revelar");
+    var entrego = false;
+    var obs = new IntersectionObserver(function (filas) {
+      entrego = true;
+      filas.forEach(function (f, i) {
+        if (!f.isIntersecting) return;
+        setTimeout(function () { f.target.classList.add("visible"); }, i * 60);
+        obs.unobserve(f.target);
+      });
+    }, { rootMargin: "0px 0px -12% 0px" });
+    bloques.forEach(function (b) { if (b) obs.observe(b); });
+
+    /* Red de seguridad: un observador puede existir y no entregar nunca.
+       Ya paso con la plantilla N1. Si a los 2,5 s no ha llamado, se descubre
+       todo — mejor sin animacion que con la pagina en blanco. */
+    setTimeout(function () { if (!entrego) raiz.classList.remove("js-revelar"); }, 2500);
+  }
+})();
+</script>
+<script src="/assets/medicion.js" defer></script>
+
+<script src="/assets/escena-faro.js" defer></script>
+<script defer>
+/* La escena vive en `assets/escena-faro.js` desde el 2026-08-21, porque también
+   se usa en el hero de la portada. Aquí solo se le dice dónde montarse. */
+addEventListener("DOMContentLoaded", function () {
+  if (window.faroEscena) faroEscena({ caja: "#n4Escena", palabras: "#n4Palabras span" });
+});
+</script>
+</body>
+</html>

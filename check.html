@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+<meta charset="utf-8">
+<title>Revisión instantánea y gratuita de tu web — Faro Digital</title>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication",
+ "name":"Revisión instantánea y gratuita de tu web",
+ "description":"Pega una URL y recibe al momento una revisión técnica del sitio: metadatos, datos estructurados, adaptación a móvil y medición.",
+ "url":"https://faro-digital.netlify.app/check.html",
+ "applicationCategory":"BusinessApplication",
+ "operatingSystem":"Any (web browser)",
+ "inLanguage":"es",
+ "offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},
+ "provider":{"@type":"Organization","name":"Faro Digital","url":"https://faro-digital.netlify.app/"}}
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Revisa tu web en 10 segundos — comprobaciones reales, sin adivinar con IA. Y si quieres ir más a fondo, pide la auditoría 360° completa.">
+<link rel="canonical" href="https://faro-digital.netlify.app/check">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Faro Digital">
+<meta property="og:url" content="https://faro-digital.netlify.app/check">
+<meta property="og:title" content="Revisión instantánea y gratuita de tu web — Faro Digital">
+<meta property="og:description" content="Revisa tu web en 10 segundos — comprobaciones reales. Y si quieres ir más a fondo, pide la auditoría 360° completa.">
+<meta property="og:image" content="https://faro-digital.netlify.app/assets/logo-og.png">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Revisión instantánea y gratuita de tu web — Faro Digital">
+<meta name="twitter:image" content="https://faro-digital.netlify.app/assets/logo-og.png">
+<style>
+  :root{
+    --forest:#1E3A2E; --forest-deep:#12291F; --sand:#C9A667; --cream:#F5EFE4;
+    --ink-soft:#5B6155; --line:rgba(30,58,46,.14); --paper-raised:#FFFFFF;
+    --good:#3E6B52; --bad:#A8603E;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--cream); color:var(--forest); font-family:'Work Sans',Helvetica,Arial,sans-serif; line-height:1.55; -webkit-font-smoothing:antialiased;}
+  h1,h2{font-family:'Frank Ruhl Libre',Georgia,'Times New Roman',serif; margin:0; letter-spacing:-.01em;}
+  a{color:var(--forest);}
+  .wrap{max-width:720px; margin:0 auto; padding:0 24px;}
+  header{padding:28px 0;}
+  header .wrap{display:flex; align-items:center; justify-content:space-between;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Frank Ruhl Libre',Georgia,serif; font-weight:700; font-size:15px; letter-spacing:.04em; text-transform:uppercase; text-decoration:none; color:var(--forest);}
+  .brand svg{width:20px; height:20px;}
+  header nav a{font-size:14px; font-weight:600; text-decoration:none; color:var(--forest); border-bottom:1px solid var(--forest);}
+
+  .hero{padding:48px 0 8px; text-align:center;}
+  .eyebrow{font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--sand); font-weight:700;}
+  .hero h1{font-size:clamp(28px,4.5vw,42px); line-height:1.15; margin-top:16px;}
+  .hero p{font-size:17px; color:var(--ink-soft); margin-top:16px; max-width:52ch; margin-left:auto; margin-right:auto;}
+
+  form{display:flex; gap:10px; margin-top:32px; flex-wrap:wrap; justify-content:center;}
+  #url-input{flex:1 1 320px; max-width:420px; padding:14px 16px; font-size:16px; font-family:inherit; border:1px solid rgba(30,58,46,.3); border-radius:8px; background:#fff; color:var(--forest);}
+  #url-input:focus{outline:2px solid var(--sand); outline-offset:1px;}
+  button.cta{border:none; cursor:pointer; background:var(--forest-deep); color:var(--cream); font-weight:700; font-size:15px; padding:14px 26px; border-radius:8px; transition:background .15s ease, transform .1s ease;}
+  button.cta:hover{background:var(--forest);}
+  button.cta:active{transform:translateY(1px);}
+  button.cta:disabled{opacity:.6; cursor:default;}
+
+  #status{text-align:center; font-size:14px; color:var(--ink-soft); margin-top:18px; min-height:20px;}
+
+  #results{max-width:640px; margin:40px auto 0; display:none;}
+  .results-head{display:flex; align-items:baseline; justify-content:space-between; padding-bottom:14px; border-bottom:1px solid var(--line); margin-bottom:6px; flex-wrap:wrap; gap:8px;}
+  .results-head .site{font-size:14px; color:var(--ink-soft); word-break:break-all;}
+  .results-head .score{font-family:'Frank Ruhl Libre',Georgia,serif; font-weight:700; font-size:22px; color:var(--forest-deep);}
+
+  .check-row{display:flex; align-items:flex-start; gap:14px; padding:16px 0; border-bottom:1px solid var(--line);
+    opacity:0; transform:translateY(6px); transition:opacity .4s cubic-bezier(.22,1,.36,1), transform .4s cubic-bezier(.22,1,.36,1);}
+  .check-row.show{opacity:1; transform:translateY(0);}
+  .check-row:last-child{border-bottom:none;}
+
+  /* 🔴 DOS GRUPOS, NO CATORCE FILAS SEGUIDAS. Las 5 comprobaciones GEO son lo
+     único que ninguna de las 6 agencias del barrio enseña (Benchmark §B4), y
+     mezcladas entre las 9 de SEO clásico se leen como «más de lo mismo».
+     Separarlas es lo que hace visible el argumento. */
+  .grupo-cab{display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+             margin:26px 0 2px; padding-top:18px; border-top:1px solid var(--line); flex-wrap:wrap;}
+  .grupo-cab:first-child{margin-top:8px; padding-top:0; border-top:none;}
+  .grupo-cab h3{font-family:'Frank Ruhl Libre',Georgia,serif; font-size:17px; color:var(--forest-deep); margin:0;}
+  .grupo-cab .n{font-family:'Frank Ruhl Libre',Georgia,serif; font-weight:700; font-size:17px; color:var(--forest);}
+  .grupo-cab p{width:100%; margin:5px 0 0; font-size:13px; line-height:1.5; color:var(--ink-soft);}
+  .grupo-cab .eti{display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:1.2px;
+                  text-transform:uppercase; color:var(--forest); background:var(--forest-tint, #E7ECE6);
+                  border-radius:999px; padding:3px 9px; margin-right:8px; vertical-align:middle;}
+  .badge{flex:0 0 auto; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; margin-top:2px;}
+  .badge.pass{background:rgba(62,107,82,.14); color:var(--good);}
+  .badge.fail{background:rgba(168,96,62,.14); color:var(--bad);}
+  .check-label{font-weight:700; font-size:15px;}
+  .check-note{font-size:14px; color:var(--ink-soft); margin-top:3px;}
+
+  .next-step{margin-top:36px; background:var(--paper-raised); border:1px solid var(--line); border-radius:14px; padding:26px 24px; text-align:center;}
+  .next-step p{font-size:14.5px; color:var(--ink-soft); margin:0 0 16px;}
+  .next-step .cta{display:inline-block; text-decoration:none;}
+
+  .error-box{max-width:520px; margin:32px auto 0; text-align:center; background:#fff; border:1px solid var(--line); border-radius:12px; padding:22px; font-size:14.5px; color:var(--bad); display:none;}
+
+  footer{margin-top:80px; padding:28px 0 40px; border-top:1px solid var(--line); text-align:center; font-size:13px; color:var(--ink-soft);}
+</style>
+<style>
+/* Accesibilidad — pasada de Fase A, 2026-08-19. Hay personas a las que el
+   movimiento les provoca mareo de verdad. Ver Sistema-Web-Capacidades.md 7.4. */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
+  }
+}
+</style>
+<link rel="stylesheet" href="assets/fuentes.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/">
+      <svg viewBox="0 0 64 64" fill="none"><path d="M24 58 H40 M22 58 L28 12 H36 L42 58" stroke="#1E3A2E" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M27 22 H37 M26 32 H38" stroke="#1E3A2E" stroke-width="2.5" stroke-linecap="round"/></svg>
+      Faro Digital
+    </a>
+    <nav><a href="/audit">Pedir la auditoría completa →</a></nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Revisión instantánea gratis</div>
+    <h1>¿Tu web está haciendo lo que debería?</h1>
+    <p>Pega tu URL. La revisamos de verdad, ahora mismo — sin registro y sin esperar. <b>14 comprobaciones: 9 de las que mira Google y 5 de lo que necesita una IA para poder citarte.</b> Después decides si quieres la auditoría 360° completa.</p>
+    <form id="check-form">
+      <input id="url-input" type="text" placeholder="yourbusiness.com" autocomplete="off" required>
+      <button class="cta" type="submit" id="submit-btn">Revisar mi web</button>
+    </form>
+    <div id="status"></div>
+  </div>
+</section>
+
+<div class="error-box" id="error-box"></div>
+
+<div id="results">
+  <div class="wrap">
+    <div class="results-head">
+      <div class="site" id="result-url"></div>
+      <div class="score" id="result-score"></div>
+    </div>
+    <div id="checks-list"></div>
+    <div class="next-step">
+      <p>Esto es una revisión rápida de superficie — la auditoría 360° completa entra en SEO, ficha de Google, competencia y un plan priorizado.</p>
+      <a class="cta" href="/audit">Pedir tu auditoría 360° gratuita →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">© Faro Digital — <a href="/">faro-digital.netlify.app</a></div>
+</footer>
+
+<script>
+(function(){
+  const form = document.getElementById('check-form');
+  const input = document.getElementById('url-input');
+  const btn = document.getElementById('submit-btn');
+  const status = document.getElementById('status');
+  const results = document.getElementById('results');
+  const errorBox = document.getElementById('error-box');
+  const resultUrl = document.getElementById('result-url');
+  const resultScore = document.getElementById('result-score');
+  const checksList = document.getElementById('checks-list');
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    const value = input.value.trim();
+    if (!value) return;
+
+    btn.disabled = true;
+    status.textContent = 'Revisando tu web…';
+    results.style.display = 'none';
+    errorBox.style.display = 'none';
+    checksList.innerHTML = '';
+
+    try {
+      const res = await fetch('/.netlify/functions/check-site?url=' + encodeURIComponent(value));
+      const data = await res.json();
+
+      if (!data.ok) {
+        errorBox.textContent = data.error || 'Algo ha fallado analizando esa web.';
+        errorBox.style.display = 'block';
+        status.textContent = '';
+        btn.disabled = false;
+        return;
+      }
+
+      status.textContent = '';
+      resultUrl.textContent = data.url;
+      resultScore.textContent = data.score;
+      results.style.display = 'block';
+
+      // Dos grupos. El de GEO va SEGUNDO a propósito: primero lo que la
+      // persona espera ver, y después lo que no sabía que se podía mirar.
+      const GRUPOS = [
+        { id:'seo', titulo:'Lo que mira Google', marca:data.scoreSeo,
+          texto:'Las comprobaciones técnicas de siempre. Son la base: sin esto, lo demás da igual.' },
+        { id:'geo', titulo:'Lo que necesita una IA para citarte', marca:data.scoreGeo, eti:'GEO',
+          texto:'Cuando alguien le pregunta a ChatGPT o al buscador de Google por un negocio como el tuyo, '
+              + 'la respuesta se construye con lo que hay publicado y es coherente. Esto mide si hay algo '
+              + 'tuyo que se pueda citar. <b>Lo que no se puede comprobar desde aquí es qué contesta hoy la '
+              + 'IA sobre ti</b> — eso hace falta preguntárselo en vivo, y es parte de la Foto del Día 0.' },
+      ];
+
+      let orden = 0;
+      GRUPOS.forEach(function(g){
+        const filas = data.checks.filter(function(c){ return (c.grupo || 'seo') === g.id; });
+        if (!filas.length) return;
+
+        const cab = document.createElement('div');
+        cab.className = 'grupo-cab';
+        cab.innerHTML =
+          '<h3>' + (g.eti ? '<span class="eti">' + g.eti + '</span>' : '') + g.titulo + '</h3>' +
+          (g.marca ? '<span class="n">' + g.marca + '</span>' : '') +
+          '<p>' + g.texto + '</p>';
+        checksList.appendChild(cab);
+
+        filas.forEach(function(check){
+          const row = document.createElement('div');
+          row.className = 'check-row';
+          row.innerHTML =
+            '<div class="badge ' + (check.pass ? 'pass' : 'fail') + '">' + (check.pass ? '✓' : '!') + '</div>' +
+            '<div><div class="check-label">' + check.label + '</div>' +
+            '<div class="check-note">' + check.note + '</div></div>';
+          checksList.appendChild(row);
+          setTimeout(function(){ row.classList.add('show'); }, 70 * orden++);
+        });
+      });
+    } catch (err) {
+      errorBox.textContent = 'Algo ha fallado. Inténtalo de nuevo en un momento.';
+      errorBox.style.display = 'block';
+      status.textContent = '';
+    } finally {
+      btn.disabled = false;
+    }
+  });
+})();
+</script>
+
+<script src="/assets/medicion.js" defer></script>
+</body>
+</html>

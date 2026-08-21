@@ -1,0 +1,448 @@
+<!-- @dsCard group="Agencia — Faro Digital" -->
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Faro Digital — Proyecto de muestra: Casa Lumen (panel y automatización)</title>
+<meta name="description" content="Proyecto de muestra: un panel de analítica en vivo que unifica los informes de una cadena de 4 tiendas. La misma capa que va en proyectos reales.">
+<link rel="canonical" href="https://faro-digital.netlify.app/portfolio/caso-3-dashboard-datos">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Faro Digital">
+<meta property="og:url" content="https://faro-digital.netlify.app/portfolio/caso-3-dashboard-datos">
+<meta property="og:title" content="Faro Digital — Proyecto de muestra: Casa Lumen (panel y automatización)">
+<meta property="og:description" content="Proyecto de muestra: un panel de analítica en vivo que unifica los informes de una cadena de 4 tiendas. La misma capa que va en proyectos reales.">
+<meta property="og:image" content="https://faro-digital.netlify.app/assets/logo-og.png">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Faro Digital — Proyecto de muestra: Casa Lumen (panel y automatización)">
+<meta name="twitter:description" content="Proyecto de muestra: un panel de analítica en vivo que unifica los informes de una cadena de 4 tiendas. La misma capa que va en proyectos reales.">
+<meta name="twitter:image" content="https://faro-digital.netlify.app/assets/logo-og.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://faro-digital.netlify.app/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Portfolio",
+      "item": "https://faro-digital.netlify.app/portfolio/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Casa Lumen",
+      "item": "https://faro-digital.netlify.app/portfolio/caso-3-dashboard-datos"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{
+  --graphite:#2B2E33; --graphite-deep:#1C1E22; --teal:#2F9188; --teal-deep:#1F6C63; --amber:#D98B4A;
+  --cream:#EEF1F1; --white:#F8F9F9;
+  --ink:#22252A; --ink-soft:#5C6169; --line:#DBDFE1; --line-soft:#E8EBEC;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:var(--white); color:var(--ink); font-family:Helvetica,Arial,sans-serif; font-size:16px; line-height:1.65;}
+h1,h2,h3,h4{font-family:'SF Mono','JetBrains Mono',Consolas,'Courier New',monospace; font-weight:700; color:var(--graphite); margin:0; letter-spacing:-.01em;}
+p{margin:0;}
+img{max-width:100%; display:block;}
+.wrap{max-width:940px; margin:0 auto; padding:0 32px;}
+
+.cover{background:linear-gradient(155deg, var(--graphite-deep), var(--graphite) 140%); color:#F1F4F4; padding:76px 32px 64px;}
+.cover-inner{max-width:940px; margin:0 auto;}
+.kicker{font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--teal); font-weight:700; font-family:'SF Mono','JetBrains Mono',Consolas,monospace;}
+.cover h1{color:#FAFCFC; font-size:clamp(30px,4.6vw,44px); margin-top:14px; line-height:1.18; max-width:22ch;}
+.cover .meta{color:#C6CDD0; font-size:14.5px; margin-top:16px; font-family:Helvetica,Arial,sans-serif;}
+.disclaimer{background:rgba(248,249,249,.07); border:1px solid rgba(248,249,249,.18); border-radius:10px; padding:16px 20px; font-size:13.5px; color:#DCE2E3; margin-top:26px; max-width:74ch; font-family:Helvetica,Arial,sans-serif;}
+.disclaimer b{color:var(--teal);}
+.tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:22px;}
+.tag{background:rgba(248,249,249,.08); border:1px solid rgba(248,249,249,.2); border-radius:999px; padding:6px 14px; font-size:12.5px; color:#F1F4F4; font-family:Helvetica,Arial,sans-serif;}
+
+.toc{background:var(--cream); border-bottom:1px solid var(--line);}
+.toc-inner{max-width:940px; margin:0 auto; padding:22px 32px; display:flex; gap:22px; flex-wrap:wrap; font-size:13px;}
+.toc a{color:var(--graphite); text-decoration:none; font-weight:600; border-bottom:1px dotted var(--graphite); font-family:'SF Mono','JetBrains Mono',Consolas,monospace;}
+
+section{padding:56px 0;}
+section.alt{background:var(--cream);}
+.s-kicker{font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--teal-deep); font-weight:700; font-family:'SF Mono','JetBrains Mono',Consolas,monospace;}
+h2{font-size:25px; margin-top:8px; margin-bottom:18px;}
+p.lead{font-size:17px; color:var(--ink); max-width:74ch;}
+p.body-text{font-size:15.5px; color:var(--ink-soft); margin-top:12px; max-width:74ch;}
+ul.clean{padding-left:20px; margin:14px 0 0; max-width:70ch;}
+ul.clean li{font-size:15px; color:var(--ink-soft); margin-bottom:8px;}
+ul.clean b{color:var(--ink);}
+
+table.audit{width:100%; border-collapse:collapse; margin-top:22px; font-size:14px;}
+table.audit th{text-align:left; padding:10px 12px; background:var(--graphite-deep); color:#F1F4F4; font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:.04em; font-family:'SF Mono','JetBrains Mono',Consolas,monospace;}
+table.audit td{padding:12px; border-bottom:1px solid var(--line); vertical-align:top; color:var(--ink-soft);}
+table.audit tr:nth-child(even) td{background:var(--cream);}
+table.audit .sev{display:inline-block; font-size:11px; font-weight:700; padding:3px 10px; border-radius:999px;}
+
+/* 🔴 La tabla de diagnóstico se desborda en móvil. El español es más largo que
+   el inglés — «Gravedad» por «Severity», «Hallazgo» por «Finding» — y al
+   traducir estas páginas el 2026-08-20 las tablas pasaron a salirse: hasta
+   121 px de ancho en un móvil de 320. Dos de los cuatro casos ya se salían en
+   inglés; los otros dos los rompió la traducción.
+   Una tabla ancha no se encoge: SE DESPLAZA DENTRO DE SÍ MISMA. Encogerla más
+   haría ilegible el contenido, que es lo que la tabla existe para enseñar. */
+@media (max-width:860px){
+  /* La sombra del borde derecho no es adorno: sin ella nadie sabe que hay una
+     tercera columna, y una tabla cuya ultima columna nadie descubre es una
+     tabla a la que le falta un tercio del contenido. Una linea, cero JS. */
+  table.audit{ display:block; width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch;
+               box-shadow:inset -14px 0 14px -14px rgba(0,0,0,.28); }
+  table.audit tbody, table.audit thead{ display:table; width:100%; min-width:520px; }
+}
+
+/* Mismo `min-width:auto` de siempre: el <canvas> del gráfico empujaba la
+   tarjeta más allá de su pista de rejilla. */
+.dash-grid > *{ min-width:0; }
+.dash-card canvas{ max-width:100%; }
+.sev-alta{background:#F1DCD3; color:#8A4B20;}
+.sev-media{background:#F1E4C7; color:#8A6A1E;}
+
+.stat-row{display:flex; gap:16px; flex-wrap:wrap; margin-top:26px;}
+.stat{flex:1; min-width:150px; background:var(--graphite-deep); color:#F8F9F9; border-radius:12px; padding:20px 22px;}
+.stat .n{font-family:'SF Mono','JetBrains Mono',Consolas,monospace; font-weight:700; font-size:25px; color:var(--teal);}
+.stat .l{font-size:12px; opacity:.85; margin-top:6px; line-height:1.4; font-family:Helvetica,Arial,sans-serif;}
+
+.wireframe{background:#fff; border:2px dashed #C7CBCD; border-radius:12px; padding:22px; margin-top:24px;}
+.wf-row{display:flex; gap:10px; margin-bottom:10px;}
+.wf-box{background:var(--cream); border:1px solid #D2D6D8; border-radius:6px; color:#8F969A; font-size:11px; display:flex; align-items:center; justify-content:center; text-align:center; padding:8px; font-family:'SF Mono','JetBrains Mono',Consolas,monospace;}
+.wf-nav{height:34px; flex:1;}
+.wf-block{height:80px; flex:1;}
+.wf-caption{text-align:center; font-size:12px; color:var(--ink-soft); margin-top:14px; font-style:italic;}
+
+/* ---- live embedded dashboard ---- */
+.dash-frame{background:#fff; border:1px solid var(--line); border-radius:16px; padding:12px; margin-top:10px; box-shadow:0 24px 50px -20px rgba(28,30,34,.25);}
+.dash-kpis{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;}
+.dash-kpi{flex:1; min-width:170px; background:var(--graphite-deep); color:#F8F9F9; border-radius:10px; padding:7px 12px;}
+.dash-kpi .num{font-family:'SF Mono','JetBrains Mono',Consolas,monospace; font-size:16px; color:var(--teal);}
+.dash-kpi .lbl{font-size:10px; opacity:.85; margin-top:2px; font-family:Helvetica,Arial,sans-serif;}
+.dash-grid{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+.dash-card{background:var(--cream); border:1px solid var(--line); border-radius:10px; padding:7px;}
+.dash-card h4{font-family:'SF Mono','JetBrains Mono',Consolas,monospace; font-size:11px; margin:0 0 4px;}
+@media (max-width:720px){ .dash-grid{grid-template-columns:1fr;} }
+.mockup-caption{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:14px; font-style:italic;}
+
+/* ---- automation flow ---- */
+.flow{display:flex; gap:10px; margin-top:24px; flex-wrap:wrap; align-items:stretch;}
+.flow-step{flex:1; min-width:130px; background:var(--graphite-deep); color:#F1F4F4; border-radius:10px; padding:16px; text-align:center;}
+.flow-step .day{font-family:'SF Mono','JetBrains Mono',Consolas,monospace; color:var(--teal); font-weight:700; font-size:14px;}
+.flow-step .desc{font-size:12px; margin-top:6px; opacity:.9; font-family:Helvetica,Arial,sans-serif;}
+.flow-arrow{display:flex; align-items:center; color:var(--ink-soft); font-size:18px;}
+
+.proj-note{background:var(--cream); border-left:4px solid var(--teal); padding:14px 18px; font-size:13.5px; color:var(--ink-soft); margin-top:20px; border-radius:0 8px 8px 0;}
+.proj-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:20px;}
+.proj-card{background:#fff; border:1px solid var(--line); border-radius:12px; padding:20px;}
+.proj-card .metric{font-family:'SF Mono','JetBrains Mono',Consolas,monospace; font-weight:700; font-size:21px; color:var(--graphite-deep);}
+.proj-card .bar{height:7px; background:var(--line-soft); border-radius:4px; margin-top:10px; overflow:hidden;}
+.proj-card .bar-fill{height:100%; background:linear-gradient(90deg, var(--teal), var(--amber));}
+.proj-card .lbl{font-size:12.5px; color:var(--ink-soft); margin-top:8px; font-family:Helvetica,Arial,sans-serif;}
+@media (max-width:640px){ .proj-grid{grid-template-columns:1fr;} }
+
+.quote-block{background:var(--graphite-deep); color:#F1F4F4; border-radius:14px; padding:34px 36px; margin-top:24px;}
+.quote-block p{font-family:Georgia,'Times New Roman',serif; font-style:italic; font-size:18px; line-height:1.55;}
+.quote-block .who{font-size:13px; color:var(--teal); margin-top:14px; font-style:normal; font-family:Helvetica,Arial,sans-serif;}
+
+footer{padding:40px 32px; text-align:center; font-size:13px; color:var(--ink-soft); border-top:1px solid var(--line);}
+footer b{color:var(--graphite);}
+
+/* ---- print / PDF: avoid cutting tables, images and blocks across pages ---- */
+@media print{
+  @page{ size:A4; margin:15mm 14mm; }
+  a{ text-decoration:none; }
+  .cover, .toc{ break-inside:avoid; }
+  h2, .s-kicker{ break-after:avoid; break-inside:avoid; }
+  p.lead{ break-before:avoid; }
+  .stat-row, .stat{ break-inside:avoid; }
+  table.audit{ break-inside:avoid; }
+  .wireframe{ break-inside:avoid; }
+  .dash-frame{ break-inside:avoid; box-shadow:none; }
+  .dash-kpis, .dash-kpi{ break-inside:avoid; }
+  .dash-grid{ break-inside:avoid; }
+  .dash-card{ break-inside:avoid; }
+  .flow, .flow-step{ break-inside:avoid; }
+  .proj-grid, .proj-card, .proj-note{ break-inside:avoid; }
+  .quote-block{ break-inside:avoid; }
+  footer{ break-inside:avoid; }
+  #dashboard{ break-before:page; padding-top:16px; padding-bottom:12px; }
+  #dashboard p.lead{ margin-bottom:0; }
+}
+
+/* ---- breadcrumbs ---- */
+.crumbs{background:var(--white); font-size:12px; color:var(--ink-soft);}
+.crumbs .wrap{padding:14px 32px 0; display:flex; gap:6px; flex-wrap:wrap; align-items:center;}
+.crumbs a{color:var(--ink-soft); text-decoration:none;}
+.crumbs a:hover{color:var(--forest);}
+.crumbs .current{color:var(--ink); font-weight:600;}
+
+/* ---- explore more ---- */
+.explore{padding:56px 0; background:var(--cream); border-top:1px solid var(--line);}
+.explore h2{font-size:22px;}
+.explore-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:24px;}
+@media (max-width:900px){ .explore-grid{grid-template-columns:1fr 1fr;} }
+@media (max-width:560px){ .explore-grid{grid-template-columns:1fr;} }
+.explore-card{background:#fff; border:1px solid var(--line); border-radius:12px; overflow:hidden; text-decoration:none; display:block; transition:transform .15s ease, box-shadow .15s ease;}
+.explore-card:hover{transform:translateY(-2px); box-shadow:0 16px 32px -18px rgba(20,30,20,.3);}
+.explore-thumb{aspect-ratio:16/10; background-size:cover; background-position:center; background-color:var(--forest-deep);}
+.explore-card .ec-body{padding:12px 14px 14px;}
+.explore-card .ec-body .ec-idx{font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--clay-deep); font-weight:700;}
+.explore-card .ec-body h4{font-size:13.5px; color:var(--ink); margin-top:4px; line-height:1.32; font-family:Georgia,serif; font-weight:700;}
+.explore-more-link{display:block; text-align:center; margin-top:26px; font-size:13.5px; font-weight:700; color:var(--forest); text-decoration:none;}
+.explore-more-link:hover{text-decoration:underline;}
+
+/* ---- live CTA banner ---- */
+.live-cta{background:var(--teal-deep); color:#F1F4F4; padding:18px 32px;}
+.live-cta .wrap{max-width:940px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+.live-cta p{font-size:14px; color:#E4EFEE;}
+.live-cta p b{color:#fff;}
+.live-cta a{flex:0 0 auto; background:var(--amber); color:var(--graphite-deep); font-weight:800; font-size:13.5px; text-decoration:none; padding:10px 18px; border-radius:8px; white-space:nowrap;}
+.live-cta a:hover{filter:brightness(1.06);}
+@media print{ .crumbs, .explore, .live-cta{ display:none; } }
+</style>
+<style>
+/* Accesibilidad — pasada de Fase A, 2026-08-19. Hay personas a las que el
+   movimiento les provoca mareo de verdad. Ver Sistema-Web-Capacidades.md 7.4. */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-inner">
+    <div class="kicker">Proyecto de muestra · Datos y automatización</div>
+    <h1>Cuatro tiendas, cuatro hojas de cálculo distintas — y ninguna decisión compartida</h1>
+    <div class="meta">Casa Lumen · Cadena de decoración (4 tiendas + online) · Panel + automatización de CRM</div>
+    <div class="disclaimer"><b>Caso 100 % ficticio.</b> «Casa Lumen» no existe como negocio real. Los datos del panel son de ejemplo, generados para enseñar la capa de informes y automatización que va incluida en cada proyecto real de Faro Digital — no corresponden a ventas ni a tráfico reales.</div>
+    <div class="tags">
+      <span class="tag">Panel de analítica</span>
+      <span class="tag">Automatización de marketing</span>
+      <span class="tag">CRM</span>
+      <span class="tag">Informes multitienda</span>
+    </div>
+  </div>
+</div>
+
+<div class="crumbs"><div class="wrap"><a href="/">Inicio</a><span>/</span><a href="index.html">Portfolio</a><span>/</span><span class="current">Casa Lumen</span></div></div>
+
+<div class="toc">
+  <div class="toc-inner">
+    <a href="#contexto">1. Contexto</a>
+    <a href="#diagnostico">2. Diagnóstico</a>
+    <a href="#proceso">3. Proceso</a>
+    <a href="#dashboard">4. Panel en vivo</a>
+    <a href="#automatizacion">5. Automatización</a>
+    <a href="#resultados">6. Resultados proyectados</a>
+  </div>
+</div>
+
+<div class="live-cta">
+  <div class="wrap">
+    <p>Sáltate la lectura: <b>este panel es real e interactivo</b>, no una captura.</p>
+    <a href="https://faro-digital.netlify.app/dashboard-demo.html">Pruébalo ahora →</a>
+  </div>
+</div>
+
+<section id="contexto">
+  <div class="wrap">
+    <div class="s-kicker">01 · Contexto del cliente</div>
+    <h2>Cuatro tiendas que crecieron por separado</h2>
+    <p class="lead">Casa Lumen tiene 4 tiendas físicas de decoración, más una tienda online que lanzó hace un año. Cada tienda física funciona razonablemente bien por su cuenta — el problema es que nadie en la empresa tiene una vista conjunta de qué está funcionando y qué no.</p>
+    <p class="body-text">Cada responsable de tienda lleva su propia hoja de cálculo. El marketing (redes, email, alguna campaña de pago suelta) se decide «a ojo», sin ninguna relación entre qué campaña generó qué venta y en qué tienda. La tienda online funciona como un quinto negocio aislado, sin cruzar datos de cliente con las tiendas físicas.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="n">5</div><div class="l">canales de venta sin ni un dato compartido entre ellos</div></div>
+      <div class="stat"><div class="n">0</div><div class="l">informes unificados — todo vive en hojas de cálculo separadas</div></div>
+      <div class="stat"><div class="n">100%</div><div class="l">de las decisiones de marketing se toman sin datos reales de conversión</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="diagnostico">
+  <div class="wrap">
+    <div class="s-kicker">02 · Diagnóstico</div>
+    <h2>El problema no es que falten datos: es que nadie los ve juntos</h2>
+    <table class="audit">
+      <tr><th>Área</th><th>Hallazgo</th><th>Gravedad</th></tr>
+      <tr><td>Informes</td><td>4 hojas de cálculo distintas, en formatos distintos y actualizadas a ritmos distintos — imposible comparar tiendas de un vistazo.</td><td><span class="sev sev-alta">Alta</span></td></tr>
+      <tr><td>Atribución</td><td>Ninguna visibilidad de qué canal (redes, email, búsqueda, referidos) trae más clientes a cada tienda — el presupuesto de marketing se reparte por intuición.</td><td><span class="sev sev-alta">Alta</span></td></tr>
+      <tr><td>CRM</td><td>Los clientes de tienda y los de online se tratan como bases de datos separadas — nadie sabe cuántos compran por los dos canales.</td><td><span class="sev sev-alta">Alta</span></td></tr>
+      <tr><td>Email marketing</td><td>Newsletter enviada a mano y de vez en cuando, sin segmentación ni automatización — el mismo mensaje para todo el mundo.</td><td><span class="sev sev-media">Media</span></td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="proceso">
+  <div class="wrap">
+    <div class="s-kicker">03 · Proceso</div>
+    <h2>Unificar antes de automatizar</h2>
+    <p class="lead">El orden importa: antes de automatizar nada, todos los datos tienen que vivir en un solo sitio. Solo entonces tiene sentido diseñar flujos automáticos sobre datos fiables.</p>
+    <div class="wireframe">
+      <div class="wf-row"><div class="wf-box wf-nav">INDICADORES CLAVE — VISITAS, CONTACTOS, COSTE POR CONTACTO, RETORNO</div></div>
+      <div class="wf-row"><div class="wf-box wf-block">TRÁFICO POR CANAL</div><div class="wf-box wf-block">CONTACTOS EN EL TIEMPO</div></div>
+      <div class="wf-row"><div class="wf-box wf-block">EMBUDO: VISITAS → CONTACTOS → CLIENTES</div><div class="wf-box wf-block">COSTE POR CONTACTO Y CANAL</div></div>
+    </div>
+    <p class="wf-caption">Esquema del panel — un solo cuadro, las 4 tiendas y la online comparables una al lado de otra.</p>
+  </div>
+</section>
+
+<section class="alt" id="dashboard">
+  <div class="wrap">
+    <div class="s-kicker">04 · El panel — en vivo, no una captura</div>
+    <h2>El mismo panel que recibe cualquier cliente de Faro Digital</h2>
+    <p class="lead">A diferencia de una captura, este panel es real: los gráficos de abajo están hechos con Chart.js y se dibujan en vivo en esta misma página — es exactamente la capa de informes (Python/Power BI, o un panel web como este) que se entrega en cualquier proyecto con ejecución continua.</p>
+    <div class="dash-frame">
+      <div class="dash-kpis">
+        <div class="dash-kpi"><div class="num">12,480</div><div class="lbl">Visitas al mes (online + búsquedas de tienda)</div></div>
+        <div class="dash-kpi"><div class="num">4.6%</div><div class="lbl">Conversión visita → contacto</div></div>
+        <div class="dash-kpi"><div class="num">€18.40</div><div class="lbl">Coste por contacto (medio)</div></div>
+        <div class="dash-kpi"><div class="num">3.8x</div><div class="lbl">Retorno de la inversión publicitaria</div></div>
+      </div>
+      <div class="dash-grid">
+        <div class="dash-card"><h4>Tráfico por canal</h4><canvas id="chTraffic" height="95"></canvas></div>
+        <div class="dash-card"><h4>Contactos en el tiempo</h4><canvas id="chLeads" height="95"></canvas></div>
+        <div class="dash-card"><h4>Embudo: visitas → contactos → clientes</h4><canvas id="chFunnel" height="95"></canvas></div>
+        <div class="dash-card"><h4>Coste por contacto y canal</h4><canvas id="chCPL" height="95"></canvas></div>
+      </div>
+    </div>
+    <p class="mockup-caption">Datos de ejemplo — en un proyecto real, este mismo panel se conecta a las fuentes de datos reales de cada tienda y de la web.</p>
+  </div>
+</section>
+
+<section id="automatizacion">
+  <div class="wrap">
+    <div class="s-kicker">05 · Automatización de marketing</div>
+    <h2>De la newsletter a mano a una secuencia con lógica</h2>
+    <p class="lead">Con los datos unificados, el siguiente paso es dejar de mandar el mismo email a todo el mundo. Ejemplo de la secuencia de bienvenida diseñada para nuevos suscriptores, con salida automática en cuanto compran:</p>
+    <div class="flow">
+      <div class="flow-step"><div class="day">Día 0</div><div class="desc">Bienvenida + código de bienvenida</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="day">Día 3</div><div class="desc">La historia de la marca, sin vender directamente</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="day">Día 7</div><div class="desc">Los productos mejor valorados por categoría</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="day">Día 12</div><div class="desc">Recordatorio del código, cierre suave</div></div>
+    </div>
+    <p class="body-text" style="margin-top:20px;">Condición de salida: en cuanto el CRM detecta una compra (online o en tienda, gracias a la base unificada), la secuencia se para y el cliente pasa a un flujo de fidelización distinto — nunca recibe un email de bienvenida después de haber comprado ya.</p>
+  </div>
+</section>
+
+<section class="alt" id="resultados">
+  <div class="wrap">
+    <div class="s-kicker">06 · Resultados proyectados</div>
+    <h2>Qué está construida para conseguir esta unificación</h2>
+    <div class="proj-note">Objetivos de propuesta, basados en referencias de retail multitienda — no resultados medidos de un negocio real.</div>
+    <div class="proj-grid">
+      <div class="proj-card"><div class="metric">100%</div><div class="bar"><div class="bar-fill" style="width:85%;"></div></div><div class="lbl">De las decisiones de marketing respaldadas por datos comparables entre tiendas</div></div>
+      <div class="proj-card"><div class="metric">–30%</div><div class="bar"><div class="bar-fill" style="width:50%;"></div></div><div class="lbl">Tiempo dedicado cada mes a hacer informes a mano</div></div>
+      <div class="proj-card"><div class="metric">+1 canal</div><div class="bar"><div class="bar-fill" style="width:40%;"></div></div><div class="lbl">Cliente omnicanal (tienda + online) identificado por primera vez</div></div>
+    </div>
+    <div class="quote-block">
+      <p>«No hacía falta más marketing. Hacía falta que las cuatro tiendas hablaran el mismo idioma de datos antes de decidir nada.»</p>
+      <div class="who">Zyad Bennani · Fundador de Faro Digital</div>
+    </div>
+    <p style="text-align:center; margin-top:28px;"><a href="https://faro-digital.netlify.app/dashboard-demo.html" style="font-weight:700; text-decoration:underline;">Probar la versión interactiva de este panel →</a></p>
+  </div>
+</section>
+
+<section class="explore">
+  <div class="wrap">
+    <div class="s-kicker">Sigue explorando</div>
+    <h2>Más proyectos</h2>
+    <div class="explore-grid">
+      <a class="explore-card" href="/portfolio/caso-1-salon-belleza-verbena">
+        <div class="explore-thumb" style="background-image:url('assets/verbena/card-thumb-480.jpg');"></div>
+        <div class="ec-body"><div class="ec-idx">Caso 01</div><h4>De un local con encanto y cero visibilidad, a una marca con dos motivos para reservar</h4></div>
+      </a>
+      <a class="explore-card" href="/portfolio/caso-2-ecommerce-spec">
+        <div class="explore-thumb" style="background-image:url('assets/aura/card-thumb-480.jpg');"></div>
+        <div class="ec-body"><div class="ec-idx">Caso 02</div><h4>Rediseñar una página de producto alrededor de una sola decisión</h4></div>
+      </a>
+      <a class="explore-card" href="/portfolio/caso-4-corporativo-meridian">
+        <div class="explore-thumb" style="background-image:url('assets/meridian/card-thumb-480.jpg');"></div>
+        <div class="ec-body"><div class="ec-idx">Caso 04</div><h4>Una web anticuada que hacía parecer poco fiable a una consultora solvente</h4></div>
+      </a>
+      <a class="explore-card" href="/portfolio/caso-5-hosteleria-brasa-sal">
+        <div class="explore-thumb" style="background-image:url('assets/brasa/card-thumb-480.jpg');"></div>
+        <div class="ec-body"><div class="ec-idx">Caso 05</div><h4>Tres restaurantes excelentes, compitiendo entre ellos en Google sin querer</h4></div>
+      </a>
+    </div>
+    <a class="explore-more-link" href="index.html">Ver el portfolio completo (5 casos) →</a>
+  </div>
+</section>
+
+<footer>
+  <b>Faro Digital</b> — sistemas de marketing digital con datos · La misma capa de informes y automatización de este caso va incluida en cada proyecto con ejecución continua.
+</footer>
+
+<!-- Chart.js 4.4.4, MIT, servido desde NUESTRO dominio.
+     Antes venia de un CDN externo, y eso expone la IP de cada visitante a un
+     tercero: el mismo problema de RGPD que ya se corrigio con las fuentes.
+     Ademas llegaba en DOS versiones distintas desde DOS CDN distintos.
+     Va AQUI, pegado al codigo que lo usa, y SIN defer: el script de abajo
+     crea los graficos al vuelo, sin esperar a DOMContentLoaded, asi que con
+     defer "Chart" no estaria definido todavia y la pagina se quedaria en
+     blanco. Al estar en el cuerpo tampoco bloquea el pintado de la cabecera.
+     Licencia en assets/vendor/chart.js-LICENSE.md -->
+<script src="/assets/vendor/chart.umd.min.js"></script>
+<script>
+  Chart.defaults.animation = false;
+  const teal = '#2F9188';
+  const graphite = '#2B2E33';
+  const amber = '#D98B4A';
+  const slate = '#8A9199';
+  const paleTeal = '#BFDAD5';
+  const gridColor = '#DBDFE1';
+  const baseOpts = {
+    plugins: { legend: { labels: { color: '#2B2E33' } } },
+    scales: {
+      x: { ticks: { color: '#5C6169' }, grid: { color: gridColor } },
+      y: { ticks: { color: '#5C6169', callback: v => v.toLocaleString('en-US') }, grid: { color: gridColor } }
+    }
+  };
+  new Chart(document.getElementById('chTraffic'), {
+    type: 'doughnut',
+    data: { labels: ['Organic search', 'Paid social', 'Email', 'Direct', 'Referrals'],
+      datasets: [{ data: [38, 27, 14, 13, 8], backgroundColor: [teal, amber, graphite, slate, paleTeal] }] },
+    options: { plugins: { legend: { position: 'bottom', labels: { color: '#2B2E33' } } } }
+  });
+  new Chart(document.getElementById('chLeads'), {
+    type: 'line',
+    data: { labels: ['Jan','Feb','Mar','Apr','May','Jun'],
+      datasets: [{ label: 'Leads', data: [140,165,158,190,210,232], borderColor: teal, backgroundColor: 'rgba(47,145,136,0.14)', fill: true, tension: .3 }] },
+    options: baseOpts
+  });
+  new Chart(document.getElementById('chFunnel'), {
+    type: 'bar',
+    data: { labels: ['Visits', 'Leads', 'Customers'],
+      datasets: [{ label: 'Volume', data: [12480, 574, 61], backgroundColor: [teal, amber, graphite] }] },
+    options: { ...baseOpts, plugins: { legend: { display:false } } }
+  });
+  new Chart(document.getElementById('chCPL'), {
+    type: 'bar',
+    data: { labels: ['Organic', 'Paid social', 'Email', 'Referrals'],
+      datasets: [{ label: 'Cost per lead (€)', data: [4.2, 22.8, 2.1, 6.5], backgroundColor: amber }] },
+    options: { ...baseOpts, plugins: { legend: { display:false } } }
+  });
+</script>
+<script src="/assets/medicion.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!doctype html>
+<!--
+  ============================================================================
+  /audit — página de captación de Faro. REHECHA a Nivel 2 el 2026-08-20.
+
+  QUÉ SUSTITUYE. Un export de Claude Design de 1.210.801 bytes, guardado en
+  Versiones-Anteriores/audit-v1-claude-design-2026-08-20.html. Funcionaba, pero:
+    · pesaba 12× el presupuesto del sistema (100 KB de marcado)
+    · su renderizador BORRABA el <head> al arrancar, así que Google la indexaba
+      SIN TÍTULO. Hubo que ponerle un parche que repusiera la cabecera
+    · no tenía <h1> ni lang
+    · ningún campo del formulario era obligatorio: se podía enviar vacío
+    · no tenía datos estructurados en el DOM
+
+  QUÉ ES AHORA. Nivel 2 del sistema: tipografía y contención, más movimiento
+  nativo —  aparición al entrar, con los tokens de la Fase B—  y CERO librerías.
+  El contenido, el formulario y las respuestas del FAQ son los mismos: esto es
+  un cambio de construcción, no de mensaje.
+
+  Las miniaturas son una versión de 480 px generada para esta página: se
+  muestran a 190 px, y servir las de 1200 px eran 389 KB para nada. Ahora son
+  92 KB. Las originales NO se tocan —  las usan la home y el portfolio.
+
+  El formulario sigue yendo al mismo destino de Formspree que ya usaba.
+  ============================================================================
+-->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Auditoría de marketing 360° gratuita — Faro Digital</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Auditoría 360° gratuita de tu web, tu SEO y tu presencia online. Informe escrito con hallazgos reales en 3 días laborables, sin compromiso ni llamada de venta.">
+<link rel="canonical" href="https://faro-digital.netlify.app/audit">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Faro Digital">
+<meta property="og:url" content="https://faro-digital.netlify.app/audit">
+<meta property="og:title" content="Auditoría de marketing 360° gratuita — Faro Digital">
+<meta property="og:description" content="Una auditoría de verdad de tu web, tu SEO y tu presencia online — no una llamada de venta disfrazada. Hallazgos por escrito en 3 días laborables.">
+<meta property="og:image" content="https://faro-digital.netlify.app/assets/logo-og.png">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Auditoría de marketing 360° gratuita — Faro Digital">
+<meta name="twitter:description" content="Una auditoría de verdad de tu web, tu SEO y tu presencia online. Hallazgos por escrito en 3 días laborables.">
+<meta name="twitter:image" content="https://faro-digital.netlify.app/assets/logo-og.png">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage",
+ "name":"Auditoría de marketing 360° gratuita",
+ "description":"Pide a Faro Digital una auditoría 360° gratuita de tu web, tu SEO y tu presencia online.",
+ "url":"https://faro-digital.netlify.app/audit",
+ "inLanguage":"es",
+ "isPartOf":{"@type":"WebSite","name":"Faro Digital","url":"https://faro-digital.netlify.app/"},
+ "publisher":{"@type":"Organization","name":"Faro Digital","url":"https://faro-digital.netlify.app/",
+   "logo":{"@type":"ImageObject","url":"https://faro-digital.netlify.app/assets/logo-og.png"}}}
+</script>
+
+<!-- Las mismas cuatro preguntas que ya estaban, ahora también legibles por
+     Google. La versión anterior las tenía en el DOM y sin marcar. -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+ {"@type":"Question","name":"¿Es una llamada de venta disfrazada?",
+  "acceptedAnswer":{"@type":"Answer","text":"No. Recibes un informe escrito trabajemos juntos o no."}},
+ {"@type":"Question","name":"¿Cuánto tarda?",
+  "acceptedAnswer":{"@type":"Answer","text":"Los hallazgos llegan a tu correo en 3 días laborables."}},
+ {"@type":"Question","name":"¿Qué necesitáis de mí?",
+  "acceptedAnswer":{"@type":"Answer","text":"Solo la URL de tu web y un email que funcione. Nada más."}},
+ {"@type":"Question","name":"¿Qué pasa después de enviarlo?",
+  "acceptedAnswer":{"@type":"Answer","text":"Revisamos, te mandamos el informe y tú decides si quieres hablar de los siguientes pasos. Sin presión y sin llamadas de seguimiento salvo que las pidas."}}
+]}
+</script>
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Ccircle cx='150' cy='150' r='150' fill='%23F6F0E3'/%3E%3Cline x1='150' y1='123' x2='100' y2='92' stroke='%23C9A667' stroke-width='9' stroke-linecap='round'/%3E%3Cline x1='150' y1='123' x2='200' y2='92' stroke='%23C9A667' stroke-width='9' stroke-linecap='round'/%3E%3Cpath d='M150 133 L168 175 L132 175 Z' fill='%231E3A2E'/%3E%3Cpath d='M141 175 L159 175 L169 238 L131 238 Z' fill='%231E3A2E'/%3E%3Crect x='122' y='238' width='56' height='12' rx='2' fill='%231E3A2E'/%3E%3Ccircle cx='150' cy='123' r='10' fill='%23C9A667'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/fuentes.css">
+
+<style>
+:root{
+  --forest:#1E3A2E; --forest-deep:#12291F; --sand:#C9A667; --cream:#F5EFE4;
+  --white:#E2D9C6; --ink:#17211C; --ink-soft:#5B6155; --line:#E2D9C6;
+  /* Tokens de movimiento de la Fase B. Ninguna curva inventada. */
+  --curva-salida:cubic-bezier(0.23, 1, 0.32, 1);
+  --dur-pulsacion:130ms; --dur-desplegable:200ms; --dur-entrada:600ms; --escalonado:60ms;
+}
+*{box-sizing:border-box}
+body{margin:0; font-family:'Work Sans',Helvetica,Arial,sans-serif; color:var(--ink);
+     background:var(--cream); line-height:1.55; -webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'Frank Ruhl Libre',Georgia,'Times New Roman',serif;
+         color:var(--forest); margin:0; font-weight:500; line-height:1.15}
+p{margin:0}
+a{color:var(--forest)}
+img{max-width:100%; height:auto; display:block}
+.wrap{max-width:1080px; margin:0 auto; padding:0 28px}
+.kicker{color:var(--sand); letter-spacing:3px; font-size:12px; text-transform:uppercase; font-weight:700}
+.sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+  clip:rect(0 0 0 0); white-space:nowrap; border:0}
+
+header{background:var(--forest-deep); padding:18px 0}
+header .nav{display:flex; align-items:center; justify-content:space-between; gap:20px}
+/* 🔴 `nowrap` en los dos. Traducir al espanol alargo el boton de la cabecera
+   («Request audit» -> «Pedir auditoria»), y en 390 px el nombre de la marca se
+   partia en DOS LINEAS y la flecha del boton caia sola. No lo vio ninguna
+   comprobacion: el HTML era valido y el CSS tambien. Se vio en una captura.
+   Regla: traducir es cambiar la longitud, y la longitud es maquetacion. */
+header .brand{display:flex; align-items:center; gap:11px; text-decoration:none; color:var(--cream);
+  font-family:'Frank Ruhl Libre',Georgia,serif; font-size:17px; letter-spacing:.5px;
+  white-space:nowrap; flex:0 0 auto}
+header .brand svg{width:30px; height:30px; flex:0 0 auto}
+header .cta{color:var(--cream); background:var(--sand); text-decoration:none; padding:9px 16px;
+  border-radius:3px; font-size:14px; font-weight:600; color:var(--forest-deep);
+  white-space:nowrap; flex:0 0 auto;
+  transition:background var(--dur-pulsacion) var(--curva-salida)}
+@media (max-width:420px){
+  header .brand{font-size:15px; letter-spacing:.3px}
+  header .brand svg{width:26px; height:26px}
+  header .cta{padding:8px 12px; font-size:13px}
+}
+/* Por debajo de 360 px ya no caben en una fila sin apretar ninguno de los dos.
+   Se envuelve: dos filas centradas. Misma solucion que la navegacion movil de
+   la portada, y por el mismo motivo — antes de encoger la letra, se envuelve. */
+@media (max-width:360px){
+  header .nav{flex-wrap:wrap; justify-content:center; row-gap:12px; gap:12px}
+}
+header .cta:hover{background:#d8b87e}
+
+.hero{background:var(--forest-deep); color:var(--cream); padding:78px 0 84px}
+.hero h1{color:var(--cream); font-size:clamp(2.1rem, 1.3rem + 3.1vw, 3.4rem); max-width:20ch; margin-top:14px}
+.hero p{margin-top:20px; max-width:58ch; font-size:clamp(1.02rem, .98rem + .3vw, 1.14rem);
+  color:rgb(245 239 228/.82)}
+.hero .acciones{margin-top:30px}
+
+.boton{display:inline-block; background:var(--sand); color:var(--forest-deep); text-decoration:none;
+  padding:14px 26px; border-radius:3px; font-size:1rem; font-weight:600; border:0; cursor:pointer;
+  font-family:inherit; transition:background var(--dur-pulsacion) var(--curva-salida)}
+.boton:hover{background:#d8b87e}
+.boton.oscuro{background:var(--forest); color:var(--cream)}
+.boton.oscuro:hover{background:var(--forest-deep)}
+
+section{padding:72px 0}
+section.claro{background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+section h2{font-size:clamp(1.5rem, 1.2rem + 1.3vw, 2.1rem); max-width:24ch; margin-top:12px}
+
+.casos{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:18px; margin-top:30px}
+.caso{text-decoration:none; color:inherit; display:block}
+.caso img{border-radius:4px; border:1px solid var(--line);
+  transition:transform var(--dur-desplegable) var(--curva-salida)}
+.caso:hover img{transform:translateY(-3px)}
+.caso .pie{margin-top:9px; font-size:.88rem; color:var(--ink-soft)}
+.caso .pie b{display:block; color:var(--forest); font-family:'Frank Ruhl Libre',Georgia,serif;
+  font-size:1rem; font-weight:500}
+
+.entregables{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:26px; margin-top:32px}
+.entregable{padding-left:16px; border-left:2px solid var(--sand)}
+.entregable h3{font-size:1.08rem}
+.entregable p{margin-top:8px; font-size:.95rem; color:var(--ink-soft)}
+
+/* --- el formulario, que es lo único que esta página tiene que conseguir --- */
+.formulario{max-width:560px; margin-top:30px}
+.formulario .fila{margin-bottom:18px}
+.formulario label{display:block; font-size:.9rem; font-weight:600; margin-bottom:6px}
+.formulario label .opt{font-weight:400; color:var(--ink-soft)}
+.formulario input, .formulario textarea{width:100%; padding:12px 13px; font:inherit; font-size:.97rem;
+  border:1px solid var(--line); border-radius:3px; background:#fff; color:var(--ink);
+  transition:border-color var(--dur-pulsacion) var(--curva-salida)}
+.formulario input:focus, .formulario textarea:focus{outline:2px solid var(--sand); outline-offset:1px;
+  border-color:var(--sand)}
+.formulario textarea{min-height:96px; resize:vertical}
+.formulario .nota{font-size:.86rem; color:var(--ink-soft); margin-top:14px}
+.formulario .aviso{margin-top:16px; padding:12px 14px; border-radius:3px; font-size:.93rem; display:none}
+.formulario .aviso.ok{display:block; background:rgb(30 58 46/.08); border-left:3px solid var(--forest)}
+.formulario .aviso.mal{display:block; background:rgb(156 90 60/.1); border-left:3px solid #9C5A3C}
+
+.faq{margin-top:28px; max-width:62ch}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer; padding:15px 0; font-weight:600; list-style:none;
+  display:flex; justify-content:space-between; gap:14px; align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+"; color:var(--sand); font-size:1.3rem; line-height:1}
+.faq details[open] summary::after{content:"–"}
+.faq details p{padding:0 0 16px; color:var(--ink-soft); max-width:58ch}
+
+footer{background:var(--forest-deep); color:rgb(245 239 228/.7); padding:26px 0; font-size:.88rem}
+footer a{color:rgb(245 239 228/.9)}
+
+/* --- Nivel 2: aparición al entrar, nativo y sin librería ---------------- */
+.js-revelar .revela{opacity:0; transform:translateY(14px)}
+.revela.visible{opacity:1; transform:none;
+  transition:opacity var(--dur-entrada) var(--curva-salida), transform var(--dur-entrada) var(--curva-salida)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important; transition-duration:.01ms!important;
+    scroll-behavior:auto!important}
+  .js-revelar .revela{opacity:1; transform:none}
+}
+</style>
+</head>
+<body id="top">
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/">
+      <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="150" cy="150" r="150" fill="#F5EFE4"/>
+        <line x1="150" y1="123" x2="100" y2="92" stroke="#C9A667" stroke-width="9" stroke-linecap="round"/>
+        <line x1="150" y1="123" x2="200" y2="92" stroke="#C9A667" stroke-width="9" stroke-linecap="round"/>
+        <path d="M150 133 L168 175 L132 175 Z" fill="#1E3A2E"/>
+        <path d="M141 175 L159 175 L169 238 L131 238 Z" fill="#1E3A2E"/>
+        <rect x="122" y="238" width="56" height="12" rx="2" fill="#1E3A2E"/>
+        <circle cx="150" cy="123" r="10" fill="#C9A667"/>
+      </svg>
+      FARO DIGITAL
+    </a>
+    <a class="cta" href="#pedir">Pedir auditoría →</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="kicker">Auditoría 360° gratuita</div>
+    <h1>Una auditoría de verdad de tu web, tu SEO y tu presencia online — no una llamada de venta disfrazada.</h1>
+    <p>Revisamos qué está pasando de verdad en tu web y en tu presencia en buscadores, y te devolvemos hallazgos concretos. Sin compromiso y sin presentación de ventas.</p>
+    <div class="acciones"><a class="boton" href="#pedir">Pedir tu auditoría 360° gratuita</a></div>
+  </div>
+</section>
+
+<section class="claro">
+  <div class="wrap revela">
+    <div class="kicker">Proyectos de muestra</div>
+    <h2>Cinco sectores, un método</h2>
+    <div class="casos">
+      <a class="caso" href="/portfolio/caso-1-salon-belleza-verbena">
+        <img src="/portfolio/assets/verbena/card-thumb-480.jpg" width="480" height="300" loading="lazy" alt="Verbena, peluquería y bienestar — proyecto de muestra">
+        <span class="pie"><b>Verbena</b>Peluquería</span>
+      </a>
+      <a class="caso" href="/portfolio/caso-2-ecommerce-spec">
+        <img src="/portfolio/assets/aura/card-thumb-480.jpg" width="480" height="300" loading="lazy" alt="Aura Skincare — proyecto de muestra de e-commerce">
+        <span class="pie"><b>Aura Skincare</b>E-commerce</span>
+      </a>
+      <a class="caso" href="/portfolio/caso-3-dashboard-datos">
+        <img src="/portfolio/assets/casalumen/card-thumb-480.jpg" width="480" height="300" loading="lazy" alt="Panel de Casa Lumen — proyecto de muestra de datos">
+        <span class="pie"><b>Casa Lumen</b>Datos</span>
+      </a>
+      <a class="caso" href="/portfolio/caso-4-corporativo-meridian">
+        <img src="/portfolio/assets/meridian/card-thumb-480.jpg" width="480" height="300" loading="lazy" alt="Meridian Advisory — proyecto de muestra corporativo">
+        <span class="pie"><b>Meridian</b>Corporativo</span>
+      </a>
+      <a class="caso" href="/portfolio/caso-5-hosteleria-brasa-sal">
+        <img src="/portfolio/assets/brasa/card-thumb-480.jpg" width="480" height="300" loading="lazy" alt="Brasa &amp; Sal — proyecto de muestra de restauración">
+        <span class="pie"><b>Brasa &amp; Sal</b>Restauración</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap revela">
+    <div class="kicker">Qué recibes</div>
+    <h2>Cuatro entregables concretos, no un repaso vago</h2>
+    <div class="entregables">
+      <div class="entregable">
+        <h3>Informe de hallazgos</h3>
+        <p>Un desglose por escrito de qué funciona y qué no, en tu web, tu SEO y tu presencia online.</p>
+      </div>
+      <div class="entregable">
+        <h3>Mapa de oportunidades priorizado</h3>
+        <p>Cada mejora ordenada por impacto esperado — no una lista de todo lo que se podría cambiar.</p>
+      </div>
+      <div class="entregable">
+        <h3>Comparativa rápida con la competencia</h3>
+        <p>Cómo estás frente a 2–3 competidores directos en lo que de verdad mueve clientes.</p>
+      </div>
+      <div class="entregable">
+        <h3>Siguiente paso recomendado</h3>
+        <p>Una recomendación clara de por dónde empezar — no un menú de cosas que venderte.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="claro" id="pedir">
+  <div class="wrap revela">
+    <div class="kicker">Pídela</div>
+    <h2>Se tarda menos de un minuto</h2>
+    <p style="margin-top:12px; color:var(--ink-soft)">Respondemos con los hallazgos en 3 días laborables.</p>
+
+    <!-- Mismo destino de Formspree que ya usaba la versión anterior. -->
+    <form class="formulario" id="fd-audit-form" action="https://formspree.io/f/mqpzkyoj" method="POST">
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true"
+             style="position:absolute;left:-9999px" title="Deja este campo vacío">
+
+      <div class="fila">
+        <label for="fd-name">Nombre</label>
+        <input id="fd-name" name="name" type="text" required autocomplete="name">
+      </div>
+      <div class="fila">
+        <label for="fd-website">URL de tu web</label>
+        <input id="fd-website" name="website" type="text" required inputmode="url"
+               placeholder="tunegocio.com" autocomplete="url">
+      </div>
+      <div class="fila">
+        <label for="fd-email">Email</label>
+        <input id="fd-email" name="email" type="email" required autocomplete="email">
+      </div>
+      <div class="fila">
+        <label for="fd-message">¿Algo concreto que quieras que miremos? <span class="opt">(opcional)</span></label>
+        <textarea id="fd-message" name="message"></textarea>
+      </div>
+
+      <button class="boton" type="submit">Pedir mi auditoría 360° gratuita</button>
+      <p class="nota">Usamos tus datos solo para mandarte la auditoría. Ni lista de correo ni llamadas de seguimiento, salvo que las pidas.</p>
+      <p class="aviso" id="aviso" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<section>
+  <div class="wrap revela">
+    <div class="kicker">Preguntas</div>
+    <h2>Las cuatro que más nos hacen</h2>
+    <div class="faq">
+      <details>
+        <summary>¿Es una llamada de venta disfrazada?</summary>
+        <p>No. Recibes un informe escrito trabajemos juntos o no.</p>
+      </details>
+      <details>
+        <summary>¿Cuánto tarda?</summary>
+        <p>Los hallazgos llegan a tu correo en 3 días laborables.</p>
+      </details>
+      <details>
+        <summary>¿Qué necesitáis de mí?</summary>
+        <p>Solo la URL de tu web y un email que funcione. Nada más.</p>
+      </details>
+      <details>
+        <summary>¿Qué pasa después de enviarlo?</summary>
+        <p>Revisamos, te mandamos el informe y tú decides si quieres hablar de los siguientes pasos. Sin presión y sin llamadas de seguimiento salvo que las pidas.</p>
+      </details>
+    </div>
+    <p style="margin-top:28px"><a class="boton oscuro" href="#pedir">Pedir tu auditoría 360° gratuita</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a href="/">Faro Digital</a> · Sistemas de marketing digital con datos ·
+    <a href="/levels.html">Los cuatro niveles de web</a> ·
+    <a href="/portfolio/">Portfolio</a> ·
+    <a href="/check">Revisión instantánea gratis</a>
+  </div>
+</footer>
+
+<script>
+/* ===========================================================================
+   Dos cosas, las dos nativas y sin ninguna librería.
+   =========================================================================== */
+(function () {
+  "use strict";
+
+  /* 1 · Envío del formulario sin recargar la página, con aviso visible.
+        Si el JavaScript no llega a ejecutarse, el formulario funciona igual:
+        tiene action y method de verdad, y el navegador lo envía solo. Eso es
+        deliberado —  es la página que tiene que conseguir el contacto. */
+  var f = document.getElementById("fd-audit-form");
+  var aviso = document.getElementById("aviso");
+  f.addEventListener("submit", function (e) {
+    if (!f.checkValidity()) return;              // el navegador ya avisa
+    e.preventDefault();
+    var boton = f.querySelector("button[type=submit]");
+    var textoOriginal = boton.textContent;
+    boton.disabled = true; boton.textContent = "Enviando…";
+    aviso.className = "aviso";
+
+    fetch(f.action, { method: "POST", body: new FormData(f), headers: { Accept: "application/json" } })
+      .then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        f.reset();
+        aviso.className = "aviso ok";
+        aviso.textContent = "Recibido. Te mandamos los hallazgos en 3 días laborables.";
+      })
+      .catch(function () {
+        aviso.className = "aviso mal";
+        aviso.textContent = "Algo ha fallado. Escribe a zyadbennani2000@gmail.com y seguimos por ahí.";
+      })
+      .then(function () { boton.disabled = false; boton.textContent = textoOriginal; });
+  });
+
+  /* 2 · Aparición al entrar (Nivel 2). Con la preferencia de menos movimiento
+        ni se enciende: no se oculta y se muestra después, no se oculta nunca. */
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (!("IntersectionObserver" in window)) return;
+
+  var raiz = document.documentElement;
+  raiz.classList.add("js-revelar");
+  var entrego = false;
+  var obs = new IntersectionObserver(function (filas) {
+    entrego = true;
+    filas.forEach(function (fila, i) {
+      if (!fila.isIntersecting) return;
+      setTimeout(function () { fila.target.classList.add("visible"); }, i * 60);
+      obs.unobserve(fila.target);
+    });
+  }, { rootMargin: "0px 0px -10% 0px" });
+  [].forEach.call(document.querySelectorAll(".revela"), function (el) { obs.observe(el); });
+
+  /* Red de seguridad: un observador puede existir y no entregar NUNCA. Ya pasó
+     dos veces esta semana. Si a los 2,5 s no ha llamado, se descubre todo —
+     mejor sin animación que con la página en blanco. */
+  setTimeout(function () { if (!entrego) raiz.classList.remove("js-revelar"); }, 2500);
+})();
+</script>
+<script src="/assets/medicion.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- 2026-08-20 · Esta maqueta NO es una pagina del sitio: es la FUENTE de las
+     capturas del caso (mockup-hero-shot.jpg y similares). Es la web ficticia de
+     un cliente inventado, y que un buscador la indexe solo puede confundir.
+     Aura y Meridian estan en ingles a proposito — Meridian porque su caso dice
+     que se entrego trilingue EN/ES/FR. Verbena y Brasa estan en espanol porque
+     son negocios de Valencia y de Madrid. -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meridian Advisory</title>
+<style>
+:root{
+  --navy:#1B2A3D; --navy-deep:#101B29; --slate:#5B6B7D; --gold:#B8934A;
+  --cream:#F4F2EE; --white:#FFFFFF; --ink:#1D2128; --ink-soft:#5C6470; --line:#E2E0DA;
+}
+*{box-sizing:border-box;}
+body{margin:0; background:var(--white); color:var(--ink); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:16px; line-height:1.6;}
+h1,h2,h3{font-weight:600; letter-spacing:-.01em; margin:0; color:var(--navy);}
+p{margin:0;}
+.wrap{max-width:1100px; margin:0 auto; padding:0 30px;}
+.photo{position:relative; overflow:hidden; background-size:cover; background-position:center;}
+.photo::after{content:""; position:absolute; inset:0; background:linear-gradient(155deg, var(--navy-deep), transparent 65%); mix-blend-mode:multiply; opacity:.5;}
+
+nav{position:sticky; top:0; z-index:50; background:rgba(255,255,255,.95); backdrop-filter:blur(8px); border-bottom:1px solid var(--line);}
+.nav-inner{max-width:1100px; margin:0 auto; padding:20px 30px; display:flex; align-items:center; justify-content:space-between;}
+.logo{font-weight:700; font-size:18px; letter-spacing:.02em; color:var(--navy);}
+.logo span{color:var(--gold);}
+.nav-links{display:flex; gap:30px; list-style:none; margin:0; padding:0; font-size:13.5px; color:var(--slate);}
+.nav-cta{background:var(--navy); color:#fff; font-weight:600; font-size:13.5px; padding:11px 24px; border-radius:3px; text-decoration:none;}
+
+.hero{position:relative; min-height:74vh; display:flex; align-items:center; color:#fff; padding:60px 30px;}
+.hero-inner{max-width:640px; position:relative; z-index:2;}
+.hero-eyebrow{font-size:12.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); font-weight:700;}
+.hero h1{font-size:clamp(32px,4.6vw,48px); color:#fff; margin-top:16px; line-height:1.15;}
+.hero p{color:#D8DDE3; font-size:17px; margin-top:18px; max-width:46ch;}
+.hero-ctas{display:flex; gap:12px; margin-top:28px;}
+.btn{display:inline-block; font-weight:600; font-size:14px; padding:14px 28px; border-radius:3px; text-decoration:none;}
+.btn-gold{background:var(--gold); color:#1D1404;}
+.btn-outline{border:1.5px solid rgba(255,255,255,.5); color:#fff;}
+
+.statbar{background:var(--navy-deep); color:#fff; padding:0;}
+.statbar-inner{max-width:1100px; margin:0 auto; padding:26px 30px; display:flex; gap:30px; flex-wrap:wrap;}
+.sitem{flex:1; min-width:140px;}
+.sitem .n{font-size:24px; font-weight:700; color:var(--gold);}
+.sitem .l{font-size:12px; color:#B7C0C9; margin-top:4px;}
+
+section{padding:64px 0;}
+.cap{max-width:600px; margin:0 auto 36px; text-align:center;}
+.kicker{font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); font-weight:700;}
+.cap h2{font-size:28px; margin-top:8px;}
+
+.svc-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+.svc{background:var(--cream); border-radius:6px; padding:26px; border-top:3px solid var(--navy);}
+.svc h3{font-size:17px;}
+.svc p{font-size:13.5px; color:var(--ink-soft); margin-top:8px;}
+
+.split{display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; margin-top:20px;}
+.split-img{border-radius:6px; aspect-ratio:4/3; background-size:cover; background-position:center;}
+
+footer{padding:30px 24px; text-align:center; font-size:12.5px; color:var(--ink-soft); border-top:1px solid var(--line);}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <div class="logo">MERIDIAN<span>.</span></div>
+    <ul class="nav-links"><li>Services</li><li>Approach</li><li>Insights</li><li>About</li></ul>
+    <a class="nav-cta" href="#">Request a Consultation</a>
+  </div>
+</nav>
+
+<header class="hero photo" style="background-image:url('hero-meridian.jpg');">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Strategy &amp; Management Consulting</div>
+    <h1>Clarity for the decisions that actually move your business</h1>
+    <p>We help mid-sized companies cut through operational complexity with a structured, data-backed approach — not another generic slide deck.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-gold" href="#">Request a Consultation</a>
+      <a class="btn btn-outline" href="#">Our Approach</a>
+    </div>
+  </div>
+</header>
+
+<div class="statbar">
+  <div class="statbar-inner">
+    <div class="sitem"><div class="n">12+</div><div class="l">years advising mid-market companies</div></div>
+    <div class="sitem"><div class="n">40+</div><div class="l">engagements across 6 industries</div></div>
+    <div class="sitem"><div class="n">3</div><div class="l">practice areas, one integrated approach</div></div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="cap"><div class="kicker">What we do</div><h2>Three practice areas, one method</h2></div>
+    <div class="svc-grid">
+      <div class="svc"><h3>Operations Strategy</h3><p>Structured diagnostics that find where complexity is actually costing you money.</p></div>
+      <div class="svc"><h3>Growth Advisory</h3><p>Market entry, pricing, and go-to-market plans grounded in real data, not assumptions.</p></div>
+      <div class="svc"><h3>Organizational Design</h3><p>Structures and decision rights that scale with the business, not against it.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--cream);">
+  <div class="wrap">
+    <div class="split">
+      <div class="split-img" style="background-image:url('meeting-meridian.jpg');"></div>
+      <div>
+        <div class="kicker">Our approach</div>
+        <h2 style="margin-top:8px;">Diagnosis before recommendation</h2>
+        <p style="color:var(--ink-soft); font-size:15px; margin-top:12px;">Every engagement starts with a structured assessment — not a template. Recommendations are tied to your specific constraints, not a generic playbook.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>Meridian Advisory Group — concept brand, no real firm or business behind this page.</footer>
+</body>
+</html>

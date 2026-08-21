@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Faro Digital — Portfolio de proyectos</title>
+<meta name="description" content="Cinco proyectos de muestra: auditoría 360°, diseño web, SEO técnico, GEO y automatización. El método OAE-360 de punta a punta, de la auditoría al diseño.">
+<link rel="canonical" href="https://faro-digital.netlify.app/portfolio/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Faro Digital">
+<meta property="og:url" content="https://faro-digital.netlify.app/portfolio/">
+<meta property="og:title" content="Faro Digital — Portfolio de proyectos">
+<meta property="og:description" content="Cinco proyectos de muestra: auditoría 360°, diseño web, SEO técnico, GEO y automatización. El método OAE-360 de punta a punta, de la auditoría al diseño.">
+<meta property="og:image" content="https://faro-digital.netlify.app/assets/logo-og.png">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Faro Digital — Portfolio de proyectos">
+<meta name="twitter:description" content="Cinco proyectos de muestra: auditoría 360°, diseño web, SEO técnico, GEO y automatización. El método OAE-360 de punta a punta, de la auditoría al diseño.">
+<meta name="twitter:image" content="https://faro-digital.netlify.app/assets/logo-og.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://faro-digital.netlify.app/" },
+    { "@type": "ListItem", "position": 2, "name": "Portfolio", "item": "https://faro-digital.netlify.app/portfolio/" }
+  ]
+}
+</script>
+<style>
+:root{
+  --forest:#1E3A2E; --forest-deep:#12241B; --sand:#C9A667; --cream:#F6F0E3; --white:#FCFAF4;
+  --ink:#20241E; --ink-soft:#5C6255; --line:#E6DFCC;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:var(--white); color:var(--ink); font-family:Helvetica,Arial,sans-serif; font-size:16px; line-height:1.6;}
+h1,h2,h3{font-family:Georgia,'Times New Roman',serif; color:var(--forest-deep); margin:0;}
+p{margin:0;}
+a{color:inherit;}
+.wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+
+header.top{background:linear-gradient(160deg, var(--forest-deep), var(--forest) 150%); color:#F3F6F1; padding:64px 32px 56px;}
+.top-inner{max-width:1180px; margin:0 auto;}
+.eyebrow{font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--sand); font-weight:700;}
+header.top h1{color:#FDFAF3; font-size:clamp(30px,4.4vw,46px); margin-top:16px; max-width:24ch; line-height:1.16;}
+header.top p.sub{color:#DCE3D8; font-size:16.5px; margin-top:18px; max-width:64ch;}
+.brandline{display:flex; align-items:center; gap:10px; margin-bottom:8px;}
+.brandline .dot{width:8px; height:8px; border-radius:50%; background:var(--sand);}
+.brandline .name{font-size:13px; letter-spacing:.06em; color:#EDE7D6; font-weight:700; text-transform:uppercase;}
+
+.disclaimer-bar{background:var(--cream); border-bottom:1px solid var(--line);}
+.disclaimer-bar .wrap{padding:16px 32px; font-size:13px; color:var(--ink-soft); display:flex; gap:10px; align-items:flex-start;}
+.disclaimer-bar b{color:var(--forest-deep);}
+
+section.gallery{padding:60px 0 80px;}
+.grid{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+@media (max-width:800px){ .grid{grid-template-columns:1fr;} }
+
+.card{background:#fff; border:1px solid var(--line); border-radius:16px; overflow:hidden; text-decoration:none; display:flex; flex-direction:column; transition:transform .18s ease, box-shadow .18s ease;}
+.card:hover{transform:translateY(-3px); box-shadow:0 22px 44px -22px rgba(20,30,20,.28);}
+.thumb{aspect-ratio:16/10; background-size:cover; background-position:center; position:relative;}
+.thumb::after{content:""; position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,.55), transparent 55%);}
+.thumb .idx{position:absolute; top:16px; left:16px; z-index:2; font-family:Georgia,serif; font-weight:700; font-size:13px; color:#fff; background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.35); border-radius:999px; padding:5px 13px;}
+.thumb .lang-badge{position:absolute; top:16px; right:16px; z-index:2; font-size:11px; font-weight:700; letter-spacing:.04em; color:#1D1404; background:var(--sand); border-radius:999px; padding:5px 12px;}
+.thumb .service{position:absolute; bottom:14px; left:16px; z-index:2; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:#F3EFE3; font-weight:700;}
+
+.card-body{padding:22px 24px 24px; flex:1; display:flex; flex-direction:column;}
+.card-body h3{font-size:19px; line-height:1.32; color:var(--ink);}
+.card-body .client{font-size:12.5px; color:var(--ink-soft); margin-top:8px;}
+.card-body .tags{display:flex; gap:6px; flex-wrap:wrap; margin-top:16px;}
+.card-body .tag{font-size:11px; background:var(--cream); color:var(--ink-soft); border:1px solid var(--line); border-radius:999px; padding:4px 10px;}
+.card-body .cta{margin-top:18px; font-size:13px; font-weight:700; color:var(--forest-deep); display:flex; align-items:center; gap:6px;}
+.card-body .cta .arrow{transition:transform .15s ease;}
+.card:hover .cta .arrow{transform:translateX(4px);}
+
+.dash-thumb{width:100%; height:100%; display:flex; align-items:flex-end; gap:10px; padding:28px 22px; background:linear-gradient(160deg, #2A4552, #3E5C6B 150%);}
+.dash-bar{flex:1; background:linear-gradient(180deg, #C98A3E, #E0A85E); border-radius:4px 4px 0 0; opacity:.92;}
+
+footer.close{background:var(--forest-deep); color:#EDE7D6; padding:52px 32px; text-align:center;}
+footer.close .wrap{max-width:640px;}
+footer.close h2{color:#FDFAF3; font-size:22px;}
+footer.close p{font-size:14.5px; color:#CBD3C6; margin-top:12px;}
+footer.close .contact{margin-top:22px; font-size:13.5px; color:var(--sand); font-weight:700;}
+footer.close .legal{margin-top:30px; font-size:11.5px; color:#7E8A78;}
+
+/* ---- print / PDF: each card whole, never cut ---- */
+@media print{
+  @page{ size:A4; margin:15mm 14mm; }
+  a{ text-decoration:none; }
+  header.top{ break-inside:avoid; }
+  .disclaimer-bar{ break-inside:avoid; }
+  .grid{ grid-template-columns:1fr 1fr; gap:16px; }
+  .card{ break-inside:avoid; }
+  .card-body{ padding:16px 18px 18px; }
+  .card-body h3{ font-size:15.5px; }
+  .card-body .tags{ margin-top:10px; }
+  .card-body .cta{ margin-top:10px; }
+  footer.close{ break-inside:avoid; }
+}
+</style>
+<style>
+/* Accesibilidad — pasada de Fase A, 2026-08-19. Hay personas a las que el
+   movimiento les provoca mareo de verdad. Ver Sistema-Web-Capacidades.md 7.4. */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
+  }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brandline"><span class="dot"></span><span class="name">Faro Digital</span></div>
+    <div class="eyebrow">Portfolio de proyectos</div>
+    <h1>Cinco proyectos, cinco problemas de negocio reales, un método</h1>
+    <p class="sub">Cada caso cubre una línea de servicio distinta — web corporativa, landing de conversión, panel con automatización, SEO técnico + visibilidad en buscadores con IA (GEO), SEO local — con la misma profundidad en todos: contexto, auditoría, proceso, diseño final y resultados proyectados.</p>
+  </div>
+</header>
+
+<div class="disclaimer-bar">
+  <div class="wrap"><span>ℹ</span><span><b>Proyectos de muestra.</b> Las marcas que aparecen (Verbena, Aura, Casa Lumen, Meridian, Brasa &amp; Sal) son ficticias, creadas para enseñar el proceso y el nivel de trabajo reales de Faro Digital. Ninguna cifra de resultado es un dato medido, y cada caso lo dice explícitamente donde corresponde.</span></div>
+</div>
+
+<section class="gallery">
+  <div class="wrap">
+    <div class="grid">
+
+      <a class="card" href="/portfolio/caso-1-salon-belleza-verbena">
+        <div class="thumb" style="background-image:url('assets/verbena/card-thumb.jpg');">
+          <div class="idx">Caso 01</div>
+          <div class="service">Auditoría 360° · Web · SEO local</div>
+        </div>
+        <div class="card-body">
+          <h3>De un local con encanto y cero visibilidad, a una marca con dos motivos para reservar</h3>
+          <div class="client">Verbena, peluquería y bienestar — El Carmen, Valencia</div>
+          <div class="tags">
+            <span class="tag">Auditoría 360°</span>
+            <span class="tag">Estrategia</span>
+            <span class="tag">Diseño web</span>
+            <span class="tag">SEO local</span>
+            <span class="tag">CRO</span>
+          </div>
+          <div class="cta">Ver el proyecto completo <span class="arrow">→</span></div>
+        </div>
+      </a>
+
+      <a class="card" href="/portfolio/caso-2-ecommerce-spec">
+        <div class="thumb" style="background-image:url('assets/aura/card-thumb.jpg');">
+          <div class="idx">Caso 02</div>
+          <div class="service">Landing · CRO · E-commerce</div>
+        </div>
+        <div class="card-body">
+          <h3>Rediseñar una página de producto alrededor de una sola decisión</h3>
+          <div class="client">Aura Skincare — landing de producto en venta directa</div>
+          <div class="tags">
+            <span class="tag">Landing</span>
+            <span class="tag">CRO</span>
+            <span class="tag">Identidad ligera</span>
+            <span class="tag">E-commerce</span>
+          </div>
+          <div class="cta">Ver el proyecto completo <span class="arrow">→</span></div>
+        </div>
+      </a>
+
+      <a class="card" href="/portfolio/caso-3-dashboard-datos">
+        <div class="thumb">
+          <div class="dash-thumb">
+            <div class="dash-bar" style="height:38%;"></div>
+            <div class="dash-bar" style="height:62%;"></div>
+            <div class="dash-bar" style="height:48%;"></div>
+            <div class="dash-bar" style="height:80%;"></div>
+            <div class="dash-bar" style="height:55%;"></div>
+            <div class="dash-bar" style="height:70%;"></div>
+          </div>
+          <div class="idx">Caso 03</div>
+          <div class="service">Panel en vivo · Automatización</div>
+        </div>
+        <div class="card-body">
+          <h3>Cuatro tiendas, cuatro hojas de cálculo distintas — y ninguna decisión compartida</h3>
+          <div class="client">Casa Lumen — cadena de decoración, 4 tiendas</div>
+          <div class="tags">
+            <span class="tag">Panel de analítica</span>
+            <span class="tag">Automatización</span>
+            <span class="tag">CRM</span>
+            <span class="tag">Informes multitienda</span>
+          </div>
+          <div class="cta">Ver el proyecto completo <span class="arrow">→</span></div>
+        </div>
+      </a>
+
+      <a class="card" href="/portfolio/caso-4-corporativo-meridian">
+        <div class="thumb" style="background-image:url('assets/meridian/card-thumb.jpg');">
+          <div class="idx">Caso 04</div>
+          <div class="lang-badge">EN · ES · FR</div>
+          <div class="service">Rediseño web · SEO técnico · Buscadores con IA (GEO)</div>
+        </div>
+        <div class="card-body">
+          <h3>Una web anticuada que hacía parecer poco fiable a una consultora solvente</h3>
+          <div class="client">Meridian Advisory Group — consultoría de estrategia B2B</div>
+          <div class="tags">
+            <span class="tag">Rediseño web</span>
+            <span class="tag">SEO técnico</span>
+            <span class="tag">Buscadores con IA (GEO)</span>
+            <span class="tag">CRO</span>
+          </div>
+          <div class="cta">Ver el proyecto completo <span class="arrow">→</span></div>
+        </div>
+      </a>
+
+      <a class="card" href="/portfolio/caso-5-hosteleria-brasa-sal">
+        <div class="thumb" style="background-image:url('assets/brasa/card-thumb.jpg');">
+          <div class="idx">Caso 05</div>
+          <div class="service">SEO local · Embudo de reservas</div>
+        </div>
+        <div class="card-body">
+          <h3>Tres restaurantes excelentes, compitiendo entre ellos en Google sin querer</h3>
+          <div class="client">Brasa &amp; Sal — grupo de restauración, 3 locales en Madrid</div>
+          <div class="tags">
+            <span class="tag">SEO local</span>
+            <span class="tag">Ficha de Google</span>
+            <span class="tag">Embudo de conversión</span>
+            <span class="tag">Varios locales</span>
+          </div>
+          <div class="cta">Ver el proyecto completo <span class="arrow">→</span></div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<footer class="close">
+  <div class="wrap">
+    <h2>¿Un problema parecido en tu negocio?</h2>
+    <p>Cada caso de este portfolio se construyó con el mismo método que aplicamos a clientes reales: auditar antes de suponer, y un objetivo medible decision behind every design change.</p>
+    <p style="margin-top:14px"><a href="/levels.html">Ver los cuatro niveles de web, con una demo por nivel →</a></p>
+    <div class="contact">zyadbennani2000@gmail.com</div>
+    <div class="legal">Faro Digital · Método OAE-360 — Objetivos → Auditoría 360° → Mapa de Oportunidades → Plan de Acción → Ejecución</div>
+  </div>
+</footer>
+
+<script src="/assets/medicion.js" defer></script>
+</body>
+</html>

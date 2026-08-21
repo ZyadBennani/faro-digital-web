@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+<meta charset="utf-8">
+<title>Panel en vivo, de demostración — Faro Digital</title>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage",
+ "name":"Panel en vivo, de demostración — Faro Digital",
+ "description":"Una demo interactiva del panel de informes que Faro Digital construye para sus clientes, con la same structure as the Casa Lumen case study.",
+ "url":"https://faro-digital.netlify.app/dashboard-demo.html",
+ "inLanguage":"es",
+ "isPartOf":{"@type":"WebSite","name":"Faro Digital","url":"https://faro-digital.netlify.app/"},
+ "publisher":{"@type":"Organization","name":"Faro Digital","url":"https://faro-digital.netlify.app/"}}
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Un ejemplo interactivo del panel de marketing que Faro Digital construye para sus clientes: tráfico, embudo, campañas y rendimiento por tienda en un solo sitio.">
+<link rel="canonical" href="https://faro-digital.netlify.app/dashboard-demo">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Faro Digital">
+<meta property="og:url" content="https://faro-digital.netlify.app/dashboard-demo">
+<meta property="og:title" content="Panel en vivo, de demostración — Faro Digital">
+<meta property="og:description" content="Un ejemplo interactivo del panel de marketing en tiempo real que Faro Digital construye para sus clientes.">
+<meta property="og:image" content="https://faro-digital.netlify.app/assets/logo-og.png">
+<meta property="og:locale" content="es_ES">
+
+<style>
+  :root{
+    --forest:#1E3A2E; --forest-deep:#12291F; --sand:#C9A667; --cream:#F5EFE4;
+    --ink-soft:#5B6155; --line:rgba(30,58,46,.14); --paper-raised:#FFFFFF;
+    --good:#3E6B52; --bad:#A8603E; --paper:#EFE8D6;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--cream); color:var(--forest); font-family:'Work Sans',Helvetica,Arial,sans-serif; line-height:1.55; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Frank Ruhl Libre',Georgia,'Times New Roman',serif; margin:0; letter-spacing:-.01em;}
+  a{color:var(--forest);}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+  header{padding:26px 0;}
+  header .wrap{display:flex; align-items:center; justify-content:space-between;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Frank Ruhl Libre',Georgia,serif; font-weight:700; font-size:15px; letter-spacing:.04em; text-transform:uppercase; text-decoration:none; color:var(--forest);}
+  .brand svg{width:20px; height:20px;}
+  header nav a{font-size:14px; font-weight:600; text-decoration:none; color:var(--forest); border-bottom:1px solid var(--forest); margin-left:22px;}
+
+  .intro{padding:20px 0 8px;}
+  .eyebrow{font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--sand); font-weight:700;}
+  .intro h1{font-size:clamp(26px,3.6vw,36px); line-height:1.18; margin-top:14px; max-width:20ch;}
+  .intro p{font-size:16px; color:var(--ink-soft); margin-top:14px; max-width:64ch;}
+  .illustrative-tag{display:inline-block; margin-top:14px; font-size:12px; letter-spacing:.04em; text-transform:uppercase; font-weight:700; color:var(--ink-soft); background:var(--paper-raised); border:1px solid var(--line); padding:5px 11px; border-radius:999px;}
+
+  .toolbar{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; margin:30px 0 22px;}
+  .period-toggle{display:inline-flex; background:var(--paper-raised); border:1px solid var(--line); border-radius:10px; padding:4px;}
+  .period-toggle button{border:none; background:transparent; font-family:inherit; font-size:13.5px; font-weight:600; color:var(--ink-soft); padding:8px 16px; border-radius:7px; cursor:pointer; transition:background .15s ease, color .15s ease;}
+  .period-toggle button.active{background:var(--forest-deep); color:var(--cream);}
+  .store-label{font-size:13px; color:var(--ink-soft);}
+
+  /* KPI row */
+  .kpi-row{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:16px; margin-bottom:28px;}
+  .kpi-card{background:var(--forest-deep); color:var(--cream); border-radius:14px; padding:20px 20px 18px;}
+  .kpi-card .label{font-size:12px; letter-spacing:.05em; text-transform:uppercase; color:#9FB3A6;}
+  .kpi-card .value{font-family:'Frank Ruhl Libre',Georgia,serif; font-size:30px; font-weight:700; margin-top:8px; color:#EAF3F0;}
+  .kpi-card .delta{font-size:12.5px; margin-top:6px; font-weight:600;}
+  .kpi-card .delta.up{color:#8FC9A6;}
+  .kpi-card .delta.down{color:#E0A98F;}
+
+  /* Goal tracker */
+  .goal{background:var(--paper-raised); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-bottom:28px; display:flex; align-items:center; gap:22px; flex-wrap:wrap;}
+  .goal .goal-text{flex:1 1 220px;}
+  .goal .goal-text strong{font-family:'Frank Ruhl Libre',Georgia,serif; font-size:17px;}
+  .goal-bar-wrap{flex:2 1 300px; min-width:220px;}
+  .goal-bar-track{background:var(--paper); border-radius:999px; height:12px; overflow:hidden;}
+  .goal-bar-fill{background:linear-gradient(90deg,var(--sand),#DBB877); height:100%; border-radius:999px; transition:width .5s cubic-bezier(.22,1,.36,1);}
+  .goal-pct{font-family:'Frank Ruhl Libre',Georgia,serif; font-weight:700; font-size:15px; margin-top:6px; color:var(--forest-deep);}
+
+  /* Chart grid */
+  .section-title{font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin:34px 0 14px;}
+  .chart-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
+  @media (max-width:760px){.chart-grid{grid-template-columns:1fr;}}
+  /* 🔴 Mismo fallo que en levels.html, el mismo dia: un hijo de grid vale
+     `min-width:auto`, asi que el <canvas> del grafico empujaba la tarjeta a
+     342 px dentro de una pista de 312 y la pagina se salia 6 px en un movil
+     de 360. Poco, pero es scroll horizontal en la pagina que demuestra que
+     sabemos construir. */
+  .chart-grid > *{min-width:0;}
+  .card canvas{max-width:100%;}
+  .card{background:var(--paper-raised); border:1px solid var(--line); border-radius:14px; padding:20px;}
+  .card h4{font-size:14px; font-weight:700; margin-bottom:14px; color:var(--forest-deep);}
+
+  /* Tables */
+  table{width:100%; border-collapse:collapse; font-size:13.5px;}
+  th{text-align:left; font-size:11.5px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-soft); padding:9px 10px; border-bottom:1px solid var(--line); cursor:pointer; user-select:none; white-space:nowrap;}
+  th.sortable:hover{color:var(--forest-deep);}
+  th .arrow{opacity:.35; margin-left:3px;}
+  th.sorted .arrow{opacity:1; color:var(--sand);}
+  td{padding:10px; border-bottom:1px solid var(--line); white-space:nowrap;}
+  tr:last-child td{border-bottom:none;}
+  td.num{text-align:right; font-variant-numeric:tabular-nums;}
+  .trend-up{color:var(--good); font-weight:600;}
+  .trend-down{color:var(--bad); font-weight:600;}
+  .table-scroll{overflow-x:auto;}
+
+  /* Heatmap */
+  .heat-table{width:100%; border-collapse:separate; border-spacing:4px; font-size:11.5px;}
+  .heat-table th{border:none; padding:4px 6px; text-align:center; cursor:default;}
+  .heat-table td{border:none; padding:0; text-align:center;}
+  .heat-cell{display:flex; align-items:center; justify-content:center; height:30px; border-radius:6px; color:var(--forest-deep); font-weight:700; font-size:11px;}
+  .heat-row-label{text-align:right !important; padding-right:10px !important; font-weight:600; color:var(--ink-soft); font-size:11.5px;}
+
+  .next-step{margin-top:44px; background:var(--forest-deep); color:var(--cream); border-radius:16px; padding:30px 28px; text-align:center;}
+  .next-step p{color:#C9D3C6; font-size:14.5px; margin:6px 0 18px;}
+  .next-step .cta{display:inline-block; text-decoration:none; background:var(--sand); color:#12291F; font-weight:700; font-size:15px; padding:13px 26px; border-radius:8px;}
+
+  footer{margin-top:60px; padding:28px 0 40px; border-top:1px solid var(--line); text-align:center; font-size:13px; color:var(--ink-soft);}
+</style>
+<style>
+/* Accesibilidad — pasada de Fase A, 2026-08-19. Hay personas a las que el
+   movimiento les provoca mareo de verdad. Ver Sistema-Web-Capacidades.md 7.4. */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
+  }
+}
+</style>
+<link rel="stylesheet" href="assets/fuentes.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="/">
+      <svg viewBox="0 0 64 64" fill="none"><path d="M24 58 H40 M22 58 L28 12 H36 L42 58" stroke="#1E3A2E" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M27 22 H37 M26 32 H38" stroke="#1E3A2E" stroke-width="2.5" stroke-linecap="round"/></svg>
+      Faro Digital
+    </a>
+    <nav>
+      <a href="/portfolio/caso-3-dashboard-datos">Leer el caso</a>
+      <a href="/audit">Pedir la auditoría completa →</a>
+    </nav>
+  </div>
+</header>
+
+<section class="intro">
+  <div class="wrap">
+    <div class="eyebrow">Panel en vivo, de demostración</div>
+    <h1>Qué significa de verdad «trabajamos con datos reales»</h1>
+    <p>Esta es la misma estructura de panel que recibe cada mes Casa Lumen — una marca de hogar y estilo de vida con 4 tiendas: un solo sitio en vez de cuatro hojas de cálculo. Prueba el cambio de periodo, ordena las tablas, pasa el cursor por los gráficos.</p>
+    <div class="illustrative-tag">Datos de ejemplo — la misma estructura que se entrega en proyectos reales</div>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <div class="toolbar">
+    <div class="period-toggle" id="period-toggle">
+      <button data-period="30" class="active">Últimos 30 días</button>
+      <button data-period="90">Últimos 90 días</button>
+    </div>
+    <div class="store-label">Las 4 tiendas · Conjunto</div>
+  </div>
+
+  <div class="kpi-row" id="kpi-row"></div>
+
+  <div class="goal">
+    <div class="goal-text"><strong id="goal-value">—</strong><br><span style="color:var(--ink-soft); font-size:13.5px;">del objetivo mensual de contactos alcanzado</span></div>
+    <div class="goal-bar-wrap">
+      <div class="goal-bar-track"><div class="goal-bar-fill" id="goal-fill" style="width:0%"></div></div>
+      <div class="goal-pct" id="goal-pct">—</div>
+    </div>
+  </div>
+
+  <div class="section-title">Tráfico y conversión</div>
+  <div class="chart-grid">
+    <div class="card"><h4>Tráfico por canal</h4><canvas id="chTraffic" height="200"></canvas></div>
+    <div class="card"><h4>Contactos en el tiempo — últimos 6 meses</h4><canvas id="chLeads" height="200"></canvas></div>
+    <div class="card"><h4>Embudo: visitas → contactos → clientes</h4><canvas id="chFunnel" height="200"></canvas></div>
+    <div class="card"><h4>Coste por contacto y canal</h4><canvas id="chCPL" height="200"></canvas></div>
+  </div>
+
+  <div class="section-title">Campañas destacadas</div>
+  <div class="card">
+    <div class="table-scroll">
+      <table id="tbl-campaigns">
+        <thead>
+          <tr>
+            <th class="sortable" data-key="name">Campaña<span class="arrow">↕</span></th>
+            <th class="sortable" data-key="channel">Canal<span class="arrow">↕</span></th>
+            <th class="sortable num" data-key="spend">Inversión<span class="arrow">↕</span></th>
+            <th class="sortable num" data-key="leads">Contactos<span class="arrow">↕</span></th>
+            <th class="sortable num" data-key="cpl">Coste<span class="arrow">↕</span></th>
+            <th class="sortable num" data-key="conv">Conversión<span class="arrow">↕</span></th>
+          </tr>
+        </thead>
+        <tbody id="tbl-campaigns-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section-title">Rendimiento por tienda</div>
+  <div class="card">
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>Tienda</th><th class="num">Visitas</th><th class="num">Contactos</th><th class="num">Conversión</th><th class="num">Ingresos</th><th class="num">Tendencia</th></tr>
+        </thead>
+        <tbody id="tbl-stores-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section-title">Mejores momentos para llegar a tu público</div>
+  <div class="card">
+    <div class="table-scroll" id="heatmap-wrap"></div>
+  </div>
+
+  <div class="next-step">
+    <h3 style="color:var(--cream); font-size:22px;">Esto es lo que significa «sistema» en Faro Digital</h3>
+    <p>No una captura cada trimestre — un panel vivo, conectado a tus canales reales y actualizado de forma continua.</p>
+    <a class="cta" href="/audit">Pedir tu auditoría 360° gratuita →</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap">© Faro Digital — <a href="/">faro-digital.netlify.app</a></div>
+</footer>
+
+<!-- Chart.js 4.4.4, MIT, servido desde NUESTRO dominio.
+     Antes venia de un CDN externo, y eso expone la IP de cada visitante a un
+     tercero: el mismo problema de RGPD que ya se corrigio con las fuentes.
+     Ademas llegaba en DOS versiones distintas desde DOS CDN distintos.
+     Va AQUI, pegado al codigo que lo usa, y SIN defer: el script de abajo
+     crea los graficos al vuelo, sin esperar a DOMContentLoaded, asi que con
+     defer "Chart" no estaria definido todavia y la pagina se quedaria en
+     blanco. Al estar en el cuerpo tampoco bloquea el pintado de la cabecera.
+     Licencia en assets/vendor/chart.js-LICENSE.md -->
+<script src="/assets/vendor/chart.umd.min.js"></script>
+<script>
+(function(){
+  // ---- Datos ilustrativos, coherentes con el caso real Casa Lumen (12,480 visitas / 4,6% / 3,8x ROAS a 30 días) ----
+  const DATA = {
+    30: {
+      kpis: [
+        { label:'Visitas al mes', value:'12.480', delta:'+6,2 % vs 30 d anteriores', up:true },
+        { label:'Conversión visita → contacto', value:'4,6 %', delta:'+0,3 pp vs 30 d anteriores', up:true },
+        { label:'Retorno de la inversión publicitaria', value:'3,8x', delta:'+0,2x vs 30 d anteriores', up:true },
+        { label:'Coste medio por contacto', value:'18,40 €', delta:'-1,10 € vs 30 d anteriores', up:true },
+      ],
+      goalLeads: 574, goalTarget: 600,
+      funnel: [12480, 574, 92],
+      cpl: [14.80, 22.10, 9.60, 26.30],
+      campaigns: [
+        { name:'Renovación primavera — Búsqueda', channel:'Google Ads', spend:2140, leads:118, cpl:18.14, conv:5.1 },
+        { name:'Retargeting — Carrito abandonado', channel:'Meta Ads', spend:980, leads:74, cpl:13.24, conv:6.8 },
+        { name:'Orgánico — Blog + SEO', channel:'Búsqueda orgánica', spend:0, leads:142, cpl:0, conv:4.9 },
+        { name:'Newsletter — Envío mensual', channel:'Email', spend:120, leads:61, cpl:1.97, conv:11.2 },
+        { name:'Prospección — Audiencia similar', channel:'Meta Ads', spend:1860, leads:88, cpl:21.14, conv:3.4 },
+        { name:'Local — Radio de tienda', channel:'Google Ads', spend:640, leads:41, cpl:15.61, conv:5.9 },
+        { name:'Referidos — Sitios colaboradores', channel:'Referidos', spend:0, leads:50, cpl:0, conv:6.3 },
+      ],
+      stores: [
+        { name:'Gràcia (flagship)', visits:4820, leads:238, conv:4.9, revenue:'€19,860', trend:'+4.1%', up:true },
+        { name:'Poble Sec', visits:2960, leads:121, conv:4.1, revenue:'€10,420', trend:'+1.8%', up:true },
+        { name:'Sant Cugat', visits:2510, leads:112, conv:4.5, revenue:'€9,760', trend:'-0.6%', up:false },
+        { name:'Tienda online', visits:2190, leads:103, conv:4.7, revenue:'€8,140', trend:'+9.3%', up:true },
+      ],
+    },
+    90: {
+      kpis: [
+        { label:'Visitas al mes (media)', value:'11.930', delta:'+3,4 % vs 90 d anteriores', up:true },
+        { label:'Conversión visita → contacto', value:'4,9 %', delta:'+0,5 pp vs 90 d anteriores', up:true },
+        { label:'Retorno de la inversión publicitaria', value:'4,1x', delta:'+0,4x vs 90 d anteriores', up:true },
+        { label:'Coste medio por contacto', value:'17,10 €', delta:'-2,30 € vs 90 d anteriores', up:true },
+      ],
+      goalLeads: 1744, goalTarget: 1800,
+      funnel: [35790, 1744, 279],
+      cpl: [13.90, 20.40, 8.80, 24.70],
+      campaigns: [
+        { name:'Renovación primavera — Búsqueda', channel:'Google Ads', spend:6420, leads:361, cpl:17.78, conv:5.4 },
+        { name:'Retargeting — Carrito abandonado', channel:'Meta Ads', spend:2940, leads:231, cpl:12.73, conv:7.1 },
+        { name:'Orgánico — Blog + SEO', channel:'Búsqueda orgánica', spend:0, leads:418, cpl:0, conv:5.0 },
+        { name:'Newsletter — Envío mensual', channel:'Email', spend:360, leads:189, cpl:1.90, conv:11.6 },
+        { name:'Prospección — Audiencia similar', channel:'Meta Ads', spend:5580, leads:264, cpl:21.14, conv:3.6 },
+        { name:'Local — Radio de tienda', channel:'Google Ads', spend:1920, leads:129, cpl:14.88, conv:6.1 },
+        { name:'Referidos — Sitios colaboradores', channel:'Referidos', spend:0, leads:152, cpl:0, conv:6.5 },
+      ],
+      stores: [
+        { name:'Gràcia (flagship)', visits:14210, leads:712, conv:5.0, revenue:'€58,940', trend:'+5.0%', up:true },
+        { name:'Poble Sec', visits:8760, leads:361, conv:4.1, revenue:'€30,980', trend:'+2.1%', up:true },
+        { name:'Sant Cugat', visits:7490, leads:337, conv:4.5, revenue:'€29,120', trend:'-0.2%', up:false },
+        { name:'Tienda online', visits:6330, leads:334, conv:5.3, revenue:'€26,650', trend:'+11.7%', up:true },
+      ],
+    },
+  };
+
+  // Datos que NO cambian con el periodo (tendencia histórica y patrón semanal)
+  const TRAFFIC_SHARE = { 'Búsqueda orgánica':38, 'Social de pago':29, 'Email':15, 'Directo':11, 'Referidos':7 };
+  const LEADS_TREND = { labels:['Ene','Feb','Mar','Abr','May','Jun'], values:[142,159,151,188,203,221] };
+  const HEATMAP_DAYS = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+  const HEATMAP_SLOTS = ['9–11h','11–13h','13–15h','15–17h','17–19h','19–21h'];
+  // valores de intensidad 0-100, patrón realista: tardes entre semana y sábado por la mañana más fuertes
+  const HEATMAP_DATA = [
+    [22,38,30,44,58,40], [20,35,28,46,60,38], [24,40,32,50,64,42],
+    [26,42,34,52,68,46], [30,48,40,58,74,60], [55,62,58,50,44,30], [18,24,20,26,32,24],
+  ];
+
+  const money = n => '€' + n.toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:0});
+  const fmt = n => n.toLocaleString('en-US');
+
+  let currentPeriod = 30;
+  let sortState = { key:null, dir:1 };
+  let charts = {};
+
+  function renderKpis(d){
+    const row = document.getElementById('kpi-row');
+    row.innerHTML = d.kpis.map(k => `
+      <div class="kpi-card">
+        <div class="label">${k.label}</div>
+        <div class="value">${k.value}</div>
+        <div class="delta ${k.up ? 'up':'down'}">${k.up ? '▲':'▼'} ${k.delta}</div>
+      </div>`).join('');
+  }
+
+  function renderGoal(d){
+    const pct = Math.round((d.goalLeads / d.goalTarget) * 100);
+    document.getElementById('goal-value').textContent = `${fmt(d.goalLeads)} / ${fmt(d.goalTarget)} contactos`;
+    document.getElementById('goal-fill').style.width = Math.min(pct,100) + '%';
+    document.getElementById('goal-pct').textContent = pct + '%';
+  }
+
+  function renderCampaignsTable(d){
+    const rows = [...d.campaigns];
+    if (sortState.key) {
+      rows.sort((a,b) => {
+        const va = a[sortState.key], vb = b[sortState.key];
+        if (typeof va === 'string') return va.localeCompare(vb) * sortState.dir;
+        return (va - vb) * sortState.dir;
+      });
+    }
+    document.getElementById('tbl-campaigns-body').innerHTML = rows.map(c => `
+      <tr>
+        <td>${c.name}</td>
+        <td>${c.channel}</td>
+        <td class="num">${c.spend ? money(c.spend) : '—'}</td>
+        <td class="num">${fmt(c.leads)}</td>
+        <td class="num">${c.cpl ? '€'+c.cpl.toFixed(2) : '—'}</td>
+        <td class="num">${c.conv.toFixed(1)}%</td>
+      </tr>`).join('');
+
+    document.querySelectorAll('#tbl-campaigns th.sortable').forEach(th => {
+      th.classList.toggle('sorted', th.dataset.key === sortState.key);
+    });
+  }
+
+  function renderStoresTable(d){
+    document.getElementById('tbl-stores-body').innerHTML = d.stores.map(s => `
+      <tr>
+        <td>${s.name}</td>
+        <td class="num">${fmt(s.visits)}</td>
+        <td class="num">${fmt(s.leads)}</td>
+        <td class="num">${s.conv.toFixed(1)}%</td>
+        <td class="num">${s.revenue}</td>
+        <td class="num ${s.up ? 'trend-up':'trend-down'}">${s.up ? '▲':'▼'} ${s.trend}</td>
+      </tr>`).join('');
+  }
+
+  function renderHeatmap(){
+    let html = '<table class="heat-table"><thead><tr><th></th>' +
+      HEATMAP_SLOTS.map(s => `<th>${s}</th>`).join('') + '</tr></thead><tbody>';
+    HEATMAP_DAYS.forEach((day,i) => {
+      html += `<tr><td class="heat-row-label">${day}</td>`;
+      HEATMAP_DATA[i].forEach(v => {
+        const alpha = (v/100*0.85 + 0.08).toFixed(2);
+        html += `<td><div class="heat-cell" style="background:rgba(201,166,103,${alpha});">${v}</div></td>`;
+      });
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+    document.getElementById('heatmap-wrap').innerHTML = html;
+  }
+
+  function renderCharts(d){
+    const forest = '#1E3A2E', sand='#C9A667', teal='#4C8D75', slate='#6B7A70', clay='#B97452';
+
+    if (charts.traffic) charts.traffic.destroy();
+    charts.traffic = new Chart(document.getElementById('chTraffic'), {
+      type:'doughnut',
+      data:{ labels:Object.keys(TRAFFIC_SHARE), datasets:[{ data:Object.values(TRAFFIC_SHARE), backgroundColor:[forest,clay,'#22201C',slate,'#B7C4B0'], borderWidth:0 }] },
+      options:{ plugins:{ legend:{ position:'bottom', labels:{ boxWidth:10, font:{size:11} } } }, cutout:'62%' }
+    });
+
+    if (charts.leads) charts.leads.destroy();
+    charts.leads = new Chart(document.getElementById('chLeads'), {
+      type:'line',
+      data:{ labels:LEADS_TREND.labels, datasets:[{ data:LEADS_TREND.values, borderColor:teal, backgroundColor:'rgba(76,141,117,.12)', fill:true, tension:.35, pointRadius:3 }] },
+      options:{ plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:true } } }
+    });
+
+    if (charts.funnel) charts.funnel.destroy();
+    const funnelLabels = [
+      `Visitas — ${fmt(d.funnel[0])}`,
+      `Leads — ${fmt(d.funnel[1])} (${(d.funnel[1]/d.funnel[0]*100).toFixed(1)}%)`,
+      `Clientes — ${fmt(d.funnel[2])} (${(d.funnel[2]/d.funnel[1]*100).toFixed(0)} % de los contactos)`,
+    ];
+    charts.funnel = new Chart(document.getElementById('chFunnel'), {
+      type:'bar',
+      data:{ labels:funnelLabels, datasets:[{ data:d.funnel, backgroundColor:[forest, sand, clay], borderRadius:4 }] },
+      options:{
+        indexAxis:'y',
+        plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label: ctx => fmt(ctx.raw) + ' total' } } },
+        scales:{ x:{ type:'logarithmic', min:1, ticks:{ callback:(v)=>{ const l=Math.log10(v); return Number.isInteger(l) ? fmt(v) : ''; } } }, y:{ ticks:{ font:{size:11} } } }
+      }
+    });
+
+    if (charts.cpl) charts.cpl.destroy();
+    charts.cpl = new Chart(document.getElementById('chCPL'), {
+      type:'bar',
+      data:{ labels:['Organic','Paid social','Email','Local Ads'], datasets:[{ data:d.cpl, backgroundColor:clay, borderRadius:4 }] },
+      options:{ plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:true } } }
+    });
+  }
+
+  function render(){
+    const d = DATA[currentPeriod];
+    renderKpis(d);
+    renderGoal(d);
+    renderCharts(d);
+    renderCampaignsTable(d);
+    renderStoresTable(d);
+  }
+
+  document.getElementById('period-toggle').addEventListener('click', function(e){
+    const btn = e.target.closest('button[data-period]');
+    if (!btn) return;
+    currentPeriod = Number(btn.dataset.period);
+    document.querySelectorAll('#period-toggle button').forEach(b => b.classList.toggle('active', b === btn));
+    render();
+  });
+
+  document.getElementById('tbl-campaigns').addEventListener('click', function(e){
+    const th = e.target.closest('th.sortable');
+    if (!th) return;
+    const key = th.dataset.key;
+    sortState.dir = (sortState.key === key) ? sortState.dir * -1 : 1;
+    sortState.key = key;
+    renderCampaignsTable(DATA[currentPeriod]);
+  });
+
+  renderHeatmap();
+  render();
+})();
+</script>
+
+<script src="/assets/medicion.js" defer></script>
+</body>
+</html>

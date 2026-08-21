@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<!-- 2026-08-20 · Esta maqueta NO es una pagina del sitio: es la FUENTE de las
+     capturas del caso (mockup-hero-shot.jpg y similares). Es la web ficticia de
+     un cliente inventado, y que un buscador la indexe solo puede confundir.
+     Aura y Meridian estan en ingles a proposito — Meridian porque su caso dice
+     que se entrego trilingue EN/ES/FR. Verbena y Brasa estan en espanol porque
+     son negocios de Valencia y de Madrid. -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verbena — Peluquería &amp; Bienestar · Barrio del Carmen, Valencia</title>
+<style>
+:root{
+  --clay:#9C5A3C; --clay-deep:#743F28; --teal:#2C4A47; --teal-deep:#1B2E2C;
+  --cream:#F5EEE2; --cream-alt:#FBF6EC; --ink:#2A231D; --ink-soft:#6B5F52; --line:#E4D8C4;
+}
+*{box-sizing:border-box;}
+body{margin:0; background:var(--cream); color:var(--ink); font-family:Helvetica,Arial,sans-serif; font-size:16.5px; line-height:1.6;}
+h1,h2,h3{font-family:Georgia,'Times New Roman',serif; font-weight:700; color:var(--teal-deep); margin:0;}
+p{margin:0;}
+.wrap{max-width:1080px; margin:0 auto; padding:0 26px;}
+.photo{position:relative; overflow:hidden; background-size:cover; background-position:center;}
+.photo::after{content:""; position:absolute; inset:0; background:linear-gradient(155deg, var(--teal-deep), transparent 65%); mix-blend-mode:multiply; opacity:.42;}
+
+nav{position:sticky; top:0; z-index:50; background:rgba(245,238,226,.94); backdrop-filter:blur(8px); border-bottom:1px solid var(--line);}
+.nav-inner{max-width:1080px; margin:0 auto; padding:16px 26px; display:flex; align-items:center; justify-content:space-between;}
+.logo{font-family:Georgia,serif; font-weight:700; font-size:21px; color:var(--teal-deep);}
+.nav-links{display:flex; gap:26px; list-style:none; margin:0; padding:0; font-size:14px; color:var(--ink-soft);}
+.nav-cta{background:var(--clay); color:#FBF6EC; font-weight:700; font-size:14px; padding:10px 20px; border-radius:999px; text-decoration:none;}
+
+.hero{position:relative; min-height:88vh; display:flex; align-items:center; justify-content:center; text-align:center; color:#FBF6EC; padding:100px 24px; overflow:hidden;}
+.hero::after{content:none;}
+.hero-scrim{position:absolute; inset:0; z-index:5; background:linear-gradient(180deg, rgba(20,32,30,.72), rgba(20,32,30,.9)); pointer-events:none;}
+.hero-content{position:relative; z-index:10;}
+.hero-eyebrow{font-size:12.5px; letter-spacing:.22em; text-transform:uppercase; color:#E3C7A8; font-weight:700;}
+.hero h1{font-size:clamp(50px,9vw,86px); color:#FFF; margin-top:16px; line-height:.98; position:relative; z-index:2;}
+.hero .tag{font-family:Georgia,serif; font-style:italic; font-size:20px; color:#E8DAC5; margin-top:8px; position:relative; z-index:2;}
+.hero p.desc{color:#EFE6D8; max-width:48ch; margin:22px auto 0; font-size:16px; position:relative; z-index:2;}
+.chip{display:inline-flex; gap:8px; margin-top:24px; border:1px solid rgba(255,255,255,.32); border-radius:999px; padding:9px 20px; font-size:14px; position:relative; z-index:2;}
+.chip b{color:#E3A66B;}
+.hero-ctas{display:flex; gap:14px; justify-content:center; margin-top:28px; position:relative; z-index:2;}
+.btn{display:inline-block; font-weight:700; font-size:14.5px; padding:14px 26px; border-radius:8px; text-decoration:none;}
+.btn-clay{background:var(--clay); color:#FFF7EE;}
+.btn-ghost{border:1px solid rgba(255,255,255,.4); color:#FFF;}
+
+section{padding:70px 0;}
+.cap{max-width:600px; margin:0 auto 40px; text-align:center;}
+.kicker{font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--clay-deep); font-weight:700;}
+.cap h2{font-size:32px; margin-top:8px;}
+
+.worlds{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+.world{border-radius:16px; padding:32px; color:#fff;}
+.world.pel{background:linear-gradient(150deg, var(--teal), var(--teal-deep));}
+.world.bien{background:linear-gradient(150deg, var(--clay), var(--clay-deep));}
+.world h3{color:#fff; font-size:23px;}
+.world p{opacity:.9; font-size:14.5px; margin-top:8px;}
+
+.svc{display:grid; grid-template-columns:1fr 1.2fr; gap:32px; align-items:center; margin-top:50px;}
+.svc-photo{border-radius:14px; aspect-ratio:4/5;}
+.svc-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px;}
+.svc-item{background:#fff; border:1px solid var(--line); border-radius:10px; padding:16px 18px; display:flex; justify-content:space-between; font-size:14px;}
+.svc-item .price{font-family:Georgia,serif; font-weight:700; color:var(--clay-deep);}
+
+.rev{background:var(--cream-alt); border:1px solid var(--line); border-radius:16px; max-width:700px; margin:0 auto; padding:36px; display:flex; gap:28px; align-items:center; flex-wrap:wrap;}
+.rev-n{font-family:Georgia,serif; font-weight:700; font-size:42px; color:var(--clay-deep); text-align:center;}
+.rev-stars{color:var(--clay); letter-spacing:2px;}
+.rev-q{flex:1; font-family:Georgia,serif; font-style:italic; font-size:17px; min-width:240px;}
+
+footer{padding:30px 24px; text-align:center; font-size:13px; color:var(--ink-soft);}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <div class="logo">Verbena</div>
+    <ul class="nav-links"><li>Peluquería</li><li>Bienestar</li><li>Nosotras</li><li>Dónde estamos</li></ul>
+    <a class="nav-cta" href="#">Reservar</a>
+  </div>
+</nav>
+
+<header class="hero photo" style="background-image:url('hero-verbena.jpg'); background-position:center 25%;">
+  <div class="hero-scrim"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Barrio del Carmen · Valencia</div>
+    <h1>Verbena</h1>
+    <div class="tag">Peluquería &amp; Bienestar</div>
+    <p class="desc">Un espacio pensado para dos ritmos distintos: el del corte y el color que te define, y el de la calma que te lo permite disfrutar.</p>
+    <div class="chip"><b>4,8 ★</b>&nbsp;&nbsp;190 opiniones verificadas</div>
+    <div class="hero-ctas">
+      <a class="btn btn-clay" href="#">Reserva online</a>
+      <a class="btn btn-ghost" href="#">Descubre Verbena</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="cap"><div class="kicker">Un mismo cuidado</div><h2>Dos mundos, una sola casa</h2></div>
+    <div class="worlds">
+      <div class="world pel"><h3>Peluquería</h3><p>Color de autor, cortes a medida y el alisado orgánico que se ha convertido en nuestra firma.</p></div>
+      <div class="world bien"><h3>Bienestar</h3><p>Masajes con piedras cálidas, ritual facial y manicura — el tiempo que te dedicas, bien empleado.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--cream-alt);">
+  <div class="wrap">
+    <div class="svc">
+      <div class="svc-photo photo" style="background-image:url('peluqueria-verbena.jpg');"></div>
+      <div>
+        <h3 style="font-size:22px;">Peluquería</h3>
+        <p style="color:var(--ink-soft); margin-top:8px; font-size:14.5px;">Cada color se piensa antes de aplicarse — a partir de tu piel y tu luz, no de una tendencia genérica.</p>
+        <div class="svc-grid">
+          <div class="svc-item"><span>Corte y peinado</span><span class="price">28€</span></div>
+          <div class="svc-item"><span>Color de autor</span><span class="price">desde 55€</span></div>
+          <div class="svc-item"><span>Alisado orgánico</span><span class="price">consultar</span></div>
+          <div class="svc-item"><span>Tratamiento reparador</span><span class="price">32€</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="svc" style="margin-top:60px;">
+      <div>
+        <h3 style="font-size:22px;">Bienestar</h3>
+        <p style="color:var(--ink-soft); margin-top:8px; font-size:14.5px;">Rituales pensados para desconectar de verdad — no un trámite entre cita y cita.</p>
+        <div class="svc-grid">
+          <div class="svc-item"><span>Masaje piedras cálidas</span><span class="price">45€</span></div>
+          <div class="svc-item"><span>Ritual facial</span><span class="price">40€</span></div>
+          <div class="svc-item"><span>Manicura spa</span><span class="price">22€</span></div>
+          <div class="svc-item"><span>Pedicura spa</span><span class="price">28€</span></div>
+        </div>
+      </div>
+      <div class="svc-photo photo" style="background-image:url('bienestar-verbena.jpg');"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cap"><div class="kicker">El barrio opina</div><h2>Nueve años de confianza</h2></div>
+    <div class="rev">
+      <div style="text-align:center;"><div class="rev-n">4,8</div><div class="rev-stars">★★★★★</div><div style="font-size:12px; color:var(--ink-soft);">190 opiniones</div></div>
+      <div class="rev-q">"Entré por un corte y descubrí el masaje de piedras — ahora reservo las dos cosas siempre juntas."</div>
+    </div>
+  </div>
+</section>
+
+<footer>Verbena, Peluquería &amp; Bienestar · Plaça del Roser, 8 · Barrio del Carmen, Valencia</footer>
+</body>
+</html>
