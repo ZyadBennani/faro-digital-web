@@ -1,6 +1,0 @@
-[functions]
-  directory = "netlify/functions"
-  # esbuild empaqueta @netlify/blobs DENTRO de cada funcion. Se probo primero con
-  # external_node_modules y las funciones daban 502: se desplegaban y se caian al
-  # arrancar, porque el entorno no lo provee por si solo. Detectado en borrador.
-  node_bundler = "esbuild"

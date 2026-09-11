@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Preguntamos a la IA por 7 negocios de Barcelona. Cinco no salían. — The Faro Signal nº 3</title>
+<meta name="description" content="Medimos 7 negocios reales de Barcelona en ChatGPT, Perplexity y Google: 91 preguntas y respuestas guardadas. Cinco no salían. Los datos y qué hacer.">
+
+<link rel="canonical" href="https://faro-digital.pages.dev/signal-03-radar-ia-barcelona">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Faro Digital">
+<meta property="og:url" content="https://faro-digital.pages.dev/signal-03-radar-ia-barcelona">
+<meta property="og:title" content="Preguntamos a la IA por 7 negocios de Barcelona. Cinco no salían.">
+<meta property="og:description" content="91 preguntas a ChatGPT, Perplexity y Google sobre negocios reales de Barcelona. La IA te conoce si le das tu nombre — pero no te recomienda a quien no te conoce.">
+<meta property="og:image" content="https://faro-digital.pages.dev/assets/logo-og.png">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Preguntamos a la IA por 7 negocios de Barcelona. Cinco no salían.">
+<meta name="twitter:description" content="91 preguntas a los buscadores de IA sobre negocios reales de Barcelona. Los datos, y qué se puede hacer.">
+<meta name="twitter:image" content="https://faro-digital.pages.dev/assets/logo-og.png">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article",
+ "headline":"Preguntamos a la IA por 7 negocios de Barcelona. Cinco no salían.",
+ "description":"Estudio propio: 91 preguntas a ChatGPT, Perplexity y Google sobre 7 negocios reales de Barcelona, con las respuestas guardadas. Qué determina que la IA recomiende un negocio local.",
+ "datePublished":"2026-08-22",
+ "dateModified":"2026-08-22",
+ "inLanguage":"es",
+ "isPartOf":{"@type":"Blog","name":"The Faro Signal","url":"https://faro-digital.pages.dev/signal.html"},
+ "author":{"@type":"Person","name":"Zyad Bennani"},
+ "publisher":{"@type":"Organization","name":"Faro Digital","url":"https://faro-digital.pages.dev/",
+   "logo":{"@type":"ImageObject","url":"https://faro-digital.pages.dev/assets/logo-og.png"}},
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://faro-digital.pages.dev/signal-03-radar-ia-barcelona"}}
+</script>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"es","mainEntity":[
+ {"@type":"Question","name":"¿Se puede pagar para salir en ChatGPT?",
+  "acceptedAnswer":{"@type":"Answer","text":"No. No existe ningún formulario ni sistema de anuncios para aparecer dentro de las respuestas de ChatGPT, Perplexity o Claude. Lo que sí se puede es trabajar las fuentes de las que estos buscadores se fían —fichas, reseñas, directorios y listados— y volver a medir si eso cambia lo que responden."}},
+ {"@type":"Question","name":"¿Por qué la IA no recomienda mi negocio si tengo buenas reseñas?",
+  "acceptedAnswer":{"@type":"Answer","text":"En nuestra medición, la nota no fue el factor decisivo: el volumen de reseñas y la presencia en fuentes citables sí. Un salón con la nota más alta de su zona no aparecía, mientras la IA recomendaba salones con peor nota pero con cientos de reseñas más. También pesa que la identidad del negocio sea consistente: si tu nombre aparece de varias formas distintas por internet, los buscadores no consiguen unir las piezas."}},
+ {"@type":"Question","name":"¿Los AI Overviews de Google aparecen en todas las búsquedas?",
+  "acceptedAnswer":{"@type":"Answer","text":"No. En tres búsquedas comerciales que probamos en Barcelona (agosto de 2026) Google no mostró ningún bloque de IA: respondió con el mapa de empresas, un extracto destacado y listados clásicos. Donde la IA decide hoy con claridad es en ChatGPT y Perplexity."}},
+ {"@type":"Question","name":"¿Cuánto tarda en mejorar la visibilidad en buscadores de IA?",
+  "acceptedAnswer":{"@type":"Answer","text":"No se puede garantizar un plazo ni un resultado, porque los motores cambian sus fuentes y sus respuestas. Lo que sí se puede hacer es medir el punto de partida, trabajar las palancas con evidencia y volver a medir a 30 y 60 días para ver si se mueve."}}
+]}
+</script>
+
+<link rel="stylesheet" href="assets/fuentes.css">
+<link rel="stylesheet" href="assets/profundidad.css">
+
+<style>
+:root{
+  --forest:#1E3A2E; --forest-deep:#12291F; --sand:#C9A667; --cream:#F5EFE4;
+  --ink:#17211C; --ink-soft:#5B6155; --line:#E2D9C6; --clay-deep:#743F28;
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--cream); color:var(--ink);
+     font-family:'Work Sans',Helvetica,Arial,sans-serif; font-size:17px; line-height:1.65}
+h1,h2,h3{font-family:'Frank Ruhl Libre',Georgia,'Times New Roman',serif; color:var(--forest); margin:0}
+a{color:var(--clay-deep)}
+.wrap{max-width:660px; margin:0 auto; padding:0 24px}
+
+header{background:var(--forest-deep); padding:30px 24px; text-align:center}
+header .brand{color:var(--sand); font-size:13px; letter-spacing:.14em; text-transform:uppercase; font-weight:700}
+header .issue{color:#D8E3DA; font-size:12px; margin-top:4px}
+
+.hero{padding:48px 0 8px}
+h1{font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.18; font-weight:500}
+.bajada{margin-top:18px; font-size:1.12rem; color:var(--ink-soft)}
+.meta{margin-top:22px; padding-top:16px; border-top:1px solid var(--line);
+      font-size:.86rem; color:var(--ink-soft)}
+
+main{padding:8px 0 40px}
+h2{font-size:1.45rem; margin:42px 0 14px; font-weight:500}
+h3{font-size:1.12rem; margin:28px 0 8px; font-family:'Work Sans',sans-serif; font-weight:700; color:var(--forest-deep)}
+p{margin:0 0 16px}
+ul{margin:0 0 16px; padding-left:22px}
+li{margin-bottom:8px}
+strong{color:var(--forest-deep)}
+
+table{width:100%; border-collapse:collapse; margin:20px 0; font-size:.94rem; background:#FBF7F0}
+th,td{padding:10px 12px; border:1px solid var(--line); text-align:left; vertical-align:top}
+th{background:var(--forest); color:var(--cream); font-weight:600}
+.tabla-scroll{overflow-x:auto}
+
+.dato{background:var(--forest-deep); color:var(--cream); padding:26px 28px; margin:30px 0; border-radius:3px}
+.dato .cifra{font-family:'Frank Ruhl Libre',serif; font-size:3rem; color:var(--sand); line-height:1}
+.dato p{color:#D8CFC0; margin:8px 0 0}
+
+.dato strong{color:var(--sand)}
+
+.nota{border-left:3px solid var(--sand); background:#FBF7F0; padding:16px 20px; margin:24px 0; font-size:.95rem}
+.nota p:last-child{margin-bottom:0}
+
+.metodo{border:1px solid var(--line); background:#FBF7F0; padding:20px 22px; margin:32px 0; font-size:.92rem}
+.metodo h3{margin-top:0}
+
+.cta{background:var(--forest); color:var(--cream); padding:32px 28px; margin:44px 0 0; text-align:center; border-radius:3px}
+.cta h2{color:var(--cream); margin-top:0}
+.cta p{color:#D8CFC0}
+.cta a{display:inline-block; margin-top:14px; background:var(--sand); color:var(--forest-deep);
+       padding:13px 26px; text-decoration:none; font-weight:700; border-radius:2px}
+
+footer{border-top:1px solid var(--line); margin-top:44px; padding:26px 0 50px;
+       font-size:.86rem; color:var(--ink-soft)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">The Faro Signal</div>
+  <div class="issue">Número 3 · 22 de agosto de 2026 · Faro Digital, Barcelona</div>
+</header>
+
+<div class="wrap">
+
+<div class="hero">
+  <h1>Preguntamos a la IA por 7 negocios de Barcelona. Cinco no salían.</h1>
+  <p class="bajada">Hicimos 91 preguntas a ChatGPT, Perplexity y Google sobre negocios reales de aquí —los que haría un cliente que aún no los conoce— y guardamos todas las respuestas. El resultado no fue el que esperábamos: la IA sí sabe quién eres. Simplemente no te recomienda.</p>
+  <p class="meta">Estudio propio · 7 negocios · 91 consultas · respuestas archivadas con fecha · agosto 2026</p>
+</div>
+
+<main>
+
+<p>Cada vez más gente pregunta antes de buscar. En vez de teclear «peluquería Gràcia» y mirar diez resultados, le dicen a ChatGPT <em>«recomiéndame una peluquería en Gràcia»</em> y se quedan con lo que salga. Google va por el mismo camino con sus respuestas generadas.</p>
+
+<p>Eso plantea una pregunta incómoda para cualquier negocio local: <strong>¿qué contesta la IA cuando le preguntan por un negocio como el mío?</strong> Nadie lo sabe, porque casi nadie lo ha mirado. Así que lo miramos.</p>
+
+<h2>Qué hicimos, exactamente</h2>
+
+<p>Elegimos siete negocios reales de Barcelona: comercios de barrio con años de historia y buena reputación, más nuestra propia agencia. A cada uno le construimos entre 13 y 17 preguntas de dos tipos:</p>
+
+<ul>
+  <li><strong>Preguntas de descubrimiento</strong> — las que hace alguien que <em>no</em> te conoce: «mejor pastelería en Gràcia», «dónde reparar una guitarra en Barcelona», «dónde comprar frutos secos a granel».</li>
+  <li><strong>Preguntas de marca</strong> — las que hace alguien que ya oyó tu nombre: «[nombre del negocio] opiniones», «¿es recomendable?».</li>
+</ul>
+
+<p>Las lanzamos contra Perplexity y Google, guardamos cada respuesta íntegra con su fecha, y puntuamos cada negocio del 0 al 100. Ningún negocio se nombra en este artículo: no son clientes nuestros y no nos han dado permiso para exponerlos. El único que sale con nombre y apellidos es el nuestro, con sus peores datos.</p>
+
+<h2>El resultado que no esperábamos</h2>
+
+<div class="dato">
+  <div class="cifra">100 / 0</div>
+  <p>Los negocios con historia sacaron <strong>100 sobre 100</strong> cuando la IA respondía a su nombre — y entre <strong>0 y 25</strong> cuando alguien preguntaba sin conocerlos.</p>
+</div>
+
+<p>Si le das el nombre, la IA lo hace bien: cuenta la historia del negocio, el año de fundación, qué vende, con qué reputación. Todo correcto.</p>
+
+<p>Si preguntas <em>«mejor pastelería en Gràcia»</em>, recomienda a otros.</p>
+
+<p><strong>Es exactamente el cliente equivocado el que te encuentra.</strong> Quien ya te conoce sigue llegando —te buscaría igual sin la IA—; quien todavía no te conoce, que es el único cliente nuevo que existe, no llega a descubrirte.</p>
+
+<h2>Tres cosas concretas que encontramos</h2>
+
+<h3>1. La IA puede estar juzgándote con la fuente equivocada</h3>
+
+<p>Una pastelería del estudio tiene <strong>más de 400 opiniones en Google</strong> y una nota por encima de 4. Preguntada por ella, la IA respondió que tiene <strong>«3,4 sobre 5»</strong> y que la experiencia es <em>«correcta pero irregular»</em>.</p>
+
+<p>¿De dónde salía ese 3,4? De otra plataforma, con <strong>una decena de opiniones</strong>. Cuarenta veces menos evidencia, y es la que contó. El negocio no tiene un problema de reputación: tiene un problema de qué reputación encuentra la IA primero.</p>
+
+<h3>2. La nota no gana. El rastro gana.</h3>
+
+<p>Un salón del estudio tiene <strong>la nota más alta de todo su sector en la zona: un 5,0 redondo</strong>, con más de 150 reseñas en Google y otras tantas en su plataforma de reservas. No apareció en ninguna de las trece preguntas de descubrimiento.</p>
+
+<p>¿Quién apareció? Varios salones con <strong>4,8</strong> — peor nota— pero con cientos de reseñas más, web propia indexada y presencia en los listados del barrio que la IA consulta.</p>
+
+<div class="nota">
+  <p><strong>La lectura es dura pero útil:</strong> estos buscadores no premian al mejor. Premian al que pueden verificar en varios sitios a la vez. La excelencia sin rastro comprobable, para una IA, no existe.</p>
+</div>
+
+<h3>3. Si tu nombre baila, la IA se rinde</h3>
+
+<p>El caso más llamativo del estudio: un negocio con <strong>varios cientos de reseñas reales</strong> sumando sus dos plataformas principales. Al preguntar por él por su nombre completo, la respuesta fue literal:</p>
+
+<p><em>«No aparece una ficha clara con valoraciones verificables de ese local.»</em></p>
+
+<p>Investigando encontramos la causa: ese negocio arrastra <strong>cinco versiones de su propio nombre</strong> repartidas por internet —dos fichas de mapas con direcciones distintas y tres nombres históricos en su plataforma de reservas, uno de ellos de hace años y todavía vivo en el índice de los buscadores—. La IA no consigue unir las piezas, y ante la duda no recomienda.</p>
+
+<h2>¿Y nosotros?</h2>
+
+<p><strong>Faro Digital saca 1 sobre 100</strong> en su propia medición. Preguntada por nosotros, la IA habla de una ONG argentina que se llama igual, nos cuelga la valoración de una empresa de iluminación que también comparte el nombre, y describe servicios que no prestamos.</p>
+
+<p>Lo publicamos porque un diagnóstico que no te aplicas tú primero no vale nada. Y porque ilustra el punto tres mejor que ningún ejemplo ajeno: no es que hagamos mal el trabajo, es que <strong>nuestro rastro está confundido con el de otros</strong>. Es exactamente lo que estamos arreglando, y lo contaremos con el número delante.</p>
+
+<h2>Un matiz importante, para no vender humo</h2>
+
+<p>Se dice mucho que los buscadores de IA ya dominan las búsquedas locales. En nuestras pruebas <strong>eso no fue así en Google</strong>: en tres búsquedas comerciales hechas desde Barcelona, Google no mostró ningún bloque de respuesta generada. Respondió como siempre: el mapa de empresas, un extracto destacado y una lista de enlaces.</p>
+
+<div class="tabla-scroll">
+<table>
+  <tr><th>Dónde</th><th>Qué manda hoy (agosto 2026)</th></tr>
+  <tr><td><strong>Google</strong></td><td>Tu ficha de empresa con reseñas, el extracto destacado y los listados. La IA aparece a veces, no siempre</td></tr>
+  <tr><td><strong>ChatGPT y Perplexity</strong></td><td>Aquí sí decide la IA, siempre. Y casi nadie está mirando qué dice</td></tr>
+</table>
+</div>
+
+<p>Contarlo así es menos espectacular que el titular de moda, pero es lo que medimos.</p>
+
+<h2>Qué se puede hacer (y qué no)</h2>
+
+<p><strong>Lo que no se puede:</strong> pagar por salir. No existe ningún anuncio ni formulario para aparecer dentro de las respuestas de ChatGPT o Perplexity. Quien te lo venda, te está vendiendo humo.</p>
+
+<p><strong>Lo que sí se puede</strong>, por orden de lo que más movió la aguja en los siete casos:</p>
+
+<div class="tabla-scroll">
+<table>
+  <tr><th>Acción</th><th>Por qué importa</th></tr>
+  <tr><td><strong>Un solo nombre, idéntico en todas partes</strong></td><td>Es lo que permite a la IA saber que todas las versiones que encuentra son el mismo negocio. Sin esto, lo demás rinde a medias</td></tr>
+  <tr><td><strong>Tener web propia y que esté indexada</strong></td><td>Todos los negocios que la IA recomendó tenían web propia. Los que no salían, no</td></tr>
+  <tr><td><strong>Estar en los listados que la IA cita</strong></td><td>En cada búsqueda, la IA se apoya en dos o tres listas del sector o del barrio. Se pueden identificar y estar en ellas</td></tr>
+  <tr><td><strong>Volumen de reseñas, no solo nota</strong></td><td>La diferencia entre salir y no salir estuvo más en el número de reseñas que en la puntuación</td></tr>
+  <tr><td><strong>Responder todas las reseñas</strong></td><td>Es señal de negocio activo, y además influye en quien te lee antes de decidir</td></tr>
+</table>
+</div>
+
+<div class="metodo">
+  <h3>Método, para quien quiera reproducirlo</h3>
+  <p>7 negocios de Barcelona · 91 consultas en total (13-17 por negocio, mezcla de descubrimiento y marca) · ejecutadas contra Perplexity (API, modelo <code>sonar</code>) y Google (manual, ventana de incógnito desde Barcelona) entre el 21 y el 22 de agosto de 2026 · cada respuesta archivada íntegra con su fecha · puntuación 0-100 ponderando descubrimiento (70 %) y marca (30 %).</p>
+  <p><strong>Limitaciones, dichas claramente:</strong> es una foto de dos días, no una serie. Estos buscadores cambian sus respuestas según la sesión y la ubicación. Un solo motor cubierto al completo (Perplexity) y otro parcialmente (Google). La comparación que vale es la evolución mes a mes con el mismo método, y eso es lo que estamos midiendo ahora.</p>
+</div>
+
+<div class="cta">
+  <h2>¿Quieres saber tu número?</h2>
+  <p>Hago la misma medición para tu negocio y te digo qué responde la IA cuando preguntan por lo que tú vendes — y a quién recomienda en tu lugar. Sin coste y sin compromiso.</p>
+  <a href="/#contacto">Pedir mi medición</a>
+</div>
+
+</main>
+
+<footer>
+  <div>Zyad Bennani · Faro Digital · Barcelona · <a href="mailto:zyadbennani2000@gmail.com">zyadbennani2000@gmail.com</a></div>
+  <div style="margin-top:8px">Todos los datos de este artículo proceden de mediciones propias con las respuestas archivadas. Ningún negocio del estudio es cliente de Faro Digital salvo donde se indica, y ninguno se nombra. <a href="/signal.html">Ver todos los números de The Faro Signal</a></div>
+</footer>
+
+</div>
+
+<script src="/assets/medicion.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,593 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   EL MARCO DE FARO — la capa constante de los seis casos
+   ═══════════════════════════════════════════════════════════════════════════
+
+   Seis casos con seis direcciones artísticas distintas necesitan algo que los
+   haga un portfolio y no seis webs sueltas. Ese algo NO puede ser el color:
+   `SISTEMA-MARCA.md` §4 lo prohibe expresamente —«las marcas de los casos de
+   estudio no se mezclan nunca con la de Faro»— y ademas seis paletas iguales
+   serían seis casos iguales, que es justo lo que no queremos.
+
+   Lo que comparten es esto:
+
+     · la barra de arriba y el bloque de cierre  — el marco visible
+     · la MISMA curva de animacion               — todo se mueve igual
+     · la MISMA escala tipografica               — mismos tamaños, otras familias
+     · la misma apertura de tres lineas          — sector · problema · muestra
+
+   La coherencia no la da el color: la da como se mueven las cosas y como esta
+   montada la pagina. Cada caso pinta encima lo que quiera.
+
+   ── Como se usa en un caso ──
+   1. <link rel="stylesheet" href="assets/_marco/faro-marco.css">
+   2. <body data-caso="2" data-tono="claro">   (tono = fondo del caso)
+   3. Redefinir SOLO las variables de --caso-* en el <style> de la pagina.
+      Las de --fx-* no se tocan: son el marco.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Las fuentes ya NO se declaran aquí ──────────────────────────────────────
+   Estaban declaradas dos veces —aquí y en `Sitio-Web/assets/`— apuntando a
+   dos copias distintas de los mismos cuatro .woff2, y con otro rango de
+   pesos (400-600 frente a 400-700). Dos copias del mismo archivo no son un
+   problema de KB: son dos definiciones de la misma familia, y cuál gana
+   depende de qué hoja cargue después.
+
+       Una fuente declarada dos veces es una fuente que un día
+       se va a ver distinta en dos páginas del mismo sitio.
+
+   Ahora las declara `/assets/base.css`, generado desde los tokens, y hay
+   una sola ruta: `/assets/fuentes/`. (30-ago-2026) */
+@font-face{ font-family:"Work Sans"; font-style:normal; font-weight:400 600; font-display:swap;
+  src:url(fuentes/WorkSans-latin.woff2) format("woff2");
+  unicode-range:U+0-FF,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face{ font-family:"Work Sans"; font-style:normal; font-weight:400 600; font-display:swap;
+  src:url(fuentes/WorkSans-latin-ext.woff2) format("woff2");
+  unicode-range:U+100-2BA,U+2BD-2C5,U+2C7-2CC,U+2CE-2D7,U+2DD-2FF,U+304,U+308,U+329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+
+:root{
+  /* Paleta de Faro. Solo la usa el marco; el cuerpo del caso tiene la suya. */
+  --fx-papel:#F5EFE4;  --fx-verde:#12291F;  --fx-verde-medio:#1E3A2E;
+  --fx-oro:#C9A667;    --fx-tinta:#17211C;  --fx-linea:#E2D9C6;
+
+  /* ── EL ORO NO ESCRIBE SOBRE PAPEL ──────────────────────────────
+     🔴 Medido el 25-ago-2026 sobre el índice del portfolio: el oro de marca
+     sobre papel da **2,01:1**, y el mínimo de WCAG para texto pequeño es 4,5:1.
+     Los rótulos de sección llevaban meses publicados por debajo del mínimo.
+
+     La primera respuesta fue un segundo oro oscurecido (`#876830`, 4,53:1) solo
+     para texto. **Retirado el mismo día por Zyad**, y el motivo vale para
+     cualquier color: pasaba la medida y rompía la marca. Dos oros en la paleta
+     son dos fuentes de verdad para el mismo color, y el oscuro no se lee como
+     oro — se lee como mostaza.
+
+         Un color que hay que oscurecer para poder leerlo
+         no es ese color: es otro.
+
+     LA REGLA, entera y sin excepciones:
+
+       Fondo oscuro  →  el oro ESCRIBE.  6,70:1 sobre verde profundo.
+       Fondo claro   →  el oro es GRAFISMO: una línea, un punto, una marca,
+                        un relleno. Nunca tinta. Si algo tiene que decirse
+                        en oro sobre papel, se dice DENTRO de un relleno oro
+                        — el CTA de la barra es exactamente eso — o el
+                        bloque entero se va a fondo verde.
+
+     La comprueba una máquina, no un documento: `verificar-publicado.py --oro`
+     mide el tono ya compuesto página por página. Una prohibición que solo vive
+     escrita se salta a los tres meses. */
+
+  /* LA CURVA. Una sola, en los seis casos y en todo lo que se mueva.
+     Es el detalle que mas hace que seis paginas distintas se sientan de la
+     misma mano — mas que cualquier color. Sale suave y frena largo. */
+  /* 🔴 ESTAS CUATRO YA NO SON VALORES: SON ALIAS DEL SISTEMA (25-ago-2026).
+     Hasta hoy el portfolio se movía a 340 / 620 / 980 ms, la home a otros
+     números y Remotion a un tercero. Tres sistemas de movimiento para una sola
+     marca — y eso no se ve en una pieza, se ve al poner un reel al lado de la
+     web y notar que no son del mismo sitio sin poder decir por qué.
+
+     Ahora los valores viven en `Marca/marca.tokens.json` y salen generados en
+     `Sitio-Web/assets/motion.css` con `Marca/generar-movimiento.py`. Los cuatro
+     nombres de aquí se conservan porque los usan doce reglas de este archivo y
+     seis páginas: renombrarlos en todas de golpe habría sido un cambio ciego.
+
+         Un alias es una mudanza sin obra.
+         Se cambia de dónde viene el valor, no quién lo usa.
+
+     El respaldo detrás de la coma es literal: si un día esta hoja se usa sin
+     `motion.css` al lado, el portfolio sigue moviéndose — con los números de
+     antes, que es peor que los nuevos pero muchísimo mejor que sin transición. */
+  --fx-curva: var(--m-entrada, cubic-bezier(.22,1,.36,1));
+  --fx-rapido:var(--m-rapido,  340ms);
+  --fx-medio: var(--m-base,    620ms);
+  --fx-lento: var(--m-lento,   980ms);
+
+  /* LA ESCALA. Los tamaños son constantes; las familias las elige cada caso.
+     Asi dos casos con tipografias opuestas siguen teniendo el mismo ritmo de
+     lectura, que es lo que el ojo reconoce como «el mismo sitio».
+
+     🔴 SEIS ESCALONES, Y HASTA HOY ERAN SEIS QUE NADIE USABA (25-ago-2026).
+        Medido con `jurado.py` sobre produccion: entre 11 y 17 tamaños
+        computados por pagina. Los seis tokens existian y cada caso escribia
+        los suyos al lado — `1.9rem` aqui, `clamp(2rem,…)` alla — asi que la
+        escala compartida decoraba el archivo y no gobernaba nada.
+
+            Un sistema que se puede esquivar sin darse cuenta
+            no es un sistema: es una recomendacion con sintaxis.
+
+     Y en la revision salieron DOS problemas de la propia escala:
+
+     1. `--fx-sello` (11,5 px) y `--fx-pie` (12,8 px) estaban a 1,3 px. Nadie
+        percibe eso como jerarquia: son dos nombres para el mismo tamaño, y
+        gastaban un escalon de seis. **Se fusionan hacia arriba** —al mayor,
+        que es el legible— y `--fx-pie` se queda como alias para no tocar las
+        veintitantas reglas que ya lo usan.
+
+     2. Faltaba el escalon de la CIFRA. Tres de los seis casos son de datos y
+        enseñan numeros grandes; sin un token para eso, cada uno se invento el
+        suyo, y de ahi salian la mitad de los tamaños sobrantes. Entra
+        `--fx-cifra`, entre el titulo y la entradilla.
+
+     Siguen siendo seis. */
+  /* 🔴 30-ago-2026: LOS SEIS YA NO SE DEFINEN AQUÍ. Se midió el sitio entero y
+     había DOCE tamaños: estos seis en las siete páginas del portfolio, y otros
+     seis en la home, sin un solo valor en común. Cada una pasaba el criterio
+     A8 por su cuenta; el conjunto no, porque se contaba por página.
+
+         Un cliente no abre una página: abre dos pestañas.
+
+     Los valores viven en `Marca/marca.tokens.json` y salen generados en
+     `/assets/base.css`. Estos nombres se quedan como alias porque los usan
+     treinta reglas de este archivo — misma mudanza sin obra que se hizo con
+     las duraciones de movimiento veinte líneas más arriba.
+
+     El respaldo detrás de la coma es literal y es el que ya servían estas
+     siete páginas: si un día falta `base.css`, el portfolio se ve como hoy en
+     vez de caer al tamaño por defecto del navegador. */
+  --fx-display:var(--f-display, clamp(3.1rem, 1.5rem + 5.6vw, 7rem));
+  --fx-titulo: var(--f-titulo,  clamp(2.3rem, 1.3rem + 3.4vw, 4.5rem));
+  --fx-cifra:  var(--f-cifra,   clamp(1.9rem, 1.2rem + 1.9vw, 2.75rem));
+  --fx-lede:   var(--f-lede,    clamp(1.2rem, 1rem + .7vw, 1.62rem));
+  --fx-cuerpo: var(--f-cuerpo,  clamp(1rem, .96rem + .18vw, 1.12rem));
+  --fx-sello:  var(--f-sello,   .8rem);
+  --fx-pie:    var(--fx-sello);
+
+  --fx-margen:clamp(20px, 5vw, 96px);
+  --fx-barra-alto:56px;
+
+  /* Cada caso redefine estas cuatro y con eso cambia de piel entera. */
+  --caso-fondo:var(--fx-papel);
+  --caso-tinta:var(--fx-tinta);
+  /* 🔴 68 % Y NO 62 %, medido el 30-ago-2026. Al 62 % este gris da 4,46:1
+     sobre papel: por debajo del 4,5 de WCAG AA para texto normal, y no en una
+     pagina sino en 115 bloques de siete de las ocho. Un texto secundario puede
+     ser mas claro que el principal; no puede dejar de leerse.
+         Un valor heredado no es un valor medido.
+     El numero vive en `marca.tokens.json` y sale en `--f-suave`; aqui queda el
+     alias con su respaldo literal. */
+  --caso-suave:color-mix(in srgb, var(--caso-tinta) var(--f-suave-pct, 68%), transparent);
+  --caso-acento:var(--fx-oro);
+  --caso-display:"Frank Ruhl Libre", Georgia, serif;
+  --caso-texto:"Work Sans", system-ui, sans-serif;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+body{
+  margin:0; background:var(--caso-fondo); color:var(--caso-tinta);
+  font-family:var(--caso-texto); font-size:var(--fx-cuerpo); line-height:1.6;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+img,video,canvas,svg{ max-width:100%; height:auto; display:block; }
+a{ color:inherit; }
+
+/* Contenedor. Nunca a sangre por accidente: quien quiera sangre la pide. */
+/* 🔴 `min-width:0` NO ES DECORACION, y esto ya nos pasó una vez (20-ago, en
+   `levels.html`): un hijo de grid o de flex tiene `min-width:auto`, así que NO
+   PUEDE encogerse por debajo del ancho mínimo de su contenido. En la portada de
+   Brasa & Sal, un rótulo con `width:max-content` de 420 px estiraba la caja a
+   460 px dentro de una ventana de 390.
+
+   Y no se veía en ninguna puerta, porque `.portada` lleva `overflow:hidden`:
+
+       El titular, la bajada y la píldora salían CORTADOS a media palabra en
+       un móvil, y `scrollWidth` marcaba 390 — verde.
+
+   `overflow:hidden` no arregla un desbordamiento: lo esconde, y de paso lo
+   esconde del comprobador. Un recorte silencioso es peor que una barra
+   horizontal, porque la barra al menos se ve.
+
+   El arreglo del 20-ago se hizo en una página. Va aquí, que es el marco, para
+   que valga para las seis. */
+.fx-ancho{ width:100%; min-width:0; max-width:1180px; margin-inline:auto; padding-inline:var(--fx-margen); }
+
+
+/* ── LA BARRA ────────────────────────────────────────────────────────────────
+   Fina, fija y del color del caso. Es lo unico que ve el visitante todo el rato,
+   asi que es donde vive la marca. Se adapta al tono del fondo con `data-tono`
+   en vez de con dos clases, porque el tono lo decide el caso, no el marco. */
+.fx-barra{
+  position:fixed; inset:0 0 auto 0; z-index:90; height:var(--fx-barra-alto);
+  display:flex; align-items:center; gap:18px;
+  padding-inline:var(--fx-margen);
+  font-family:"Work Sans", system-ui, sans-serif;
+  font-size:var(--fx-sello); font-weight:600; letter-spacing:.13em; text-transform:uppercase;
+  background:color-mix(in srgb, var(--caso-fondo) 82%, transparent);
+  backdrop-filter:saturate(1.4) blur(14px);
+  -webkit-backdrop-filter:saturate(1.4) blur(14px);
+  border-bottom:1px solid color-mix(in srgb, var(--caso-tinta) 12%, transparent);
+  transition:transform var(--fx-medio) var(--fx-curva);
+}
+/* Al bajar se esconde, al subir vuelve. En un caso que se mira, la barra
+   compite con la pieza; al subir el visitante quiere navegar otra vez. */
+.fx-barra[data-oculta="si"]{ transform:translateY(-100%); }
+
+/* 🔴 30-ago-2026 · LA BARRA NO PUEDE TENER ALTURA FIJA CUANDO SU CONTENIDO SE
+   PARTE EN DOS FILAS, y esto estuvo en producción unas horas.
+   Al añadir la navegación a los casos, en móvil la barra pasa a dos filas —
+   marca y acción arriba, menú debajo—. Pero aquí seguía valiendo
+   `height:56px`, así que **el fondo cubría solo la primera fila** y el menú se
+   imprimía encima del texto de la página. En Brasa & Sal, «MÉTODO» y «cualquier
+   hora» ocupaban los mismos píxeles y no se leía ninguna.
+
+       Una barra fija con altura fija es una promesa de que su contenido
+       nunca crecerá. En cuanto crece, el fondo deja de taparlo y lo que
+       queda no es una barra: es texto suelto sobre otro texto.
+
+   Lo encontró el jurado externo mirando; ninguna de las ocho puertas lo veía,
+   porque no es desbordamiento, ni contraste, ni recorte: es una capa fija sin
+   suelo. Va a hacer falta una puerta para esto.
+
+   `min-height` y no `height`: la barra reserva su alto de siempre y crece si
+   hace falta. Y el hueco que dejan las páginas debajo se calcula con la misma
+   variable, así que sube con ella. */
+@media (max-width:900px){
+  :root{ --fx-barra-alto:104px; }
+  .fx-barra{ height:auto; min-height:var(--fx-barra-alto); }
+}
+/* Sobre el cierre —que es verde profundo en los seis casos, sea cual sea el
+   tono de la pagina— la barra se invierte. Sin esto se quedaba clara encima de
+   un bloque oscuro y parecia un trozo de otra web pegado arriba. */
+.fx-barra[data-sobre="oscuro"]{
+  background:color-mix(in srgb, var(--fx-verde) 82%, transparent);
+  color:var(--fx-papel);
+  border-bottom-color:color-mix(in srgb, var(--fx-papel) 14%, transparent);
+}
+.fx-barra{ transition:transform var(--fx-medio) var(--fx-curva),
+           background var(--fx-rapido) var(--fx-curva), color var(--fx-rapido) var(--fx-curva); }
+
+.fx-barra a{ text-decoration:none; display:inline-flex; align-items:center; gap:9px; }
+.fx-barra .marca svg{ width:15px; height:auto; }
+.fx-barra .marca span{ letter-spacing:.16em; }
+.fx-barra .cuenta{ margin-left:auto; opacity:.55; font-variant-numeric:tabular-nums; }
+/* 🔴 EL CTA ES EL UNICO ACENTO, y va en RELLENO, no en tinta (25-ago-2026).
+   Antes era texto del color del acento. Sobre papel eso es oro sobre claro
+   — 2,01:1 — y sobre un caso de fondo claro, lo mismo con su color propio.
+   En relleno se lee en los dos fondos, y de paso deja de competir con los
+   rotulos: un elemento relleno es un acento mas fuerte que seis palabras
+   doradas repartidas por la pagina. */
+.fx-barra .sig{
+  color:var(--fx-verde); background:var(--fx-oro);
+  padding:7px 15px; border-radius:100px; letter-spacing:.12em;
+  transition:background var(--fx-rapido) var(--fx-curva),
+             color var(--fx-rapido) var(--fx-curva);
+}
+.fx-barra .sig:hover{ background:var(--fx-tinta); color:var(--fx-papel); }
+.fx-barra .sig::after{ content:"→"; margin-left:6px; transition:transform var(--fx-rapido) var(--fx-curva); display:inline-block; }
+.fx-barra .sig:hover::after{ transform:translateX(5px); }
+@media (max-width:640px){ .fx-barra .cuenta{ display:none; } }
+
+/* ── LA APERTURA — tres lineas, iguales en los seis ──────────────────────────
+   Sector · el problema en UNA frase · la etiqueta de muestra. La etiqueta va
+   arriba y visible sin hacer scroll: un portfolio honesto no esconde que sus
+   casos son de muestra en un pie de pagina. */
+/* 🔴 Menos aire. Estaba en 9vh arriba y 7vh abajo, y sumado al relleno de la
+   primera sección daba casi una pantalla de nada entre el titular y el primer
+   contenido. El aire de una portada tiene que dejar respirar al titular, no
+   esconder lo que viene después. */
+
+/* ══ FASE 2 DEL TALLER · 1-sep-2026 — UN SITIO, NO UNA CARPETA ═══════════════
+   El jurado del 30-ago: «ocho páginas, seis acentos y dos familias de titular
+   no leen como un sitio: leen como una carpeta».
+
+   Medido antes de tocar nada: **la familia de titular ya estaba unificada** en
+   los seis, y la cabecera también. Lo que quedaba eran los acentos.
+
+   Y los cinco sitios donde el marco usaba `--caso-acento` son todos CROMO —el
+   kicker de sector, la viñeta de la píldora, el foco de teclado, el hover de
+   los mandos—. Ninguno es del módulo del cliente.
+
+       El color del cliente se había salido de su módulo al cromo.
+       Por eso ocho páginas leen como ocho carpetas.
+
+   🔴 Y no vale poner el oro y ya. Regla de marca del 25-ago: sobre fondo claro
+      el oro es grafismo y nunca tinta (2,01:1), y cuatro de los seis casos
+      tienen fondo claro. El acento único no es un color: son dos papeles.
+
+           grafismo (viñeta, foco, borde)  →  oro, sobre cualquier fondo
+           tinta    (los kickers)          →  verde sobre claro, crema sobre oscuro
+
+   `--caso-acento` NO desaparece: sigue disponible para lo que sea del cliente
+   dentro de su propia pieza. Lo que deja de hacer es teñir el cromo.
+   ═════════════════════════════════════════════════════════════════════════ */
+:root{
+  /* El grafismo del cromo, igual en las ocho páginas. */
+  --fx-grafismo:var(--fx-oro);
+  /* La tinta de los kickers. Cada caso declara si su fondo es claro u oscuro
+     y esta variable se resuelve sola — ver `.caso-oscuro` más abajo. */
+  --fx-tinta-acento:var(--fx-verde);
+}
+/* Un caso con fondo oscuro invierte la tinta, no el grafismo: el oro escribe
+   sobre oscuro (6,70:1) y ahí sí puede ser tinta, pero se usa el crema para
+   que los seis kickers tengan el mismo peso visual. */
+
+/* 🔴 1-sep · Y NO SE RESUELVE POR PAGINA, SE RESUELVE POR TRAMO.
+   Medido en las seis: NINGUNA es toda clara ni toda oscura. El mismo `.sello`
+   cae sobre papel en una seccion y sobre carbon en la siguiente — Brasa 5
+   kickers, 3 oscuros y 2 claros. Una tinta por pagina deja la mitad a 1,06:1.
+       El tono no es una propiedad de la pagina: es una propiedad del tramo.
+   Por eso cada caso engancha la tinta donde YA invierte su fondo. */
+.fx-cierre{ --fx-tinta-acento:var(--fx-papel); }   /* el bloque verde de Faro */
+
+
+
+.fx-apertura .muestra{
+  display:inline-flex; align-items:center; gap:9px; margin-top:34px;
+  padding:7px 15px 7px 12px; border-radius:100px;
+  border:1px solid color-mix(in srgb, var(--caso-tinta) 22%, transparent);
+  font-size:var(--fx-pie); letter-spacing:.02em; text-transform:none;
+  font-weight:400; color:var(--caso-suave);
+}
+.fx-apertura .muestra::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--fx-grafismo); flex:none;
+}
+
+/* ── EL CIERRE — capacidades, CTA y navegacion ───────────────────────────────
+   Siempre verde profundo, en los seis, sea cual sea el tono del caso. Es el
+   momento en que la pagina deja de ser del cliente y vuelve a ser de Faro. */
+.fx-cierre{
+  background:var(--fx-verde); color:var(--fx-papel);
+  padding-block:clamp(48px,6vw,84px);
+  /* 🔴 Aquí había un `margin-top` de hasta 140 px ADEMÁS del relleno de la
+     última sección. Dos separaciones seguidas del mismo sitio: la de fuera del
+     cierre y la de dentro de la sección anterior. Se ve como una pantalla en
+     blanco justo antes del bloque verde. Una separación, no dos. */
+}
+.fx-cierre h2{
+  font-family:"Frank Ruhl Libre", Georgia, serif; font-weight:500;
+  font-size:var(--fx-titulo); line-height:1.1; margin:0 0 8px; letter-spacing:-.01em;
+}
+.fx-cierre .sello{
+  font-size:var(--fx-sello); font-weight:600; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--fx-oro); margin:0 0 20px;
+}
+.fx-skills{ display:flex; flex-wrap:wrap; gap:9px; margin:30px 0 0; padding:0; list-style:none; }
+.fx-skills li a, .fx-skills li{
+  display:block; padding:9px 16px; border-radius:100px; text-decoration:none;
+  border:1px solid color-mix(in srgb, var(--fx-papel) 24%, transparent);
+  font-size:var(--fx-pie); color:var(--fx-linea);
+  transition:border-color var(--fx-rapido) var(--fx-curva), color var(--fx-rapido) var(--fx-curva);
+}
+
+
+.fx-acciones{ display:flex; flex-wrap:wrap; gap:14px; margin-top:38px; }
+.fx-btn{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:15px 26px; border-radius:100px; text-decoration:none;
+  font-size:var(--fx-pie); font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+  background:var(--fx-oro); color:var(--fx-verde);
+  transition:transform var(--fx-rapido) var(--fx-curva);
+}
+.fx-btn.hueco{ background:transparent; color:var(--fx-linea); border:1px solid color-mix(in srgb, var(--fx-papel) 28%, transparent); }
+.fx-btn:hover{ transform:translateY(-2px); }
+
+/* El siguiente caso, asomando. Que se puedan ver los seis seguidos sin volver
+   nunca al indice — es la diferencia entre un portfolio y una carpeta. */
+.fx-siguiente{
+  display:block; text-decoration:none; margin-top:clamp(50px,7vw,90px);
+  padding-top:clamp(34px,4vw,54px);
+  border-top:1px solid color-mix(in srgb, var(--fx-papel) 18%, transparent);
+}
+/* `display:block`, porque el rotulo lo escribe el JavaScript en un <span> y
+   sin esto se pegaba al titular en la misma linea. Afecta a las seis paginas:
+   por eso vive aqui y no en el CSS de cada caso. */
+.fx-siguiente .et{ display:block; font-size:var(--fx-sello); letter-spacing:.18em; text-transform:uppercase; color:var(--fx-oro); }
+.fx-siguiente .tit{
+  display:block;
+  font-family:"Frank Ruhl Libre", Georgia, serif; font-weight:500;
+  font-size:var(--fx-titulo); line-height:1.12; margin-top:12px; max-width:22ch;
+  transition:transform var(--fx-medio) var(--fx-curva);
+}
+.fx-siguiente:hover .tit{ transform:translateX(10px); }
+.fx-pie{
+  margin-top:clamp(44px,6vw,72px); padding-top:26px;
+  border-top:1px solid color-mix(in srgb, var(--fx-papel) 14%, transparent);
+  display:flex; flex-wrap:wrap; gap:8px 26px; align-items:center;
+  font-size:var(--fx-pie); color:color-mix(in srgb, var(--fx-linea) 70%, transparent);
+}
+.fx-pie a{ text-decoration:none; }
+.fx-pie a:hover{ color:var(--fx-oro); }
+
+/* ── LA APARICION — un solo gesto para todo el portfolio ─────────────────────
+   Todo lo que entra lo hace igual: 18 px de subida y opacidad, con LA curva.
+   Es barato y es lo que mas hace por la sensacion de acabado. */
+.fx-in{ opacity:0; transform:translateY(18px); }
+.fx-in.visto{ opacity:1; transform:none;
+  transition:opacity var(--fx-medio) var(--fx-curva), transform var(--fx-medio) var(--fx-curva); }
+.fx-in[data-espera="1"].visto{ transition-delay:var(--m-paso, 90ms); }
+/* 🔴 Eran 90 / 180 / 270 ms escritos a mano. El sistema de movimiento fija el
+   escalonado entre hermanos en `--m-paso` (55 ms), y tener DOS escalonados en
+   la misma marca —uno en el portfolio y otro en la home— es exactamente el
+   problema que el sistema vino a cerrar. Se expresan como múltiplos del paso:
+   así se ve, leyendo, que el segundo entra un paso después que el primero. */
+.fx-in[data-espera="2"].visto{ transition-delay:calc(var(--m-paso, 90ms) * 2); }
+.fx-in[data-espera="3"].visto{ transition-delay:calc(var(--m-paso, 90ms) * 3); }
+
+/* Sin JavaScript, o con animaciones reducidas, TODO se ve. El estado de reposo
+   es el que funciona, no el que espera a que algo lo termine. */
+html.sin-js .fx-in{ opacity:1; transform:none; }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  .fx-in{ opacity:1 !important; transform:none !important; transition:none !important; }
+  *,*::before,*::after{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
+}
+
+/* Foco visible. En una pagina que va de calidad, esto no es un extra.
+   🔴 1-sep · ESTABA EN ORO, Y SOBRE PAPEL EL ORO DA 2,08:1. La regla del
+   25-ago dice que sobre claro el oro es grafismo y nunca tinta, y de ahi
+   salio ponerlo aqui. Pero un anillo de foco NO es grafismo decorativo: es
+   un limite de interfaz, y WCAG 1.4.11 le pide 3:1. Un filete que no se ve
+   sigue siendo un filete; un foco que no se ve deja de decir donde estas.
+       El oro decora sobre cualquier fondo. No delimita sobre claro.
+   Con la tinta: 13,9:1 sobre papel y 15,5:1 sobre carbon. */
+/* 🔴 Y CON UN SOLO COLOR TAMPOCO. Medido despues de cambiarlo a la tinta: la
+   cabecera fija es una barra oscura sobre paginas claras, y el foco verde
+   caia ahi a 1,10:1 — peor que el oro, que daba 4,4. Lo mismo en los modulos
+   oscuros de Aura (1,18) y en la cortina de Verbena (1,23).
+       Un aro de un solo color no puede estar bien en un sitio que
+       alterna claro y oscuro: sea cual sea, hay islas del otro tono.
+   Van DOS aros de luminancia opuesta, uno pegado al otro: sobre claro se ve
+   el verde, sobre oscuro se ve el crema, y no hay que saber donde cae. Es la
+   unica forma que no depende de mantener una lista de islas. */
+:where(a,button,[tabindex]):focus-visible{
+  outline:2px solid var(--fx-verde); outline-offset:3px; border-radius:3px;
+  box-shadow:0 0 0 5px var(--fx-papel);
+}
+.fx-salta{
+  position:absolute; left:-9999px; top:0; z-index:100;
+  background:var(--fx-verde); color:var(--fx-papel); padding:12px 20px; text-decoration:none;
+}
+.fx-salta:focus{ left:0; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   FICHA DE LA PIEZA — criterio A2 de la rúbrica
+   ══════════════════════════════════════════════════════════════════════════
+   «Ficha de la pieza: qué demuestra y a quién. Sin las dos respuestas,
+   máximo 2.» Va DEBAJO de la pieza y a la vista: es parte del argumento de
+   venta, no una nota de auditoría.
+
+   Filete arriba y nada más: la pieza ya tiene su caja, y meter la ficha en
+   otra caja las convierte en dos cosas en vez de una cosa y su pie.
+   ══════════════════════════════════════════════════════════════════════════ */
+.fx-ficha{
+  margin-top:clamp(18px,2vw,28px); padding-top:clamp(16px,1.8vw,24px);
+  border-top:1px solid var(--fx-linea, #E2D9C6);
+  display:grid; gap:clamp(14px,1.8vw,30px);
+  grid-template-columns:repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+}
+.fx-ficha > div{ margin:0; }
+.fx-ficha dt{
+  margin:0 0 7px; font-size:var(--fx-sello); font-weight:600;
+  letter-spacing:.14em; text-transform:uppercase;
+  color:var(--fx-tinta-acento);
+}
+.fx-ficha dd{
+  margin:0; font-size:var(--fx-cuerpo); line-height:1.55;
+  color:var(--caso-tinta, var(--fx-tinta)); max-width:46ch;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   REVELADO AL SCROLL — la gramática, tres grados
+   ══════════════════════════════════════════════════════════════════════════
+   Antes había que poner `.fx-in` a mano elemento por elemento, y por eso
+   había cinco por página en páginas de cien bloques: el efecto existía y no
+   se veía. Ahora lo pone el marco solo (ver `faro-marco.js`).
+
+   🔴 Y de ahí sale la garantía sin red: si el JavaScript no corre, no
+   etiqueta; si no etiqueta, no esconde. Nada que rescatar.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* 1 · BLOQUE — lo normal. */
+.fx-sube{ opacity:0; transform:translateY(22px);
+  transition:opacity var(--fx-medio) var(--fx-curva),
+             transform var(--fx-medio) var(--fx-curva);
+  transition-delay:calc(var(--fx-paso, 70ms) * var(--fx-i, 0)); }
+.fx-sube.visto{ opacity:1; transform:none; }
+
+/* 2 · FRASE — palabra a palabra. Solo en titulares: en un párrafo entero el
+      ojo persigue palabras sueltas y se lee peor, no mejor. */
+.fx-frase{ display:inline-block; }
+.fx-frase > i{ display:inline-block; font-style:inherit;
+  opacity:0; transform:translateY(.42em);
+  transition:opacity var(--m-base) var(--fx-curva),
+             transform var(--m-base) var(--fx-curva);
+  transition-delay:calc(38ms * var(--fx-w, 0)); }
+.fx-frase.visto > i{ opacity:1; transform:none; }
+
+/* 3 · SUBIR — desde más abajo y sin nada más. Para tablas y cifras: lo que
+      Zyad pidió para el caso de datos, «los bloques subiendo hacia arriba». */
+.fx-alza{ opacity:0; transform:translateY(38px);
+  transition:opacity var(--fx-lento) var(--fx-curva),
+             transform var(--fx-lento) var(--fx-curva);
+  transition-delay:calc(var(--fx-paso, 70ms) * var(--fx-i, 0)); }
+.fx-alza.visto{ opacity:1; transform:none; }
+
+/* 4 · CÍRCULO — se dibuja como un círculo, no aparece como una mancha.
+      Pedido para el diagrama del caso de datos. El trazo se recorta con
+      `stroke-dasharray` y se suelta al entrar. */
+.fx-circulo{ stroke-dasharray:var(--fx-perim, 1000);
+  stroke-dashoffset:var(--fx-perim, 1000);
+  transition:stroke-dashoffset 1400ms var(--fx-curva); }
+.fx-circulo.visto{ stroke-dashoffset:0; }
+
+@media (prefers-reduced-motion: reduce){
+  .fx-sube, .fx-alza, .fx-frase > i{
+    opacity:1 !important; transform:none !important; transition:none !important; }
+  .fx-circulo{ stroke-dashoffset:0 !important; transition:none !important; }
+}
+
+/* ── LOS CARRUSELES — flechas, posicion y desvanecido ────────────────────────
+   🔴 31-ago-2026 · TRES CARRUSELES SANGRANDO POR EL MISMO LADO.
+   El jurado externo, sobre Sobremesa: «a 1440 los tres carruseles se cortan a
+   media tarjeta contra el margen derecho, sin desvanecido, sin flechas y sin
+   mas indicador de posicion que un "DESLIZA →". Tres bloques seguidos sangrando
+   por el mismo lado hacen que la pagina parezca que no cabe.»
+
+       «Desliza →» dice lo que hay que hacer y no da ninguna forma de hacerlo
+       con un raton. Es un cartel donde deberia haber un control.
+
+   Va en el marco y no en Sobremesa porque `.tira` existe tambien en Verbena y
+   en Casa Lumen, y porque el septimo caso lo tendra sin escribir una linea.
+   El desvanecido NO puede vivir en `.tira`: un pseudoelemento dentro de un
+   contenedor con `overflow-x` se desplaza con el contenido y se va de la
+   pantalla junto a las tarjetas. Por eso el JS envuelve la tira en `.fx-carrusel`. */
+.fx-carrusel{ position:relative; }
+.fx-carrusel::before, .fx-carrusel::after{
+  content:""; position:absolute; top:0; bottom:14px; width:clamp(26px,5vw,64px);
+  pointer-events:none; z-index:2; opacity:0;
+  transition:opacity var(--fx-rapido) var(--fx-curva);
+}
+.fx-carrusel::before{ left:0;
+  background:linear-gradient(90deg, var(--caso-fondo) 14%, transparent); }
+.fx-carrusel::after{ right:0;
+  background:linear-gradient(270deg, var(--caso-fondo) 14%, transparent); }
+/* Solo se ve el lado por el que QUEDA algo. Un desvanecido permanente a la
+   izquierda en la primera tarjeta es suciedad, no informacion. */
+.fx-carrusel[data-ini="si"]::before{ opacity:1; }
+.fx-carrusel[data-fin="si"]::after{ opacity:1; }
+
+.fx-mando{ margin-left:auto; display:flex; align-items:center; gap:9px; }
+.fx-mando.suelto{ justify-content:flex-end; margin:0 0 12px; }
+.fx-ir{
+  width:34px; height:34px; padding:0; border-radius:100px; cursor:pointer;
+  border:1px solid color-mix(in srgb, var(--caso-tinta) 22%, transparent);
+  background:transparent; color:var(--caso-tinta);
+  /* 🔴 AQUI HABIA UN `19px` A PELO, y era el septimo tamaño de letra del sitio
+     con un contrato de seis. La puerta de tipografia lo dio en VERDE igual:
+     mide el DOM inicial y este boton lo crea el JS, asi que para ella no
+     existia. Se encontro preguntandole al navegador que tamaños hay de verdad,
+     no al comprobador. */
+  font:600 var(--fx-cuerpo)/1 "Work Sans", system-ui, sans-serif;
+  display:inline-flex; align-items:center; justify-content:center;
+  transition:border-color var(--fx-rapido) var(--fx-curva),
+             background var(--fx-rapido) var(--fx-curva),
+             opacity var(--fx-rapido) var(--fx-curva);
+}
+.fx-ir:hover:not([disabled]){ border-color:var(--fx-grafismo);
+  background:color-mix(in srgb, var(--fx-grafismo) 12%, transparent); }
+/* Deshabilitado y NO escondido: si el boton desaparece en el primer paso, el
+   mando cambia de ancho y la cabecera del bloque da un salto. */
+.fx-ir[disabled]{ opacity:.26; cursor:default; }
+.fx-pos{ font-size:var(--fx-sello); letter-spacing:.12em; font-weight:600;
+  color:var(--caso-suave); font-variant-numeric:tabular-nums;
+  min-width:54px; text-align:center; }

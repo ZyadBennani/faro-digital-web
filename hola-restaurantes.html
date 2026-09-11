@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Faro Digital — Para restaurantes de Barcelona</title>
+<meta name="description" content="Tu negocio es mejor de lo que parece en internet. Faro Digital — estudio de marketing digital y web para negocios de Barcelona.">
+<link rel="canonical" href="https://faro-digital.pages.dev/hola-restaurantes">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Faro Digital">
+<meta property="og:url" content="https://faro-digital.pages.dev/hola-restaurantes">
+<meta property="og:title" content="Tu negocio es mejor de lo que parece en internet.">
+<meta property="og:description" content="Para restaurantes de Barcelona — estudio de marketing digital y web en Barcelona.">
+<meta property="og:image" content="https://faro-digital.pages.dev/assets/logo-og.png">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Faro Digital",
+  "description": "Tu negocio es mejor de lo que parece en internet. Faro Digital — estudio de marketing digital y web para negocios de Barcelona.",
+  "url": "https://faro-digital.pages.dev/hola-restaurantes",
+  "areaServed": { "@type": "City", "name": "Barcelona" },
+  "address": { "@type": "PostalAddress", "addressLocality": "Barcelona", "addressCountry": "ES" },
+  "founder": { "@type": "Person", "name": "Zyad Bennani" },
+  "knowsLanguage": ["es", "ca", "fr", "ar", "en"]
+}</script>
+<link rel="stylesheet" href="assets/fuentes.css">
+<link rel="stylesheet" href="assets/profundidad.css">
+<style>
+*{box-sizing:border-box;margin:0}
+:root{
+  --papel:#F5EFE4; --verde:#12291F; --verde-medio:#1E3A2E; --oro:#C9A667;
+  --tinta:#17211C; --linea:#E2D9C6; --tinta-suave:#5B6155;
+  --curva:cubic-bezier(.23,1,.32,1);
+
+  --acento-texto:var(--verde);
+}
+.oscura, .media{--acento-texto:var(--oro)}
+html{scroll-behavior:smooth}
+body{background:var(--papel);color:var(--tinta);
+  font-family:'Work Sans',Helvetica,Arial,sans-serif;line-height:1.55;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h3{font-family:'Frank Ruhl Libre',Georgia,serif;font-weight:500;letter-spacing:-.015em;line-height:1.1}
+.pantalla{min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(48px,8vw,92px) 0;position:relative}
+.wrap{width:100%;max-width:940px;margin:0 auto;padding:0 clamp(22px,5vw,40px)}
+.oscura{background:var(--verde);color:var(--papel)}
+.media{background:var(--verde-medio);color:var(--papel)}
+.oscura h1,.oscura h2,.oscura h3,.media h2,.media h3{color:var(--papel)}
+.etiqueta{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--acento-texto);font-weight:600}
+h2{font-size:clamp(28px,4.6vw,46px);margin-top:16px;max-width:18ch}
+.parrafo{margin-top:clamp(20px,2.8vw,28px);font-size:clamp(15.5px,2.05vw,18px);
+  max-width:54ch;color:var(--tinta-suave);line-height:1.6}
+.oscura .parrafo,.media .parrafo{color:var(--linea)}
+.remate{margin-top:clamp(26px,3.4vw,36px);padding-top:clamp(20px,2.6vw,26px);
+  border-top:1px solid var(--linea);font-size:clamp(14.5px,1.9vw,16.5px);
+  max-width:56ch;line-height:1.6}
+.oscura .remate,.media .remate{border-top-color:rgba(226,217,198,.22)}
+
+.hero{display:grid;grid-template-columns:1.35fr .85fr;gap:clamp(28px,5vw,64px);align-items:center}
+.impacto h1{font-size:clamp(36px,6.4vw,72px);max-width:13ch}
+.impacto .bajada{margin-top:clamp(22px,3.2vw,30px);font-size:clamp(15px,1.9vw,17.5px);
+  color:var(--linea);max-width:40ch}
+.marca{width:100%;max-width:380px;height:auto;display:block;margin-left:auto}
+
+@media(max-width:860px){
+  .hero{grid-template-columns:1fr;gap:clamp(34px,7vw,48px)}
+  .marca{max-width:210px;margin-left:0;order:-1}
+}
+.pista{position:absolute;left:0;right:0;bottom:clamp(22px,4vw,34px);text-align:center;
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--oro);opacity:.7}
+
+.mock{margin-top:clamp(30px,4vw,42px);border:1px solid var(--linea);border-radius:14px;
+  background:#FBF8F1;padding:clamp(22px,3.2vw,32px);max-width:640px;
+  box-shadow:0 1px 2px rgba(21,38,29,.05),0 18px 44px -22px rgba(21,38,29,.28)}
+.mock .preg{font-family:'Frank Ruhl Libre',Georgia,serif;font-size:clamp(18px,2.6vw,24px);
+  color:var(--tinta);line-height:1.3}
+.mock .intro{margin-top:14px;font-size:13.5px;color:var(--tinta-suave)}
+.mock ol{list-style:none;padding:0;margin:16px 0 0}
+.mock li{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid var(--linea)}
+.mock li .i{font-family:'Frank Ruhl Libre',Georgia,serif;font-size:14px;color:var(--tinta-suave);
+  font-variant-numeric:tabular-nums;min-width:14px}
+.mock li .barra{height:11px;border-radius:3px;background:var(--tinta);opacity:.22}
+.mock li:nth-child(1) .barra{width:58%}
+.mock li:nth-child(2) .barra{width:44%}
+.mock li:nth-child(3) .barra{width:66%}
+.mock .tu{display:flex;align-items:center;gap:14px;padding-top:15px}
+.mock .tu .i{font-family:'Frank Ruhl Libre',Georgia,serif;font-size:14px;color:var(--acento-texto);min-width:14px}
+.mock .tu span{font-size:14.5px;color:var(--acento-texto);font-weight:600}
+.mock .pie{margin-top:16px;font-size:13px;color:var(--tinta-suave);font-style:italic}
+
+.rejilla{margin-top:clamp(30px,4vw,42px);display:grid;gap:clamp(18px,2.6vw,26px);max-width:640px}
+.fila .k{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-suave);font-weight:600}
+.fila .celdas{margin-top:11px;display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(5px,1vw,8px)}
+.celda{aspect-ratio:1;border-radius:3px;border:1px solid var(--linea);background:transparent}
+.celda.on{background:var(--tinta);border-color:var(--tinta);opacity:.82}
+
+.media .celda{border-color:rgba(226,217,198,.28)}
+.media .celda.on{background:var(--linea);border-color:var(--linea);opacity:.9}
+.media .fila .k,.media .pie-rejilla{color:var(--linea)}
+.fila.buena .k{color:var(--acento-texto)}
+.fila.buena .celda{background:var(--oro);border-color:var(--oro)}
+.pie-rejilla{margin-top:14px;font-size:13px;color:var(--tinta-suave);font-style:italic}
+
+.pasos{margin-top:clamp(30px,4vw,44px);display:flex;flex-wrap:wrap;
+  gap:clamp(8px,1.4vw,14px);align-items:baseline}
+
+.par{white-space:nowrap;display:inline-flex;align-items:baseline;gap:clamp(8px,1.4vw,14px)}
+.paso{font-family:'Frank Ruhl Libre',Georgia,serif;font-size:clamp(20px,3.1vw,32px);color:var(--papel)}
+.flecha{color:var(--acento-texto);font-size:clamp(14px,1.8vw,19px);opacity:.85}
+.promesas{margin-top:clamp(38px,5vw,58px);display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(22px,3.4vw,40px);border-top:1px solid rgba(226,217,198,.22);padding-top:clamp(24px,3.2vw,32px)}
+@media(max-width:700px){.promesas{grid-template-columns:1fr;gap:26px}}
+.promesas .k{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--acento-texto);font-weight:600}
+.promesas p{margin-top:10px;font-size:15.5px;color:var(--linea);line-height:1.5;max-width:38ch}
+
+.cierre h2{font-size:clamp(30px,5vw,54px);max-width:16ch}
+.acciones{margin-top:clamp(28px,3.6vw,40px);display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.btn{display:inline-block;background:var(--oro);color:var(--verde);text-decoration:none;
+  font-weight:600;font-size:15.5px;padding:15px 30px;border-radius:6px;
+  transition:transform .2s var(--curva),opacity .2s}
+.btn:hover{transform:translateY(-1px);opacity:.92}
+.acciones .apunte{font-size:14.5px;color:var(--linea)}
+.firma{margin-top:clamp(46px,6.5vw,80px);padding-top:clamp(22px,3vw,30px);
+  border-top:1px solid rgba(226,217,198,.22);display:flex;justify-content:space-between;
+  align-items:flex-end;gap:24px;flex-wrap:wrap}
+.firma svg{width:clamp(124px,16vw,158px);height:auto}
+.firma .eslogan{font-family:'Frank Ruhl Libre',Georgia,serif;font-size:clamp(14px,1.9vw,17px);
+  color:var(--oro);text-align:right}
+.firma a{color:var(--linea);text-decoration:none;font-size:13.5px}
+
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+</style>
+</head>
+<body>
+
+<section class="pantalla oscura impacto">
+  <div class="wrap hero">
+    <div>
+      <p class="etiqueta">Para restaurantes de Barcelona</p>
+      <h1>Tu negocio es mejor de lo que parece en internet.</h1>
+      <p class="bajada">Faro Digital — estudio de marketing digital y web para negocios de Barcelona.</p>
+    </div>
+    <div class="marca"><svg viewBox="0 0 500 440" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    
+    <radialGradient id="g-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#C9A667" stop-opacity=".9"/>
+      <stop offset="55%" stop-color="#C9A667" stop-opacity=".25"/>
+      <stop offset="100%" stop-color="#C9A667" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  
+  <circle cx="250" cy="100" r="34.0" fill="url(#g-glow)"/>
+  <line x1="250" y1="100" x2="183.0" y2="58.0" stroke="#C9A667" stroke-width="6.0" stroke-linecap="round"/>
+  <line x1="250" y1="100" x2="317.0" y2="58.0" stroke="#C9A667" stroke-width="6.0" stroke-linecap="round"/>
+  <path d="M250 110.0 L274.0 174.0 L226.0 174.0 Z" fill="#F5EFE4"/>
+  <path d="M238.0 174.0 L262.0 174.0 L280.0 314.0 L220.0 314.0 Z" fill="#F5EFE4"/>
+  <rect x="205.0" y="314.0" width="90.0" height="20.0" rx="3.0" fill="#F5EFE4"/>
+  <circle cx="250" cy="100" r="11.0" fill="#C9A667"/>
+  <text x="250" y="395" text-anchor="middle" fill="#F5EFE4" font-family="'Frank Ruhl Libre',Georgia,'Times New Roman',serif" font-weight="500" font-size="56" letter-spacing="1.6">FARO DIGITAL</text>
+</svg></div>
+  </div>
+  <div class="pista">Sigue bajando</div>
+</section>
+
+<section class="pantalla">
+  <div class="wrap">
+    <p class="etiqueta">Lo que ha cambiado</p>
+    <h2>Ya no te buscan solo en Google.</h2>
+    <p class="parrafo">Cada vez más gente le pregunta a ChatGPT en vez de buscar. Y la IA no da diez enlaces: recomienda tres.</p>
+    <div class="mock">
+      <p class="preg">«¿Dónde cenar bien en Gràcia?»</p>
+      <p class="intro">Te recomiendo tres sitios:</p>
+      <ol><li><span class="i">1</span><span class="barra"></span></li><li><span class="i">2</span><span class="barra"></span></li><li><span class="i">3</span><span class="barra"></span></li></ol>
+      <div class="tu"><span class="i">—</span><span>Tú no estás en la lista.</span></div>
+      <p class="pie">Tres sitios de tu zona. Ninguno eres tú.</p>
+    </div>
+    <p class="remate">Lo medimos cada mes, con las respuestas guardadas, y te enseñamos el número.</p>
+  </div>
+</section>
+
+<section class="pantalla media">
+  <div class="wrap">
+    <p class="etiqueta">El contenido</p>
+    <h2>La idea no es publicar sin parar, es no parar de publicar.</h2>
+    <div class="rejilla">
+      <div class="fila"><div class="k">Cómo suele ir</div><div class="celdas"><div class="celda on"></div><div class="celda on"></div><div class="celda"></div><div class="celda on"></div><div class="celda on"></div><div class="celda"></div><div class="celda"></div><div class="celda on"></div><div class="celda"></div><div class="celda"></div><div class="celda"></div><div class="celda on"></div></div></div>
+      <div class="fila buena"><div class="k">Con un sistema detrás</div><div class="celdas"><div class="celda"></div><div class="celda"></div><div class="celda"></div><div class="celda"></div><div class="celda"></div><div class="celda"></div><div class="celda"></div><div class="celda"></div><div class="celda"></div><div class="celda"></div><div class="celda"></div><div class="celda"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="pantalla oscura">
+  <div class="wrap">
+    <p class="etiqueta">La web</p>
+    <h2>Una web no es un folleto. Es donde se decide.</h2>
+    <p class="parrafo">Casi todas las de negocio local son bonitas y no traen a nadie: sin precios, incómodas en el móvil y sin medir nada.</p>
+  </div>
+</section>
+
+<section class="pantalla">
+  <div class="wrap">
+    <p class="etiqueta">Cómo trabajamos</p>
+    <div class="pasos" style="color:var(--tinta)"><span class="par"><span class="paso" style="color:var(--tinta)">Medimos</span><span class="flecha">→</span></span><span class="par"><span class="paso" style="color:var(--tinta)">Priorizamos</span><span class="flecha">→</span></span><span class="par"><span class="paso" style="color:var(--tinta)">Construimos</span><span class="flecha">→</span></span><span class="par"><span class="paso" style="color:var(--tinta)">Publicamos</span><span class="flecha">→</span></span><span class="paso" style="color:var(--tinta)">Volvemos a medir</span></div>
+    <div class="promesas" style="border-top-color:var(--linea)">
+      <div>
+        <div class="k">Lo que no prometemos</div>
+        <p style="color:var(--tinta-suave)">Que salgas el primero en Google. Nadie puede.</p>
+      </div>
+      <div>
+        <div class="k">Lo que sí</div>
+        <p style="color:var(--tinta-suave)">Enseñarte el número cada mes. Suba o baje.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pantalla oscura cierre">
+  <div class="wrap">
+    <p class="etiqueta">El primer paso, y es gratis</p>
+    <h2>Empecemos por mirar cómo te encuentran hoy.</h2>
+    <div class="acciones">
+      <a class="btn" href="https://wa.me/34603954136?text=Hola%20Zyad%2C%20vengo%20de%20la%20presentaci%C3%B3n%20para%20restaurantes%20de%20Barcelona" target="_blank" rel="noopener">Escríbeme por WhatsApp</a>
+      <span class="apunte">Y si te encaja, hablamos veinte minutos.</span>
+    </div>
+    <div class="firma">
+      <svg viewBox="0 0 820 240" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    
+    <radialGradient id="g-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#C9A667" stop-opacity=".9"/>
+      <stop offset="55%" stop-color="#C9A667" stop-opacity=".25"/>
+      <stop offset="100%" stop-color="#C9A667" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  
+  <circle cx="120" cy="70" r="20.4" fill="url(#g-glow)"/>
+  <line x1="120" y1="70" x2="79.8" y2="44.8" stroke="#C9A667" stroke-width="3.6" stroke-linecap="round"/>
+  <line x1="120" y1="70" x2="160.2" y2="44.8" stroke="#C9A667" stroke-width="3.6" stroke-linecap="round"/>
+  <path d="M120 76.0 L134.4 114.4 L105.6 114.4 Z" fill="#F5EFE4"/>
+  <path d="M112.8 114.4 L127.2 114.4 L138.0 198.4 L102.0 198.4 Z" fill="#F5EFE4"/>
+  <rect x="93.0" y="198.4" width="54.0" height="12.0" rx="1.8" fill="#F5EFE4"/>
+  <circle cx="120" cy="70" r="6.6" fill="#C9A667"/>
+  <text x="230" y="140" text-anchor="start" fill="#F5EFE4" font-family="'Frank Ruhl Libre',Georgia,'Times New Roman',serif" font-weight="500" font-size="64" letter-spacing="1.9">FARO DIGITAL</text>
+</svg>
+      <div>
+        <div class="eslogan">Un solo sistema. Todos los ángulos.</div>
+        <div style="text-align:right;margin-top:6px"><a href="tel:+34603954136">603 954 136</a>
+          <span style="opacity:.4"> · </span><a href="https://faro-digital.pages.dev" target="_blank" rel="noopener">faro-digital.pages.dev</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="assets/medicion.js"></script>
+</body>
+</html>

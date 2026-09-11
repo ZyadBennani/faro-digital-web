@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="es" class="sin-js">
+<head>
+<meta charset="utf-8">
+
+<meta name="faro-nivel" content="N3">
+<script>document.documentElement.classList.remove("sin-js");</script>
+<title>Verbena — querido en su barrio, invisible fuera · Faro</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Ccircle cx='150' cy='150' r='150' fill='%23F6F0E3'/%3E%3Cline x1='150' y1='123' x2='100' y2='92' stroke='%23C9A667' stroke-width='9' stroke-linecap='round'/%3E%3Cline x1='150' y1='123' x2='200' y2='92' stroke='%23C9A667' stroke-width='9' stroke-linecap='round'/%3E%3Cpath d='M150 133 L168 175 L132 175 Z' fill='%231E3A2E'/%3E%3Cpath d='M141 175 L159 175 L169 238 L131 238 Z' fill='%231E3A2E'/%3E%3Crect x='122' y='238' width='56' height='12' rx='2' fill='%231E3A2E'/%3E%3Ccircle cx='150' cy='123' r='10' fill='%23C9A667'/%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Proyecto de muestra de Faro Digital: auditoría 360°, web, SEO local y venta cruzada para una peluquería y espacio de bienestar de barrio.">
+
+<link rel="canonical" href="https://faro-digital.pages.dev/portfolio/caso-1-local-verbena">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Faro Digital">
+<meta property="og:url" content="https://faro-digital.pages.dev/portfolio/caso-1-local-verbena">
+<meta property="og:title" content="Un negocio al que quiere su barrio, invisible fuera de él — proyecto de muestra">
+<meta property="og:description" content="Proyecto de muestra de Faro Digital: auditoría 360°, web, SEO local y venta cruzada para una peluquería y espacio de bienestar de barrio.">
+<meta property="og:image" content="https://faro-digital.pages.dev/portfolio/assets/verbena/card-thumb.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="750">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Un negocio al que quiere su barrio, invisible fuera de él — proyecto de muestra">
+<meta name="twitter:description" content="Proyecto de muestra de Faro Digital: auditoría 360°, web, SEO local y venta cruzada para una peluquería y espacio de bienestar de barrio.">
+<meta name="twitter:image" content="https://faro-digital.pages.dev/portfolio/assets/verbena/card-thumb.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Un negocio al que quiere su barrio, invisible fuera de él",
+  "description": "Proyecto de muestra de Faro Digital: auditoría 360°, web, SEO local y venta cruzada para una peluquería y espacio de bienestar de barrio.",
+  "disambiguatingDescription": "Proyecto de muestra. Verbena es una marca ficticia creada para este caso; no es un cliente real y no existe.",
+  "inLanguage": "es",
+  "image": "https://faro-digital.pages.dev/portfolio/assets/verbena/card-thumb.jpg",
+  "mainEntityOfPage": "https://faro-digital.pages.dev/portfolio/caso-1-local-verbena",
+  "isPartOf": { "@type": "CollectionPage", "name": "Portfolio de Faro Digital", "url": "https://faro-digital.pages.dev/portfolio/" },
+  "author": { "@type": "Person", "name": "Zyad Bennani" },
+  "creator": { "@type": "Organization", "name": "Faro Digital", "url": "https://faro-digital.pages.dev/" },
+  "about": ["SEO local", "Diseño web", "Auditoría 360", "CRO"]
+}
+</script>
+
+<script>document.documentElement.classList.add('js')</script>
+<link rel="stylesheet" href="/assets/motion.css">
+<link rel="stylesheet" href="/assets/profundidad.css">
+<link rel="stylesheet" href="/assets/base.css">
+<link rel="stylesheet" href="assets/_marco/faro-marco.css">
+<script src="/assets/medicion.js" defer></script>
+<style>
+
+:root{
+  --caso-fondo:#101A14;
+  --caso-tinta:#EFE7D8;
+    
+  --caso-suave:color-mix(in srgb, var(--caso-tinta) var(--f-suave-pct, 68%), transparent);
+  --caso-acento:#D9A05B;
+  
+  --fx-tinta-acento:var(--fx-papel, #F5EFE4);          
+  --terracota:#B4694A;
+  --caso-display:"Frank Ruhl Libre", Georgia, serif;
+  --caso-texto:"Work Sans", system-ui, sans-serif;
+  --linea:rgba(239,231,216,.18);
+}
+
+.tramo-2{
+  --caso-fondo:#2E2A22; --caso-tinta:#F2ECE0; --caso-suave:color-mix(in srgb, var(--caso-tinta) var(--f-suave-pct, 68%), transparent);
+  --linea:rgba(242,236,224,.20);
+}
+
+.tramo-3{
+  
+  --fx-tinta-acento:var(--fx-verde, #12291F);
+
+  --caso-fondo:var(--fx-papel, #F5EFE4); --caso-tinta:#221E19; --caso-suave:color-mix(in srgb, var(--caso-tinta) var(--f-suave-pct, 68%), transparent);
+  --caso-acento:#9C5A2E; --linea:rgba(34,30,25,.16);
+}
+body{ background:var(--caso-fondo); transition:background var(--m-lento, 900ms) var(--fx-curva); }
+section{ background:var(--caso-fondo); color:var(--caso-tinta); }
+
+.paso-luz{ height:clamp(120px,18vh,220px); }
+.paso-luz.a2{ background:linear-gradient(#101A14, #2E2A22); }
+.paso-luz.a3{ background:linear-gradient(#2E2A22, var(--fx-papel, #F5EFE4)); }
+
+.ap-bajada{ margin:26px 0 0; max-width:48ch; font-size:var(--fx-lede);
+  color:var(--caso-suave); line-height:1.55; }
+
+.seccion{ padding-block:clamp(60px,8vw,115px); }
+.sello{ font-size:var(--fx-sello); font-weight:600; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--fx-tinta-acento); margin:0 0 18px; }
+.seccion h2{ font-family:var(--caso-display); font-weight:500; margin:0;
+  font-size:var(--fx-titulo); line-height:1.07; letter-spacing:-.02em; max-width:19ch; text-wrap:balance; }
+.cuerpo{ max-width:58ch; }
+.cuerpo p{ margin:20px 0 0; font-size:var(--fx-cuerpo); line-height:1.68; }
+.cuerpo p b{ font-weight:600; }
+
+.datos{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(18px,3vw,44px); margin-top:clamp(24px,2.6vw,40px); }
+@media (max-width:720px){ .datos{ grid-template-columns:1fr; gap:24px; } }
+.datos div{ border-top:2px solid var(--caso-acento); padding-top:16px; }
+.datos b{ display:block; font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-cifra); line-height:1; letter-spacing:-.03em; font-variant-numeric:tabular-nums; }
+.datos span{ display:block; margin-top:10px; font-size:var(--fx-pie); color:var(--caso-suave); line-height:1.5; }
+
+.hall{ width:100%; border-collapse:collapse; margin-top:clamp(28px,3.5vw,46px); }
+.hall td{ padding:15px 14px 15px 0; border-bottom:1px solid var(--linea);
+  vertical-align:top; font-size:var(--fx-cuerpo); line-height:1.55; }
+.hall td:first-child{ font-weight:600; white-space:nowrap; width:1%; }
+.hall td:last-child{ text-align:right; white-space:nowrap; width:1%; font-size:var(--fx-pie);
+  font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--caso-suave); }
+
+.hall td.alta{ color:var(--fx-tinta-acento); }
+@media (max-width:720px){
+  .hall, .hall tbody, .hall tr, .hall td{ display:block; width:auto; }
+  .hall tr{ border-bottom:1px solid var(--linea); padding:13px 0; }
+  .hall td{ border:0; padding:2px 0; width:auto; }
+  
+  .hall td:last-child{ text-align:left; margin-top:6px; }
+}
+
+.cortina{
+  position:relative; margin-top:clamp(24px,2.6vw,40px);
+  aspect-ratio:16/10; border-radius:4px; overflow:hidden;
+  background:#0C120E; cursor:ew-resize; touch-action:pan-y;
+  user-select:none; -webkit-user-select:none;
+  box-shadow:0 30px 70px -40px rgba(0,0,0,.8);
+}
+@media (max-width:760px){ .cortina{ aspect-ratio:4/5; } }
+.cortina .lado{ position:absolute; inset:0; display:grid; place-items:center; padding:clamp(20px,4vw,52px); }
+
+.cortina .antes{ background:radial-gradient(90% 70% at 26% 45%, #182119, #0A0F0B);
+  place-items:center start; }
+.cortina .antes .txt{ max-width:min(30ch, 40%); }
+.cortina .antes .et{ font-size:var(--fx-sello); letter-spacing:.2em; text-transform:uppercase;
+  color:rgba(239,231,216,.42); margin-bottom:16px; }
+.cortina .antes h3{ margin:0; font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-lede); line-height:1.16; color:#EFE7D8; letter-spacing:-.02em; }
+.cortina .antes p{ margin:14px 0 0; font-size:var(--fx-pie); color:rgba(239,231,216,.55); line-height:1.6; }
+.cortina .despues{
+  clip-path:inset(0 0 0 var(--corte, 50%));
+  background:var(--fx-papel, #F5EFE4);
+  align-items:start; justify-items:center; overflow:hidden;
+}
+.cortina .despues img{ width:min(46%, 300px); height:auto; margin-top:3%; border-radius:3px;
+  box-shadow:0 20px 50px -26px rgba(60,40,30,.6); }
+
+.cortina{ --fx-tinta-acento:var(--fx-papel, #F5EFE4); }
+.cortina .tirador{
+  position:absolute; top:0; bottom:0; left:var(--corte, 50%); width:2px;
+  background:var(--fx-tinta-acento); transform:translateX(-1px); pointer-events:none;
+}
+.cortina .tirador::after{
+  content:"⟷"; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:44px; height:44px; border-radius:50%; background:var(--fx-tinta-acento); color:#101A14;
+  display:grid; place-items:center; font-size:var(--fx-cuerpo);
+  box-shadow:0 6px 20px rgba(0,0,0,.35);
+}
+.cortina-pie{ margin-top:14px; font-size:var(--fx-pie); color:var(--caso-suave); }
+
+.dos-listas{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(22px,3.5vw,50px); margin-top:clamp(24px,2.6vw,40px); }
+@media (max-width:760px){ .dos-listas{ grid-template-columns:1fr; } }
+.dos-listas h4{ margin:0 0 16px; font-size:var(--fx-sello); letter-spacing:.16em;
+  text-transform:uppercase; font-weight:600; color:var(--caso-suave);
+  padding-bottom:12px; border-bottom:2px solid var(--linea); }
+.dos-listas ul{ list-style:none; margin:0; padding:0; }
+.dos-listas li{ padding:13px 0 13px 22px; border-bottom:1px solid var(--linea);
+  font-size:var(--fx-cuerpo); line-height:1.5; position:relative; }
+.dos-listas li::before{ content:"—"; position:absolute; left:0; color:var(--caso-suave); }
+.dos-listas .bien h4{ color:var(--fx-tinta-acento); border-bottom-color:var(--caso-acento); }
+.dos-listas .bien li::before{ content:"+"; color:var(--fx-tinta-acento); font-weight:600; }
+
+.dos-fotos{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(14px,2vw,26px); margin-top:clamp(24px,2.6vw,40px); }
+@media (max-width:700px){ .dos-fotos{ grid-template-columns:1fr; } }
+.dos-fotos figure{ margin:0; }
+.dos-fotos img{ width:100%; height:auto; border-radius:3px; display:block; }
+.dos-fotos figcaption{ margin-top:10px; font-size:var(--fx-pie); color:var(--caso-suave); line-height:1.45; }
+
+.cita{ margin-top:clamp(24px,2.6vw,40px); padding-left:clamp(20px,3vw,36px); border-left:3px solid var(--caso-acento); }
+.cita p{ margin:0; font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-lede); line-height:1.3; letter-spacing:-.015em; max-width:27ch; }
+.cita cite{ display:block; margin-top:16px; font-style:normal; font-size:var(--fx-pie); color:var(--caso-suave); }
+
+.seccion{ padding-block:clamp(46px,5.5vw,84px) clamp(10px,1.2vw,20px) !important; }
+.seccion h2, .bloque h2{
+  max-width:none !important; text-wrap:nowrap; letter-spacing:-.025em;
+}
+@media (max-width:1000px){
+  .seccion h2, .bloque h2{ text-wrap:balance; }
+}
+.cuerpo{ max-width:54ch; }
+.cuerpo p{ margin-top:14px; }
+.cita{ margin-top:clamp(30px,3.4vw,48px) !important; }
+
+.portada{
+  position:relative; overflow:hidden; background:var(--caso-fondo);
+  min-height:min(86vh,780px); display:grid; align-content:center;
+  padding-block:calc(var(--fx-barra-alto) + 5vh) 8vh;
+}
+
+.portada::before{
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(72% 58% at 26% 46%,
+    rgba(217,160,91,.30), rgba(180,105,74,.12) 46%, transparent 74%);
+  
+  opacity:0; animation:encender var(--m-cinematografico, 1400ms) var(--fx-curva)
+                       var(--m-instantaneo, 120ms) forwards;
+}
+.portada-caja{ position:relative; z-index:1; }
+.portada-caja > *{ opacity:0; animation:encender var(--m-cinematografico, 1400ms) var(--fx-curva) forwards; }
+
+.portada-caja > h1{ opacity:1; animation:none; }
+
+.portada-caja > *:nth-child(1){ animation-delay:calc(var(--m-paso, 90ms) * 2); }
+.portada-caja > *:nth-child(2){ animation-delay:calc(var(--m-paso, 90ms) * 4); }
+.portada-caja > *:nth-child(3){ animation-delay:calc(var(--m-paso, 90ms) * 6); }
+.portada-caja > *:nth-child(4){ animation-delay:calc(var(--m-paso, 90ms) * 8); }
+.portada-caja > *:nth-child(5){ animation-delay:calc(var(--m-paso, 90ms) * 10); }
+@keyframes encender{ from{ opacity:0 } to{ opacity:1 } }
+
+@media (prefers-reduced-motion:reduce){
+  .portada::before, .portada-caja > *{ animation:none; opacity:1; }
+}
+html.sin-js .portada::before, html.sin-js .portada-caja > *{ opacity:1; }
+
+.marca-verbena{ margin:0 0 clamp(26px,3.2vw,42px); width:max-content; max-width:100%; }
+.marca-verbena svg{ width:clamp(96px,9vw,132px); height:auto; color:var(--caso-tinta);
+  display:block; margin:0 auto 8px; }
+.marca-verbena .nombre{ margin:0; font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-lede); line-height:1;
+  letter-spacing:.2em; text-indent:.2em; text-align:center; }
+.marca-verbena .bajada{ margin:8px 0 0; font-size:var(--fx-sello); font-weight:600;
+  letter-spacing:.26em; text-indent:.26em; text-transform:uppercase;
+  color:var(--caso-suave); text-align:center; }
+
+.portada .sector{ font-size:var(--fx-sello); font-weight:600; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--fx-tinta-acento); margin:0 0 20px; }
+.portada h1{
+  font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-display); line-height:1.02; letter-spacing:-.025em;
+  margin:0; max-width:15ch; text-wrap:balance;
+}
+.portada .ap-bajada{ margin:26px 0 0; max-width:46ch; font-size:var(--fx-lede);
+  color:var(--caso-suave); line-height:1.5; }
+.portada .muestra{
+  display:inline-flex; align-items:center; gap:9px; margin-top:30px;
+  padding:7px 15px 7px 12px; border-radius:100px;
+  border:1px solid color-mix(in srgb, var(--caso-tinta) 26%, transparent);
+  font-size:var(--fx-pie); color:var(--caso-suave);
+}
+.portada .muestra::before{ content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--caso-acento); flex:none; }
+
+.campo{
+  position:relative; overflow:hidden; isolation:isolate;
+  margin-top:clamp(26px,3.2vw,44px);
+  border:1px solid var(--linea); border-radius:3px;
+  padding:clamp(26px,3.4vw,46px) clamp(20px,3vw,40px) clamp(20px,2.4vw,32px);
+  background:#0B120E;
+}
+
+.campo::before{
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(240px 240px at var(--lx,-999px) var(--ly,-999px),
+    rgba(217,160,91,.22), rgba(217,160,91,.07) 45%, transparent 72%);
+  transition:opacity var(--fx-rapido) var(--fx-curva);
+}
+.campo-et{
+  position:relative; z-index:1; margin:0 0 clamp(20px,2.4vw,32px);
+  font-size:var(--fx-sello); font-weight:600; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--caso-acento);
+}
+
+.cosas{ position:relative; z-index:1; display:grid;
+  grid-template-columns:repeat(12,minmax(0,1fr));
+  gap:clamp(16px,2.4vw,34px) clamp(14px,2vw,28px); align-items:baseline; }
+.cosa{
+  font-family:var(--caso-display); font-weight:500; line-height:1.15;
+  font-size:var(--fx-lede); letter-spacing:-.015em;
+  color:var(--caso-tinta); grid-column:span 12;
+  transition:opacity var(--m-rapido, 240ms) var(--fx-curva),
+             text-shadow var(--m-rapido, 240ms) var(--fx-curva);
+}
+@media (min-width:760px){
+  .cosa.c1{ grid-column:1 / span 5; }
+  .cosa.c2{ grid-column:7 / span 4; }
+  .cosa.c3{ grid-column:2 / span 5; }
+  .cosa.c4{ grid-column:8 / span 5; }
+  .cosa.c5{ grid-column:1 / span 4; }
+  .cosa.c6{ grid-column:6 / span 4; }
+  .cosa.c7{ grid-column:3 / span 5; }
+}
+
+#campo[data-listo] .cosa{ opacity:var(--v,1); }
+#campo[data-listo] .cosa{ text-shadow:0 0 calc(18px * var(--v,1)) rgba(217,160,91,calc(.4 * var(--v,1))); }
+.cosa:focus-visible{ outline:2px solid var(--fx-tinta-acento); outline-offset:6px; border-radius:3px; }
+.campo-pie{
+  position:relative; z-index:1; margin:clamp(24px,3vw,40px) 0 0;
+  padding-top:16px; border-top:1px solid var(--linea);
+  font-size:var(--fx-pie); color:var(--caso-suave); line-height:1.55;
+}
+html.sin-js .campo-et{ display:none; }
+@media (prefers-reduced-motion:reduce){ .campo::before{ display:none; } }
+</style>
+</head>
+<body data-caso="1" data-tono="oscuro">
+<a class="fx-salta" href="#contenido">Saltar al contenido</a>
+
+<header class="fx-barra faro-barra">
+  <a class="faro-marca" href="index.html" aria-label="Portfolio de Faro Digital">
+    <svg viewBox="0 0 180 300" aria-hidden="true">
+      <line x1="90" y1="60" x2="23" y2="18" stroke="currentColor" stroke-width="9" stroke-linecap="round"/>
+      <line x1="90" y1="60" x2="157" y2="18" stroke="currentColor" stroke-width="9" stroke-linecap="round"/>
+      <path d="M90 70 L114 134 L66 134 Z" fill="currentColor"/>
+      <path d="M78 134 L102 134 L120 274 L60 274 Z" fill="currentColor"/>
+      <rect x="45" y="274" width="90" height="20" rx="3" fill="currentColor"/>
+      <circle cx="90" cy="60" r="13" fill="currentColor"/>
+    </svg>
+    <span>Faro Digital</span>
+  </a>  <nav class="faro-nav">
+    
+    <a href="/#servicios">Qué hacemos</a>
+    <a href="/#metodo">Método</a>
+    <a href="index.html">Trabajo</a>
+    <a href="/#precios">Precios</a>
+  </nav>
+
+  <span class="cuenta faro-cuenta">01 / 06</span>
+  <a class="sig faro-accion" href="#">Siguiente</a>
+</header>
+
+<main id="contenido">
+
+  <section class="portada">
+    <div class="fx-ancho portada-caja">
+      
+      <div class="marca-verbena">
+        <svg viewBox="0 0 132 26" aria-hidden="true" focusable="false">
+          <path d="M2 4 Q66 26 130 4" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".55"/>
+          <circle cx="24" cy="12.4" r="2.6" fill="var(--caso-acento)"/>
+          <circle cx="53" cy="17.4" r="2.6" fill="var(--caso-acento)"/>
+          <circle cx="79" cy="17.4" r="2.6" fill="var(--caso-acento)"/>
+          <circle cx="108" cy="12.4" r="2.6" fill="var(--caso-acento)"/>
+        </svg>
+        <p class="nombre">Verbena</p>
+        <p class="bajada">Peluquería y bienestar · El Carmen</p>
+      </div>
+
+      <p class="sector">Belleza y bienestar · Negocio local</p>
+      <h1 class="g-titular">Querido dentro, invisible fuera</h1>
+      <p class="ap-bajada">Nueve años, un local y 4,8 estrellas. Y a tres calles, nadie sabía que existía.</p>
+      <span class="muestra">Proyecto de muestra — la marca es nuestra, el método es el real</span>
+    </div>
+  </section>
+
+  <section class="seccion tramo-3"><div class="fx-ancho">
+    <p class="sello">Lo que se construyó</p>
+    <h2>No lo describimos: lo construimos</h2>
+    <div class="cuerpo">
+      <p>La web entera, con el mismo nivel de acabado que recibe un cliente que paga. <b>Arrastra para ver lo que había y lo que hay.</b></p>
+    </div>
+
+    <div class="cortina" id="cortina" role="group" aria-label="Comparador: antes y después">
+      <div class="lado antes">
+        <div class="txt">
+          <div class="et">Lo que había</div>
+          <h3>Una ficha de Google, y nada más.</h3>
+          <p>Sin web, sin páginas que indexar, sin forma de reservar fuera del horario de teléfono. Nueve años de trabajo que en internet no aparecían por ningún lado.</p>
+        </div>
+      </div>
+      <div class="lado despues">
+        <img src="assets/verbena/mockup-full-shot.webp" width="760" height="1647" loading="lazy" decoding="async" alt="La web construida para Verbena, vista completa" srcset="assets/verbena/mockup-full-shot-480w.webp 480w, assets/verbena/mockup-full-shot.webp 760w" sizes="(max-width: 700px) 143px, 300px">
+      </div>
+      <div class="tirador" aria-hidden="true"></div>
+    </div>
+    <p class="cortina-pie">A la izquierda no hay una captura de la web antigua porque <b>no había web antigua</b>. Montar una habría sido inventarse el punto de partida.</p>
+
+  </div></section>
+
+  <section class="seccion "><div class="fx-ancho">
+    <p class="sello">01 · El contexto</p>
+    <h2>Todo estaba. No se veía</h2>
+    <div class="cuerpo">
+      <p>Escribió por algo concreto: <b>en verano, con el barrio lleno de gente de fuera, no entraba nadie nuevo.</b></p>
+    </div>
+
+    <div class="campo" id="campo">
+      <p class="campo-et">Pásale la luz por encima</p>
+      <div class="cosas">
+        <span class="cosa c1">Nueve años en el mismo local</span>
+        <span class="cosa c2">4,8 ★ con 187 reseñas</span>
+        <span class="cosa c3">Clientas que vuelven cada seis semanas</span>
+        <span class="cosa c4">Tres tratamientos que nadie busca por su nombre</span>
+        <span class="cosa c5">El único visagismo del barrio</span>
+        <span class="cosa c6">Fotos de trabajos reales, en un móvil</span>
+        <span class="cosa c7">Un horario que solo se sabe llamando</span>
+      </div>
+      <p class="campo-pie">Nada de esto se inventó. Estaba todo — pero a tres calles no lo veía nadie.</p>
+    </div>
+  </div></section>
+
+  <div class="paso-luz a2" aria-hidden="true"></div>
+
+  <section class="seccion tramo-2"><div class="fx-ancho">
+    <p class="sello">02 · La auditoría</p>
+    <h2>Lo que encontramos</h2>
+    <div class="cuerpo">
+      <p>El método no empieza por «hagamos una web»: empieza mirando cada canal. El problema declarado casi nunca es el real.</p>
+    </div>
+    <table class="hall">
+      <tbody>
+        <tr><td>Web propia</td><td>No existe. Toda la presencia digital depende de la ficha de Google y de menciones sueltas en las redes de sus clientas.</td><td class="alta">Alta</td></tr>
+        <tr><td>Ficha de Google</td><td>Activa y bien valorada, pero incompleta: sin fotos recientes y sin la categoría de bienestar, así que no sale en la mitad de las búsquedas que le corresponden.</td><td class="alta">Alta</td></tr>
+        <tr><td>SEO local</td><td>Fuera del top 3 del mapa para «peluquería Carmen Valencia». Competidores con peor valoración aparecen por delante.</td><td class="alta">Alta</td></tr>
+        <tr><td>Reservas</td><td>El 100 % por teléfono o por el WhatsApp personal de la dueña, con cuello de botella en las horas punta.</td><td>Media</td></tr>
+        <tr><td>Venta cruzada</td><td>La peluquería y el bienestar se perciben como dos negocios distintos, incluso entre las clientas habituales.</td><td class="alta">Alta</td></tr>
+      </tbody>
+    </table>
+  </div></section>
+
+  <section class="seccion tramo-2"><div class="fx-ancho">
+    <p class="sello">03 · La estrategia</p>
+    <h2>Tres objetivos, fijados con ella</h2>
+    <div class="dos-listas">
+      <div>
+        <h4>El problema, en tres frases</h4>
+        <ul>
+          <li>Solo la encuentra quien busca «Verbena» por su nombre</li>
+          <li>Reservar depende de que alguien coja el teléfono</li>
+          <li>Cada clienta usa la mitad del negocio y no sabe de la otra</li>
+        </ul>
+      </div>
+      <div class="bien">
+        <h4>El objetivo, en tres frases</h4>
+        <ul>
+          <li>Salir cuando alguien busca «peluquería» o «masaje» en el Carmen</li>
+          <li>Reservar a cualquier hora, sin descolgar</li>
+          <li>Que cada visita descubra el otro lado de la casa</li>
+        </ul>
+      </div>
+    </div>
+  </div></section>
+
+  <div class="paso-luz a3" aria-hidden="true"></div>
+
+  <section class="seccion tramo-3"><div class="fx-ancho">
+    <p class="sello">04 · El detalle</p>
+    <h2>Fotografía real, no banco de imágenes</h2>
+    <div class="dos-fotos">
+      <figure class="fx-in">
+        <img src="assets/verbena/peluqueria.webp" width="900" height="600" loading="lazy" decoding="async" alt="El espacio de peluquería de Verbena" srcset="assets/verbena/peluqueria-480w.webp 480w, assets/verbena/peluqueria.webp 900w" sizes="(max-width: 700px) 350px, 505px">
+        <figcaption>Fotografía real del local, no banco de imágenes. En un negocio con nueve años detrás, la foto de archivo resta.</figcaption>
+      </figure>
+      <figure class="fx-in" data-espera="1">
+        <img src="assets/verbena/bienestar.webp" width="760" height="941" loading="lazy" decoding="async" alt="El espacio de bienestar de Verbena" srcset="assets/verbena/bienestar-480w.webp 480w, assets/verbena/bienestar.webp 760w" sizes="(max-width: 700px) 350px, 505px">
+        <figcaption>«Dos mundos», con el mismo peso visual. No es decoración: es la respuesta directa al hallazgo de venta cruzada.</figcaption>
+      </figure>
+    </div>
+  </div></section>
+
+  <section class="seccion tramo-3"><div class="fx-ancho">
+    <p class="sello">05 · El resultado</p>
+    <h2>Lo que busca conseguir</h2>
+    <div class="cuerpo">
+      <p>Objetivos de propuesta para un negocio local de este tamaño. <b>No son resultados medidos</b>, y esta página no va a decir que lo sean.</p>
+    </div>
+      
+      <div class="faro-resultados">
+        <div class="fx-in"><span class="cifra">202 KB</span><span class="pie">pesa la página entera, con su portada animada dentro</span></div>
+        <div class="fx-in" data-espera="1"><span class="cifra">1,0 s</span><span class="pie">tarda en pintarse el titular en un móvil de gama media</span></div>
+        <div class="fx-in" data-espera="2"><span class="cifra">0</span><span class="pie">recursos de terceros: ni una fuente, ni un script, ni un píxel de fuera</span></div>
+        <p class="fuente">Medido el 30 de agosto de 2026 sobre esta misma página, en un móvil de gama media con la red y el procesador limitados. Se repite con <code>puertas.py</code>.</p>
+      </div>
+
+    <blockquote class="cita">
+      <p>No había que inventarle una reputación. Había que ponerla donde alguien pudiera encontrarla.</p>
+      <cite>Zyad Bennani · fundador de Faro Digital</cite>
+    </blockquote>
+  </div></section>
+
+  <section class="fx-cierre">
+    <div class="fx-ancho">
+      <p class="sello">Lo que se usó aquí</p>
+      <h2>Auditoría, web y SEO local</h2>
+      <ul class="fx-skills">
+        <li>Auditoría 360°</li><li>Estrategia</li><li>Diseño web</li>
+        <li>UX/UI</li><li>Desarrollo</li><li>SEO local</li><li>Ficha de Google</li><li>CRO</li>
+      </ul>
+
+      <div class="fx-acciones">
+        <a class="fx-btn" href="/#contacto">Pide la Foto del Día 0 — gratis</a>
+        <a class="fx-btn hueco" href="index.html">Ver los otros cinco</a>
+      </div>
+
+      <a class="fx-siguiente" href="#">
+        <span class="et">Siguiente caso</span>
+        <span class="tit">—</span>
+      </a>
+
+      <div class="fx-pie">
+        <a href="index.html">Todos los proyectos</a>
+        <a href="/">Faro Digital</a>
+        <span>Proyecto de muestra · el salón Verbena no existe</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+/* La cortina. Puntero y teclado, y nada más: 30 líneas.
+   `setPointerCapture` es lo que hace que el arrastre no se pierda al salir del
+   recuadro — sin él, soltar fuera deja la cortina pegada al ratón. */
+(function () {
+  "use strict";
+  var c = document.getElementById("cortina");
+  if (!c) return;
+  var arrastrando = false;
+
+  function poner(x) {
+    var r = c.getBoundingClientRect();
+    var p = Math.max(4, Math.min(96, ((x - r.left) / r.width) * 100));
+    c.style.setProperty("--corte", p + "%");
+  }
+  /* 🔴 El movimiento se escucha en la VENTANA, no en el recuadro. Con
+     `setPointerCapture` sobre el propio elemento el arrastre no llegaba a
+     seguir al puntero — medido: al soltar, el corte se quedaba donde se pulsó.
+     Escuchar en window es el patrón que funciona en todos los navegadores, y
+     además permite arrastrar fuera del recuadro sin perder el gesto. */
+  c.addEventListener("pointerdown", function (e) {
+    arrastrando = true; poner(e.clientX); e.preventDefault();
+  });
+  addEventListener("pointermove", function (e) { if (arrastrando) poner(e.clientX); }, { passive: true });
+  function soltar() { arrastrando = false; }
+  addEventListener("pointerup", soltar);
+  addEventListener("pointercancel", soltar);
+
+  /* Teclado: la cortina es contenido, no un adorno. Quien no usa ratón también
+     tiene que poder ver el otro lado. */
+  c.tabIndex = 0;
+  c.addEventListener("keydown", function (e) {
+    var act = parseFloat(getComputedStyle(c).getPropertyValue("--corte")) || 50;
+    if (e.key === "ArrowLeft") { c.style.setProperty("--corte", Math.max(4, act - 6) + "%"); e.preventDefault(); }
+    else if (e.key === "ArrowRight") { c.style.setProperty("--corte", Math.min(96, act + 6) + "%"); e.preventDefault(); }
+  });
+
+  /* Arranca casi cerrada y se abre sola al entrar en pantalla: si empezara al
+     50 % nadie sabría que se puede mover. El gesto se enseña haciéndolo. */
+  c.style.setProperty("--corte", "88%");
+  if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+/* El umbral sale del sistema (`--m-umbral`, generado desde
+       marca.tokens.json). Estaba escrito a mano y habia SEIS valores distintos
+       en el portfolio para la misma decision: 0,18 · 0,3 · 0,3 · 0,35 · 0,35 ·
+       0,4. Ninguno estaba mal; el problema es que eran seis.
+
+           Un valor del sistema copiado a mano deja de ser del sistema
+           en cuanto alguien lo toca, y nadie se entera porque sigue funcionando. */
+    function umbralFaro() {
+      var v = parseFloat(getComputedStyle(document.documentElement)
+                         .getPropertyValue("--m-umbral"));
+      return (v > 0 && v <= 1) ? v : 0.15;
+    }
+    var ojo = new IntersectionObserver(function (f) {
+      if (!f[0].isIntersecting) return;
+      ojo.disconnect();
+      var t0 = null;
+      requestAnimationFrame(function paso(t) {
+        if (t0 === null) t0 = t;
+        var k = Math.min((t - t0) / 1100, 1);
+        var e = 1 - Math.pow(1 - k, 3);
+        c.style.setProperty("--corte", (88 - 40 * e) + "%");
+        if (k < 1) requestAnimationFrame(paso);
+      });
+    }, { threshold: umbralFaro() });
+    ojo.observe(c);
+  } else { c.style.setProperty("--corte", "48%"); }
+})();
+</script>
+<script src="assets/verbena/luz.js" defer></script>
+<script src="assets/_marco/faro-marco.js" defer></script>
+<script src="/assets/gestos.js" defer></script>
+</body>
+</html>

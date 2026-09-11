@@ -1,0 +1,104 @@
+[
+ {
+  "caso": "Caso-1-Local-Verbena.html",
+  "cifras": [
+   [
+    "202 KB",
+    "pesa la página entera, con su portada animada dentro"
+   ],
+   [
+    "1,0 s",
+    "tarda en pintarse el titular en un móvil de gama media"
+   ],
+   [
+    "0",
+    "recursos de terceros: ni una fuente, ni un script, ni un píxel de fuera"
+   ]
+  ]
+ },
+ {
+  "caso": "Caso-2-Ecommerce-Aura.html",
+  "cifras": [
+   [
+    "5",
+    "pantallas de tienda funcionando dentro de esta página, no en un vídeo"
+   ],
+   [
+    "21",
+    "controles que se pueden tocar sin salir del caso"
+   ],
+   [
+    "2,0 s",
+    "tarda en pintarse el titular en un móvil de gama media, con el 3D dentro"
+   ]
+  ]
+ },
+ {
+  "caso": "Caso-3-Datos-Casa-Lumen.html",
+  "cifras": [
+   [
+    "184 KB",
+    "pesa la página entera, panel incluido"
+   ],
+   [
+    "1,8 s",
+    "tarda en pintarse el titular en un móvil de gama media"
+   ],
+   [
+    "0",
+    "imágenes: todo lo que se ve está dibujado por el navegador"
+   ]
+  ]
+ },
+ {
+  "caso": "Caso-4-B2B-Meridian.html",
+  "cifras": [
+   [
+    "8",
+    "controles que se pueden tocar para ver el antes y el después"
+   ],
+   [
+    "191 KB",
+    "pesa la página entera"
+   ],
+   [
+    "1,7 s",
+    "tarda en pintarse el titular en un móvil de gama media"
+   ]
+  ]
+ },
+ {
+  "caso": "Caso-5-Multilocal-Brasa-Sal.html",
+  "cifras": [
+   [
+    "3",
+    "locales que se cambian sin recargar, en el selector de la página"
+   ],
+   [
+    "295 KB",
+    "pesa la página entera, con la portada de brasas dentro"
+   ],
+   [
+    "2,0 s",
+    "tarda en pintarse el titular en un móvil de gama media"
+   ]
+  ]
+ },
+ {
+  "caso": "Caso-6-Contenido-Sobremesa.html",
+  "cifras": [
+   [
+    "23",
+    "piezas de contenido reales dentro de la página, no descritas"
+   ],
+   [
+    "329 KB",
+    "pesa la página entera, con las 23 piezas"
+   ],
+   [
+    "2,0 s",
+    "tarda en pintarse el titular en un móvil de gama media"
+   ]
+  ]
+ }
+]

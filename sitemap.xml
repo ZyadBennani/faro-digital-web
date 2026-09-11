@@ -1,55 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://faro-digital.netlify.app/</loc>
+    <loc>https://faro-digital.pages.dev/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://faro-digital.netlify.app/audit</loc>
+    <loc>https://faro-digital.pages.dev/audit</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://faro-digital.netlify.app/portfolio/</loc>
+    <loc>https://faro-digital.pages.dev/portfolio/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://faro-digital.netlify.app/portfolio/caso-1-salon-belleza-verbena</loc>
+    <loc>https://faro-digital.pages.dev/portfolio/caso-1-local-verbena</loc>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://faro-digital.netlify.app/portfolio/caso-2-ecommerce-spec</loc>
+    <loc>https://faro-digital.pages.dev/portfolio/caso-2-ecommerce-aura</loc>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://faro-digital.netlify.app/portfolio/caso-3-dashboard-datos</loc>
+    <loc>https://faro-digital.pages.dev/portfolio/caso-3-datos-casa-lumen</loc>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://faro-digital.netlify.app/portfolio/caso-4-corporativo-meridian</loc>
+    <loc>https://faro-digital.pages.dev/portfolio/caso-4-b2b-meridian</loc>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://faro-digital.netlify.app/portfolio/caso-5-hosteleria-brasa-sal</loc>
+    <loc>https://faro-digital.pages.dev/portfolio/caso-5-multilocal-brasa-sal</loc>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://faro-digital.netlify.app/dashboard-demo</loc>
+    <loc>https://faro-digital.pages.dev/portfolio/caso-6-contenido-sobremesa</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://faro-digital.pages.dev/dashboard-demo</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
-  <url><loc>https://faro-digital.netlify.app/levels.html</loc></url>
+  <url><loc>https://faro-digital.pages.dev/levels.html</loc></url>
   <url>
-    <loc>https://faro-digital.netlify.app/check</loc>
+    <loc>https://faro-digital.pages.dev/check</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://faro-digital.pages.dev/signal-03-radar-ia-barcelona</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

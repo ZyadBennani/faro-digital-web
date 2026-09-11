@@ -3,11 +3,7 @@
 <head>
 
 <meta charset="utf-8">
-<!-- 2026-08-20 · La newsletter en ingles esta CONGELADA (Sprint 1, tabla D):
-     Faro vende en espanol a negocio local. Se deja publicada y accesible por si
-     alguien tiene el enlace, pero fuera del indice: tres paginas en ingles
-     indexadas bajo un sitio en espanol confunden a Google y al visitante.
-     Para revertirlo: quitar esta linea y devolver las URL al sitemap. -->
+
 <meta name="robots" content="noindex,follow">
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,39 +11,44 @@
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Faro Digital">
-<meta property="og:url" content="https://faro-digital.netlify.app/signal.html">
+<meta property="og:url" content="https://faro-digital.pages.dev/signal.html">
 <meta property="og:title" content="The Faro Signal — one real lesson a month">
 <meta property="og:description" content="One real lesson a month: an actual finding from a real audit, a real design decision, or a mistake we caught and fixed. No sales pitch.">
-<meta property="og:image" content="https://faro-digital.netlify.app/assets/logo-og.png">
+<meta property="og:image" content="https://faro-digital.pages.dev/assets/logo-og.png">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="The Faro Signal — one real lesson a month">
 <meta name="twitter:description" content="One real lesson a month: an actual finding from a real audit, a real design decision, or a mistake we caught and fixed. No sales pitch.">
-<meta name="twitter:image" content="https://faro-digital.netlify.app/assets/logo-og.png">
+<meta name="twitter:image" content="https://faro-digital.pages.dev/assets/logo-og.png">
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Blog",
  "name":"The Faro Signal",
  "description":"One real lesson a month from Faro Digital: findings from real audits, real design decisions, and mistakes caught and fixed.",
- "url":"https://faro-digital.netlify.app/signal.html",
+ "url":"https://faro-digital.pages.dev/signal.html",
  "inLanguage":"en",
- "publisher":{"@type":"Organization","name":"Faro Digital","url":"https://faro-digital.netlify.app/",
-   "logo":{"@type":"ImageObject","url":"https://faro-digital.netlify.app/assets/logo-og.png"}},
+ "publisher":{"@type":"Organization","name":"Faro Digital","url":"https://faro-digital.pages.dev/",
+   "logo":{"@type":"ImageObject","url":"https://faro-digital.pages.dev/assets/logo-og.png"}},
  "blogPost":[
   {"@type":"BlogPosting","headline":"We checked several agencies that call themselves data-driven. None showed us a dashboard.",
-   "url":"https://faro-digital.netlify.app/signal-02-dashboard-benchmark.html","datePublished":"2026-08-08"},
+   "url":"https://faro-digital.pages.dev/signal-03-radar-ia-barcelona","datePublished":"2026-08-22"},
+  {"@type":"BlogPosting","headline":"Preguntamos a la IA por 7 negocios de Barcelona. Cinco no salían.",
+   "url":"https://faro-digital.pages.dev/signal-02-dashboard-benchmark.html","datePublished":"2026-08-08"},
   {"@type":"BlogPosting","headline":"We didn't have our own SEO in order — here's what that taught us",
-   "url":"https://faro-digital.netlify.app/signal-01-seo-homework.html","datePublished":"2026-08-01"}
+   "url":"https://faro-digital.pages.dev/signal-01-seo-homework.html","datePublished":"2026-08-01"}
  ]}
 </script>
 
 <meta name="description" content="The Faro Signal: one real marketing lesson a month from Faro Digital, drawn from actual client and agency work — no sales pitch.">
-<link rel="canonical" href="https://faro-digital.netlify.app/signal.html">
+<link rel="canonical" href="https://faro-digital.pages.dev/signal.html">
 <style>
 :root{
   --forest:#1E3A2E; --forest-deep:#12291F; --sand:#C9A667; --cream:#F5EFE4;
+  
+  --acento-texto:var(--forest-deep);
   --white:#E2D9C6; --ink:#17211C; --ink-soft:#5B6155; --line:#E2D9C6;
 }
+header.top, footer{--acento-texto:var(--sand);}
 *{box-sizing:border-box;}
 body{margin:0; font-family:'Work Sans',Helvetica,Arial,sans-serif; color:var(--ink); background:var(--white); line-height:1.6;}
 h1,h2,h3{font-family:'Frank Ruhl Libre',Georgia,'Times New Roman',serif; margin:0;}
@@ -64,7 +65,7 @@ header.top .back{display:inline-block; margin-bottom:22px; font-size:13px; color
 main{padding:52px 0 80px;}
 .issue{display:flex; gap:24px; padding:26px 0; border-bottom:1px solid var(--line);}
 .issue:first-child{padding-top:0;}
-.issue .num{font-family:'Frank Ruhl Libre',Georgia,serif; font-size:15px; color:var(--sand); font-weight:700; flex:0 0 90px;}
+.issue .num{font-family:'Frank Ruhl Libre',Georgia,serif; font-size:15px; color:var(--acento-texto); font-weight:700; flex:0 0 90px;}
 .issue h3{font-size:19px; color:var(--forest);}
 .issue p{font-size:14px; color:var(--ink-soft); margin-top:8px;}
 .issue a.read{display:inline-block; margin-top:10px; font-size:13.5px; font-weight:700; color:var(--forest); text-decoration:none;}
@@ -75,6 +76,7 @@ main{padding:52px 0 80px;}
 footer{padding:40px 32px; text-align:center; font-size:12px; color:var(--ink-soft); border-top:1px solid var(--line);}
 </style>
 <link rel="stylesheet" href="assets/fuentes.css">
+<link rel="stylesheet" href="assets/profundidad.css">
 </head>
 <body>
 
@@ -89,6 +91,15 @@ footer{padding:40px 32px; text-align:center; font-size:12px; color:var(--ink-sof
 
 <main>
   <div class="wrap">
+
+    <div class="issue">
+      <div class="num">Número 3<br>Ago 2026</div>
+      <div>
+        <h3>Preguntamos a la IA por 7 negocios de Barcelona. Cinco no salían.</h3>
+        <p>91 preguntas a ChatGPT, Perplexity y Google sobre negocios reales de aquí, con las respuestas guardadas. La IA sabe quién eres si le das tu nombre — pero no te recomienda a quien todavía no te conoce. Los datos, y las cinco cosas que sí mueven la aguja.</p>
+        <a class="read" href="/signal-03-radar-ia-barcelona">Leer el número 3 →</a>
+      </div>
+    </div>
 
     <div class="issue">
       <div class="num">Issue 2<br>Sep 2026</div>

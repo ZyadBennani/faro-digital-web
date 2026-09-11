@@ -9,29 +9,32 @@
 {"@context":"https://schema.org","@type":"WebPage",
  "name":"Panel en vivo, de demostración — Faro Digital",
  "description":"Una demo interactiva del panel de informes que Faro Digital construye para sus clientes, con la same structure as the Casa Lumen case study.",
- "url":"https://faro-digital.netlify.app/dashboard-demo.html",
+ "url":"https://faro-digital.pages.dev/dashboard-demo.html",
  "inLanguage":"es",
- "isPartOf":{"@type":"WebSite","name":"Faro Digital","url":"https://faro-digital.netlify.app/"},
- "publisher":{"@type":"Organization","name":"Faro Digital","url":"https://faro-digital.netlify.app/"}}
+ "isPartOf":{"@type":"WebSite","name":"Faro Digital","url":"https://faro-digital.pages.dev/"},
+ "publisher":{"@type":"Organization","name":"Faro Digital","url":"https://faro-digital.pages.dev/"}}
 </script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Un ejemplo interactivo del panel de marketing que Faro Digital construye para sus clientes: tráfico, embudo, campañas y rendimiento por tienda en un solo sitio.">
-<link rel="canonical" href="https://faro-digital.netlify.app/dashboard-demo">
+<link rel="canonical" href="https://faro-digital.pages.dev/dashboard-demo">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Faro Digital">
-<meta property="og:url" content="https://faro-digital.netlify.app/dashboard-demo">
+<meta property="og:url" content="https://faro-digital.pages.dev/dashboard-demo">
 <meta property="og:title" content="Panel en vivo, de demostración — Faro Digital">
 <meta property="og:description" content="Un ejemplo interactivo del panel de marketing en tiempo real que Faro Digital construye para sus clientes.">
-<meta property="og:image" content="https://faro-digital.netlify.app/assets/logo-og.png">
+<meta property="og:image" content="https://faro-digital.pages.dev/assets/logo-og.png">
 <meta property="og:locale" content="es_ES">
 
 <style>
   :root{
     --forest:#1E3A2E; --forest-deep:#12291F; --sand:#C9A667; --cream:#F5EFE4;
+    
+    --acento-texto:var(--forest-deep);
     --ink-soft:#5B6155; --line:rgba(30,58,46,.14); --paper-raised:#FFFFFF;
     --good:#3E6B52; --bad:#A8603E; --paper:#EFE8D6;
   }
+  header, .hero, footer, .kpi-card, .next-step{--acento-texto:var(--sand);}
   *{box-sizing:border-box;}
   body{margin:0; background:var(--cream); color:var(--forest); font-family:'Work Sans',Helvetica,Arial,sans-serif; line-height:1.55; -webkit-font-smoothing:antialiased;}
   h1,h2,h3{font-family:'Frank Ruhl Libre',Georgia,'Times New Roman',serif; margin:0; letter-spacing:-.01em;}
@@ -44,7 +47,7 @@
   header nav a{font-size:14px; font-weight:600; text-decoration:none; color:var(--forest); border-bottom:1px solid var(--forest); margin-left:22px;}
 
   .intro{padding:20px 0 8px;}
-  .eyebrow{font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--sand); font-weight:700;}
+  .eyebrow{font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--acento-texto); font-weight:700;}
   .intro h1{font-size:clamp(26px,3.6vw,36px); line-height:1.18; margin-top:14px; max-width:20ch;}
   .intro p{font-size:16px; color:var(--ink-soft); margin-top:14px; max-width:64ch;}
   .illustrative-tag{display:inline-block; margin-top:14px; font-size:12px; letter-spacing:.04em; text-transform:uppercase; font-weight:700; color:var(--ink-soft); background:var(--paper-raised); border:1px solid var(--line); padding:5px 11px; border-radius:999px;}
@@ -55,7 +58,6 @@
   .period-toggle button.active{background:var(--forest-deep); color:var(--cream);}
   .store-label{font-size:13px; color:var(--ink-soft);}
 
-  /* KPI row */
   .kpi-row{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:16px; margin-bottom:28px;}
   .kpi-card{background:var(--forest-deep); color:var(--cream); border-radius:14px; padding:20px 20px 18px;}
   .kpi-card .label{font-size:12px; letter-spacing:.05em; text-transform:uppercase; color:#9FB3A6;}
@@ -64,7 +66,6 @@
   .kpi-card .delta.up{color:#8FC9A6;}
   .kpi-card .delta.down{color:#E0A98F;}
 
-  /* Goal tracker */
   .goal{background:var(--paper-raised); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-bottom:28px; display:flex; align-items:center; gap:22px; flex-wrap:wrap;}
   .goal .goal-text{flex:1 1 220px;}
   .goal .goal-text strong{font-family:'Frank Ruhl Libre',Georgia,serif; font-size:17px;}
@@ -73,21 +74,15 @@
   .goal-bar-fill{background:linear-gradient(90deg,var(--sand),#DBB877); height:100%; border-radius:999px; transition:width .5s cubic-bezier(.22,1,.36,1);}
   .goal-pct{font-family:'Frank Ruhl Libre',Georgia,serif; font-weight:700; font-size:15px; margin-top:6px; color:var(--forest-deep);}
 
-  /* Chart grid */
   .section-title{font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin:34px 0 14px;}
   .chart-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
   @media (max-width:760px){.chart-grid{grid-template-columns:1fr;}}
-  /* 🔴 Mismo fallo que en levels.html, el mismo dia: un hijo de grid vale
-     `min-width:auto`, asi que el <canvas> del grafico empujaba la tarjeta a
-     342 px dentro de una pista de 312 y la pagina se salia 6 px en un movil
-     de 360. Poco, pero es scroll horizontal en la pagina que demuestra que
-     sabemos construir. */
+  
   .chart-grid > *{min-width:0;}
   .card canvas{max-width:100%;}
   .card{background:var(--paper-raised); border:1px solid var(--line); border-radius:14px; padding:20px;}
   .card h4{font-size:14px; font-weight:700; margin-bottom:14px; color:var(--forest-deep);}
 
-  /* Tables */
   table{width:100%; border-collapse:collapse; font-size:13.5px;}
   th{text-align:left; font-size:11.5px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-soft); padding:9px 10px; border-bottom:1px solid var(--line); cursor:pointer; user-select:none; white-space:nowrap;}
   th.sortable:hover{color:var(--forest-deep);}
@@ -100,7 +95,6 @@
   .trend-down{color:var(--bad); font-weight:600;}
   .table-scroll{overflow-x:auto;}
 
-  /* Heatmap */
   .heat-table{width:100%; border-collapse:separate; border-spacing:4px; font-size:11.5px;}
   .heat-table th{border:none; padding:4px 6px; text-align:center; cursor:default;}
   .heat-table td{border:none; padding:0; text-align:center;}
@@ -114,8 +108,7 @@
   footer{margin-top:60px; padding:28px 0 40px; border-top:1px solid var(--line); text-align:center; font-size:13px; color:var(--ink-soft);}
 </style>
 <style>
-/* Accesibilidad — pasada de Fase A, 2026-08-19. Hay personas a las que el
-   movimiento les provoca mareo de verdad. Ver Sistema-Web-Capacidades.md 7.4. */
+
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{
     animation-duration:.01ms!important;
@@ -126,6 +119,7 @@
 }
 </style>
 <link rel="stylesheet" href="assets/fuentes.css">
+<link rel="stylesheet" href="assets/profundidad.css">
 </head>
 <body>
 
@@ -136,7 +130,7 @@
       Faro Digital
     </a>
     <nav>
-      <a href="/portfolio/caso-3-dashboard-datos">Leer el caso</a>
+      <a href="/portfolio/caso-3-datos-casa-lumen">Leer el caso</a>
       <a href="/audit">Pedir la auditoría completa →</a>
     </nav>
   </div>
@@ -224,18 +218,9 @@
 </div>
 
 <footer>
-  <div class="wrap">© Faro Digital — <a href="/">faro-digital.netlify.app</a></div>
+  <div class="wrap">© Faro Digital — <a href="/">faro-digital.pages.dev</a></div>
 </footer>
 
-<!-- Chart.js 4.4.4, MIT, servido desde NUESTRO dominio.
-     Antes venia de un CDN externo, y eso expone la IP de cada visitante a un
-     tercero: el mismo problema de RGPD que ya se corrigio con las fuentes.
-     Ademas llegaba en DOS versiones distintas desde DOS CDN distintos.
-     Va AQUI, pegado al codigo que lo usa, y SIN defer: el script de abajo
-     crea los graficos al vuelo, sin esperar a DOMContentLoaded, asi que con
-     defer "Chart" no estaria definido todavia y la pagina se quedaria en
-     blanco. Al estar en el cuerpo tampoco bloquea el pintado de la cabecera.
-     Licencia en assets/vendor/chart.js-LICENSE.md -->
 <script src="/assets/vendor/chart.umd.min.js"></script>
 <script>
 (function(){

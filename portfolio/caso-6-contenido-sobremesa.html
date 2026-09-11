@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="es" class="sin-js">
+<head>
+<meta charset="utf-8">
+
+<meta name="faro-nivel" content="N3">
+<script>document.documentElement.classList.remove("sin-js");</script>
+<title>Sobremesa — un restaurante que necesitaba existir · Faro</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Ccircle cx='150' cy='150' r='150' fill='%23F6F0E3'/%3E%3Cline x1='150' y1='123' x2='100' y2='92' stroke='%23C9A667' stroke-width='9' stroke-linecap='round'/%3E%3Cline x1='150' y1='123' x2='200' y2='92' stroke='%23C9A667' stroke-width='9' stroke-linecap='round'/%3E%3Cpath d='M150 133 L168 175 L132 175 Z' fill='%231E3A2E'/%3E%3Cpath d='M141 175 L159 175 L169 238 L131 238 Z' fill='%231E3A2E'/%3E%3Crect x='122' y='238' width='56' height='12' rx='2' fill='%231E3A2E'/%3E%3Ccircle cx='150' cy='123' r='10' fill='%23C9A667'/%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Proyecto de muestra de Faro Digital: contenido, marca y redes para un restaurante de barrio. 21 piezas producidas — carruseles, stories, reels y campaña.">
+
+<link rel="canonical" href="https://faro-digital.pages.dev/portfolio/caso-6-contenido-sobremesa">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Faro Digital">
+<meta property="og:url" content="https://faro-digital.pages.dev/portfolio/caso-6-contenido-sobremesa">
+<meta property="og:title" content="Lleno los viernes, vacío el resto de la semana — proyecto de muestra">
+<meta property="og:description" content="Contenido, marca y redes para un restaurante de barrio. 21 piezas reales y un calendario que se puede tocar.">
+<meta property="og:image" content="https://faro-digital.pages.dev/portfolio/assets/sobremesa/og-sobremesa.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lleno los viernes, vacío el resto de la semana — proyecto de muestra">
+<meta name="twitter:description" content="Contenido, marca y redes para un restaurante de barrio. 21 piezas reales y un calendario que se puede tocar.">
+<meta name="twitter:image" content="https://faro-digital.pages.dev/portfolio/assets/sobremesa/og-sobremesa.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Lleno los viernes, vacío el resto de la semana",
+  "description": "Proyecto de muestra de Faro Digital: contenido, marca y redes para un restaurante de barrio.",
+  "disambiguatingDescription": "Proyecto de muestra. Sobremesa es una marca ficticia creada para este caso; no es un cliente real y no existe. Las 21 piezas sí están producidas de verdad.",
+  "inLanguage": "es",
+  "image": "https://faro-digital.pages.dev/portfolio/assets/sobremesa/og-sobremesa.jpg",
+  "mainEntityOfPage": "https://faro-digital.pages.dev/portfolio/caso-6-contenido-sobremesa",
+  "isPartOf": { "@type": "CollectionPage", "name": "Portfolio de Faro Digital", "url": "https://faro-digital.pages.dev/portfolio/" },
+  "author": { "@type": "Person", "name": "Zyad Bennani" },
+  "creator": { "@type": "Organization", "name": "Faro Digital", "url": "https://faro-digital.pages.dev/" },
+  "about": ["Contenido", "Redes sociales", "Branding", "Motion", "IA generativa"]
+}
+</script>
+
+<script>document.documentElement.classList.add('js')</script>
+<link rel="stylesheet" href="/assets/motion.css">
+<link rel="stylesheet" href="/assets/profundidad.css">
+<link rel="stylesheet" href="/assets/base.css">
+<link rel="stylesheet" href="assets/_marco/faro-marco.css">
+<script src="/assets/medicion.js" defer></script>
+
+<style>
+
+:root{
+
+  --caso-fondo:var(--fx-papel, #F5EFE4);   
+  --caso-tinta:#241F1C;      
+    
+  --caso-suave:color-mix(in srgb, var(--caso-tinta) var(--f-suave-pct, 68%), transparent);
+  --caso-acento:#6B2737;
+  
+  --fx-tinta-acento:var(--fx-verde, #12291F);     
+  --oliva:#7C8363;
+  --caso-display:"Frank Ruhl Libre", Georgia, serif;
+  --caso-texto:"Work Sans", system-ui, sans-serif;
+  --linea:rgba(36,31,28,.16);
+}
+
+.portada{
+  position:relative; overflow:hidden; background:var(--caso-fondo);
+  padding-block:calc(var(--fx-barra-alto) + 6vh) 7vh;
+  border-bottom:1px solid var(--linea);
+}
+.mantel{ position:absolute; inset:0; z-index:0; }
+.mantel canvas{ width:100%; height:100%; display:block; }
+.portada-caja{ position:relative; z-index:1; display:grid;
+  grid-template-columns:minmax(0,1.5fr) minmax(0,.85fr);
+  gap:clamp(30px,5vw,72px); align-items:center; }
+@media (max-width:940px){ .portada-caja{ grid-template-columns:minmax(0,1fr); gap:34px; } }
+.portada h1{
+  font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-display); line-height:1.02; letter-spacing:-.028em;
+  margin:0; max-width:14ch; text-wrap:balance;
+}
+.portada .sector{
+  font-size:var(--fx-sello); font-weight:600; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--fx-tinta-acento); margin:0 0 22px;
+}
+.portada .muestra{
+  display:inline-flex; align-items:center; gap:9px; margin-top:32px;
+  padding:7px 15px 7px 12px; border-radius:100px;
+  border:1px solid color-mix(in srgb, var(--caso-tinta) 24%, transparent);
+  background:color-mix(in srgb, var(--caso-fondo) 72%, transparent);
+  font-size:var(--fx-pie); color:var(--caso-suave);
+}
+.portada .muestra::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--caso-acento); flex:none;
+}
+
+.carta{
+  background:#FBF7F0; padding:clamp(26px,3vw,40px) clamp(22px,2.6vw,34px) clamp(22px,2.4vw,32px);
+  border-radius:2px; transform:rotate(-1.2deg);
+  box-shadow:0 26px 60px -32px rgba(60,40,30,.65), 0 2px 6px -3px rgba(60,40,30,.25);
+  text-align:center; justify-self:center; width:min(100%,360px);
+}
+.carta img{ width:82%; margin:0 auto; display:block; }
+.carta .lema{
+  margin:22px 0 0; padding-top:16px; border-top:1px solid var(--linea);
+  font-family:var(--caso-display); font-style:italic; font-weight:500;
+  font-size:var(--fx-cuerpo); color:var(--caso-suave); letter-spacing:.01em;
+}
+
+.seccion{ padding-block:clamp(46px,5.5vw,84px) clamp(14px,1.6vw,26px); border-top:1px solid var(--linea); }
+.seccion .sello{
+  font-size:var(--fx-sello); font-weight:600; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--fx-tinta-acento); margin:0 0 16px;
+}
+.seccion h2{
+  font-family:var(--caso-display); font-weight:500; margin:0;
+  font-size:var(--fx-titulo); line-height:1.08; letter-spacing:-.03em; text-wrap:balance;
+}
+.cuerpo{ max-width:46ch; }
+.cuerpo p{ margin:14px 0 0; font-size:var(--fx-cuerpo); line-height:1.6; }
+.cuerpo p b{ font-weight:600; }
+
+.seccion.banda{
+  
+  --fx-tinta-acento:var(--fx-papel, #F5EFE4);
+  --caso-fondo:#241F1C; --caso-tinta:#F5EFE6; --caso-suave:color-mix(in srgb, var(--caso-tinta) var(--f-suave-pct, 68%), transparent);
+  --caso-acento:#D89AA4; --linea:rgba(245,239,230,.16);
+  background:var(--caso-fondo); color:var(--caso-tinta);
+  padding-block:clamp(58px,6.5vw,96px) clamp(30px,3.4vw,52px);
+  border-top:0;
+}
+.seccion.banda + .seccion{ padding-top:clamp(58px,6.5vw,96px); }
+
+.nunca{ margin-top:clamp(24px,2.6vw,40px); display:flex; flex-wrap:wrap; gap:10px 12px; align-items:center; }
+.nunca .et{
+  font-size:var(--fx-sello); letter-spacing:.16em; text-transform:uppercase;
+  font-weight:600; color:var(--fx-tinta-acento); margin-right:6px;
+}
+.nunca span:not(.et){
+  position:relative; font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-lede); line-height:1.2;
+  color:color-mix(in srgb, var(--caso-tinta) var(--f-suave-pct, 68%), transparent);
+  padding:2px 4px;
+}
+.nunca span:not(.et)::after{
+  content:""; position:absolute; left:0; right:0; top:52%; height:2px;
+  background:var(--caso-acento); transform:rotate(-1.4deg); opacity:.85;
+}
+
+.semana{ margin-top:clamp(26px,3vw,42px); }
+.sem-cab{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;
+  padding-bottom:14px; border-bottom:1px solid var(--linea); }
+.sem-cab b{ font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-lede); letter-spacing:-.015em; }
+.sem-cab > span{ font-size:var(--fx-pie); color:var(--caso-suave); }
+.sem-btns{ margin-left:auto; display:flex; gap:6px; }
+.sem-btns button{
+  font:inherit; font-size:var(--fx-sello); letter-spacing:.1em; text-transform:uppercase;
+  border:1px solid var(--linea); background:none; color:var(--caso-suave);
+  padding:6px 13px; border-radius:100px; cursor:pointer;
+  transition:border-color var(--fx-rapido) var(--fx-curva), color var(--fx-rapido) var(--fx-curva);
+}
+.sem-btns button:hover{ border-color:var(--fx-tinta-acento); color:var(--fx-tinta-acento); }
+.semana[data-estado="antes"] .sem-btns button[data-sem="0"],
+.semana[data-estado="plan"]  .sem-btns button[data-sem="1"]{
+  border-color:var(--fx-tinta-acento); color:var(--caso-fondo); background:var(--fx-tinta-acento);
+}
+
+.sem-rej{ display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:clamp(4px,.8vw,12px);
+  margin-top:26px; }
+.dia{
+  position:relative; height:clamp(200px,26vw,270px); padding:0; margin:0;
+  background:none; border:0; border-bottom:2px solid var(--caso-tinta);
+  font:inherit; color:inherit; text-align:center; cursor:pointer;
+  display:block;
+}
+.dia[disabled]{ cursor:default; }
+
+.dia .barra{
+  position:absolute; left:12%; right:12%; bottom:0; height:var(--h);
+  background:color-mix(in srgb, var(--oliva) 42%, transparent);
+  border-radius:2px 2px 0 0;
+}
+.dia[data-sala="0"] .barra{ background:repeating-linear-gradient(45deg,
+  color-mix(in srgb, var(--caso-tinta) 9%, transparent) 0 4px, transparent 4px 8px); height:14px; }
+
+.dia .post{
+  position:absolute; left:0; right:0; bottom:calc(var(--h) + 10px);
+  font-size:var(--fx-sello); line-height:1.25; padding:6px 4px;
+  border-radius:3px; transition:opacity var(--m-rapido, 240ms) var(--fx-curva),
+                                transform var(--m-rapido, 240ms) var(--fx-curva);
+}
+.dia .post[data-on="0"]{ opacity:0; transform:translateY(8px); }
+.dia .post[hidden]{ display:none; }
+
+.dia .post:empty{ display:none; }
+.dia .post.plan{ background:var(--caso-acento); color:#FBF7F0; font-weight:600; }
+.dia .post.antes{ background:color-mix(in srgb, var(--caso-tinta) 16%, transparent);
+  color:var(--caso-suave); font-weight:600; }
+.dia .post.silencio{ background:none; color:var(--caso-suave); font-weight:600;
+  border:1px dashed color-mix(in srgb, var(--caso-tinta) 34%, transparent); }
+.dia .nom{ position:absolute; left:0; right:0; bottom:-26px;
+  font-size:var(--fx-sello); letter-spacing:.1em; text-transform:uppercase; color:var(--caso-suave); }
+
+.dia .nom i{ font-style:normal; }
+.dia .larga{ display:none; }
+
+.dia[aria-expanded="true"] .barra{ background:color-mix(in srgb, var(--caso-acento) 62%, transparent); }
+.dia[aria-expanded="true"] .nom{ color:var(--caso-acento); font-weight:600; }
+.dia:not([disabled]):hover .barra{ background:color-mix(in srgb, var(--oliva) 62%, transparent); }
+
+@media (min-width:760px){
+  .dia .corta{ display:none; }
+  .dia .larga{ display:inline; }
+}
+@media (max-width:759px){
+  
+  .dia .post{ font-size:0; height:12px; padding:0; margin-inline:22%; border-radius:100px; }
+  .dia .post.silencio{ height:12px; }
+}
+.sem-rej + .sem-pie{ margin-top:44px; }
+.sem-pie{ font-size:var(--fx-pie); color:var(--caso-suave); line-height:1.55; }
+.sem-pie b{ color:var(--fx-tinta-acento); font-weight:600; font-variant-numeric:tabular-nums;
+  font-size:var(--fx-cuerpo); }
+
+.detalle{ display:grid; grid-template-columns:auto minmax(0,1fr); gap:clamp(16px,2.4vw,28px);
+  align-items:start; margin-top:22px; padding-top:20px; border-top:1px solid var(--linea); }
+.detalle[hidden]{ display:none; }
+.detalle img{ width:clamp(96px,13vw,150px); height:auto; border-radius:3px;
+  box-shadow:0 14px 34px -20px rgba(60,40,30,.6); background:#EDE4D6; }
+.detalle h4{ margin:0; font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-lede); letter-spacing:-.015em; }
+.detalle p{ margin:8px 0 0; font-size:var(--fx-pie); color:var(--caso-suave); line-height:1.6; max-width:52ch; }
+
+.serie{ margin-top:clamp(24px,2.6vw,40px); }
+.serie-cab{ display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;
+  padding-bottom:14px; border-bottom:1px solid var(--linea); margin-bottom:20px; }
+.serie-cab h3{ margin:0; font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-lede); letter-spacing:-.015em; }
+.serie-cab span{ font-size:var(--fx-pie); color:var(--caso-suave); }
+.serie-cab .paso{ margin-left:auto; font-size:var(--fx-sello); letter-spacing:.14em;
+  text-transform:uppercase; color:var(--fx-tinta-acento); font-weight:600; }
+.tira{
+  display:grid; grid-auto-flow:column; grid-auto-columns:min(62vw, 300px);
+  gap:14px; overflow-x:auto; overscroll-behavior-x:contain;
+  scroll-snap-type:x mandatory; padding-bottom:14px;
+  scrollbar-width:thin; scrollbar-color:var(--linea) transparent;
+}
+.tira::-webkit-scrollbar{ height:5px; }
+.tira::-webkit-scrollbar-thumb{ background:var(--linea); border-radius:9px; }
+.tira img, .tira video{
+  width:100%; height:auto; display:block; scroll-snap-align:start;
+  border-radius:3px; background:#EDE4D6;
+  box-shadow:0 12px 30px -18px rgba(60,40,30,.55);
+}
+.tira.reels{ grid-auto-columns:min(52vw, 250px); }
+.nota-foto{ margin-top:clamp(22px,2.4vw,34px); padding-left:clamp(16px,2vw,26px);
+  border-left:2px solid var(--caso-acento);
+  font-size:var(--fx-pie); color:var(--caso-suave); line-height:1.65; max-width:62ch; }
+.nota-foto b{ color:var(--caso-tinta); }
+
+.collage{ display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:16px; margin-top:clamp(24px,2.6vw,40px); }
+.collage figure{ margin:0; grid-column:span 4; }
+.collage img{ width:100%; border-radius:3px; box-shadow:0 16px 40px -24px rgba(60,40,30,.6); background:#EDE4D6; }
+.collage figcaption{ margin-top:10px; font-size:var(--fx-pie); color:var(--caso-suave); line-height:1.45; }
+@media (min-width:900px){
+  .collage figure:nth-child(1){ grid-column:1 / span 4; transform:rotate(-1.1deg); }
+  .collage figure:nth-child(2){ grid-column:5 / span 5; margin-top:52px; transform:rotate(.7deg); }
+  .collage figure:nth-child(3){ grid-column:10 / span 3; transform:rotate(-.5deg); }
+}
+@media (max-width:900px){ .collage figure{ grid-column:span 12; } }
+
+.cita{ margin-top:clamp(26px,3vw,44px); padding-left:clamp(18px,2.6vw,32px);
+  border-left:3px solid var(--caso-acento); }
+.cita p{ margin:0; font-family:var(--caso-display); font-style:italic; font-weight:500;
+  font-size:var(--fx-lede); line-height:1.3; letter-spacing:-.015em; max-width:28ch; }
+.cita cite{ display:block; margin-top:14px; font-style:normal; font-size:var(--fx-pie); color:var(--caso-suave); }
+
+html.sin-js .sem-btns{ display:none; }
+html.sin-js .dia{ cursor:default; }
+
+.portada .ap-bajada, .hero .ap-bajada{
+  margin:22px 0 0; max-width:34ch; font-size:var(--fx-lede);
+  line-height:1.45; color:var(--caso-suave); }
+
+</style>
+</head>
+<body data-caso="6" data-tono="claro">
+<a class="fx-salta" href="#contenido">Saltar al contenido</a>
+
+<header class="fx-barra faro-barra">
+  <a class="faro-marca" href="index.html" aria-label="Portfolio de Faro Digital">
+    <svg viewBox="0 0 180 300" aria-hidden="true">
+      <line x1="90" y1="60" x2="23" y2="18" stroke="currentColor" stroke-width="9" stroke-linecap="round"/>
+      <line x1="90" y1="60" x2="157" y2="18" stroke="currentColor" stroke-width="9" stroke-linecap="round"/>
+      <path d="M90 70 L114 134 L66 134 Z" fill="currentColor"/>
+      <path d="M78 134 L102 134 L120 274 L60 274 Z" fill="currentColor"/>
+      <rect x="45" y="274" width="90" height="20" rx="3" fill="currentColor"/>
+      <circle cx="90" cy="60" r="13" fill="currentColor"/>
+    </svg>
+    <span>Faro Digital</span>
+  </a>  <nav class="faro-nav">
+    
+    <a href="/#servicios">Qué hacemos</a>
+    <a href="/#metodo">Método</a>
+    <a href="index.html">Trabajo</a>
+    <a href="/#precios">Precios</a>
+  </nav>
+
+  <span class="cuenta faro-cuenta">06 / 06</span>
+  <a class="sig faro-accion" href="#">Siguiente</a>
+</header>
+
+<main id="contenido">
+
+  <section class="portada">
+    
+    <div class="mantel" id="mantel" aria-hidden="true"><canvas></canvas></div>
+
+    <div class="fx-ancho portada-caja">
+      <div class="portada-texto">
+        <p class="sector">Restauración · Contenido y marca</p>
+        <h1 class="g-titular">Llenos el viernes, vacíos el martes</h1>
+    <p class="ap-bajada">Publicaban los días que ya estaban llenos, y callaban los que había que llenar.</p>
+        <span class="muestra">Proyecto de muestra — la marca es nuestra, las 21 piezas son reales</span>
+      </div>
+
+      <div class="carta">
+        <img src="assets/sobremesa/marca-sobremesa.svg" width="460" height="150"
+             alt="Logotipo de Sobremesa" fetchpriority="high">
+        <p class="lema">La mesa no tiene prisa</p>
+      </div>
+    </div>
+  </section>
+
+<section class="seccion banda"><div class="fx-ancho">
+    <p class="sello">El calendario</p>
+    <h2>Publicaban los días que ya estaban llenos</h2>
+
+    <div class="semana" id="semana">
+      <div class="sem-cab">
+        <b>La semana</b>
+        <span>la altura es lo llena que está la sala</span>
+        <div class="sem-btns">
+          <button type="button" data-sem="0">Como estaba</button>
+          <button type="button" data-sem="1">Con el plan</button>
+        </div>
+      </div>
+
+      <div class="sem-rej">
+        <button class="dia" data-sala="0" style="--h:0%" disabled>
+          <span class="post antes"></span><span class="post plan"></span>
+          <span class="barra"></span>
+          <span class="nom"><i class="corta">L</i><i class="larga">Lunes</i></span>
+        </button>
+
+        <button class="dia" data-sala="30" style="--h:30%" data-pieza="ahoramismo">
+          <span class="post antes"></span>
+          <span class="post plan">Story «Ahora mismo»</span>
+          <span class="barra"></span>
+          <span class="nom"><i class="corta">M</i><i class="larga">Martes</i></span>
+        </button>
+
+        <button class="dia" data-sala="35" style="--h:35%" data-pieza="lacarta">
+          <span class="post antes"></span>
+          <span class="post plan">Carrusel de carta</span>
+          <span class="barra"></span>
+          <span class="nom"><i class="corta">X</i><i class="larga">Miércoles</i></span>
+        </button>
+
+        <button class="dia" data-sala="45" style="--h:45%" data-pieza="oficio">
+          <span class="post antes"></span>
+          <span class="post plan">Reel «El oficio»</span>
+          <span class="barra"></span>
+          <span class="nom"><i class="corta">J</i><i class="larga">Jueves</i></span>
+        </button>
+
+        <button class="dia" data-sala="95" style="--h:95%" data-pieza="silencio">
+          <span class="post antes"></span>
+          <span class="post plan silencio">Silencio</span>
+          <span class="barra"></span>
+          <span class="nom"><i class="corta">V</i><i class="larga">Viernes</i></span>
+        </button>
+
+        <button class="dia" data-sala="100" style="--h:100%" disabled>
+          <span class="post antes"></span><span class="post plan"></span>
+          <span class="barra"></span>
+          <span class="nom"><i class="corta">S</i><i class="larga">Sábado</i></span>
+        </button>
+
+        <button class="dia" data-sala="78" style="--h:78%" data-pieza="vozcliente">
+          <span class="post antes"></span>
+          <span class="post plan">La voz del cliente</span>
+          <span class="barra"></span>
+          <span class="nom"><i class="corta">D</i><i class="larga">Domingo</i></span>
+        </button>
+      </div>
+
+      <p class="sem-pie">Días flojos con una pieza: <b class="sem-cuenta">3</b> de 3. La ocupación es el problema de partida, no un dato medido.</p>
+
+      <div class="detalle" data-pieza="ahoramismo" hidden>
+        <img src="assets/sobremesa/story-ahoramismo-entresemana-mini.webp" width="190" height="338" loading="lazy" decoding="async" alt="Story «Ahora mismo», variante entre semana">
+        <div><h4>Story «Ahora mismo»</h4>
+          <p>Lo que ha entrado hoy del mercado. No se prepara antes.</p></div>
+      </div>
+      <div class="detalle" data-pieza="lacarta" hidden>
+        <img src="assets/sobremesa/lacarta-01-mini.webp" width="190" height="238" loading="lazy" decoding="async" alt="Carrusel «La carta», primera pieza">
+        <div><h4>Carrusel de carta</h4>
+          <p>Un plato, de dónde viene y por qué está esta semana.</p></div>
+      </div>
+      <div class="detalle" data-pieza="oficio" hidden>
+        <img src="assets/sobremesa/reel-oficio-nivel2-poster.webp" width="190" height="338" loading="lazy" decoding="async" alt="Fotograma del reel «El oficio»">
+        <div><h4>Reel «El oficio»</h4>
+          <p>Las manos, la cocina, el ritmo. Sin voz en off.</p></div>
+      </div>
+      <div class="detalle" data-pieza="silencio" hidden>
+        <div><h4>Viernes: silencio, a propósito</h4>
+          <p>El día lleno no necesita contenido. Publicar por publicar gasta la atención del martes.</p></div>
+      </div>
+      <div class="detalle" data-pieza="vozcliente" hidden>
+        <img src="assets/sobremesa/vozcliente-01-mini.webp" width="190" height="238" loading="lazy" decoding="async" alt="Carrusel «La voz del cliente», primera pieza">
+        <div><h4>La voz del cliente</h4>
+          <p>Una reseña real, sin retocar. La que más se comparte.</p></div>
+      </div>
+    </div>
+
+    <dl class="fx-ficha">
+      <div><dt>Qué demuestra</dt>
+        <dd>Que el calendario se decide con el dato de sala, no con la intuición. La altura es la gente que hubo; encima, lo que se publicó.</dd></div>
+      <div><dt>A quién le habla</dt>
+        <dd>A quien lleva un restaurante y publica cuando se acuerda, sin saber por qué unos días llenan y otros no.</dd></div>
+    </dl>
+  </div></section>
+
+  <section class="seccion banda"><div class="fx-ancho">
+    <p class="sello">01 · El problema</p>
+    <h2>El sitio estaba bien. El recuerdo, no</h2>
+    <div class="cuerpo">
+      <p>No era la comida ni el precio: <b>nadie pensaba en ellos un martes.</b></p>
+    </div>
+
+      <div class="faro-resultados">
+        <div class="fx-in"><span class="cifra">23</span><span class="pie">piezas de contenido reales dentro de la página, no descritas</span></div>
+        <div class="fx-in" data-espera="1"><span class="cifra">329 KB</span><span class="pie">pesa la página entera, con las 23 piezas</span></div>
+        <div class="fx-in" data-espera="2"><span class="cifra">2,0 s</span><span class="pie">tarda en pintarse el titular en un móvil de gama media</span></div>
+        <p class="fuente">Medido el 30 de agosto de 2026 sobre esta misma página, en un móvil de gama media con la red y el procesador limitados. Se repite con <code>puertas.py</code>.</p>
+      </div>
+  </div></section>
+
+  <section class="seccion"><div class="fx-ancho">
+    <p class="sello">02 · La voz</p>
+    <h2>Lo que no se dice, también es la marca</h2>
+
+    <div class="nunca">
+      <span class="et">Nunca</span>
+      <span>experiencia gastronómica</span>
+      <span>único</span>
+      <span>inolvidable</span>
+      <span>el mejor</span>
+      <span>reserva ya</span>
+      <span>no te lo pierdas</span>
+    </div>
+
+    <div class="cuerpo">
+      <p>Un restaurante cuyo lema es <i>la mesa no tiene prisa</i> <b>no puede meter prisa en el pie de foto.</b></p>
+    </div>
+  </div></section>
+
+  <section class="seccion"><div class="fx-ancho">
+    <p class="sello">03 · Las piezas</p>
+    <h2>Veintiuna, y son estas</h2>
+    <div class="cuerpo">
+      <p>No son maquetas: son los archivos que se publican.</p>
+    </div>
+
+    <div class="serie">
+      <div class="serie-cab"><h3>En la mesa</h3><span>Carrusel · 6 piezas</span><span class="paso">Desliza →</span></div>
+      <div class="tira">
+        <img src="assets/sobremesa/enlamesa-01.webp" width="760" height="950" loading="lazy" decoding="async" alt="Carrusel «En la mesa», pieza 1" srcset="assets/sobremesa/enlamesa-01-480w.webp 480w, assets/sobremesa/enlamesa-01.webp 760w" sizes="(max-width: 700px) 242px, 300px">
+        <img src="assets/sobremesa/enlamesa-02.webp" width="760" height="950" loading="lazy" decoding="async" alt="Carrusel «En la mesa», pieza 2" srcset="assets/sobremesa/enlamesa-02-480w.webp 480w, assets/sobremesa/enlamesa-02.webp 760w" sizes="(max-width: 700px) 242px, 300px">
+        <img src="assets/sobremesa/enlamesa-03.webp" width="760" height="950" loading="lazy" decoding="async" alt="Carrusel «En la mesa», pieza 3" srcset="assets/sobremesa/enlamesa-03-480w.webp 480w, assets/sobremesa/enlamesa-03.webp 760w" sizes="(max-width: 700px) 242px, 300px">
+        <img src="assets/sobremesa/enlamesa-04.webp" width="760" height="950" loading="lazy" decoding="async" alt="Carrusel «En la mesa», pieza 4" srcset="assets/sobremesa/enlamesa-04-480w.webp 480w, assets/sobremesa/enlamesa-04.webp 760w" sizes="(max-width: 700px) 242px, 300px">
+        <img src="assets/sobremesa/enlamesa-05.webp" width="760" height="950" loading="lazy" decoding="async" alt="Carrusel «En la mesa», pieza 5" srcset="assets/sobremesa/enlamesa-05-480w.webp 480w, assets/sobremesa/enlamesa-05.webp 760w" sizes="(max-width: 700px) 242px, 300px">
+        <img src="assets/sobremesa/enlamesa-06.webp" width="760" height="950" loading="lazy" decoding="async" alt="Carrusel «En la mesa», pieza 6" srcset="assets/sobremesa/enlamesa-06-480w.webp 480w, assets/sobremesa/enlamesa-06.webp 760w" sizes="(max-width: 700px) 242px, 300px">
+      </div>
+    </div>
+
+    <div class="serie">
+      <div class="serie-cab"><h3>La carta</h3><span>Carrusel · 4 piezas</span><span class="paso">Desliza →</span></div>
+      <div class="tira">
+        <img src="assets/sobremesa/lacarta-01.webp" width="760" height="950" loading="lazy" decoding="async" alt="Carrusel «La carta», pieza 1" srcset="assets/sobremesa/lacarta-01-480w.webp 480w, assets/sobremesa/lacarta-01.webp 760w" sizes="(max-width: 700px) 242px, 300px">
+        <img src="assets/sobremesa/lacarta-02.webp" width="760" height="950" loading="lazy" decoding="async" alt="Carrusel «La carta», pieza 2" srcset="assets/sobremesa/lacarta-02-480w.webp 480w, assets/sobremesa/lacarta-02.webp 760w" sizes="(max-width: 700px) 242px, 300px">
+        <img src="assets/sobremesa/lacarta-03.webp" width="760" height="950" loading="lazy" decoding="async" alt="Carrusel «La carta», pieza 3" srcset="assets/sobremesa/lacarta-03-480w.webp 480w, assets/sobremesa/lacarta-03.webp 760w" sizes="(max-width: 700px) 242px, 300px">
+        <img src="assets/sobremesa/lacarta-04.webp" width="760" height="950" loading="lazy" decoding="async" alt="Carrusel «La carta», pieza 4" srcset="assets/sobremesa/lacarta-04-480w.webp 480w, assets/sobremesa/lacarta-04.webp 760w" sizes="(max-width: 700px) 242px, 300px">
+      </div>
+    </div>
+
+    <div class="serie">
+      <div class="serie-cab"><h3>La voz del cliente</h3><span>Carrusel · 5 piezas</span><span class="paso">Desliza →</span></div>
+      <div class="tira">
+        <img src="assets/sobremesa/vozcliente-01.webp" width="760" height="950" loading="lazy" decoding="async" alt="Carrusel «La voz del cliente», pieza 1" srcset="assets/sobremesa/vozcliente-01-480w.webp 480w, assets/sobremesa/vozcliente-01.webp 760w" sizes="(max-width: 700px) 242px, 300px">
+        <img src="assets/sobremesa/vozcliente-02.webp" width="760" height="950" loading="lazy" decoding="async" alt="Carrusel «La voz del cliente», pieza 2" srcset="assets/sobremesa/vozcliente-02-480w.webp 480w, assets/sobremesa/vozcliente-02.webp 760w" sizes="(max-width: 700px) 242px, 300px">
+        <img src="assets/sobremesa/vozcliente-03.webp" width="760" height="950" loading="lazy" decoding="async" alt="Carrusel «La voz del cliente», pieza 3" srcset="assets/sobremesa/vozcliente-03-480w.webp 480w, assets/sobremesa/vozcliente-03.webp 760w" sizes="(max-width: 700px) 242px, 300px">
+        <img src="assets/sobremesa/vozcliente-04.webp" width="760" height="950" loading="lazy" decoding="async" alt="Carrusel «La voz del cliente», pieza 4" srcset="assets/sobremesa/vozcliente-04-480w.webp 480w, assets/sobremesa/vozcliente-04.webp 760w" sizes="(max-width: 700px) 242px, 300px">
+        <img src="assets/sobremesa/vozcliente-05.webp" width="760" height="950" loading="lazy" decoding="async" alt="Carrusel «La voz del cliente», pieza 5" srcset="assets/sobremesa/vozcliente-05-480w.webp 480w, assets/sobremesa/vozcliente-05.webp 760w" sizes="(max-width: 700px) 242px, 300px">
+      </div>
+    </div>
+
+    <div class="serie">
+      <div class="serie-cab"><h3>El oficio</h3><span>Reel · 2 versiones, 7 y 18 segundos</span><span class="paso">Dale al play</span></div>
+      <div class="tira reels">
+        <video src="assets/sobremesa/reel-oficio-nivel1.mp4" poster="assets/sobremesa/reel-oficio-nivel1-poster.webp"
+               width="540" height="960" controls playsinline preload="none"
+               aria-label="Reel «El oficio», versión corta de 7 segundos"></video>
+        <video src="assets/sobremesa/reel-oficio-nivel2.mp4" poster="assets/sobremesa/reel-oficio-nivel2-poster.webp"
+               width="540" height="960" controls playsinline preload="none"
+               aria-label="Reel «El oficio», versión larga de 18 segundos"></video>
+      </div>
+    </div>
+
+    <p class="nota-foto">Hay <b>huecos de fotografía sin rellenar</b>, a propósito: la marca pide mesa compartida real, y eso no se genera. <b>Misma regla que con clientes reales:</b> sin autorización, no se publica.</p>
+
+    <div class="collage">
+      <figure class="fx-in">
+        <img src="assets/sobremesa/story-ahoramismo-entresemana.webp" width="380" height="676" loading="lazy" decoding="async" alt="Story «Ahora mismo», variante entre semana" srcset="assets/sobremesa/story-ahoramismo-entresemana-480w.webp 480w, assets/sobremesa/story-ahoramismo-entresemana.webp 760w" sizes="(max-width: 700px) 350px, 346px">
+        <figcaption>La serie que da una razón para venir un martes.</figcaption>
+      </figure>
+      <figure class="fx-in" data-espera="1">
+        <img src="assets/sobremesa/anuncio-meta-1200x627.webp" width="900" height="470" loading="lazy" decoding="async" alt="Anuncio para Meta" srcset="assets/sobremesa/anuncio-meta-1200x627-480w.webp 480w, assets/sobremesa/anuncio-meta-1200x627.webp 900w" sizes="(max-width: 700px) 350px, 425px">
+        <figcaption>Campaña de pago. Sin foto autorizada, la tipografía sostiene sola.</figcaption>
+      </figure>
+      <figure class="fx-in" data-espera="2">
+        <img src="assets/sobremesa/story-ahoramismo-mesalibre.webp" width="380" height="676" loading="lazy" decoding="async" alt="Story «Ahora mismo», variante mesa libre" srcset="assets/sobremesa/story-ahoramismo-mesalibre-480w.webp 480w, assets/sobremesa/story-ahoramismo-mesalibre.webp 760w" sizes="(max-width: 700px) 350px, 251px">
+        <figcaption>«Mesa libre». Se publica el mismo día; no se programa.</figcaption>
+      </figure>
+    </div>
+  </div></section>
+
+  <section class="seccion banda"><div class="fx-ancho">
+    <p class="sello">04 · El resultado</p>
+    <h2>Lo que se queda cuando nos vamos</h2>
+    <div class="cuerpo">
+      <p>Las ocho guías están para que la pieza 22 se haga sin nosotros. <b>Un lote que solo sabe producir quien lo hizo es una dependencia.</b></p>
+    </div>
+
+    <blockquote class="cita">
+      <p>No hacía falta más marketing. Hacía falta que alguien se acordara de ellos un martes.</p>
+      <cite>Zyad Bennani · fundador de Faro Digital</cite>
+    </blockquote>
+  </div></section>
+
+  <section class="fx-cierre">
+    <div class="fx-ancho">
+      <p class="sello">Lo que se usó aquí</p>
+      <h2>Marca, contenido y redes</h2>
+      <ul class="fx-skills">
+        <li>Branding</li><li>Contenido</li><li>Redes sociales</li><li>Motion</li>
+        <li>IA generativa</li><li>Campaña de pago</li><li>Calendario editorial</li>
+      </ul>
+
+      <div class="fx-acciones">
+        <a class="fx-btn" href="/#contacto">Pide la Foto del Día 0 — gratis</a>
+      </div>
+
+      <a class="fx-siguiente" href="#">
+        <span class="et">Siguiente caso</span>
+        <span class="tit">—</span>
+      </a>
+
+      <div class="fx-pie">
+        <a href="index.html">Todos los proyectos</a>
+        <a href="/">Faro Digital</a>
+        <span>Proyecto de muestra · el restaurante Sobremesa no existe</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="assets/sobremesa/mantel.js" defer></script>
+<script src="assets/sobremesa/semana.js" defer></script>
+<script src="assets/_marco/faro-marco.js" defer></script>
+<script>
+  /* El mantel se arranca aquí y no dentro de su archivo, para que el archivo
+     siga siendo transplantable a otro caso con otra paleta. */
+  addEventListener("DOMContentLoaded", function () {
+    if (window.sobremesaMantel) window.sobremesaMantel({ caja: "#mantel" });
+  });
+</script>
+<script src="/assets/gestos.js" defer></script>
+</body>
+</html>

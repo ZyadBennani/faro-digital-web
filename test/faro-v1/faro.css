@@ -1,0 +1,711 @@
+/* `/test/faro` · la pieza firma sobre la página del test B11.
+   Copia de `test/kaito/kaito.css`: hero + escena sticky + secciones 3-6.
+   Lo único que cambia en la portada es que el vídeo pasa a ser un <canvas>.
+   Reutiliza fuentes.css (familias) y motion.css (curvas y duraciones: --m-estandar
+   es exactamente cubic-bezier(.2,.7,.2,1), --m-lento son los 900 ms de la spec y
+   --m-salida-base los 288 ms de salida). No existe superficie.css en el sitio. */
+
+:root{
+  /* Crema de Faro: 245/239/228. Sin blanco puro. */
+  --k-crema: rgb(245 239 228);
+  /* Color medio del vídeo (ffmpeg scale=1:1 sobre hero-1280.mp4): 25/38/34. */
+  --k-fondo: rgb(25 38 34);
+  --k-linea: rgb(245 239 228 / .25);
+
+  /* LA ESCALA: cinco tamaños en toda la página, ninguno más (spec paso 3, R1).
+     Display: el del H1. Sale del ancho libre hasta la torre (ver .hero-h1), con
+     techo 4.5rem y suelo 2.75rem; en móvil, min(…, 10.1vw). Los títulos de
+     sección usan EXACTAMENTE el mismo valor computado que el H1. */
+  --k-torre: min(50vw - 6.02dvh, 46.6vw);
+  --k-h1-ancho: min(42vw, var(--k-torre) - var(--k-margen) - var(--k-gap));
+  --k-display: clamp(2.75rem, var(--k-h1-ancho) * 0.117, 4.5rem);
+  --k-fila: 2.25rem;        /* Título de fila: fases, casos, precios, respuestas del cierre, bloques de la sección 2 */
+  --k-parrafo: 1.0625rem;
+  --k-ui: 0.8125rem;
+  --k-micro: 0.75rem;
+
+  --k-margen: 1.5rem;
+  --k-gap: 1.5rem;
+  /* Alto de la cabecera fija (la píldora: .5rem × 2 + 13 px × 1.3). Las dos
+     rejillas de la escena reservan esta primera fila para no pisarla. */
+  --k-cabecera: 2.25rem;
+}
+@media (min-width: 640px){ :root{ --k-margen: 2.5rem; } }
+@media (min-width: 1024px){ :root{ --k-margen: 3.5rem; } }
+@media (max-width: 640px){
+  /* «Todos los ángulos.» mide 375 px a 44 px en Frank Ruhl 700: no cabe en los
+     342 px que deja un móvil de 390. Por debajo de 435 px el Display baja a
+     10,1vw (36 px a 360, 39 px a 390) para que el H1 siga en DOS líneas. */
+  :root{ --k-display: min(clamp(2.75rem, 6.5vw, 4.5rem), 10.1vw); }
+}
+
+html{ background: var(--k-fondo); color: var(--k-crema); }
+body{
+  margin: 0;
+  font-family: 'Work Sans', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a{ color: inherit; text-decoration: none; }
+
+/* ---------- Escala: clases ---------- */
+.hero-ui{
+  font-family: 'Work Sans', Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-size: var(--k-ui);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+.t-fila{
+  font-family: 'Frank Ruhl Libre', Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: var(--k-fila);
+  line-height: 1.05;
+  letter-spacing: -.01em;
+  margin: 0;
+}
+.parrafo{ font-size: var(--k-parrafo); line-height: 1.5; margin: 0; }
+.micro{ font-size: var(--k-micro); line-height: 1.4; color: rgb(245 239 228 / .6); margin: 0; }
+.suave{ color: rgb(245 239 228 / .85); }
+.enlace{
+  display: inline-block;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .35em;
+}
+b{ font-weight: 600; }
+
+/* ==========================================================================
+   LA ESCENA (paso 2): 200vh de recorrido con el vídeo fijo.
+   ========================================================================== */
+.escena{ position: relative; height: 200vh; }
+.escena-marca{ position: absolute; top: 160vh; left: 0; width: 1px; height: 1px; }
+/* Paso 3: los últimos 20 vh de la escena pasan de transparente al fondo sólido. */
+.escena-degradado{
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 20vh;
+  z-index: 3;
+  background: linear-gradient(to bottom, transparent, var(--k-fondo));
+  pointer-events: none;
+}
+
+/* ---------- Hero: marco sticky con el vídeo ---------- */
+.hero{
+  position: sticky;
+  top: 0;
+  isolation: isolate;
+  overflow: hidden;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 560px;
+  color: var(--k-crema);
+}
+
+/* Fondo: poster debajo, vídeo encima. Mismo encuadre en los dos. */
+.hero-fondo{
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--k-fondo);
+  transform-origin: 50% 60%;
+}
+.hero-poster, .hero-poster img, .hero-video, .pieza{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: 50% 60%;
+}
+/* B15 · el canvas ocupa exactamente el hueco del vídeo. `object-fit` no le
+   afecta —un canvas no recorta su contenido— así que el encuadre lo hace el
+   propio shader con las UV, usando la misma proporción que usaba el vídeo.
+   Empieza invisible: `pieza.js` lo muestra cuando tiene el primer frame bueno,
+   y así el poster nunca parpadea. */
+.pieza{ opacity: 0; transition: opacity var(--m-base, 480ms) var(--m-estandar, ease); }
+.pieza.viva{ opacity: 1; }
+@media (prefers-reduced-motion: reduce){ .pieza{ display: none; } }
+@media (max-width: 640px){
+  .hero-poster img, .hero-video{ object-position: 50% 70%; }
+}
+/* B15 · se invierte: con movimiento normal manda la pieza y el vídeo del hero
+   no se muestra (ni se descarga, porque sus <source> ya no coinciden). */
+.hero-video{ display: none; }
+@media (prefers-reduced-motion: reduce){
+  .hero-video{ display: block; }
+}
+
+/* Los textos del hero, en la rejilla de 12 columnas. Se desvanecen con el scroll
+   (--k-desvanece la escribe kaito.js: 1 → 0 en los primeros 60 vh). */
+.hero-textos{
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  padding: var(--k-margen);
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: var(--k-cabecera) 1fr auto;
+  column-gap: var(--k-gap);
+  opacity: var(--k-desvanece, 1);
+}
+.hero.sin-texto .hero-textos{ visibility: hidden; }
+
+/* ---------- Cabecera: marca · píldora · enlace. Fija sobre toda la página en
+   escritorio (ronda 2 + spec paso 3). Vive al final del body.
+   Ronda 3: se retira al bajar y vuelve al subir; mientras el hero está en
+   pantalla no se retira nunca (kaito.js pone y quita .oculta). ---------- */
+.hero-arriba{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  transition: transform 300ms var(--m-estandar, cubic-bezier(.2,.7,.2,1));
+  box-sizing: border-box;
+  padding: var(--k-margen) var(--k-margen) 0;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--k-gap);
+  align-items: center;
+  color: var(--k-crema);
+}
+.hero-arriba.oculta{ transform: translateY(-100%); }
+.hero-marca{ grid-column: 1 / 4; justify-self: start; white-space: nowrap; }
+.hero-nav{
+  grid-column: 4 / 10;
+  justify-self: center;
+  display: flex;
+  gap: 1.25rem;
+  padding: .5rem 1.25rem;
+  border-radius: 999px;
+  background: rgb(245 239 228 / .12);
+  border: 1px solid rgb(245 239 228 / .28);
+  color: var(--k-crema);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  white-space: nowrap;
+}
+/* B12·cierre: el enlace vuelve al tamaño de UI. El 0.875rem lo hacía visible
+   pero metía un sexto tamaño en la página, y la escala de cinco es una condición
+   de la spec. Lo que se queda es el subrayado más grueso, que no cuesta nada. */
+.hero-cta{
+  grid-column: 9 / 13;
+  justify-self: end;
+  white-space: nowrap;
+  font-size: var(--k-ui);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: .35em;
+}
+.hero-menu{
+  display: none;
+  grid-column: 10 / 13;
+  justify-self: end;
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* ---------- Centro: H1 a la izquierda, sobre el mar vacío (ronda 1) ----------
+   Fila central de la rejilla: centrado entre la cabecera y el párrafo de abajo.
+   Ancho máximo 42vw, y nunca más allá de la torre: la torre no está en un
+   porcentaje fijo (object-fit cover recorta según la proporción del viewport);
+   con la torre en el píxel 895 de 1920 del fotograma, su borde izquierdo es
+   50vw − 6.02dvh en viewports más estrechos que 16:9 y 46.6vw en los más anchos.
+   El tamaño sale del ancho (0.117 × ancho = «Todos los ángulos.» en una línea,
+   375 px a 44 px), techo 4.5rem: dos líneas desde 1024 px, sin tocar la torre. */
+.hero-h1{
+  grid-row: 2;
+  grid-column: 1 / -1;
+  align-self: center;
+  justify-self: start;
+  max-width: 42vw;
+  max-width: var(--k-h1-ancho);
+  margin: 0;
+  text-align: left;
+  font-family: 'Frank Ruhl Libre', Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: var(--k-display);
+  line-height: .98;
+  letter-spacing: -.015em;
+}
+.hero-h1 > span{ display: block; }
+
+/* ---------- Abajo: bajada · nota ---------- */
+.hero-bajada{
+  grid-row: 3;
+  grid-column: 1 / 6;
+  align-self: end;
+  margin: 0;
+  max-width: 34ch;
+  font-size: var(--k-parrafo);
+  line-height: 1.5;
+}
+.hero-nota{
+  grid-row: 3;
+  grid-column: 8 / 13;
+  align-self: end;
+  justify-self: end;
+  text-align: right;
+  display: grid;
+  gap: .25rem;
+}
+
+/* ==========================================================================
+   SECCIÓN 2: la oferta alrededor del faro (paso 2, rondas 1-2; escala del paso 3).
+   Segunda capa sticky sobre el hero (margin-top negativo de una pantalla).
+   ========================================================================== */
+.oferta{
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  box-sizing: border-box;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 560px;
+  margin-top: -100vh;
+  margin-top: -100dvh;
+  padding: var(--k-margen);
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  /* cabecera · aire · título · bloques de arriba · separación · bloques de abajo · aire mayor */
+  grid-template-rows: var(--k-cabecera) 1fr auto auto 6vh auto 1.4fr;
+  column-gap: var(--k-gap);
+  color: var(--k-crema);
+  pointer-events: none;
+}
+.oferta-franja{ display: none; }
+/* Con la cabecera fija (ronda 2) el título va a la izquierda, sobre los bloques
+   01-02, en su misma columna. Display, como todo título de sección (paso 3). */
+.oferta-titulo{
+  grid-row: 3;
+  grid-column: 1 / 6;
+  justify-self: start;
+  align-self: end;
+  margin: 0 0 1.5rem;
+  text-align: left;
+  font-family: 'Frank Ruhl Libre', Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: var(--k-display);
+  line-height: .98;
+  letter-spacing: -.015em;
+}
+.oferta-bloques{ display: contents; list-style: none; margin: 0; padding: 0; }
+.bloque{ margin: 0; }
+.bloque:nth-child(1){ grid-row: 4; grid-column: 1 / 6; }
+.bloque:nth-child(2){ grid-row: 6; grid-column: 1 / 6; }
+/* Los de la derecha, alineados a la derecha, número incluido (ronda 2). */
+.bloque:nth-child(3){ grid-row: 4; grid-column: 8 / 13; text-align: right; }
+.bloque:nth-child(4){ grid-row: 6; grid-column: 8 / 13; text-align: right; }
+
+.bloque-etiqueta{ display: block; color: rgb(245 239 228 / .6); margin-bottom: .75rem; }
+.bloque-titular{
+  margin: 0 0 .5rem;
+  font-family: 'Frank Ruhl Libre', Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: var(--k-fila);
+  line-height: 1.05;
+  letter-spacing: -.01em;
+}
+.bloque-texto{
+  margin: 0;
+  font-size: var(--k-parrafo);
+  line-height: 1.5;
+  color: rgb(245 239 228 / .85);
+}
+
+/* Aparición en cascada de 120 ms, con los valores de .hero-fade (700 ms, 10 px,
+   la curva estándar), por transición y no por animación: al volver hacia arriba
+   se van en la salida corta (288 ms) en vez de desaparecer de golpe. */
+.oferta-titulo, .bloque{
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--m-salida-base, 288ms) var(--m-estandar, cubic-bezier(.2,.7,.2,1)),
+              transform var(--m-salida-base, 288ms) var(--m-estandar, cubic-bezier(.2,.7,.2,1));
+}
+.oferta.es-visible .oferta-titulo, .oferta.es-visible .bloque{
+  opacity: 1;
+  transform: none;
+  transition-duration: 700ms, 700ms;
+  transition-delay: calc(var(--k-i, 0) * 120ms);
+}
+
+/* ==========================================================================
+   SECCIONES 3-6 (paso 3): fondo sólido, rejilla de 12, líneas finas, un gesto.
+   ========================================================================== */
+.seccion{
+  position: relative;
+  box-sizing: border-box;
+  padding: 6rem var(--k-margen);
+  background: var(--k-fondo);
+  color: var(--k-crema);
+  /* Ronda 3: al saltar desde la píldora, el título no queda debajo de la
+     cabecera fija (que mide 91 px con su margen superior). */
+  scroll-margin-top: 6rem;
+}
+.seccion.cierre{ padding-block: 8rem; }
+.seccion-cab{
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--k-gap);
+  margin-bottom: 3rem;
+}
+.kicker{ grid-column: 1 / -1; display: block; color: rgb(245 239 228 / .6); margin-bottom: 1rem; }
+.seccion-titulo{
+  grid-column: 1 / 8;
+  margin: 0;
+  font-family: 'Frank Ruhl Libre', Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: var(--k-display);
+  line-height: .98;
+  letter-spacing: -.015em;
+}
+.filas{ list-style: none; margin: 0; padding: 0; }
+.fila{
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--k-gap);
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--k-linea);
+}
+.filas > .fila:last-child{ border-bottom: 1px solid var(--k-linea); }
+.num{ color: rgb(245 239 228 / .6); }
+
+/* --- Método --- */
+.fila-fase{ align-items: baseline; }
+.fila-fase .num{ grid-column: 1; }
+.fila-fase .t-fila{ grid-column: 2 / 8; }
+.fila-fase .parrafo{ grid-column: 8 / 13; }
+
+/* --- Trabajo --- */
+.fila-caso{ align-items: start; }
+.caso-num{ grid-column: 1; display: grid; gap: .5rem; }
+.caso-num .hero-ui{ color: rgb(245 239 228 / .6); }
+.caso-foto{ grid-column: 2 / 5; display: block; width: 100%; height: auto; border: 0; border-radius: 0; }
+.caso-cuerpo{ grid-column: 5 / 9; display: grid; gap: 1rem; align-content: start; }
+.caso-cifras{ grid-column: 9 / 13; list-style: none; margin: 0; padding: 0; display: grid; gap: .75rem; }
+.caso-cifras .cifra{
+  font-family: 'Frank Ruhl Libre', Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: var(--k-parrafo);
+  line-height: 1.5;
+}
+.caso-cifras .micro{ display: inline; }
+.dos-enlaces{ margin: 2rem 0 0; display: flex; flex-wrap: wrap; gap: 1rem 2rem; }
+
+/* --- Precios --- */
+.grupo{ margin-top: 3rem; }
+.grupo-cab{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding-bottom: 1rem;
+}
+.grupo-nombre{ margin: 0; }
+.fila-plan .plan-nom{ grid-column: 1 / 4; display: grid; gap: .35rem; align-content: start; }
+.fila-plan .plan-para{ grid-column: 4 / 8; }
+.fila-plan .plan-precio{ grid-column: 8 / 10; display: grid; gap: .25rem; align-content: start; }
+.fila-plan .plan-lista{ grid-column: 10 / 13; list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; }
+.tiras{ margin-top: 0; }
+.tiras .fila:first-child{ border-top: 0; }
+.fila-tira{ align-items: baseline; }
+.tira-t{
+  grid-column: 1 / 5;
+  margin: 0;
+  font-family: 'Frank Ruhl Libre', Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: var(--k-parrafo);
+  line-height: 1.5;
+}
+.fila-tira .parrafo{ grid-column: 5 / 10; }
+.tira-accion{ grid-column: 10 / 13; justify-self: end; }
+.precios-pie{ margin-top: 2rem; }
+
+/* --- Cierre --- */
+.cierre .seccion-titulo{ grid-column: 1 / 9; }
+.cierre-intro{ grid-column: 1 / 7; margin-top: 1.5rem; }
+.cierre-preguntas{
+  list-style: none;
+  margin: 0;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid var(--k-linea);
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--k-gap);
+}
+.cierre-preguntas > li{ grid-column: span 3; display: grid; gap: .75rem; align-content: start; }
+.cierre-preguntas .k{ color: rgb(245 239 228 / .6); }
+.cierre-pie{
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--k-gap);
+  row-gap: 1.25rem;
+}
+.cierre-pie > .parrafo{ grid-column: 1 / 7; }
+/* La nota del cierre es el único Micro que queda sobre el vídeo: al 60 % daba
+   4,46 a 390 px, y AA pide 4,5. Al 70 % pasa. El resto de Micro va sobre fondo
+   sólido y se queda al 60 %. */
+.cierre-pie > .micro{ color: rgb(245 239 228 / .7); }
+/* Ronda 3: el CTA a Título de fila, subrayado fino, sobre la nota en Micro. */
+.cierre-cta{
+  grid-column: 1 / 7;
+  justify-self: start;
+  font-family: 'Frank Ruhl Libre', Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: var(--k-fila);
+  line-height: 1.05;
+  letter-spacing: -.01em;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .25em;
+}
+.cierre-pie > .micro{ grid-column: 1 / 7; }
+
+/* ==========================================================================
+   PASO 4 · Cierre + pie sobre UN SOLO vídeo. Un contenedor, un fondo, dos
+   zonas, sin línea entre ellas y sin overlay: el contraste sale de dónde cae
+   el texto (el vídeo del cierre es casi negro), no de oscurecer la imagen.
+   ========================================================================== */
+.cierre-escena{
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--k-fondo);
+}
+.cierre-fondo{
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--k-fondo);
+}
+.cierre-poster, .cierre-poster img, .cierre-video{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: 50% 35%;
+}
+@media (prefers-reduced-motion: reduce){
+  .cierre-video{ display: none; }
+}
+/* El cierre va transparente: su fondo es el vídeo del contenedor. */
+.cierre-escena .seccion{ background: transparent; }
+
+/* --- El pie ---
+   Ronda 4: el vídeo se acaba antes del pie. Una franja de 20 vh justo encima
+   lleva de transparente al color medio del vídeo, y el pie entero queda sobre
+   fondo sólido: es la única forma de que su contraste no dependa de dónde caiga
+   la torre iluminada, que a 1440 dejaba un enlace en 1,84:1. */
+.pie{
+  position: relative;
+  box-sizing: border-box;
+  padding: 0 var(--k-margen) 6rem;
+  color: var(--k-crema);
+  background: var(--k-fondo);
+}
+.pie::before{
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 100%;
+  height: 20vh;
+  background: linear-gradient(to bottom, transparent, var(--k-fondo));
+  pointer-events: none;
+}
+.pie-tres{
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--k-gap);
+  row-gap: 2.5rem;
+  padding-top: 3rem;
+}
+.pie-tres > div{ grid-column: span 4; display: grid; gap: .75rem; align-content: start; }
+.pie-tres h3{ margin: 0; color: var(--k-crema); }
+.pie-accion{ color: rgb(245 239 228 / .75); justify-self: start; }
+.pie-legal{
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 4rem;
+}
+.pie-legal .enlace{ text-decoration-thickness: 1px; }
+
+/* Un solo gesto: la cascada del paso 2, por sección, una vez. */
+.seccion .seccion-cab, .seccion .fila, .seccion .grupo-cab, .seccion .dos-enlaces,
+.seccion .precios-pie, .cierre-preguntas > li, .cierre-pie > *,
+.pie-tres > div, .pie-legal{
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 700ms var(--m-estandar, cubic-bezier(.2,.7,.2,1)),
+              transform 700ms var(--m-estandar, cubic-bezier(.2,.7,.2,1));
+  transition-delay: calc(var(--k-i, 0) * 120ms);
+}
+.seccion.es-visible .seccion-cab, .seccion.es-visible .fila, .seccion.es-visible .grupo-cab,
+.seccion.es-visible .dos-enlaces, .seccion.es-visible .precios-pie,
+.seccion.es-visible .cierre-preguntas > li, .seccion.es-visible .cierre-pie > *,
+.pie.es-visible .pie-tres > div, .pie.es-visible .pie-legal{
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px){
+  /* B12·1: la oferta también sobre el pliegue en móvil. «Pide tu Foto del Día 0
+     — gratis» mide 249 px en UI y solo quedan 202 junto a la marca y al «Menú»,
+     así que reparte en dos líneas alineadas a la derecha en vez de encogerse:
+     el estilo es el mismo que en escritorio, el texto también. */
+  .hero-arriba{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: .75rem;
+    position: absolute;   /* en móvil no es fija: se va con el scroll */
+  }
+  .hero-nav{ display: none; }
+  .hero-cta{
+    display: block;
+    white-space: normal;
+    text-align: right;
+    max-width: 10.5rem;
+    text-decoration-thickness: 1px;
+    text-underline-offset: .3em;
+  }
+  .hero-menu{ display: block; flex: 0 0 auto; }
+
+  /* Nada es sticky: el hero es una pantalla, y la oferta va debajo en flujo,
+     con una franja de 56vh que repite el poster del hero. */
+  .escena{ height: auto; }
+  .escena-marca, .escena-degradado{ display: none; }
+  .hero{ position: relative; }
+  .hero-textos{ opacity: 1; }
+  .oferta{
+    position: static;
+    height: auto;
+    min-height: 0;
+    margin-top: 0;
+    padding: 0 0 var(--k-margen);
+    display: block;
+    pointer-events: auto;
+    background: var(--k-fondo);
+  }
+  /* B12·2: la sección 2 ya no repite la foto del hero. Sobre el fondo sólido y
+     con la misma línea fina que abre las secciones siguientes: así el móvil lee
+     que la página ha avanzado, en vez de ver dos veces la misma imagen. */
+  .oferta-franja{ display: none; }
+  .oferta{ margin-top: 4rem; border-top: 1px solid var(--k-linea); }
+  .oferta-titulo{ padding: 4rem var(--k-margen) 0; }
+  .oferta-bloques{ display: grid; gap: 2rem; padding: 2rem var(--k-margen) 0; }
+  .oferta-bloques > .bloque{ grid-row: auto; grid-column: auto; text-align: left; }
+  .oferta-titulo, .bloque{ opacity: 1; transform: none; transition: none; }
+
+  /* Secciones 3-6: todo apilado a una columna. */
+  .seccion{ padding-block: 4rem; }
+  .seccion.cierre{ padding-block: 5rem; }
+  .seccion-titulo, .cierre .seccion-titulo{ grid-column: 1 / -1; }
+  .fila{ display: grid; grid-template-columns: 1fr; row-gap: .75rem; }
+  .fila-fase .num, .fila-fase .t-fila, .fila-fase .parrafo,
+  .caso-num, .caso-foto, .caso-cuerpo, .caso-cifras,
+  .fila-plan .plan-nom, .fila-plan .plan-para, .fila-plan .plan-precio, .fila-plan .plan-lista,
+  .tira-t, .fila-tira .parrafo, .tira-accion{ grid-column: 1 / -1; }
+  .fila-fase{ grid-template-columns: auto 1fr; column-gap: 1rem; }
+  .fila-fase .num{ grid-column: 1; grid-row: 1; }
+  .fila-fase .t-fila{ grid-column: 2; grid-row: 1; }
+  .fila-fase .parrafo{ grid-column: 2; grid-row: 2; }
+  .caso-num{ grid-template-columns: auto 1fr; }
+  .fila-plan{ grid-template-columns: 1fr auto; }
+  .fila-plan .plan-nom{ grid-column: 1; grid-row: 1; }
+  .fila-plan .plan-precio{ grid-column: 2; grid-row: 1; text-align: right; }
+  .fila-plan .plan-para{ grid-column: 1 / -1; grid-row: 2; }
+  .fila-plan .plan-lista{ grid-column: 1 / -1; grid-row: 3; }
+  .tira-accion{ justify-self: start; }
+  .cierre-intro{ grid-column: 1 / -1; }
+  .cierre-preguntas{ display: grid; grid-template-columns: 1fr; padding-top: 0; border-top: 0; }
+  .cierre-preguntas > li{ grid-column: 1; padding: 1.5rem 0; border-top: 1px solid var(--k-linea); }
+  .cierre-pie > .parrafo, .cierre-cta, .cierre-pie > .micro{ grid-column: 1 / -1; }
+
+  /* B12·3: en móvil el contenedor del cierre es 390×2024 y el vídeo (960×1280)
+     se escala a 1518×2024: el recorte es HORIZONTAL y el porcentaje vertical no
+     mueve nada. Llevando el encuadre al 100 % la torre iluminada sale del cuadro
+     por la izquierda y no queda detrás de ninguna respuesta. Medido sobre el
+     fotograma más claro: el peor bloque pasa de +0,11 a +0,92 sobre el umbral AA. */
+  .cierre-poster, .cierre-poster img, .cierre-video{ object-position: 100% 35%; }
+
+  /* Pie: los tres bloques apilados. */
+  .pie{ padding-bottom: 4rem; }
+  .pie-tres{ display: grid; grid-template-columns: 1fr; }
+  .pie-tres > div{ grid-column: 1; }
+  .pie-legal{ margin-top: 3rem; }
+}
+@media (max-width: 640px){
+  .hero-h1{ max-width: none; }
+  .hero-bajada{ display: none; }
+  .hero-nota{
+    grid-column: 1 / -1;
+    justify-self: stretch;
+    text-align: left;
+  }
+}
+
+/* ---------- Menú móvil (cerrado por defecto, sin animación) ---------- */
+.menu-movil{
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+  background: var(--k-fondo);
+  color: var(--k-crema);
+  padding: calc(var(--k-margen) + 3rem) var(--k-margen) var(--k-margen);
+  display: grid;
+  align-content: start;
+  gap: 1.5rem;
+}
+.menu-movil[hidden]{ display: none; }
+.menu-movil-cta{
+  margin-top: 1.5rem;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .35em;
+}
+/* Con el menú abierto la cabecera pasa a fija también en móvil: el botón «Cerrar»
+   tiene que quedarse donde está aunque la página esté desplazada. */
+.hero-arriba:has(.hero-menu[aria-expanded="true"]){ position: fixed; }
+
+/* ---------- Animación de entrada (una vez, al cargar; respeta prefers-reduced-motion
+   a través de motion.css, que acorta toda animación a 200 ms y quita retardos) ---------- */
+@keyframes k-zoom{ from{ transform: scale(1.06); } to{ transform: scale(1); } }
+@keyframes k-reveal{
+  from{ opacity: 0; transform: translateY(18px); filter: blur(6px); }
+  to{ opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+/* Ronda 3: la PRIMERA línea del H1 no anima la opacidad. Parte de opacidad 1,
+   así Chrome la pinta desde el primer frame y vuelve a haber candidato de LCP
+   con CPU ×4 (con opacidad 0 de partida no emitía ninguno). */
+@keyframes k-reveal-1{
+  from{ transform: translateY(18px); filter: blur(6px); }
+  to{ transform: translateY(0); filter: blur(0); }
+}
+@keyframes k-fade{
+  from{ opacity: 0; transform: translateY(10px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+.hero-zoom{ animation: k-zoom 9s ease-out 1 both; }
+.hero-reveal{
+  animation: k-reveal var(--m-lento, 900ms) var(--m-estandar, cubic-bezier(.2,.7,.2,1)) 1 both;
+  animation-delay: var(--k-retardo, 0s);
+}
+.hero-reveal-1{ animation-name: k-reveal-1; }
+.hero-fade{
+  animation: k-fade 700ms var(--m-estandar, cubic-bezier(.2,.7,.2,1)) 1 both;
+  animation-delay: var(--k-retardo, 0s);
+}

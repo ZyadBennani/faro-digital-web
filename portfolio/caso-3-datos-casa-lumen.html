@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="es" class="sin-js">
+<head>
+<meta charset="utf-8">
+
+<meta name="faro-nivel" content="N3">
+<script>document.documentElement.classList.remove("sin-js");</script>
+<title>Casa Lumen — cuatro tiendas, un solo panel · Faro</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Ccircle cx='150' cy='150' r='150' fill='%23F6F0E3'/%3E%3Cline x1='150' y1='123' x2='100' y2='92' stroke='%23C9A667' stroke-width='9' stroke-linecap='round'/%3E%3Cline x1='150' y1='123' x2='200' y2='92' stroke='%23C9A667' stroke-width='9' stroke-linecap='round'/%3E%3Cpath d='M150 133 L168 175 L132 175 Z' fill='%231E3A2E'/%3E%3Cpath d='M141 175 L159 175 L169 238 L131 238 Z' fill='%231E3A2E'/%3E%3Crect x='122' y='238' width='56' height='12' rx='2' fill='%231E3A2E'/%3E%3Ccircle cx='150' cy='123' r='10' fill='%23C9A667'/%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Proyecto de muestra de Faro Digital: unificar los datos de cuatro tiendas antes de automatizar nada. Panel de analítica, CRM y automatización de marketing.">
+
+<link rel="canonical" href="https://faro-digital.pages.dev/portfolio/caso-3-datos-casa-lumen">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Faro Digital">
+<meta property="og:url" content="https://faro-digital.pages.dev/portfolio/caso-3-datos-casa-lumen">
+<meta property="og:title" content="Cuatro tiendas, cuatro hojas de cálculo y ninguna decisión compartida — proyecto de muestra">
+<meta property="og:description" content="Proyecto de muestra de Faro Digital: unificar los datos de cuatro tiendas antes de automatizar nada. Panel de analítica, CRM y automatización de marketing.">
+<meta property="og:image" content="https://faro-digital.pages.dev/portfolio/assets/casalumen/card-thumb.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="750">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cuatro tiendas, cuatro hojas de cálculo y ninguna decisión compartida — proyecto de muestra">
+<meta name="twitter:description" content="Proyecto de muestra de Faro Digital: unificar los datos de cuatro tiendas antes de automatizar nada. Panel de analítica, CRM y automatización de marketing.">
+<meta name="twitter:image" content="https://faro-digital.pages.dev/portfolio/assets/casalumen/card-thumb.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Cuatro tiendas, cuatro hojas de cálculo y ninguna decisión compartida",
+  "description": "Proyecto de muestra de Faro Digital: unificar los datos de cuatro tiendas antes de automatizar nada. Panel de analítica, CRM y automatización de marketing.",
+  "disambiguatingDescription": "Proyecto de muestra. Casa Lumen es una marca ficticia creada para este caso; no es un cliente real y no existe.",
+  "inLanguage": "es",
+  "image": "https://faro-digital.pages.dev/portfolio/assets/casalumen/card-thumb.jpg",
+  "mainEntityOfPage": "https://faro-digital.pages.dev/portfolio/caso-3-datos-casa-lumen",
+  "isPartOf": { "@type": "CollectionPage", "name": "Portfolio de Faro Digital", "url": "https://faro-digital.pages.dev/portfolio/" },
+  "author": { "@type": "Person", "name": "Zyad Bennani" },
+  "creator": { "@type": "Organization", "name": "Faro Digital", "url": "https://faro-digital.pages.dev/" },
+  "about": ["Datos", "Paneles", "Automatización", "CRM"]
+}
+</script>
+
+<script>document.documentElement.classList.add('js')</script>
+<link rel="stylesheet" href="/assets/motion.css">
+<link rel="stylesheet" href="/assets/profundidad.css">
+<link rel="stylesheet" href="/assets/base.css">
+<link rel="stylesheet" href="assets/_marco/faro-marco.css">
+<script src="/assets/medicion.js" defer></script>
+<style>
+
+:root{
+
+  --caso-fondo:var(--fx-papel, #F5EFE4);   
+  --caso-tinta:#1F1B16;
+    
+  --caso-suave:color-mix(in srgb, var(--caso-tinta) var(--f-suave-pct, 68%), transparent);
+  
+  --caso-acento:#AF4E1C;
+  
+  --fx-tinta-acento:var(--fx-verde, #12291F);          
+  --caso-display:"Frank Ruhl Libre", Georgia, serif;
+  --caso-texto:"Work Sans", system-ui, sans-serif;
+  --filete:rgba(31,27,22,.18);
+  --filete-fino:rgba(31,27,22,.10);
+}
+
+.ap-bajada{ margin:26px 0 0; max-width:52ch; font-size:var(--fx-lede);
+  color:var(--caso-suave); line-height:1.5; }
+
+.seccion{ padding-block:clamp(64px,9vw,120px); border-bottom:1px solid var(--filete-fino); }
+.sello{
+  font-size:var(--fx-sello); font-weight:600; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--fx-tinta-acento); margin:0 0 18px;
+}
+.seccion h2{
+  font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-titulo); line-height:1.05; letter-spacing:-.02em;
+  margin:0; max-width:20ch; text-wrap:balance;
+}
+
+@media (max-width:860px){
+  .columnas{ grid-template-columns:1fr; }
+  .columnas > div{ padding-left:0; border-left:0; }
+  .margen{ border-top:1px solid var(--filete); padding-top:20px; }
+}
+
+@media (max-width:720px){
+  .hallazgos, .hallazgos tbody, .hallazgos tr, .hallazgos td{ display:block; width:auto; }
+  .hallazgos thead{ display:none; }
+  .hallazgos tr{ border-bottom:1px solid var(--filete); padding:16px 0; }
+  .hallazgos td{ border:0; padding:2px 0; width:auto; }
+  
+  .hallazgos td:last-child{ text-align:left; margin-top:8px; }
+}
+
+.panel{ margin-top:clamp(24px,2.6vw,40px); border-top:2px solid var(--caso-tinta); }
+.kpis{ display:grid; grid-template-columns:repeat(4,1fr); border-bottom:1px solid var(--filete); }
+@media (max-width:820px){ .kpis{ grid-template-columns:repeat(2,1fr); } }
+.kpi{ padding:24px clamp(12px,2vw,26px) 24px 0; border-right:1px solid var(--filete-fino); }
+.kpi:last-child{ border-right:0; }
+.kpi b{
+  display:block; font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-cifra); line-height:1; letter-spacing:-.03em;
+  color:var(--caso-tinta); font-variant-numeric:tabular-nums;
+}
+.kpi span{ display:block; margin-top:10px; font-size:var(--fx-pie); color:var(--caso-suave); line-height:1.45; max-width:24ch; }
+
+.graficos{ display:grid; grid-template-columns:1fr 1fr; }
+@media (max-width:820px){ .graficos{ grid-template-columns:1fr; } }
+.graf{ padding:26px clamp(14px,2vw,30px) 30px 0; border-right:1px solid var(--filete-fino); border-bottom:1px solid var(--filete-fino); }
+.graf:nth-child(2n){ border-right:0; padding-right:0; padding-left:clamp(14px,2vw,30px); }
+.graf h3{ margin:0 0 20px; font-size:var(--fx-sello); letter-spacing:.14em;
+  text-transform:uppercase; font-weight:600; color:var(--caso-suave); }
+
+.barras{ display:grid; gap:13px; }
+.barra{ display:grid; grid-template-columns:88px 1fr auto; gap:14px; align-items:center; font-size:var(--fx-pie); }
+.barra .et{ color:var(--caso-suave); }
+.barra .via{ height:9px; background:var(--filete-fino); position:relative; overflow:hidden; }
+.barra .via i{ position:absolute; inset:0 auto 0 0; width:0; background:var(--caso-acento);
+  transition:width var(--fx-lento) var(--fx-curva); }
+.barra .via i.dos{ background:var(--caso-suave); }
+.barra .n{ font-weight:600; font-variant-numeric:tabular-nums; }
+
+.linea-svg{ width:100%; height:auto; display:block; overflow:visible; }
+.linea-svg .rejilla{ stroke:var(--filete-fino); stroke-width:1; }
+.linea-svg .trazo{ fill:none; stroke:var(--caso-acento); stroke-width:2.4;
+  stroke-linecap:round; stroke-linejoin:round;
+  stroke-dasharray:1000; stroke-dashoffset:1000;
+  transition:stroke-dashoffset 1.8s var(--fx-curva); }
+.panel.visto .linea-svg .trazo{ stroke-dashoffset:0; }
+.linea-svg .area{ fill:var(--caso-acento); opacity:0; transition:opacity var(--m-lento) var(--fx-curva) .5s; }
+.panel.visto .linea-svg .area{ opacity:.09; }
+.linea-svg text{ font-family:"Work Sans",sans-serif; font-size:var(--fx-sello); fill:rgba(31,27,22,.5); }
+
+.embudo{ display:grid; gap:10px; }
+.embudo div{ display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center;
+  padding:13px 16px; background:var(--caso-acento); color:var(--fx-papel, #F5EFE4); font-size:var(--fx-pie);
+  font-weight:600; width:0; transition:width var(--fx-lento) var(--fx-curva); }
+.embudo div span:last-child{ font-variant-numeric:tabular-nums; }
+.embudo div:nth-child(2){ opacity:.72; transition-delay:.15s; }
+.embudo div:nth-child(3){ opacity:.46; transition-delay:.3s; }
+
+.pie-panel{ padding:18px 0 0; font-size:var(--fx-pie); color:var(--caso-suave); }
+
+.paso{ display:grid; grid-template-columns:86px 1fr; gap:clamp(16px,3vw,40px);
+  padding:22px 0; border-bottom:1px solid var(--filete-fino); align-items:baseline; }
+.paso .cuando{ font-family:var(--caso-display); font-size:var(--fx-lede); color:var(--fx-tinta-acento);
+  letter-spacing:-.02em; font-variant-numeric:tabular-nums; }
+.paso b{ display:block; font-weight:600; font-size:var(--fx-cuerpo); letter-spacing:-.01em; }
+.paso p{ margin:6px 0 0; color:var(--caso-suave); font-size:var(--fx-cuerpo); max-width:58ch; }
+
+.cita{ margin:clamp(46px,6vw,80px) 0 0; padding:0; border-left:3px solid var(--caso-acento);
+  padding-left:clamp(20px,3vw,36px); }
+.cita p{ margin:0; font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-lede); line-height:1.28; letter-spacing:-.015em; max-width:26ch; }
+.cita cite{ display:block; margin-top:16px; font-style:normal; font-size:var(--fx-pie); color:var(--caso-suave); }
+
+.seccion{ padding-block:clamp(46px,5.5vw,84px) clamp(10px,1.2vw,20px) !important; }
+.seccion h2, .bloque h2{
+  max-width:none !important; text-wrap:nowrap; letter-spacing:-.025em;
+}
+@media (max-width:1000px){
+  .seccion h2, .bloque h2{ text-wrap:balance; }
+}
+.cuerpo{ max-width:54ch; }
+.cuerpo p{ margin-top:14px; }
+.cita{ margin-top:clamp(30px,3.4vw,48px) !important; }
+
+.seccion.banda{
+  
+  --fx-tinta-acento:var(--fx-papel, #F5EFE4);
+  --caso-fondo:#1D1A15; --caso-tinta:#F5F1E7; --caso-suave:color-mix(in srgb, var(--caso-tinta) var(--f-suave-pct, 68%), transparent);
+  --caso-acento:#E2814A; --linea:rgba(245,241,231,.16); --filete:rgba(245,241,231,.16); --filete-fino:rgba(245,241,231,.16);
+  background:var(--caso-fondo); color:var(--caso-tinta);
+  padding-block:clamp(58px,6.5vw,96px) clamp(30px,3.4vw,52px) !important;
+  border-top:0;
+}
+.seccion.banda + .seccion{ padding-top:clamp(58px,6.5vw,96px) !important; }
+
+.cuerpo{ max-width:46ch !important; }
+.cuerpo p{ font-size:var(--fx-cuerpo); line-height:1.6; }
+.seccion h2{ letter-spacing:-.03em; }
+
+.portada{
+  position:relative; overflow:hidden; background:var(--caso-fondo);
+  padding-block:calc(var(--fx-barra-alto) + 5vh) 6vh;
+  border-bottom:2px solid var(--caso-tinta);
+}
+.tirada{ position:absolute; inset:0; z-index:0; }
+.tirada canvas{ width:100%; height:100%; display:block; }
+.portada-caja{ position:relative; z-index:1; }
+
+.nameplate{
+  border-top:1px solid var(--caso-tinta); border-bottom:3px solid var(--caso-tinta);
+  padding:14px 0 12px; margin:0 0 clamp(26px,3.4vw,44px);
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  max-width:520px;
+}
+.nameplate .marca-cl{ width:26px; height:26px; color:var(--caso-tinta); }
+.nameplate .nombre{
+  margin:0; font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-cifra); line-height:1;
+  letter-spacing:.15em; text-indent:.15em; text-transform:uppercase;
+}
+.nameplate .bajada{
+  margin:0; font-size:var(--fx-sello); font-weight:600; letter-spacing:.24em; text-indent:.24em;
+  text-transform:uppercase; color:var(--caso-suave);
+}
+.portada .sector{
+  font-size:var(--fx-sello); font-weight:600; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--fx-tinta-acento); margin:0 0 20px;
+}
+.portada h1{
+  font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-display); line-height:1.02; letter-spacing:-.028em;
+  margin:0; max-width:15ch; text-wrap:balance;
+}
+.portada .muestra{
+  display:inline-flex; align-items:center; gap:9px; margin-top:30px;
+  padding:7px 15px 7px 12px; border-radius:100px;
+  border:1px solid color-mix(in srgb, var(--caso-tinta) 24%, transparent);
+  background:color-mix(in srgb, var(--caso-fondo) 74%, transparent);
+  font-size:var(--fx-pie); color:var(--caso-suave);
+}
+.portada .muestra::before{
+  content:""; width:6px; height:6px; background:var(--caso-acento); flex:none;
+}
+
+.definicion{
+  margin:clamp(24px,3vw,40px) 0 clamp(28px,3.4vw,46px);
+  border-top:3px solid var(--caso-tinta); border-bottom:1px solid var(--filete);
+  padding-top:18px;
+}
+.def-cab{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; }
+.def-cab b{ font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-lede); letter-spacing:-.02em; }
+.def-cab span{ font-size:var(--fx-pie); color:var(--caso-suave); }
+
+.def-reglas{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+.def-reglas button{
+  font:inherit; font-size:var(--fx-pie); border:1px solid var(--filete);
+  background:none; color:var(--caso-suave); padding:8px 14px; cursor:pointer;
+  transition:border-color var(--fx-rapido) var(--fx-curva),
+             color var(--fx-rapido) var(--fx-curva),
+             background var(--fx-rapido) var(--fx-curva);
+}
+.def-reglas button:hover{ border-color:var(--fx-tinta-acento); color:var(--caso-tinta); }
+.def-reglas button[aria-pressed="true"]{
+  background:var(--fx-tinta-acento); border-color:var(--fx-tinta-acento); color:var(--caso-fondo); font-weight:600; }
+
+.def-tiendas{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));
+  gap:1px; background:var(--filete); margin-top:22px; }
+.tienda{ background:var(--caso-fondo); padding:16px 16px 14px 0; position:relative; }
+.tienda .nom{ display:block; font-size:var(--fx-sello); letter-spacing:.14em;
+  text-transform:uppercase; color:var(--caso-suave); font-weight:600; }
+.tienda .cifra{ display:block; margin-top:8px; font-family:var(--caso-display);
+  font-weight:500; font-size:var(--fx-cifra); line-height:1;
+  letter-spacing:-.03em; font-variant-numeric:tabular-nums; }
+
+.tienda .usa{ display:block; margin-top:9px; font-size:var(--fx-sello);
+  letter-spacing:.1em; text-transform:uppercase; color:var(--caso-acento);
+  font-weight:600; min-height:1.2em; opacity:0;
+  transition:opacity var(--fx-rapido) var(--fx-curva); }
+.tienda[data-suya="si"] .usa{ opacity:1; }
+.tienda[data-suya="si"]::before{
+  content:""; position:absolute; left:0; top:0; width:22px; height:3px;
+  background:var(--caso-acento); }
+
+.def-total, .def-reportado{
+  display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+  margin:0; padding:13px 0; border-bottom:1px solid var(--filete-fino);
+  font-size:var(--fx-pie); color:var(--caso-suave); }
+.def-total{ margin-top:6px; }
+.def-total b, .def-reportado b{ font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-lede); letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums; color:var(--caso-tinta); }
+.def-reportado{ border-bottom:0; }
+.def-reportado b{ color:var(--fx-tinta-acento); }
+
+.def-remate{ margin:16px 0 0; font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-lede); line-height:1.25;
+  letter-spacing:-.018em; max-width:34ch; }
+.def-pie{ margin:12px 0 16px; font-size:var(--fx-pie); color:var(--caso-suave); line-height:1.5; }
+
+html.sin-js .def-reglas{ display:none; }
+
+</style>
+</head>
+<body data-caso="3" data-tono="claro">
+<a class="fx-salta" href="#contenido">Saltar al contenido</a>
+
+<header class="fx-barra faro-barra">
+  <a class="faro-marca" href="index.html" aria-label="Portfolio de Faro Digital">
+    <svg viewBox="0 0 180 300" aria-hidden="true">
+      <line x1="90" y1="60" x2="23" y2="18" stroke="currentColor" stroke-width="9" stroke-linecap="round"/>
+      <line x1="90" y1="60" x2="157" y2="18" stroke="currentColor" stroke-width="9" stroke-linecap="round"/>
+      <path d="M90 70 L114 134 L66 134 Z" fill="currentColor"/>
+      <path d="M78 134 L102 134 L120 274 L60 274 Z" fill="currentColor"/>
+      <rect x="45" y="274" width="90" height="20" rx="3" fill="currentColor"/>
+      <circle cx="90" cy="60" r="13" fill="currentColor"/>
+    </svg>
+    <span>Faro Digital</span>
+  </a>  <nav class="faro-nav">
+    
+    <a href="/#servicios">Qué hacemos</a>
+    <a href="/#metodo">Método</a>
+    <a href="index.html">Trabajo</a>
+    <a href="/#precios">Precios</a>
+  </nav>
+
+  <span class="cuenta faro-cuenta">03 / 06</span>
+  <a class="sig faro-accion" href="#">Siguiente</a>
+</header>
+
+<main id="contenido">
+
+  <section class="portada">
+    
+    <div class="tirada" id="tirada" aria-hidden="true"><canvas></canvas></div>
+
+    <div class="fx-ancho portada-caja">
+      
+      <div class="nameplate">
+        <svg class="marca-cl" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <rect x="5" y="5" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.2"/>
+          <rect x="19.5" y="19.5" width="11" height="11" fill="var(--caso-acento)"/>
+        </svg>
+        <p class="nombre">Casa Lumen</p>
+        <p class="bajada">Decoración · cuatro tiendas y online</p>
+      </div>
+
+      <p class="sector">Retail · Datos y automatización</p>
+      <h1 class="g-titular">Cuatro tiendas, ninguna decisión</h1>
+    <p class="ap-bajada">Cuatro hojas de cálculo distintas, y nadie sabía cuál de las cuatro tenía razón.</p>
+      <span class="muestra">Proyecto de muestra — la marca es nuestra, el método es el real</span>
+    </div>
+  </section>
+
+<section class="seccion "><div class="fx-ancho">
+    <p class="sello">El panel</p>
+    <h2>Unificar antes de automatizar</h2>
+    <p class="ap-bajada">El orden importa: antes de automatizar nada, los datos tienen que vivir en un solo sitio.</p>
+
+    <div class="panel" id="panel">
+      <div class="kpis">
+        <div class="kpi"><b data-hasta="12480" data-mil="si">0</b><span>Visitas al mes, online más búsquedas de tienda</span></div>
+        <div class="kpi"><b data-hasta="4.6" data-dec="1" data-suf="%">0</b><span>Conversión de visita a contacto</span></div>
+        <div class="kpi"><b data-hasta="18.40" data-dec="2" data-suf=" €">0</b><span>Coste por contacto, media de los cinco canales</span></div>
+        <div class="kpi"><b data-hasta="3.8" data-dec="1" data-suf="x">0</b><span>Retorno de la inversión publicitaria</span></div>
+      </div>
+
+      <div class="graficos">
+        <div class="graf">
+          <h3>Tráfico por canal</h3>
+          <div class="barras">
+            <div class="barra"><span class="et">Búsqueda</span><span class="via"><i data-pct="82"></i></span><span class="n">4.120</span></div>
+            <div class="barra"><span class="et">Redes</span><span class="via"><i data-pct="61"></i></span><span class="n">3.080</span></div>
+            <div class="barra"><span class="et">Directo</span><span class="via"><i data-pct="47"></i></span><span class="n">2.350</span></div>
+            <div class="barra"><span class="et">Email</span><span class="via"><i data-pct="38"></i></span><span class="n">1.910</span></div>
+            <div class="barra"><span class="et">Referidos</span><span class="via"><i data-pct="20"></i></span><span class="n">1.020</span></div>
+          </div>
+        </div>
+
+        <div class="graf">
+          <h3>Contactos en el tiempo</h3>
+          <svg class="linea-svg" viewBox="0 0 340 160" role="img" aria-label="Contactos mensuales: crecen de 210 en enero a 574 en octubre">
+            <line class="rejilla" x1="0" y1="30" x2="340" y2="30"/>
+            <line class="rejilla" x1="0" y1="70" x2="340" y2="70"/>
+            <line class="rejilla" x1="0" y1="110" x2="340" y2="110"/>
+            <line class="rejilla" x1="0" y1="140" x2="340" y2="140"/>
+            <path class="area" d="M6,122 L43,114 L80,118 L117,98 L154,86 L191,90 L228,66 L265,52 L302,44 L334,28 L334,140 L6,140 Z"/>
+            <path class="trazo" d="M6,122 L43,114 L80,118 L117,98 L154,86 L191,90 L228,66 L265,52 L302,44 L334,28"/>
+            <text x="0" y="156">Ene</text><text x="152" y="156">May</text><text x="310" y="156">Oct</text>
+          </svg>
+        </div>
+
+        <div class="graf">
+          <h3>Embudo del mes</h3>
+          <div class="embudo">
+            <div data-pct="100"><span>Visitas</span><span>12.480</span></div>
+            <div data-pct="46"><span>Contactos</span><span>574</span></div>
+            <div data-pct="22"><span>Clientes</span><span>188</span></div>
+          </div>
+        </div>
+
+        <div class="graf">
+          <h3>Coste por contacto y canal</h3>
+          <div class="barras">
+            <div class="barra"><span class="et">Email</span><span class="via"><i class="dos" data-pct="14"></i></span><span class="n">2,60 €</span></div>
+            <div class="barra"><span class="et">Búsqueda</span><span class="via"><i class="dos" data-pct="46"></i></span><span class="n">8,40 €</span></div>
+            <div class="barra"><span class="et">Referidos</span><span class="via"><i class="dos" data-pct="58"></i></span><span class="n">10,70 €</span></div>
+            <div class="barra"><span class="et">Redes</span><span class="via"><i data-pct="100"></i></span><span class="n">18,40 €</span></div>
+            <div class="barra"><span class="et">Display</span><span class="via"><i data-pct="96"></i></span><span class="n">17,60 €</span></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="pie-panel">Datos de ejemplo. En un proyecto real se conecta a las fuentes de cada tienda, y va incluido con la ejecución mensual.</p>
+    </div>
+  </div></section>
+
+  <section class="seccion "><div class="fx-ancho">
+    <p class="sello">01 · El contexto</p>
+    <h2>Crecieron por separado</h2>
+
+    <div class="definicion" id="definicion">
+      <div class="def-cab">
+        <b>¿Cuánto vendimos en marzo?</b>
+        <span>elige qué cuenta como una venta</span>
+      </div>
+
+      <div class="def-reglas" role="group" aria-label="Qué cuenta como una venta">
+        <button type="button" data-d="0" aria-pressed="true">Cuando el cliente paga</button>
+        <button type="button" data-d="1">Cuando el pedido sale</button>
+        <button type="button" data-d="2">Cuando pasa el plazo de devolución</button>
+      </div>
+
+      <div class="def-tiendas">
+        <div class="tienda" data-v="5240,4980,4610" data-usa="0">
+          <span class="nom">Chamberí</span><b class="cifra">5.240 €</b><span class="usa"></span></div>
+        <div class="tienda" data-v="4115,3940,3620" data-usa="1">
+          <span class="nom">Malasaña</span><b class="cifra">4.115 €</b><span class="usa"></span></div>
+        <div class="tienda" data-v="3870,3700,3410" data-usa="0">
+          <span class="nom">Gràcia</span><b class="cifra">3.870 €</b><span class="usa"></span></div>
+        <div class="tienda" data-v="5025,4480,3905" data-usa="2">
+          <span class="nom">Online</span><b class="cifra">5.025 €</b><span class="usa"></span></div>
+      </div>
+
+      <p class="def-total">Marzo, con esa regla <b>18.250 €</b></p>
+      
+      <p class="def-reportado">Lo que se reportó aquel mes <b>16.955 €</b></p>
+
+      <p class="def-remate">Ninguna de las tres cifras es falsa. La que se reportó no es ninguna de las tres.</p>
+      <p class="def-pie">Cifras de ejemplo. Lo que no lo es: cuatro definiciones de «venta» en la misma empresa.</p>
+    </div>
+
+      <div class="faro-resultados">
+        <div class="fx-in"><span class="cifra">184 KB</span><span class="pie">pesa la página entera, panel incluido</span></div>
+        <div class="fx-in" data-espera="1"><span class="cifra">1,8 s</span><span class="pie">tarda en pintarse el titular en un móvil de gama media</span></div>
+        <div class="fx-in" data-espera="2"><span class="cifra">0</span><span class="pie">imágenes: todo lo que se ve está dibujado por el navegador</span></div>
+        <p class="fuente">Medido el 30 de agosto de 2026 sobre esta misma página, en un móvil de gama media con la red y el procesador limitados. Se repite con <code>puertas.py</code>.</p>
+      </div>
+    </div>
+
+    <blockquote class="cita">
+      <p>No hacía falta más marketing. Hacía falta que las cuatro tiendas midieran lo mismo.</p>
+      <cite>Zyad Bennani · fundador de Faro Digital</cite>
+    </blockquote>
+  </div></section>
+
+  <section class="fx-cierre">
+    <div class="fx-ancho">
+      <p class="sello">Lo que se usó aquí</p>
+      <h2>Datos, CRM y automatización</h2>
+      <ul class="fx-skills">
+        <li>Panel de analítica</li><li>Automatización</li><li>CRM</li>
+        <li>Informes multitienda</li><li>Email marketing</li><li>Desarrollo</li>
+      </ul>
+
+      <div class="fx-acciones">
+        <a class="fx-btn" href="/#contacto">Pide la Foto del Día 0 — gratis</a>
+        <a class="fx-btn hueco" href="/dashboard-demo.html">Prueba el panel interactivo</a>
+      </div>
+
+      <a class="fx-siguiente" href="#">
+        <span class="et">Siguiente caso</span>
+        <span class="tit">—</span>
+      </a>
+
+      <div class="fx-pie">
+        <a href="index.html">Todos los proyectos</a>
+        <a href="/">Faro Digital</a>
+        <span>Proyecto de muestra · la marca Casa Lumen no existe</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+/* Las cifras se cuentan y las barras crecen al entrar en pantalla.
+   Nada de esto es imprescindible para leer la pagina: si el JavaScript no se
+   ejecuta, los numeros finales ya estan en el HTML como texto... no, no lo
+   estan — y ese era el fallo. Se escriben al arrancar, antes de animar, para
+   que el estado de reposo sea el correcto tambien aqui. */
+(function () {
+  "use strict";
+  var reducido = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function pinta(el, v) {
+    var dec = parseInt(el.getAttribute("data-dec") || "0", 10);
+    var txt = dec ? v.toFixed(dec).replace(".", ",")
+                  : Math.round(v).toLocaleString("es-ES");
+    el.textContent = (el.getAttribute("data-pre") || "") + txt + (el.getAttribute("data-suf") || "");
+  }
+
+  var cifras = document.querySelectorAll("[data-hasta]");
+  cifras.forEach(function (el) { pinta(el, parseFloat(el.getAttribute("data-hasta"))); });
+
+  if (reducido || !("IntersectionObserver" in window)) {
+    document.querySelectorAll(".barra i").forEach(function (i) { i.style.width = i.getAttribute("data-pct") + "%"; });
+    document.querySelectorAll(".embudo div").forEach(function (d) { d.style.width = d.getAttribute("data-pct") + "%"; });
+    document.querySelectorAll(".panel").forEach(function (p) { p.classList.add("visto"); });
+    return;
+  }
+
+/* El umbral sale del sistema (`--m-umbral`, generado desde
+     marca.tokens.json). Estaba escrito a mano y habia SEIS valores distintos
+     en el portfolio para la misma decision: 0,18 · 0,3 · 0,3 · 0,35 · 0,35 ·
+     0,4. Ninguno estaba mal; el problema es que eran seis.
+
+         Un valor del sistema copiado a mano deja de ser del sistema
+         en cuanto alguien lo toca, y nadie se entera porque sigue funcionando. */
+  function umbralFaro() {
+    var v = parseFloat(getComputedStyle(document.documentElement)
+                       .getPropertyValue("--m-umbral"));
+    return (v > 0 && v <= 1) ? v : 0.15;
+  }
+  var ojo = new IntersectionObserver(function (filas) {
+    filas.forEach(function (f) {
+      if (!f.isIntersecting) return;
+      var p = f.target;
+      p.classList.add("visto");
+      ojo.unobserve(p);
+
+      p.querySelectorAll(".barra i").forEach(function (i, k) {
+        setTimeout(function () { i.style.width = i.getAttribute("data-pct") + "%"; }, k * 70);
+      });
+      p.querySelectorAll(".embudo div").forEach(function (d) { d.style.width = d.getAttribute("data-pct") + "%"; });
+
+      p.querySelectorAll("[data-hasta]").forEach(function (el) {
+        var fin = parseFloat(el.getAttribute("data-hasta")), t0 = null, dur = 1250;
+        function paso(t) {
+          if (t0 === null) t0 = t;
+          var k = Math.min((t - t0) / dur, 1);
+          /* 🔴 SI LA CIFRA SE VA DE PANTALLA, SALTA AL VALOR REAL Y PARA.
+             Esto es un caso sobre DATOS: dejar «4 de 15» a medio contar en una
+             pagina que vende medicion es ensenar un numero que no es verdad.
+             Sin esto, quien pasa deprisa y vuelve puede encontrarse el contador
+             congelado a mitad — y no hay forma de que sepa que no es el dato.
+
+                 Una cifra a medio animar no es una animacion incompleta:
+                 es un numero equivocado en pantalla.
+
+             Y de paso deja de calcular fuera de la vista, que era trabajo
+             tirado en el hilo principal justo mientras se hace scroll. */
+          var r = el.getBoundingClientRect();
+          if (r.bottom < 0 || r.top > innerHeight) { pinta(el, fin); return; }
+          /* Frena al final con la misma curva que todo lo demas del portfolio:
+             un contador con velocidad constante parece un marcador de gasolinera. */
+          pinta(el, fin * (1 - Math.pow(1 - k, 3)));
+          if (k < 1) requestAnimationFrame(paso);
+        }
+        requestAnimationFrame(paso);
+      });
+    });
+  }, { threshold: umbralFaro() });
+
+  document.querySelectorAll(".panel").forEach(function (p) { ojo.observe(p); });
+})();
+</script>
+<script src="assets/casalumen/imprenta.js" defer></script>
+<script src="assets/casalumen/definicion.js" defer></script>
+<script src="assets/_marco/faro-marco.js" defer></script>
+<script>
+  /* La tirada se arranca aquí y no dentro de su archivo, para que el
+     archivo siga siendo transplantable a otro caso con otra paleta. */
+  addEventListener("DOMContentLoaded", function () {
+    if (window.casaLumenTirada) window.casaLumenTirada({ caja: "#tirada" });
+  });
+</script>
+<script src="/assets/gestos.js" defer></script>
+</body>
+</html>

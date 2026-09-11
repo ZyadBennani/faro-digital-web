@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="es" class="sin-js">
+<head>
+<meta charset="utf-8">
+
+<meta name="faro-nivel" content="N3">
+<script>document.documentElement.classList.remove("sin-js");</script>
+
+<title>Meridian — doce años que la web deshacía · Faro</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Ccircle cx='150' cy='150' r='150' fill='%23F6F0E3'/%3E%3Cline x1='150' y1='123' x2='100' y2='92' stroke='%23C9A667' stroke-width='9' stroke-linecap='round'/%3E%3Cline x1='150' y1='123' x2='200' y2='92' stroke='%23C9A667' stroke-width='9' stroke-linecap='round'/%3E%3Cpath d='M150 133 L168 175 L132 175 Z' fill='%231E3A2E'/%3E%3Cpath d='M141 175 L159 175 L169 238 L131 238 Z' fill='%231E3A2E'/%3E%3Crect x='122' y='238' width='56' height='12' rx='2' fill='%231E3A2E'/%3E%3Ccircle cx='150' cy='123' r='10' fill='%23C9A667'/%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Proyecto de muestra de Faro Digital: web B2B, SEO técnico y visibilidad ante los asistentes de IA. La medición del Radar IA, jugable dentro de la página.">
+
+<link rel="canonical" href="https://faro-digital.pages.dev/portfolio/caso-4-b2b-meridian">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Faro Digital">
+<meta property="og:url" content="https://faro-digital.pages.dev/portfolio/caso-4-b2b-meridian">
+<meta property="og:title" content="Doce años de reputación que la web deshacía — proyecto de muestra">
+<meta property="og:description" content="Web B2B, SEO técnico y visibilidad ante los asistentes de IA. Enciende y apaga lo que la IA puede leer y mira cómo cambia su respuesta.">
+<meta property="og:image" content="https://faro-digital.pages.dev/portfolio/assets/meridian/og-meridian.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Doce años de reputación que la web deshacía — proyecto de muestra">
+<meta name="twitter:description" content="Web B2B, SEO técnico y visibilidad ante los asistentes de IA. Enciende y apaga lo que la IA puede leer y mira cómo cambia su respuesta.">
+<meta name="twitter:image" content="https://faro-digital.pages.dev/portfolio/assets/meridian/og-meridian.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Doce años de reputación que la web deshacía antes de la primera llamada",
+  "description": "Proyecto de muestra de Faro Digital sobre web B2B, SEO técnico y visibilidad ante los asistentes de IA.",
+  "disambiguatingDescription": "Proyecto de muestra. Meridian Advisory Group es una firma ficticia creada para este caso; no es un cliente real y no existe.",
+  "inLanguage": "es",
+  "image": "https://faro-digital.pages.dev/portfolio/assets/meridian/og-meridian.jpg",
+  "mainEntityOfPage": "https://faro-digital.pages.dev/portfolio/caso-4-b2b-meridian",
+  "isPartOf": {
+    "@type": "CollectionPage",
+    "name": "Portfolio de Faro Digital",
+    "url": "https://faro-digital.pages.dev/portfolio/"
+  },
+  "author": { "@type": "Person", "name": "Zyad Bennani" },
+  "creator": { "@type": "Organization", "name": "Faro Digital", "url": "https://faro-digital.pages.dev/" },
+  "about": ["Diseño web B2B", "SEO técnico", "GEO", "Visibilidad en asistentes de IA"]
+}
+</script>
+
+<script>document.documentElement.classList.add('js')</script>
+<link rel="stylesheet" href="/assets/motion.css">
+<link rel="stylesheet" href="/assets/profundidad.css">
+<link rel="stylesheet" href="/assets/base.css">
+<link rel="stylesheet" href="assets/_marco/faro-marco.css">
+
+<script src="/assets/medicion.js" defer></script>
+<style>
+
+:root{
+  --caso-fondo:#FBFBF9;
+  --caso-tinta:#16181C;
+    
+  --caso-suave:color-mix(in srgb, var(--caso-tinta) var(--f-suave-pct, 68%), transparent);
+  --caso-acento:#2A4E7C;
+  
+  --fx-tinta-acento:var(--fx-verde, #12291F);
+  --caso-display:'Frank Ruhl Libre', Georgia, serif;
+  --caso-texto:'Work Sans', system-ui, sans-serif;
+  --linea:rgba(22,24,28,.13);
+  --linea-fina:rgba(22,24,28,.07);
+}
+
+.portada{
+  position:relative; overflow:hidden;
+  background:linear-gradient(180deg,#FFFFFF 0%, #FAF9F5 55%, #F1F0E9 100%);
+  padding-block:calc(var(--fx-barra-alto) + 5.5vh) 6vh;
+}
+
+.portada::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:2px;
+  background:linear-gradient(90deg,transparent, var(--caso-acento) 14%, var(--caso-acento) 86%, transparent);
+  opacity:.45;
+}
+.portada-caja{ position:relative; }
+.portada-texto{ position:relative; z-index:1; }
+.portada h1{
+  font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-display); line-height:1.02; letter-spacing:-.025em;
+  margin:0; max-width:11ch; text-wrap:balance;
+}
+
+.portada .ap-bajada{
+  margin:22px 0 0; max-width:34ch; font-size:var(--fx-lede);
+  line-height:1.45; color:var(--caso-suave);
+}
+.portada .sector{
+  font-size:var(--fx-sello); font-weight:600; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--fx-tinta-acento); margin:0 0 22px;
+}
+.portada .muestra{
+  display:inline-flex; align-items:center; gap:9px; margin-top:34px;
+  padding:7px 15px 7px 12px; border-radius:100px;
+  border:1px solid color-mix(in srgb, var(--caso-tinta) 22%, transparent);
+  font-size:var(--fx-pie); color:var(--caso-suave);
+}
+.portada .muestra::before{
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--caso-acento); flex:none;
+}
+
+.portada-sello{
+  position:absolute; top:50%; right:-12%; transform:translateY(-50%);
+  width:min(46vw,520px); aspect-ratio:1; z-index:0; pointer-events:none;
+}
+.portada-sello canvas{ width:100%; height:100%; display:block; }
+.sello-centro{
+  position:absolute; inset:0; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:14px;
+}
+.sello-centro svg{ width:19%; height:auto; color:var(--caso-tinta); }
+.sello-nombre{
+  margin:0; text-align:center; font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-cuerpo); letter-spacing:.30em; text-indent:.30em;
+  text-transform:uppercase; line-height:1; color:var(--caso-tinta);
+}
+
+.sello-nombre span{
+  display:block; margin-top:9px; font-family:var(--caso-texto); font-weight:600;
+  font-size:var(--fx-sello); letter-spacing:.2em; text-indent:.2em;
+  color:color-mix(in srgb, var(--caso-tinta) 72%, transparent);
+}
+@media (max-width:980px){
+  
+  .portada-sello{ position:relative; top:auto; right:auto; transform:none;
+    margin:36px auto 0; width:min(66vw,280px); }
+  .portada h1{ max-width:none; }
+  
+  .sello-centro{ gap:10px; }
+  .sello-centro svg{ width:22%; }
+  .sello-nombre{ font-size:var(--fx-sello); letter-spacing:.22em; text-indent:.22em; }
+  .sello-nombre span{ margin-top:7px; font-size:var(--fx-sello); letter-spacing:.14em; text-indent:.14em; }
+}
+
+.seccion{ padding-block:clamp(46px,5.5vw,84px) clamp(14px,1.6vw,26px); border-top:1px solid var(--linea); }
+.seccion > .fx-ancho > .rej{ display:grid; grid-template-columns:minmax(92px,.42fr) minmax(0,3fr); gap:clamp(20px,4vw,64px); }
+@media (max-width:820px){ .seccion > .fx-ancho > .rej{ grid-template-columns:minmax(0,1fr); gap:22px; } }
+.num-sec{
+  font-family:var(--caso-display); font-size:var(--fx-cifra);
+  line-height:.9; color:var(--fx-tinta-acento); font-weight:500; letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;
+}
+.num-sec span{ display:block; margin-top:12px; font-family:var(--caso-texto);
+  font-size:var(--fx-sello); letter-spacing:.16em; text-transform:uppercase;
+  color:var(--caso-suave); font-weight:600; }
+
+.seccion h2{
+  font-family:var(--caso-display); font-weight:500; margin:0;
+  font-size:var(--fx-titulo); line-height:1.08; letter-spacing:-.03em; text-wrap:balance;
+}
+.cuerpo{ max-width:46ch; }
+.cuerpo p{ margin:14px 0 0; font-size:var(--fx-cuerpo); line-height:1.6; }
+.cuerpo p b{ font-weight:600; }
+
+.seccion.banda{
+  
+  --fx-tinta-acento:var(--fx-papel, #F5EFE4);
+  --caso-fondo:#14181F; --caso-tinta:#F4F6F9; --caso-suave:color-mix(in srgb, var(--caso-tinta) var(--f-suave-pct, 68%), transparent);
+  --caso-acento:#7FA8DA; --linea:rgba(244,246,249,.15); --linea-fina:rgba(244,246,249,.13);
+  background:var(--caso-fondo); color:var(--caso-tinta);
+  padding-block:clamp(58px,6.5vw,96px) clamp(30px,3.4vw,52px);
+  border-top:0;
+}
+.seccion.banda + .seccion{ padding-top:clamp(58px,6.5vw,96px); }
+
+.datos{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));
+  gap:clamp(18px,3vw,44px); margin-top:clamp(24px,2.6vw,40px); }
+.datos div{ border-top:2px solid var(--caso-tinta); padding-top:16px; }
+.datos b{ display:block; font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-cifra); line-height:1; letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums; }
+.datos span{ display:block; margin-top:10px; font-size:var(--fx-pie); color:var(--caso-suave); line-height:1.5; }
+
+.hall{ width:100%; border-collapse:collapse; margin-top:clamp(28px,3.5vw,46px); }
+.hall td{ padding:15px 14px 15px 0; border-bottom:1px solid var(--linea-fina);
+  vertical-align:top; font-size:var(--fx-cuerpo); line-height:1.5; }
+.hall td:first-child{ font-weight:600; white-space:nowrap; width:1%; }
+.hall td:last-child{ text-align:right; white-space:nowrap; width:1%; font-size:var(--fx-pie);
+  font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--fx-tinta-acento); }
+@media (max-width:720px){
+  .hall, .hall tbody, .hall tr, .hall td{ display:block; width:auto; }
+  .hall tr{ border-bottom:1px solid var(--linea); padding:14px 0; }
+  .hall td{ border:0; padding:2px 0; width:auto; }
+  
+  .hall td:last-child{ text-align:left; margin-top:6px; }
+}
+
+.rastro{ margin-top:clamp(24px,2.8vw,40px); border:1px solid var(--linea); background:#fff; }
+.rastro-cab{
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap; padding:14px 18px;
+  border-bottom:1px solid var(--linea);
+  font-size:var(--fx-sello); letter-spacing:.14em; text-transform:uppercase; color:var(--caso-suave);
+}
+.rastro-cab b{ color:var(--fx-tinta-acento); font-weight:600; }
+.presets{ margin-left:auto; display:flex; gap:6px; }
+.presets button{
+  font:inherit; font-size:var(--fx-sello); letter-spacing:.12em; text-transform:uppercase;
+  border:1px solid var(--linea); background:none; color:var(--caso-suave);
+  padding:6px 13px; border-radius:100px; cursor:pointer;
+  transition:border-color var(--fx-rapido) var(--fx-curva), color var(--fx-rapido) var(--fx-curva);
+}
+.presets button:hover{ border-color:var(--fx-tinta-acento); color:var(--fx-tinta-acento); }
+
+.rastro-cuerpo{ display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); }
+@media (max-width:860px){ .rastro-cuerpo{ grid-template-columns:minmax(0,1fr); } }
+.fuentes{ border-right:1px solid var(--linea); padding:16px 0 8px; }
+@media (max-width:860px){ .fuentes{ border-right:0; border-bottom:1px solid var(--linea); } }
+.fuentes-tit{ margin:0 18px 12px; font-size:var(--fx-sello); letter-spacing:.16em;
+  text-transform:uppercase; color:var(--caso-suave); font-weight:600; }
+.fuente{
+  display:flex; align-items:flex-start; gap:12px; width:100%; text-align:left;
+  font:inherit; font-size:var(--fx-pie); line-height:1.42; color:var(--caso-suave);
+  background:none; border:0; border-top:1px solid var(--linea-fina);
+  padding:12px 18px; cursor:pointer;
+  transition:color var(--fx-rapido) var(--fx-curva), background-color var(--fx-rapido) var(--fx-curva);
+}
+.fuente:hover{ background:rgba(42,78,124,.05); color:var(--caso-tinta); }
+
+.fuente i{
+  width:13px; height:13px; flex:none; margin-top:3px; position:relative;
+  border:1.5px solid var(--caso-suave); font-style:normal;
+  transition:border-color var(--fx-rapido) var(--fx-curva);
+}
+.fuente i::after{
+  content:""; position:absolute; inset:2px; background:var(--fx-tinta-acento);
+  transform:scale(0); transition:transform var(--fx-rapido) var(--fx-curva);
+}
+.fuente[aria-pressed="true"]{ color:var(--caso-tinta); }
+.fuente[aria-pressed="true"] i{ border-color:var(--fx-tinta-acento); }
+.fuente[aria-pressed="true"] i::after{ transform:scale(1); }
+
+.respuesta{ padding:18px 20px 20px; }
+.pregunta{ margin:0 0 16px; padding-bottom:14px; border-bottom:1px solid var(--linea-fina);
+  font-size:var(--fx-pie); color:var(--caso-suave); line-height:1.5; }
+.resp-texto{ margin:0; font-size:var(--fx-cuerpo); line-height:1.62; min-height:8.6em; }
+.resp-texto b{ font-weight:600; color:var(--fx-tinta-acento); }
+
+.frag{ transition:opacity 240ms var(--fx-curva), background-color var(--fx-rapido) var(--fx-curva);
+  border-radius:2px; }
+.frag[data-on="0"]{ opacity:0; }
+.frag[hidden]{ display:none; }
+.frag.eco{ background:rgba(42,78,124,.15); }
+.medida{ margin:18px 0 0; padding-top:14px; border-top:1px solid var(--linea-fina);
+  display:flex; justify-content:space-between; gap:12px;
+  font-size:var(--fx-pie); color:var(--caso-suave); }
+.medida b{ color:var(--fx-tinta-acento); font-weight:600; font-variant-numeric:tabular-nums; }
+.rastro-pie{ margin:0; padding:13px 18px; border-top:1px solid var(--linea);
+  font-size:var(--fx-pie); color:var(--caso-suave); line-height:1.5; }
+
+html.sin-js .presets,
+html.sin-js .rastro-cab > span{ display:none; }
+html.sin-js .fuente{ cursor:default; }
+
+.remate{ margin:clamp(26px,3vw,42px) 0 0; font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-lede); line-height:1.2; letter-spacing:-.02em;
+  max-width:20ch; }
+.remate a{ display:block; width:fit-content; margin-top:18px; font-family:var(--caso-texto);
+  font-size:var(--fx-pie); font-weight:600; letter-spacing:.04em; color:var(--fx-tinta-acento); }
+</style>
+</head>
+<body data-caso="4" data-tono="claro">
+<a class="fx-salta" href="#contenido">Saltar al contenido</a>
+
+<header class="fx-barra faro-barra">
+  <a class="faro-marca" href="index.html" aria-label="Portfolio de Faro Digital">
+    <svg viewBox="0 0 180 300" aria-hidden="true">
+      <line x1="90" y1="60" x2="23" y2="18" stroke="currentColor" stroke-width="9" stroke-linecap="round"/>
+      <line x1="90" y1="60" x2="157" y2="18" stroke="currentColor" stroke-width="9" stroke-linecap="round"/>
+      <path d="M90 70 L114 134 L66 134 Z" fill="currentColor"/>
+      <path d="M78 134 L102 134 L120 274 L60 274 Z" fill="currentColor"/>
+      <rect x="45" y="274" width="90" height="20" rx="3" fill="currentColor"/>
+      <circle cx="90" cy="60" r="13" fill="currentColor"/>
+    </svg>
+    <span>Faro Digital</span>
+  </a>  <nav class="faro-nav">
+    
+    <a href="/#servicios">Qué hacemos</a>
+    <a href="/#metodo">Método</a>
+    <a href="index.html">Trabajo</a>
+    <a href="/#precios">Precios</a>
+  </nav>
+
+  <span class="cuenta faro-cuenta">04 / 06</span>
+  <a class="sig faro-accion" href="#">Siguiente</a>
+</header>
+
+<main id="contenido">
+
+  <section class="portada">
+    <div class="fx-ancho portada-caja">
+      <div class="portada-texto">
+        <p class="sector">Consultoría B2B · Web, SEO y GEO</p>
+        
+        <h1 class="g-titular">Doce años, mal contados</h1>
+        <p class="ap-bajada">Antes de la primera llamada, su web ya había contado otra historia.</p>
+        <span class="muestra">Proyecto de muestra — la marca es nuestra, el método es el real</span>
+      </div>
+
+      <div class="portada-sello" id="sello">
+        <canvas aria-hidden="true"></canvas>
+        <div class="sello-centro">
+          <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+            <circle cx="50" cy="52" r="34" fill="none" stroke="currentColor" stroke-width="2.4"/>
+            <ellipse cx="50" cy="52" rx="13.5" ry="34" fill="none" stroke="currentColor" stroke-width="1.4"/>
+            <line x1="50" y1="18" x2="50" y2="86" stroke="currentColor" stroke-width="1.4"/>
+            <circle cx="50" cy="18" r="5" fill="var(--caso-acento)"/>
+          </svg>
+          <p class="sello-nombre">Meridian<span>Advisory Group</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion banda"><div class="fx-ancho">
+    <div class="rej">
+      <div class="num-sec">01<span>El contexto</span></div>
+      <div>
+        <h2>Buena firma, mal vendida</h2>
+      
+      <div class="faro-resultados">
+        <div class="fx-in"><span class="cifra">8</span><span class="pie">controles que se pueden tocar para ver el antes y el después</span></div>
+        <div class="fx-in" data-espera="1"><span class="cifra">191 KB</span><span class="pie">pesa la página entera</span></div>
+        <div class="fx-in" data-espera="2"><span class="cifra">1,7 s</span><span class="pie">tarda en pintarse el titular en un móvil de gama media</span></div>
+        <p class="fuente">Medido el 30 de agosto de 2026 sobre esta misma página, en un móvil de gama media con la red y el procesador limitados. Se repite con <code>puertas.py</code>.</p>
+      </div>
+        <table class="hall">
+          <tbody>
+            <tr><td>Experiencia de uso</td><td>Plantilla de 2015. Se rompe en móvil.</td><td>Alta</td></tr>
+            <tr><td>Arquitectura</td><td>Todo en una página de «Servicios».</td><td>Alta</td></tr>
+            <tr><td>SEO</td><td>Cero páginas posicionando. Invisible en buscadores.</td><td>Alta</td></tr>
+            <tr><td>Visibilidad ante la IA</td><td>Los asistentes no tenían nada que citar.</td><td>Alta</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="seccion"><div class="fx-ancho">
+    <div class="rej">
+      <div class="num-sec">02<span>La medición</span></div>
+      <div>
+        <h2>De qué está hecha una respuesta</h2>
+
+        <div class="rastro" id="rastro">
+          <div class="rastro-cab">
+            <b>El rastro</b>
+            <span>toca para encender y apagar</span>
+            <div class="presets">
+              <button type="button" data-preset="0">Antes</button>
+              <button type="button" data-preset="1">Después</button>
+            </div>
+          </div>
+
+          <div class="rastro-cuerpo">
+            <div class="fuentes" role="group" aria-label="Lo que se hizo en el proyecto">
+              <p class="fuentes-tit">Lo que se hizo</p>
+              <button type="button" class="fuente" data-f="0" aria-pressed="true"><i></i><span>Una sola descripción de la firma</span></button>
+              <button type="button" class="fuente" data-f="1" aria-pressed="true"><i></i><span>Una página por área de práctica</span></button>
+              <button type="button" class="fuente" data-f="2" aria-pressed="true"><i></i><span>Datos estructurados en cada página</span></button>
+              <button type="button" class="fuente" data-f="3" aria-pressed="true"><i></i><span>Casos publicados</span></button>
+              <button type="button" class="fuente" data-f="4" aria-pressed="true"><i></i><span>Artículos que responden preguntas reales</span></button>
+              <button type="button" class="fuente" data-f="5" aria-pressed="true"><i></i><span>Directorios y perfiles al día</span></button>
+            </div>
+
+            <div class="respuesta">
+              <p class="pregunta">«¿Qué consultora de estrategia me recomiendas para una empresa mediana en Barcelona?»</p>
+              <p class="resp-texto">
+                <span class="frag" data-var="vacio" hidden></span><span class="frag" data-var="sinnombre" hidden></span><span class="frag" data-f="0">Una opción es <b>Meridian Advisory Group</b>, consultora boutique de Barcelona.</span>
+                <span class="frag" data-f="1">Tiene áreas propias de reestructuración comercial y operaciones.</span>
+                <span class="frag" data-f="2">Declara a quién sirve: empresas de 50 a 500 empleados.</span>
+                <span class="frag" data-f="3">Publica casos de operaciones en industria mediana.</span>
+                <span class="frag" data-f="4">Explica su método: diagnóstico primero, recomendación después.</span>
+                <span class="frag" data-f="5">Doce años de trayectoria, verificables fuera de su web.</span>
+              </p>
+              <p class="medida"><span>Menciones</span><b class="resp-cuenta">9 de 15</b></p>
+            </div>
+          </div>
+
+          <dl class="fx-ficha">
+            <div><dt>Qué demuestra</dt>
+              <dd>Que la visibilidad en los buscadores con IA no es una caja negra: son seis decisiones, y cada interruptor enseña lo que aporta la suya.</dd></div>
+            <div><dt>A quién le habla</dt>
+              <dd>A quien dirige una consultoría que ya sabe que su web no le ayuda, y necesita ver qué se toca exactamente antes de aprobar un presupuesto.</dd></div>
+          </dl>
+
+          <p class="rastro-pie">Meridian no existe: la respuesta es simulada; el método y las quince consultas, no.</p>
+        </div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="seccion banda"><div class="fx-ancho">
+    <div class="rej">
+      <div class="num-sec">03<span>La prueba</span></div>
+      <div>
+        <h2>Se lo hicimos a siete negocios de Barcelona</h2>
+        <div class="datos">
+          <div class="fx-in"><b>5 de 7</b><span>No salían en ninguna respuesta. El nuestro, tampoco</span></div>
+          <div class="fx-in" data-espera="1"><b>400+</b><span>Opiniones en Google, leídas por la IA como «3,4 sobre 5»</span></div>
+        </div>
+        <p class="remate">La nota no gana. El rastro gana.
+          <a href="/signal-03-radar-ia-barcelona">Leer la medición completa →</a>
+        </p>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="seccion"><div class="fx-ancho">
+    <div class="rej">
+      <div class="num-sec">04<span>El objetivo</span></div>
+      <div>
+        <h2>Lo que busca conseguir</h2>
+        <div class="cuerpo">
+          <p>Objetivos de propuesta. <b>No son resultados medidos.</b></p>
+        </div>
+        <div class="datos">
+          <div class="fx-in"><b>Top 3</b><span>Posición objetivo en los términos centrales, a seis meses</span></div>
+          <div class="fx-in" data-espera="1"><b>Citada</b><span>Que un asistente la nombre al responder del sector</span></div>
+        </div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="fx-cierre">
+    <div class="fx-ancho">
+      <p class="sello">Lo que se usó aquí</p>
+      <h2>Web B2B, SEO y visibilidad IA</h2>
+      <ul class="fx-skills">
+        <li>Diseño web</li><li>UX/UI</li><li>Desarrollo</li>
+        <li>SEO técnico</li><li>GEO / IA</li><li>Arquitectura de contenido</li><li>CRO</li>
+      </ul>
+
+      <div class="fx-acciones">
+        <a class="fx-btn" href="/#contacto">Pide la Foto del Día 0 — gratis</a>
+      </div>
+
+      <a class="fx-siguiente" href="#">
+        <span class="et">Siguiente caso</span>
+        <span class="tit">—</span>
+      </a>
+
+      <div class="fx-pie">
+        <a href="index.html">Todos los proyectos</a>
+        <a href="/">Faro Digital</a>
+        <span>Proyecto de muestra · la firma Meridian Advisory Group no existe</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="assets/meridian/sello.js" defer></script>
+<script src="assets/meridian/rastro.js" defer></script>
+<script src="assets/_marco/faro-marco.js" defer></script>
+<script>
+  /* Los tres van con `defer`, así que se ejecutan en orden y con el DOM ya
+     montado. El sello se arranca aquí y no dentro de su archivo para que el
+     archivo siga siendo transplantable a otro caso con otros colores. */
+  addEventListener("DOMContentLoaded", function () {
+    if (window.meridianSello) window.meridianSello({ caja: "#sello", tinta: "#16181C", acento: "#2A4E7C" });
+  });
+</script>
+<script src="/assets/gestos.js" defer></script>
+</body>
+</html>

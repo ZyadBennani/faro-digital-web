@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 120" width="460" height="120" role="img" aria-label="Meridian Advisory Group">
+  <title>Meridian Advisory Group</title>
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       MARCA DE MERIDIAN ADVISORY GROUP — empresa ficticia del Caso 04.
+
+       El símbolo es el meridiano: el círculo del globo, la elipse del meridiano
+       central visto de frente, el eje, y UN PUNTO marcado arriba — el cénit, el
+       punto más alto del recorrido. Que es lo que la palabra significa y lo que
+       la firma dice de sí misma.
+
+       Se dibuja con trazo fino y constante, como un grabado: es el lenguaje
+       visual de los sellos, los certificados y los dictámenes, que es de donde
+       una consultora saca su credibilidad.
+
+       🔴 No lleva las tipografías de Faro por capricho de disponibilidad: el
+       sistema no permite peticiones externas, así que las familias del sitio
+       son las únicas. Lo que separa esta marca de la de Faro es el trazado del
+       símbolo, el color (azul tinta, nunca el oro de Faro) y el interletrado
+       ancho — no la familia tipográfica.
+       ═════════════════════════════════════════════════════════════════════ -->
+  <g fill="none" stroke="#16181C" stroke-width="2.4">
+    <circle cx="60" cy="60" r="34"/>
+  </g>
+  <g fill="none" stroke="#16181C" stroke-width="1.4">
+    <ellipse cx="60" cy="60" rx="13.5" ry="34"/>
+    <line x1="60" y1="26" x2="60" y2="94"/>
+  </g>
+  <circle cx="60" cy="26" r="5" fill="#2A4E7C"/>
+
+  <text x="126" y="56" fill="#16181C"
+        font-family="'Frank Ruhl Libre', Georgia, 'Times New Roman', serif"
+        font-size="34" font-weight="500" letter-spacing="6.5">MERIDIAN</text>
+  <line x1="127" y1="70" x2="404" y2="70" stroke="#16181C" stroke-width="1" opacity=".28"/>
+  <text x="128" y="90" fill="#16181C" opacity=".62"
+        font-family="'Work Sans', system-ui, Arial, sans-serif"
+        font-size="12" font-weight="600" letter-spacing="4.6">ADVISORY GROUP</text>
+</svg>

@@ -1,29 +1,5 @@
 <!doctype html>
-<!--
-  ============================================================================
-  /audit — página de captación de Faro. REHECHA a Nivel 2 el 2026-08-20.
 
-  QUÉ SUSTITUYE. Un export de Claude Design de 1.210.801 bytes, guardado en
-  Versiones-Anteriores/audit-v1-claude-design-2026-08-20.html. Funcionaba, pero:
-    · pesaba 12× el presupuesto del sistema (100 KB de marcado)
-    · su renderizador BORRABA el <head> al arrancar, así que Google la indexaba
-      SIN TÍTULO. Hubo que ponerle un parche que repusiera la cabecera
-    · no tenía <h1> ni lang
-    · ningún campo del formulario era obligatorio: se podía enviar vacío
-    · no tenía datos estructurados en el DOM
-
-  QUÉ ES AHORA. Nivel 2 del sistema: tipografía y contención, más movimiento
-  nativo —  aparición al entrar, con los tokens de la Fase B—  y CERO librerías.
-  El contenido, el formulario y las respuestas del FAQ son los mismos: esto es
-  un cambio de construcción, no de mensaje.
-
-  Las miniaturas son una versión de 480 px generada para esta página: se
-  muestran a 190 px, y servir las de 1200 px eran 389 KB para nada. Ahora son
-  92 KB. Las originales NO se tocan —  las usan la home y el portfolio.
-
-  El formulario sigue yendo al mismo destino de Formspree que ya usaba.
-  ============================================================================
--->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -31,33 +7,31 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Auditoría 360° gratuita de tu web, tu SEO y tu presencia online. Informe escrito con hallazgos reales en 3 días laborables, sin compromiso ni llamada de venta.">
-<link rel="canonical" href="https://faro-digital.netlify.app/audit">
+<link rel="canonical" href="https://faro-digital.pages.dev/audit">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Faro Digital">
-<meta property="og:url" content="https://faro-digital.netlify.app/audit">
+<meta property="og:url" content="https://faro-digital.pages.dev/audit">
 <meta property="og:title" content="Auditoría de marketing 360° gratuita — Faro Digital">
 <meta property="og:description" content="Una auditoría de verdad de tu web, tu SEO y tu presencia online — no una llamada de venta disfrazada. Hallazgos por escrito en 3 días laborables.">
-<meta property="og:image" content="https://faro-digital.netlify.app/assets/logo-og.png">
+<meta property="og:image" content="https://faro-digital.pages.dev/assets/logo-og.png">
 <meta property="og:locale" content="es_ES">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Auditoría de marketing 360° gratuita — Faro Digital">
 <meta name="twitter:description" content="Una auditoría de verdad de tu web, tu SEO y tu presencia online. Hallazgos por escrito en 3 días laborables.">
-<meta name="twitter:image" content="https://faro-digital.netlify.app/assets/logo-og.png">
+<meta name="twitter:image" content="https://faro-digital.pages.dev/assets/logo-og.png">
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebPage",
  "name":"Auditoría de marketing 360° gratuita",
  "description":"Pide a Faro Digital una auditoría 360° gratuita de tu web, tu SEO y tu presencia online.",
- "url":"https://faro-digital.netlify.app/audit",
+ "url":"https://faro-digital.pages.dev/audit",
  "inLanguage":"es",
- "isPartOf":{"@type":"WebSite","name":"Faro Digital","url":"https://faro-digital.netlify.app/"},
- "publisher":{"@type":"Organization","name":"Faro Digital","url":"https://faro-digital.netlify.app/",
-   "logo":{"@type":"ImageObject","url":"https://faro-digital.netlify.app/assets/logo-og.png"}}}
+ "isPartOf":{"@type":"WebSite","name":"Faro Digital","url":"https://faro-digital.pages.dev/"},
+ "publisher":{"@type":"Organization","name":"Faro Digital","url":"https://faro-digital.pages.dev/",
+   "logo":{"@type":"ImageObject","url":"https://faro-digital.pages.dev/assets/logo-og.png"}}}
 </script>
 
-<!-- Las mismas cuatro preguntas que ya estaban, ahora también legibles por
-     Google. La versión anterior las tenía en el DOM y sin marcar. -->
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
  {"@type":"Question","name":"¿Es una llamada de venta disfrazada?",
@@ -73,15 +47,19 @@
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Ccircle cx='150' cy='150' r='150' fill='%23F6F0E3'/%3E%3Cline x1='150' y1='123' x2='100' y2='92' stroke='%23C9A667' stroke-width='9' stroke-linecap='round'/%3E%3Cline x1='150' y1='123' x2='200' y2='92' stroke='%23C9A667' stroke-width='9' stroke-linecap='round'/%3E%3Cpath d='M150 133 L168 175 L132 175 Z' fill='%231E3A2E'/%3E%3Cpath d='M141 175 L159 175 L169 238 L131 238 Z' fill='%231E3A2E'/%3E%3Crect x='122' y='238' width='56' height='12' rx='2' fill='%231E3A2E'/%3E%3Ccircle cx='150' cy='123' r='10' fill='%23C9A667'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/fuentes.css">
+<link rel="stylesheet" href="assets/profundidad.css">
 
 <style>
 :root{
   --forest:#1E3A2E; --forest-deep:#12291F; --sand:#C9A667; --cream:#F5EFE4;
+  
+  --acento-texto:var(--forest-deep);
   --white:#E2D9C6; --ink:#17211C; --ink-soft:#5B6155; --line:#E2D9C6;
-  /* Tokens de movimiento de la Fase B. Ninguna curva inventada. */
+  
   --curva-salida:cubic-bezier(0.23, 1, 0.32, 1);
   --dur-pulsacion:130ms; --dur-desplegable:200ms; --dur-entrada:600ms; --escalonado:60ms;
 }
+header, .hero, footer{--acento-texto:var(--sand);}
 *{box-sizing:border-box}
 body{margin:0; font-family:'Work Sans',Helvetica,Arial,sans-serif; color:var(--ink);
      background:var(--cream); line-height:1.55; -webkit-font-smoothing:antialiased}
@@ -91,17 +69,13 @@ p{margin:0}
 a{color:var(--forest)}
 img{max-width:100%; height:auto; display:block}
 .wrap{max-width:1080px; margin:0 auto; padding:0 28px}
-.kicker{color:var(--sand); letter-spacing:3px; font-size:12px; text-transform:uppercase; font-weight:700}
+.kicker{color:var(--acento-texto); letter-spacing:3px; font-size:12px; text-transform:uppercase; font-weight:700}
 .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
   clip:rect(0 0 0 0); white-space:nowrap; border:0}
 
 header{background:var(--forest-deep); padding:18px 0}
 header .nav{display:flex; align-items:center; justify-content:space-between; gap:20px}
-/* 🔴 `nowrap` en los dos. Traducir al espanol alargo el boton de la cabecera
-   («Request audit» -> «Pedir auditoria»), y en 390 px el nombre de la marca se
-   partia en DOS LINEAS y la flecha del boton caia sola. No lo vio ninguna
-   comprobacion: el HTML era valido y el CSS tambien. Se vio en una captura.
-   Regla: traducir es cambiar la longitud, y la longitud es maquetacion. */
+
 header .brand{display:flex; align-items:center; gap:11px; text-decoration:none; color:var(--cream);
   font-family:'Frank Ruhl Libre',Georgia,serif; font-size:17px; letter-spacing:.5px;
   white-space:nowrap; flex:0 0 auto}
@@ -115,9 +89,7 @@ header .cta{color:var(--cream); background:var(--sand); text-decoration:none; pa
   header .brand svg{width:26px; height:26px}
   header .cta{padding:8px 12px; font-size:13px}
 }
-/* Por debajo de 360 px ya no caben en una fila sin apretar ninguno de los dos.
-   Se envuelve: dos filas centradas. Misma solucion que la navegacion movil de
-   la portada, y por el mismo motivo — antes de encoger la letra, se envuelve. */
+
 @media (max-width:360px){
   header .nav{flex-wrap:wrap; justify-content:center; row-gap:12px; gap:12px}
 }
@@ -154,7 +126,6 @@ section h2{font-size:clamp(1.5rem, 1.2rem + 1.3vw, 2.1rem); max-width:24ch; marg
 .entregable h3{font-size:1.08rem}
 .entregable p{margin-top:8px; font-size:.95rem; color:var(--ink-soft)}
 
-/* --- el formulario, que es lo único que esta página tiene que conseguir --- */
 .formulario{max-width:560px; margin-top:30px}
 .formulario .fila{margin-bottom:18px}
 .formulario label{display:block; font-size:.9rem; font-weight:600; margin-bottom:6px}
@@ -182,7 +153,6 @@ section h2{font-size:clamp(1.5rem, 1.2rem + 1.3vw, 2.1rem); max-width:24ch; marg
 footer{background:var(--forest-deep); color:rgb(245 239 228/.7); padding:26px 0; font-size:.88rem}
 footer a{color:rgb(245 239 228/.9)}
 
-/* --- Nivel 2: aparición al entrar, nativo y sin librería ---------------- */
 .js-revelar .revela{opacity:0; transform:translateY(14px)}
 .revela.visible{opacity:1; transform:none;
   transition:opacity var(--dur-entrada) var(--curva-salida), transform var(--dur-entrada) var(--curva-salida)}
@@ -228,23 +198,23 @@ footer a{color:rgb(245 239 228/.9)}
     <div class="kicker">Proyectos de muestra</div>
     <h2>Cinco sectores, un método</h2>
     <div class="casos">
-      <a class="caso" href="/portfolio/caso-1-salon-belleza-verbena">
+      <a class="caso" href="/portfolio/caso-1-local-verbena">
         <img src="/portfolio/assets/verbena/card-thumb-480.jpg" width="480" height="300" loading="lazy" alt="Verbena, peluquería y bienestar — proyecto de muestra">
         <span class="pie"><b>Verbena</b>Peluquería</span>
       </a>
-      <a class="caso" href="/portfolio/caso-2-ecommerce-spec">
+      <a class="caso" href="/portfolio/caso-2-ecommerce-aura">
         <img src="/portfolio/assets/aura/card-thumb-480.jpg" width="480" height="300" loading="lazy" alt="Aura Skincare — proyecto de muestra de e-commerce">
         <span class="pie"><b>Aura Skincare</b>E-commerce</span>
       </a>
-      <a class="caso" href="/portfolio/caso-3-dashboard-datos">
+      <a class="caso" href="/portfolio/caso-3-datos-casa-lumen">
         <img src="/portfolio/assets/casalumen/card-thumb-480.jpg" width="480" height="300" loading="lazy" alt="Panel de Casa Lumen — proyecto de muestra de datos">
         <span class="pie"><b>Casa Lumen</b>Datos</span>
       </a>
-      <a class="caso" href="/portfolio/caso-4-corporativo-meridian">
+      <a class="caso" href="/portfolio/caso-4-b2b-meridian">
         <img src="/portfolio/assets/meridian/card-thumb-480.jpg" width="480" height="300" loading="lazy" alt="Meridian Advisory — proyecto de muestra corporativo">
         <span class="pie"><b>Meridian</b>Corporativo</span>
       </a>
-      <a class="caso" href="/portfolio/caso-5-hosteleria-brasa-sal">
+      <a class="caso" href="/portfolio/caso-5-multilocal-brasa-sal">
         <img src="/portfolio/assets/brasa/card-thumb-480.jpg" width="480" height="300" loading="lazy" alt="Brasa &amp; Sal — proyecto de muestra de restauración">
         <span class="pie"><b>Brasa &amp; Sal</b>Restauración</span>
       </a>
@@ -283,7 +253,6 @@ footer a{color:rgb(245 239 228/.9)}
     <h2>Se tarda menos de un minuto</h2>
     <p style="margin-top:12px; color:var(--ink-soft)">Respondemos con los hallazgos en 3 días laborables.</p>
 
-    <!-- Mismo destino de Formspree que ya usaba la versión anterior. -->
     <form class="formulario" id="fd-audit-form" action="https://formspree.io/f/mqpzkyoj" method="POST">
       <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true"
              style="position:absolute;left:-9999px" title="Deja este campo vacío">

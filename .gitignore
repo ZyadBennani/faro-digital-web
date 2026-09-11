@@ -1,0 +1,42 @@
+# Este repositorio NO tenía .gitignore. Se añadió el 11-sep-2026, durante la
+# auditoría, al ver que un `git add -A` habría subido 385 MB a un repo PÚBLICO.
+
+# --- Residuos de medición -----------------------------------------------------
+# Capturas del banco de pruebas: 122 MB que se regeneran corriendo el banco.
+# Y las del jurado de /test/kaito/ ya están en _Cuarentena/2026-09-11/.
+test/**/_capturas/
+
+# --- Material de origen -------------------------------------------------------
+# Clips sin comprimir de Kling y máscaras previas: cuestan créditos de pago y no
+# aportan nada a quien lee el código. La copia de seguridad vive en el repo
+# privado, en _Sistema/03-Recursos-Internos/.../Material-Origen-Pieza-Firma/.
+test/faro/media/olas/_original/
+test/faro/media/olas/_banco/
+test/faro/media/olas/_v3/
+test/faro/media/_mascara-anterior/
+
+# --- Residuos de herramienta --------------------------------------------------
+# La misma regla de forma que aplica `construir.py` al publicar. Seis `.bak`
+# estuvieron servidos en producción con 200 hasta el 11-sep-2026: eran versiones
+# anteriores de los casos del portfolio, descargables enteras junto a la buena.
+*.bak
+*.orig
+*.rej
+*.tmp
+*.log
+*~
+
+# --- Credenciales y estado de despliegue --------------------------------------
+# Nunca, en ningún repo, ni siquiera en el privado.
+.env
+*.env
+*.key
+*.pem
+*credenciales*
+.netlify/
+.wrangler/
+
+# --- Basura del sistema operativo ---------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini

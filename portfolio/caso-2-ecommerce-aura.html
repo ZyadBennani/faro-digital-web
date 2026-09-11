@@ -1,0 +1,985 @@
+<!doctype html>
+<html lang="es" class="sin-js">
+<head>
+<meta charset="utf-8">
+
+<meta name="faro-nivel" content="N3">
+<script>document.documentElement.classList.remove("sin-js");</script>
+<title>Aura Skincare — de una ficha a una tienda · Faro</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Ccircle cx='150' cy='150' r='150' fill='%23F6F0E3'/%3E%3Cline x1='150' y1='123' x2='100' y2='92' stroke='%23C9A667' stroke-width='9' stroke-linecap='round'/%3E%3Cline x1='150' y1='123' x2='200' y2='92' stroke='%23C9A667' stroke-width='9' stroke-linecap='round'/%3E%3Cpath d='M150 133 L168 175 L132 175 Z' fill='%231E3A2E'/%3E%3Cpath d='M141 175 L159 175 L169 238 L131 238 Z' fill='%231E3A2E'/%3E%3Crect x='122' y='238' width='56' height='12' rx='2' fill='%231E3A2E'/%3E%3Ccircle cx='150' cy='123' r='10' fill='%23C9A667'/%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Proyecto de muestra de Faro Digital: cómo se rediseña una tienda de cosmética alrededor de una sola decisión. E-commerce, 3D, UX/UI y CRO.">
+
+<link rel="canonical" href="https://faro-digital.pages.dev/portfolio/caso-2-ecommerce-aura">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Faro Digital">
+<meta property="og:url" content="https://faro-digital.pages.dev/portfolio/caso-2-ecommerce-aura">
+<meta property="og:title" content="De una página de producto a una tienda que se puede tocar — proyecto de muestra">
+<meta property="og:description" content="Proyecto de muestra de Faro Digital: cómo se rediseña una tienda de cosmética alrededor de una sola decisión. E-commerce, 3D, UX/UI y CRO.">
+<meta property="og:image" content="https://faro-digital.pages.dev/portfolio/assets/aura/card-thumb.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="750">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="De una página de producto a una tienda que se puede tocar — proyecto de muestra">
+<meta name="twitter:description" content="Proyecto de muestra de Faro Digital: cómo se rediseña una tienda de cosmética alrededor de una sola decisión. E-commerce, 3D, UX/UI y CRO.">
+<meta name="twitter:image" content="https://faro-digital.pages.dev/portfolio/assets/aura/card-thumb.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "De una página de producto a una tienda que se puede tocar",
+  "description": "Proyecto de muestra de Faro Digital: cómo se rediseña una tienda de cosmética alrededor de una sola decisión. E-commerce, 3D, UX/UI y CRO.",
+  "disambiguatingDescription": "Proyecto de muestra. Aura Skincare es una marca ficticia creada para este caso; no es un cliente real y no existe.",
+  "inLanguage": "es",
+  "image": "https://faro-digital.pages.dev/portfolio/assets/aura/card-thumb.jpg",
+  "mainEntityOfPage": "https://faro-digital.pages.dev/portfolio/caso-2-ecommerce-aura",
+  "isPartOf": { "@type": "CollectionPage", "name": "Portfolio de Faro Digital", "url": "https://faro-digital.pages.dev/portfolio/" },
+  "author": { "@type": "Person", "name": "Zyad Bennani" },
+  "creator": { "@type": "Organization", "name": "Faro Digital", "url": "https://faro-digital.pages.dev/" },
+  "about": ["E-commerce", "3D / WebGL", "UX/UI", "CRO", "Branding"]
+}
+</script>
+
+<script>document.documentElement.classList.add('js')</script>
+<link rel="stylesheet" href="/assets/motion.css">
+<link rel="stylesheet" href="/assets/profundidad.css">
+<link rel="stylesheet" href="/assets/base.css">
+<link rel="stylesheet" href="assets/_marco/faro-marco.css">
+<script src="/assets/medicion.js" defer></script>
+<style>
+
+:root{
+  --caso-fondo:#FDFAF8;
+  --caso-tinta:#33251F;
+    
+  --caso-suave:color-mix(in srgb, var(--caso-tinta) var(--f-suave-pct, 68%), transparent);
+  
+  --caso-acento:#916445;
+  
+  --fx-tinta-acento:var(--fx-verde, #12291F);
+  
+  --caso-display:"Frank Ruhl Libre", Georgia, serif;
+  --caso-texto:"Work Sans", system-ui, sans-serif;
+  --rosa:#F3E3DE;
+  --arena:#E8D5CC;
+}
+
+.ap-bajada{
+  margin:30px 0 0; max-width:44ch; font-size:var(--fx-lede);
+  color:var(--caso-suave); line-height:1.5;
+}
+
+.escena{
+  position:relative;
+  min-height:min(96vh, 900px);
+  display:grid; place-items:center;
+  background:
+    radial-gradient(58% 46% at 50% 36%, rgba(255,255,255,.95), transparent 70%),
+    radial-gradient(130% 96% at 50% -12%, #FEFCFB 0%, var(--rosa) 52%, var(--arena) 100%);
+  overflow:hidden;
+}
+
+#bote-aura{
+  position:relative; z-index:2;
+  
+  width:min(96vw, 96vh, 760px); aspect-ratio:1.3;
+  cursor:grab;
+  
+  touch-action:pan-y;
+  user-select:none; -webkit-user-select:none;
+}
+#bote-aura.cogido{ cursor:grabbing; }
+#bote-aura canvas{ position:absolute; inset:0; width:100%; height:100%; }
+
+.sin3d{
+  position:absolute; inset:0;
+  
+  background:url("assets/aura/producto-aura.jpg") center/contain no-repeat;
+}
+#bote-aura.vivo .sin3d{ display:none; }
+
+.escena .pista{
+  position:absolute; left:50%; bottom:6%; transform:translateX(-50%);
+  z-index:3; display:flex; align-items:center; gap:11px;
+  font-size:var(--fx-sello); font-weight:600; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--caso-suave); white-space:nowrap;
+}
+.escena .pista::before{
+  content:""; width:22px; height:22px; flex:none; border-radius:50%;
+  border:1.5px solid var(--caso-acento);
+  animation:pulso 2.6s var(--fx-curva) infinite;
+}
+@keyframes pulso{ 0%,100%{ transform:scale(.8); opacity:.35 } 50%{ transform:scale(1.15); opacity:1 } }
+@media (prefers-reduced-motion:reduce){ .escena .pista::before{ animation:none; opacity:.8 } }
+
+.ficha{
+  position:absolute; z-index:3; max-width:210px;
+  font-size:var(--fx-pie); line-height:1.45; color:var(--caso-suave);
+}
+.ficha b{ display:block; font-size:1.5rem; font-weight:600; color:var(--caso-tinta);
+  letter-spacing:-.02em; margin-bottom:5px; font-variant-numeric:tabular-nums; }
+.ficha.f1{ left:var(--fx-margen); top:26%; }
+.ficha.f2{ right:var(--fx-margen); top:44%; text-align:right; }
+.ficha.f3{ left:var(--fx-margen); bottom:24%; }
+@media (max-width:900px){ .ficha{ display:none; } }
+
+.seccion{ padding-block:clamp(80px, 12vw, 170px); }
+.sello{
+  font-size:var(--fx-sello); font-weight:600; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--fx-tinta-acento); margin:0 0 22px;
+}
+.seccion h2{
+  font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-titulo); line-height:1.06; letter-spacing:-.025em;
+  margin:0; max-width:17ch; text-wrap:balance;
+}
+.seccion .lede{
+  margin:26px 0 0; max-width:52ch; font-size:var(--fx-lede);
+  color:var(--caso-suave); line-height:1.55;
+}
+.fugas{ list-style:none; padding:0; margin:clamp(46px,6vw,78px) 0 0;
+  display:grid; gap:1px; background:rgba(51,37,31,.10); }
+.fugas li{ background:var(--caso-fondo); padding:clamp(24px,3vw,36px) clamp(4px,1.4vw,20px); }
+.fugas .fila{ display:grid; grid-template-columns:auto 1fr auto; gap:clamp(18px,3vw,44px); align-items:baseline; }
+.fugas .num{
+  font-size:var(--fx-pie); font-weight:600; color:var(--fx-tinta-acento);
+  font-variant-numeric:tabular-nums; letter-spacing:.1em;
+}
+.fugas h3{ margin:0; font-size:var(--fx-lede); font-weight:600; letter-spacing:-.015em; }
+.fugas p{ margin:9px 0 0; color:var(--caso-suave); max-width:56ch; font-size:var(--fx-cuerpo); }
+.fugas .coste{
+  font-size:var(--fx-pie); font-weight:600; color:var(--caso-tinta);
+  white-space:nowrap; letter-spacing:.02em;
+}
+@media (max-width:760px){
+  .fugas .fila{ grid-template-columns:auto 1fr; }
+  .fugas .coste{ grid-column:2; margin-top:12px; color:var(--fx-tinta-acento); }
+}
+
+.marco{
+  margin-top:clamp(24px,2.6vw,40px);
+  border-radius:16px; overflow:hidden;
+  background:#fff;
+  border:1px solid rgba(51,37,31,.14);
+  box-shadow:0 30px 70px -30px rgba(90,60,50,.30), 0 2px 8px rgba(90,60,50,.06);
+}
+.chrome{
+  display:flex; align-items:center; gap:12px;
+  padding:11px 16px; background:#F6EFEB;
+  border-bottom:1px solid rgba(51,37,31,.10);
+  font-size:12px; color:var(--caso-suave);
+}
+.chrome .pt{ width:9px; height:9px; border-radius:50%; background:rgba(51,37,31,.16); flex:none; }
+.chrome .url{
+  flex:1; text-align:center; font-variant-numeric:tabular-nums;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.chrome .url b{ color:var(--caso-tinta); font-weight:600; }
+.chrome .carro{
+  display:inline-flex; align-items:center; gap:6px; flex:none;
+  font-weight:600; color:var(--caso-tinta);
+  transition:color var(--fx-rapido) var(--fx-curva);
+}
+.chrome .carro[data-lleno="si"]{ color:var(--caso-acento); }
+
+.lienzo{ position:relative; }
+.pant{ display:none; padding:clamp(20px,3.2vw,40px); }
+.pant[data-activa="si"]{ display:block; animation:entra var(--fx-medio) var(--fx-curva); }
+@keyframes entra{ from{ opacity:0; transform:translateY(10px) } to{ opacity:1; transform:none } }
+@media (prefers-reduced-motion:reduce){ .pant[data-activa="si"]{ animation:none } }
+
+.arriba{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:22px; }
+.arriba h3{ margin:0; font-size:var(--fx-lede); font-weight:600; letter-spacing:-.02em; }
+.tapa{
+  font-size:var(--fx-pie); font-weight:600; color:var(--caso-acento);
+  letter-spacing:.02em; white-space:nowrap;
+}
+
+@media (max-width:720px){ .rejilla{ grid-template-columns:1fr; } }
+
+.prod .foto{
+  display:grid; aspect-ratio:1.15; place-items:center;
+  background:radial-gradient(70% 60% at 50% 30%, #FFF 0%, var(--rosa) 60%, var(--arena) 100%);
+}
+.prod .foto svg{ width:34%; opacity:.75; }
+
+.vitrina{
+  display:grid; grid-template-columns:2.25fr 1fr; gap:0;
+  border-radius:14px; overflow:hidden;
+  background:#12100F;
+}
+@media (max-width:820px){ .vitrina{ grid-template-columns:1fr; } }
+
+.esc-v{
+  position:relative; aspect-ratio:1.18; overflow:hidden;
+  perspective:1050px; perspective-origin:46% 54%;
+}
+.esc-v .mundo{
+  position:absolute; inset:0; transform-style:preserve-3d;
+  transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+  will-change:transform;
+}
+.esc-v .mundo > *{ position:absolute; }
+
+.cielo{
+  inset:-14%; transform:translateZ(-300px);
+  background:
+    radial-gradient(36% 40% at 24% 14%, rgba(216,180,126,.22), rgba(216,180,126,0) 66%),
+    radial-gradient(46% 34% at 84% 62%, rgba(150,120,96,.13), rgba(150,120,96,0) 70%),
+    radial-gradient(78% 40% at 46% 92%, rgba(126,100,82,.20), rgba(126,100,82,0) 74%),
+    linear-gradient(180deg,#191412 0%,#120E0D 56%,#0C0A09 100%);
+}
+
+.haz{
+  left:47%; bottom:2%; width:82%; height:96%;
+  transform:translate(-50%,0) translateZ(-40px);
+  background:
+    radial-gradient(30% 54% at 50% 88%, rgba(232,202,152,.19), rgba(232,202,152,0) 74%),
+    radial-gradient(58% 26% at 50% 96%, rgba(206,170,124,.13), rgba(206,170,124,0) 72%);
+  filter:blur(5px);
+  animation:haz-late 9s var(--fx-curva) infinite;
+}
+
+.polvo{ inset:0; transform:translateZ(-10px); }
+.polvo i{
+  position:absolute; display:block; border-radius:50%;
+  width:calc(1.4px + (var(--i) * .16px)); height:calc(1.4px + (var(--i) * .16px));
+  background:rgba(240,222,190,.75);
+  animation:motita calc(11s + (var(--i) * 1.7s)) linear calc(var(--i) * -1.9s) infinite;
+}
+
+.polvo i:nth-child(1) { left:34%; top:62%; }
+.polvo i:nth-child(2) { left:53%; top:74%; }
+.polvo i:nth-child(3) { left:41%; top:39%; }
+.polvo i:nth-child(4) { left:59%; top:55%; }
+.polvo i:nth-child(5) { left:29%; top:29%; }
+.polvo i:nth-child(6) { left:64%; top:33%; }
+.polvo i:nth-child(7) { left:47%; top:21%; }
+.polvo i:nth-child(8) { left:37%; top:79%; }
+.polvo i:nth-child(9) { left:56%; top:17%; }
+.polvo i:nth-child(10){ left:25%; top:49%; }
+.polvo i:nth-child(11){ left:69%; top:66%; }
+.polvo i:nth-child(12){ left:44%; top:11%; }
+
+.bruma{
+  inset:0; transform:translateZ(-30px);
+  background:linear-gradient(0deg, rgba(24,20,18,0) 24%, rgba(30,25,22,.42) 62%,
+                                    rgba(34,28,25,.30) 100%);
+}
+
+.plinto{
+  left:47%; bottom:8%; width:42%; aspect-ratio:2.31;
+  transform:translate(-50%,0) translateZ(0);
+  background:url(assets/aura/v-plinto.webp) center/contain no-repeat;
+}
+
+.charco{
+  left:47%; bottom:22.6%; width:15%; height:3.4%;
+  transform:translate(-50%,0) translateZ(6px);
+  border-radius:50%;
+  background:radial-gradient(50% 50% at 50% 50%, rgba(232,196,138,.58), rgba(232,196,138,0) 74%);
+  animation:charco-late 6.4s var(--fx-curva) infinite;
+}
+
+.refl{
+  left:47%; bottom:23.2%; width:11.5%; aspect-ratio:.338;
+  
+  transform:translate(-50%,0) translateZ(4px) scaleY(-.13);
+  transform-origin:50% 100%;
+  background:url(assets/aura/v-serum.webp) center/contain no-repeat;
+  opacity:.15; filter:blur(1.6px);
+  -webkit-mask-image:linear-gradient(0deg, rgba(0,0,0,0) 8%, #000 88%);
+          mask-image:linear-gradient(0deg, rgba(0,0,0,0) 8%, #000 88%);
+}
+
+.pz{ left:var(--x); bottom:var(--y); height:var(--h);
+     transform:translate(-50%,0) translateZ(var(--z)); }
+.pz img{
+  display:block; height:100%; width:auto;
+  transform:rotate(var(--giro))
+            rotateY(calc(var(--ry,0deg) * -0.66))
+            rotateX(calc(var(--rx,0deg) * -0.66));
+  filter:var(--velo,none) drop-shadow(var(--ds,6px 16px 20px rgba(0,0,0,.55)));
+  transition:opacity var(--m-base) var(--fx-curva);
+}
+.pz-a{ --x:47%; --y:31%;   --h:46%;   --z:130px; --giro:-3deg;
+       --ds:9px 20px 24px rgba(0,0,0,.62); animation:flota-a 7.2s var(--fx-curva) infinite; }
+.pz-b{ --x:69%; --y:37%;   --h:13.5%; --z:20px;  --giro:3deg;
+       --velo:brightness(.93) contrast(.97);
+       --ds:6px 14px 18px rgba(0,0,0,.5); animation:flota-b 8.6s var(--fx-curva) -2.6s infinite; }
+.pz-c{ --x:30%; --y:54%;   --h:19%;   --z:-80px; --giro:-6deg;
+       
+       --velo:blur(.32px) sepia(.16) brightness(.93) contrast(.95) saturate(.95);
+       --ds:4px 10px 14px rgba(0,0,0,.4); animation:flota-c 10.4s var(--fx-curva) -5.1s infinite; }
+
+@keyframes flota-a{ 50%{ transform:translate(-50%,-3.4%) translateZ(130px); } }
+@keyframes flota-b{ 50%{ transform:translate(-50%,-5.2%) translateZ(20px); } }
+@keyframes flota-c{ 50%{ transform:translate(-50%,-7.6%) translateZ(-80px); } }
+@keyframes charco-late{ 50%{ opacity:.62; transform:translate(-50%,0) translateZ(6px) scale(1.14); } }
+@keyframes haz-late{ 50%{ opacity:.78; } }
+@keyframes motita{
+  0%  { transform:translateY(0) translateZ(0); opacity:0; }
+  14% { opacity:.85; }
+  86% { opacity:.5; }
+  100%{ transform:translateY(-190px) translateZ(60px); opacity:0; }
+}
+
+.esc-v[data-foco] .pz{ opacity:.24; }
+.esc-v[data-foco="serum"]  .pz-a,
+.esc-v[data-foco="aceite"] .pz-b,
+.esc-v[data-foco="crema"]  .pz-c{ opacity:1; }
+
+.esc-v .v3d{
+  position:absolute; inset:0; width:100%; height:100%; display:block; z-index:2;
+  opacity:0; transition:opacity 900ms var(--fx-curva);
+  
+  touch-action:pan-y;
+}
+.esc-v.v3d-vivo .v3d{ opacity:1; }
+
+.esc-v.v3d-vivo .mundo{ opacity:0; transition:opacity var(--m-lento) var(--fx-curva); }
+
+.v3d-hit{
+  position:absolute; z-index:3; padding:0; border:0; background:none;
+  border-radius:50%; cursor:pointer; -webkit-appearance:none; appearance:none;
+}
+.esc-v:not(.v3d-vivo) .v3d-hit{ display:none; }
+
+.v3d-hit::after{
+  content:""; position:absolute; inset:-8%; border-radius:50%;
+  border:1px solid rgba(201,166,103,0); transform:scale(.86);
+  transition:border-color var(--m-rapido) var(--fx-curva),
+             transform var(--m-rapido) var(--fx-curva);
+}
+
+@media (hover:hover) and (pointer:fine){
+  .v3d-hit:hover::after{ border-color:rgba(201,166,103,.42); transform:scale(1); }
+}
+.v3d-hit:focus-visible::after{ border-color:rgba(201,166,103,.55); transform:scale(1); }
+.v3d-hit:focus-visible{ outline:none; }
+
+.v-rotulo{
+  position:absolute; left:clamp(18px,3.4%,34px); bottom:clamp(16px,5%,34px);
+  z-index:4; display:grid; gap:2px; pointer-events:none;
+  opacity:0; transform:translateY(10px);
+  transition:opacity var(--m-base) var(--fx-curva),
+             transform var(--m-base) var(--fx-curva);
+}
+.v-rotulo[data-ver]{ opacity:1; transform:none; }
+.v-rotulo .r-nom{ font-weight:600; font-size:clamp(1rem,1.5vw,1.22rem);
+                  letter-spacing:-.015em; color:#F3EBE1; }
+.v-rotulo .r-det{ font-size:var(--fx-pie); color:rgba(243,235,225,.55); }
+.v-rotulo .r-eur{ margin-top:6px; font-weight:600; font-size:clamp(1.05rem,1.7vw,1.32rem);
+                  color:#D8B67C; font-variant-numeric:tabular-nums; }
+
+.v-pista{
+  position:absolute; right:clamp(16px,3%,28px); bottom:clamp(14px,4%,26px); z-index:4;
+  margin:0; font-size:var(--fx-sello); letter-spacing:.1em; text-transform:uppercase;
+  color:rgba(226,196,146,.42); pointer-events:none;
+  opacity:0; transition:opacity var(--m-lento) var(--fx-curva);
+}
+.esc-v.v3d-vivo .v-pista{ opacity:1; }
+.esc-v[data-heroe]:not([data-heroe=""]) .v-pista{ opacity:0; }
+
+.v-fila[data-activa]{ background:rgba(226,196,146,.10); }
+.v-fila[data-activa] .f-nom{ color:#F6EEE4; }
+
+@media (max-width:820px){
+  
+  .esc-v{ aspect-ratio:1.02; }
+  .v-rotulo{
+    left:0; right:0; bottom:0; padding:34px 16px 14px;
+    background:linear-gradient(0deg, rgba(10,8,7,.92) 22%, rgba(10,8,7,0) 100%);
+  }
+  .v-pista{ display:none; }
+}
+
+.carta{ list-style:none; margin:0; padding:clamp(14px,2.2vw,26px) 0; align-self:center;
+        color:#EFE6DC; }
+.carta li + li{ border-top:1px solid rgba(226,196,146,.13); }
+.v-fila{
+  display:grid; grid-template-columns:1fr auto; align-items:baseline;
+  gap:2px clamp(10px,1.4vw,18px); width:100%; text-align:left;
+  padding:clamp(11px,1.5vw,16px) clamp(16px,2.2vw,26px);
+  background:none; border:0; cursor:pointer; font:inherit; color:inherit;
+  transition:background var(--fx-rapido) var(--fx-curva);
+}
+.v-fila:hover, .v-fila:focus-visible{ background:rgba(226,196,146,.07); }
+
+.f-nom{ grid-column:1; grid-row:1; font-weight:600; font-size:.98rem; letter-spacing:-.01em; }
+.f-det{ grid-column:1; grid-row:2; font-size:var(--fx-pie); color:rgba(239,230,220,.52); }
+.f-eur{ grid-column:2; grid-row:1/3; align-self:center; justify-self:end;
+        font-weight:600; font-size:1.12rem; color:#D8B67C;
+        font-variant-numeric:tabular-nums; }
+
+@media (prefers-reduced-motion:reduce){
+  .pz, .charco, .haz, .polvo i{ animation:none; }
+  .esc-v .mundo{ transform:none; }
+}
+
+.ficha2{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(20px,3vw,40px); align-items:start; }
+@media (max-width:760px){ .ficha2{ grid-template-columns:1fr; } }
+.ficha2 .foto{
+  aspect-ratio:1; border-radius:12px; display:grid; place-items:center;
+  background:radial-gradient(70% 60% at 50% 28%, #FFF 0%, var(--rosa) 58%, var(--arena) 100%);
+}
+.ficha2 .foto svg{ width:32%; opacity:.8; }
+.estrellas{ color:var(--caso-acento); letter-spacing:.14em; font-size:.9rem; }
+.estrellas span{ color:var(--caso-suave); letter-spacing:0; font-size:var(--fx-pie); margin-left:8px; }
+.opi{
+  margin:16px 0 0; padding:14px 16px; border-radius:10px;
+  background:#FBF6F3; border:1px solid rgba(51,37,31,.09);
+  font-size:var(--fx-pie); line-height:1.5; color:var(--caso-suave);
+}
+.opi b{ color:var(--caso-tinta); font-weight:600; display:block; margin-bottom:4px; }
+.precio-grande{ font-size:2rem; font-weight:600; color:var(--caso-acento); margin:18px 0 4px; font-variant-numeric:tabular-nums; }
+
+.linea{ display:flex; align-items:center; gap:14px; padding:14px 0; border-bottom:1px solid rgba(51,37,31,.10); }
+.linea .mini{ width:52px; height:52px; border-radius:8px; flex:none; display:grid; place-items:center;
+  background:radial-gradient(70% 60% at 50% 30%, #FFF, var(--rosa)); }
+.linea .mini svg{ width:52%; opacity:.7; }
+.linea .cre{ flex:1; }
+.linea .cre b{ display:block; font-weight:600; font-size:.95rem; }
+.linea .cre span{ font-size:var(--fx-pie); color:var(--caso-suave); }
+.linea .imp{ font-weight:600; font-variant-numeric:tabular-nums; }
+.suma{ display:flex; justify-content:space-between; padding:16px 0 0; font-size:1.15rem; font-weight:600; }
+.suma .imp{ color:var(--caso-acento); font-variant-numeric:tabular-nums; }
+
+.campos{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:6px; }
+.campos .ancho{ grid-column:1 / -1; }
+.campo{
+  border:1px solid rgba(51,37,31,.16); border-radius:9px;
+  padding:11px 13px; font-size:var(--fx-pie); color:var(--caso-suave); background:#FDFAF8;
+}
+.campo b{ display:block; font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+  color:rgba(51,37,31,.45); margin-bottom:4px; font-weight:600; }
+
+.pie-accion{
+  position:sticky; bottom:0; margin:22px -clamp(20px,3.2vw,40px) -clamp(20px,3.2vw,40px);
+  padding:16px clamp(20px,3.2vw,40px);
+  background:color-mix(in srgb, #fff 92%, transparent);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  border-top:1px solid rgba(51,37,31,.10);
+  display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+}
+.btn-t{
+  border:0; border-radius:100px; padding:13px 26px; cursor:pointer;
+  font:inherit; font-size:var(--fx-pie); font-weight:600; letter-spacing:.05em; text-transform:uppercase;
+  background:var(--caso-acento); color:#fff;
+  transition:transform var(--fx-rapido) var(--fx-curva), opacity var(--fx-rapido) var(--fx-curva);
+}
+.btn-t:hover{ transform:translateY(-2px); }
+.btn-t.tenue{ background:transparent; color:var(--caso-suave); border:1px solid rgba(51,37,31,.18); }
+.nota-t{ font-size:var(--fx-pie); color:var(--caso-suave); }
+
+.hecho{ text-align:center; padding:clamp(30px,5vw,60px) 0; }
+.hecho .marca-ok{
+  width:62px; height:62px; margin:0 auto 20px; border-radius:50%;
+  border:2px solid var(--caso-acento); display:grid; place-items:center;
+  color:var(--caso-acento); font-size:26px;
+}
+.hecho h3{ margin:0; font-size:1.4rem; font-weight:600; }
+.hecho p{ margin:10px auto 0; max-width:38ch; color:var(--caso-suave); font-size:var(--fx-cuerpo); }
+
+.pasos{ display:flex; gap:0; margin-top:20px; border-top:1px solid rgba(51,37,31,.12); }
+.pasos button{
+  flex:1; border:0; background:none; cursor:pointer; font:inherit; text-align:left;
+  padding:16px 14px 0; border-top:2px solid transparent; margin-top:-1px;
+  color:var(--caso-suave); transition:color var(--fx-rapido) var(--fx-curva), border-color var(--fx-rapido) var(--fx-curva);
+}
+.pasos button[aria-current="step"]{ color:var(--caso-tinta); border-top-color:var(--fx-tinta-acento); }
+.pasos .n{ font-size:var(--fx-sello); font-weight:600; letter-spacing:.16em; display:block; margin-bottom:5px; }
+.pasos .q{ font-size:var(--fx-pie); font-weight:600; display:block; }
+.pasos .f{ font-size:var(--fx-sello); display:block; margin-top:3px; opacity:.75; }
+@media (max-width:720px){
+  
+  .pasos{ flex-wrap:wrap; border-top:0; }
+  .pasos button{
+    flex:1 1 50%; padding:12px 12px 12px 14px; margin-top:0;
+    border-top:0; border-left:2px solid rgba(51,37,31,.12);
+  }
+  .pasos button[aria-current="step"]{ border-top-color:transparent; border-left-color:var(--fx-tinta-acento); }
+  .pasos .f{ display:none; }
+}
+
+.cifras{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(20px,3vw,50px); margin-top:clamp(24px,2.6vw,40px); }
+@media (max-width:760px){ .cifras{ grid-template-columns:1fr; gap:30px; } }
+.cifras div{ border-top:2px solid var(--caso-acento); padding-top:20px; }
+.cifras b{ display:block; font-size:var(--fx-cifra); font-weight:600;
+  letter-spacing:-.035em; line-height:1; color:var(--caso-tinta); font-variant-numeric:tabular-nums; }
+.cifras span{ display:block; margin-top:12px; font-size:var(--fx-pie); color:var(--caso-suave); line-height:1.5; max-width:30ch; }
+
+.aviso{ margin-top:clamp(24px,2.6vw,40px); padding:18px 22px; border-radius:12px;
+  background:#F6EFEB; font-size:var(--fx-pie); color:rgba(51,37,31,.72); line-height:1.6; max-width:70ch; }
+.aviso b{ color:#33251F; }
+
+.seccion{ padding-block:clamp(46px,5.5vw,84px) clamp(10px,1.2vw,20px) !important; }
+.seccion h2, .bloque h2{
+  max-width:none !important; text-wrap:nowrap; letter-spacing:-.025em;
+}
+@media (max-width:1000px){
+  .seccion h2, .bloque h2{ text-wrap:balance; }
+}
+.cuerpo{ max-width:54ch; }
+.cuerpo p{ margin-top:14px; }
+
+.seccion.banda{
+  
+  --fx-tinta-acento:var(--fx-papel, #F5EFE4);
+  --caso-fondo:#2B211D; --caso-tinta:#F6EEE9; --caso-suave:color-mix(in srgb, var(--caso-tinta) var(--f-suave-pct, 68%), transparent);
+  --caso-acento:#E0A277; --linea:rgba(246,238,233,.16); --filete:rgba(246,238,233,.16); --filete-fino:rgba(246,238,233,.16);
+  background:var(--caso-fondo); color:var(--caso-tinta);
+  padding-block:clamp(58px,6.5vw,96px) clamp(30px,3.4vw,52px) !important;
+  border-top:0;
+}
+.seccion.banda + .seccion{ padding-top:clamp(58px,6.5vw,96px) !important; }
+
+.cuerpo{ max-width:46ch !important; }
+.cuerpo p{ font-size:var(--fx-cuerpo); line-height:1.6; }
+.seccion h2{ letter-spacing:-.03em; }
+
+.escena.portada{ min-height:min(94vh,900px); display:grid; align-content:center;
+  place-items:stretch; padding-block:calc(var(--fx-barra-alto) + 4vh) 4vh; }
+.escena-caja{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
+  gap:clamp(24px,4vw,56px); align-items:center; }
+.escena-texto{ position:relative; z-index:3; }
+.escena-objeto{ position:relative; display:grid; place-items:center; }
+
+.marca-aura{ margin:0 0 clamp(22px,2.6vw,34px); width:max-content; max-width:100%; }
+.marca-aura svg{ width:clamp(78px,7vw,104px); height:auto; color:var(--caso-tinta);
+  display:block; margin:0 auto 6px; }
+.marca-aura .nombre{ margin:0; font-weight:500; text-transform:uppercase;
+  font-size:var(--fx-lede); letter-spacing:.34em; text-indent:.34em;
+  line-height:1; text-align:center; }
+.marca-aura .bajada{ margin:7px 0 0; font-size:var(--fx-sello); font-weight:600;
+  letter-spacing:.4em; text-indent:.4em; text-transform:uppercase;
+  color:var(--caso-suave); text-align:center; }
+
+.escena.portada .sector{ font-size:var(--fx-sello); font-weight:600; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--fx-tinta-acento); margin:0 0 18px; }
+.escena.portada h1{ font-family:var(--caso-display); font-weight:500;
+  font-size:var(--fx-display); line-height:1.04; letter-spacing:-.03em;
+  margin:0; max-width:15ch; text-wrap:balance; }
+.escena.portada .pie-portada{ margin-top:clamp(22px,2.6vw,34px);
+  padding-top:clamp(14px,1.6vw,20px);
+  border-top:1px solid color-mix(in srgb, var(--caso-tinta) 12%, transparent); }
+.escena.portada .muestra{
+  display:inline-flex; align-items:center; gap:9px; margin-top:26px;
+  padding:7px 15px 7px 12px; border-radius:100px;
+  border:1px solid color-mix(in srgb, var(--caso-tinta) 22%, transparent);
+  background:color-mix(in srgb, #FFFFFF 62%, transparent);
+  font-size:var(--fx-pie); color:var(--caso-suave); }
+.escena.portada .muestra::before{ content:""; width:6px; height:6px; border-radius:50%;
+  background:var(--caso-acento); flex:none; }
+
+.datos-escena{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(10px,1.6vw,22px); margin-top:clamp(26px,3vw,40px);
+  border-top:1px solid color-mix(in srgb, var(--caso-tinta) 16%, transparent);
+  padding-top:18px; max-width:460px; }
+.datos-escena div{ font-size:var(--fx-pie); line-height:1.4; color:var(--caso-suave); }
+.datos-escena b{ display:block; font-size:var(--fx-lede);
+  font-weight:600; color:var(--caso-tinta); letter-spacing:-.02em; margin-bottom:5px;
+  font-variant-numeric:tabular-nums; }
+
+.escena.portada #bote-aura{ width:min(100%, 76vh, 560px); }
+.escena.portada .pista{ position:static; transform:none; margin:10px 0 0;
+  justify-content:center; }
+
+@media (max-width:980px){
+  .escena-caja{ grid-template-columns:minmax(0,1fr); gap:26px; }
+  .escena.portada #bote-aura{ width:min(88vw, 60vh, 460px); }
+  .marca-aura{ margin-inline:auto; }
+  .escena.portada h1{ max-width:none; }
+}
+@media (max-width:520px){
+  .datos-escena{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .datos-escena div:last-child{ display:none; }
+}
+
+html.sin-js .escena .pista{ display:none; }
+</style>
+</head>
+<body data-caso="2" data-tono="claro">
+<a class="fx-salta" href="#contenido">Saltar al contenido</a>
+
+<header class="fx-barra faro-barra">
+  <a class="faro-marca" href="index.html" aria-label="Portfolio de Faro Digital">
+    
+    <svg viewBox="0 0 180 300" aria-hidden="true">
+      <line x1="90" y1="60" x2="23" y2="18" stroke="currentColor" stroke-width="9" stroke-linecap="round"/>
+      <line x1="90" y1="60" x2="157" y2="18" stroke="currentColor" stroke-width="9" stroke-linecap="round"/>
+      <path d="M90 70 L114 134 L66 134 Z" fill="currentColor"/>
+      <path d="M78 134 L102 134 L120 274 L60 274 Z" fill="currentColor"/>
+      <rect x="45" y="274" width="90" height="20" rx="3" fill="currentColor"/>
+      <circle cx="90" cy="60" r="13" fill="currentColor"/>
+    </svg>
+    <span>Faro Digital</span>
+  </a>  <nav class="faro-nav">
+    
+    <a href="/#servicios">Qué hacemos</a>
+    <a href="/#metodo">Método</a>
+    <a href="index.html">Trabajo</a>
+    <a href="/#precios">Precios</a>
+  </nav>
+
+  <span class="cuenta faro-cuenta">02 / 06</span>
+  <a class="sig faro-accion" href="#">Siguiente</a>
+</header>
+
+<main id="contenido">
+
+  <section class="escena portada" aria-label="El producto en tres dimensiones">
+    <div class="fx-ancho escena-caja">
+      <div class="escena-texto">
+        
+        <div class="marca-aura">
+          <svg viewBox="0 0 120 34" aria-hidden="true" focusable="false">
+            <path d="M6 30 A69 69 0 0 1 114 30" fill="none" stroke="currentColor"
+                  stroke-width="1.6" stroke-linecap="round" opacity=".55"/>
+            <circle cx="60" cy="4.2" r="3" fill="var(--caso-acento)"/>
+          </svg>
+          <p class="nombre">Aura</p>
+          <p class="bajada">Skincare</p>
+        </div>
+
+        <p class="sector">Cosmética · Tienda online</p>
+        <h1 class="g-titular">Una tienda que se toca</h1>
+    <p class="ap-bajada">De una página de producto a un frasco que se coge, se gira y se mira por detrás.</p>
+
+        <div class="datos-escena">
+          <div><b>1</b>producto, cero fotos de estudio</div>
+          <div><b>4</b>pantallas navegables aquí dentro</div>
+          <div><b>0</b>librerías: el frasco es una fórmula</div>
+        </div>
+      </div>
+
+      <div class="escena-objeto">
+        <div id="bote-aura" data-rotulo="AURA" data-bajada="SKINCARE" data-pie="SERUM REPARADOR · 30 ML">
+          <div class="sin3d" role="img" aria-label="Frasco del sérum reparador de Aura Skincare"></div>
+        </div>
+        <p class="pista">Cógelo y gíralo</p>
+      </div>
+    </div>
+
+    <div class="pie-portada fx-ancho">
+      <span class="muestra">Proyecto de muestra — la marca es nuestra, el método es el real</span>
+    </div>
+  </section>
+
+  <section class="seccion "><div class="fx-ancho">
+    <p class="sello">01 · El diagnóstico</p>
+    <h2>Cuatro fugas, y ninguna era el diseño</h2>
+    <p class="lede">Entraba tráfico de pago cada día. Lo que no encontraba, en el primer golpe de vista, era qué hace, por qué fiarse y cuánto cuesta.</p>
+
+    <ol class="fugas">
+      <li><div class="fila">
+        <span class="num">01</span>
+        <div><h3>El precio estaba a tres pantallas de distancia</h3>
+        <p>Quien no lo encuentra no asume que sea barato: asume que le van a incomodar.</p></div>
+        <span class="coste">Fuga: se van sin preguntar</span>
+      </div></li>
+
+      <li><div class="fila">
+        <span class="num">02</span>
+        <div><h3>Nueve fotos del producto, ninguna del producto en uso</h3>
+        <p>El envase se veía perfectamente desde nueve ángulos. Lo que no se veía era la textura, el tamaño real en una mano, ni qué se siente al abrirlo.</p></div>
+        <span class="coste">Fuga: no se imagina usándolo</span>
+      </div></li>
+
+      <li><div class="fila">
+        <span class="num">03</span>
+        <div><h3>La prueba social estaba al final, después de comprar</h3>
+        <p>Ciento cuarenta opiniones reales, colocadas donde solo las lee quien ya ha decidido. La duda se resuelve antes del botón, no después.</p></div>
+        <span class="coste">Fuga: la duda no se resuelve</span>
+      </div></li>
+
+      <li><div class="fila">
+        <span class="num">04</span>
+        <div><h3>El botón de comprar desaparecía al bajar</h3>
+        <p>En una página de mil doscientos píxeles, el momento en que alguien se convence casi nunca coincide con el sitio donde está el botón.</p></div>
+        <span class="coste">Fuga: se convence y no compra</span>
+      </div></li>
+    </ol>
+  </div></section>
+
+  <section class="fx-ancho seccion" id="tienda">
+    <p class="sello">02 · La tienda</p>
+    <h2>Cada pantalla tapa una fuga</h2>
+    <p class="lede">No es un vídeo ni una captura: es la tienda, funcionando aquí dentro. Cada pantalla resuelve una de las cuatro fugas.</p>
+
+    <div class="marco fx-in" data-maqueta="tienda simulada de Aura">
+      <div class="chrome">
+        <span class="pt"></span><span class="pt"></span><span class="pt"></span>
+        <span class="url">aura.es<b id="tRuta">/tienda</b></span>
+        <span class="carro" id="tCarro" data-lleno="no">Carrito · <span id="tNum">0</span></span>
+      </div>
+
+      <div class="lienzo">
+
+        <div class="pant" data-pant="1" data-activa="si">
+          <div class="arriba"><h3>Toda la carta, con el precio delante</h3>
+            <span class="tapa">Tapa la fuga 01</span></div>
+          <div class="vitrina">
+            <div class="esc-v"><div class="mundo">
+            <span class="cielo"></span>
+            <span class="haz"></span>
+            <span class="polvo"><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i><i style="--i:7"></i><i style="--i:8"></i><i style="--i:9"></i><i style="--i:10"></i><i style="--i:11"></i><i style="--i:12"></i></span>
+            <span class="pz pz-c" data-p="crema"><img src="assets/aura/v-crema.webp" width="171" height="231" loading="lazy" decoding="async" alt="Crema de noche de Aura, tarro de ópalo rosado de 50 ml"></span>
+            <span class="bruma"></span>
+            <span class="plinto"></span>
+            <span class="charco"></span>
+            <span class="refl"></span>
+            <span class="pz pz-b" data-p="aceite"><img src="assets/aura/v-balsamo.webp" width="282" height="117" loading="lazy" decoding="async" alt="Bálsamo limpiador de Aura, tarro plano de bronce de 75 ml"></span>
+            <span class="pz pz-a" data-p="serum"><img src="assets/aura/v-serum.webp" width="126" height="373" loading="lazy" decoding="async" alt="Sérum reparador de Aura, frasco ámbar de 30 ml"></span>
+            </div>
+            <div class="v-rotulo"><span class="r-nom"></span><span class="r-det"></span><span class="r-eur"></span></div>
+            <p class="v-pista">Toca un producto para verlo de cerca</p>
+            </div>
+            <ul class="carta">
+            <li><button class="v-fila" data-prod="serum" data-nom="Sérum reparador" data-det="30 ml · noche" data-eur="48"><span class="f-nom">Sérum reparador</span><span class="f-det">30 ml · noche</span><span class="f-eur">48 €</span></button></li>
+            <li><button class="v-fila" data-prod="crema" data-nom="Crema de noche" data-det="50 ml · pieles secas" data-eur="39"><span class="f-nom">Crema de noche</span><span class="f-det">50 ml · pieles secas</span><span class="f-eur">39 €</span></button></li>
+            <li><button class="v-fila" data-prod="aceite" data-nom="Bálsamo limpiador" data-det="75 ml · desmaquilla" data-eur="32"><span class="f-nom">Bálsamo limpiador</span><span class="f-det">75 ml · desmaquilla</span><span class="f-eur">32 €</span></button></li>
+            </ul></div>
+          <div class="pie-accion"><span class="nota-t">Envío gratis a partir de 40 €</span>
+            <button class="btn-t" data-ir="1">Elige uno y sigue</button></div>
+        </div>
+
+        <div class="pant" data-pant="2">
+          <div class="arriba"><h3>Lo que resuelve la duda, antes del botón</h3>
+            <span class="tapa">Tapa las fugas 02 y 03</span></div>
+          <div class="ficha2">
+            <div class="foto"><svg viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="#9C6B4A" stroke-linecap="round"><circle cx="50" cy="50" r="34" stroke-width="4" stroke-dasharray="178 40" transform="rotate(-40 50 50)"/><circle cx="50" cy="50" r="21" stroke-width="2.6" stroke-dasharray="108 24" transform="rotate(20 50 50)"/><circle cx="50" cy="50" r="7" fill="#9C6B4A" stroke="none"/></svg></div>
+            <div>
+              <div class="estrellas">★★★★★ <span>4,8 · 142 opiniones verificadas</span></div>
+              <div class="precio-grande" id="tPrecio">48 €</div>
+              <div class="nota-t" id="tNombre">Sérum reparador · 30 ml</div>
+              <div class="opi"><b>Marta G. — compra verificada</b>«La textura es ligera y no deja brillo. A las tres semanas se me nota sobre todo en la zona del pómulo.»</div>
+              <div class="opi"><b>Lucía R. — compra verificada</b>«Lo compré por el envase y me quedé por cómo huele. El gotero dosifica bien, no se desperdicia.»</div>
+            </div>
+          </div>
+          <div class="pie-accion"><span class="nota-t">Devolución en 30 días, sin explicaciones</span>
+            <button class="btn-t" data-ir="2">Añadir al carrito</button></div>
+        </div>
+
+        <div class="pant" data-pant="3">
+          <div class="arriba"><h3>El carrito no esconde nada</h3>
+            <span class="tapa">Sin sorpresas al final</span></div>
+          <div class="linea">
+            <span class="mini"><svg viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="#9C6B4A" stroke-linecap="round"><circle cx="50" cy="50" r="34" stroke-width="4" stroke-dasharray="178 40" transform="rotate(-40 50 50)"/><circle cx="50" cy="50" r="21" stroke-width="2.6" stroke-dasharray="108 24" transform="rotate(20 50 50)"/><circle cx="50" cy="50" r="7" fill="#9C6B4A" stroke="none"/></svg></span>
+            <span class="cre"><b id="tCarNom">Sérum reparador</b><span id="tCarDet">30 ml · noche</span></span>
+            <span class="imp" id="tCarEur">48,00 €</span>
+          </div>
+          <div class="linea"><span class="cre"><b>Envío</b><span>24-48 h · península</span></span><span class="imp">0,00 €</span></div>
+          <div class="suma"><span>Total</span><span class="imp" id="tTotal">48,00 €</span></div>
+          <div class="pie-accion"><span class="nota-t">IVA incluido</span>
+            <button class="btn-t tenue" data-ir="0">Seguir mirando</button>
+            <button class="btn-t" data-ir="3">Ir a pagar</button></div>
+        </div>
+
+        <div class="pant" data-pant="4">
+          <div class="arriba"><h3>Una sola pantalla, y el botón siempre a la vista</h3>
+            <span class="tapa">Tapa la fuga 04</span></div>
+          <div class="campos">
+            <div class="campo ancho"><b>Correo</b>marta@ejemplo.com</div>
+            <div class="campo ancho"><b>Dirección</b>Carrer de Verdi, 42 · 08012 Barcelona</div>
+            <div class="campo"><b>Tarjeta</b>•••• •••• •••• 4242</div>
+            <div class="campo"><b>Caduca</b>09 / 29</div>
+          </div>
+          <div class="pie-accion"><span class="nota-t">Pago cifrado · <b id="tTotal2">48,00 €</b></span>
+            <button class="btn-t" data-ir="4">Pagar</button></div>
+        </div>
+
+        <div class="pant" data-pant="5">
+          <div class="hecho">
+            <div class="marca-ok">✓</div>
+            <h3>Pedido confirmado</h3>
+            <p>De la carta al pago en cuatro pantallas y sin salir de esta página. Eso es exactamente lo que construimos.</p>
+            <div style="margin-top:26px"><button class="btn-t tenue" data-ir="0">Volver a empezar</button></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="pasos" role="tablist" aria-label="Pantallas de la tienda">
+      <button aria-current="step" data-paso="1"><span class="n">01</span><span class="q">Catálogo</span><span class="f">El precio, delante</span></button>
+      <button data-paso="2"><span class="n">02</span><span class="q">Ficha</span><span class="f">La prueba, arriba</span></button>
+      <button data-paso="3"><span class="n">03</span><span class="q">Carrito</span><span class="f">Nada escondido</span></button>
+      <button data-paso="4"><span class="n">04</span><span class="q">Pago</span><span class="f">Una pantalla</span></button>
+    </div>
+  </section>
+
+  <section class="seccion banda "><div class="fx-ancho">
+    <p class="sello">03 · El resultado</p>
+    <h2>Lo que cambia, dicho como lo que es</h2>
+    <p class="lede">Es un proyecto de muestra: no hay analítica que enseñar. Lo medible aquí es la pieza, y esos números sí son reales.</p>
+
+      <div class="faro-resultados">
+        <div class="fx-in"><span class="cifra">5</span><span class="pie">pantallas de tienda funcionando dentro de esta página, no en un vídeo</span></div>
+        <div class="fx-in" data-espera="1"><span class="cifra">21</span><span class="pie">controles que se pueden tocar sin salir del caso</span></div>
+        <div class="fx-in" data-espera="2"><span class="cifra">2,0 s</span><span class="pie">tarda en pintarse el titular en un móvil de gama media, con el 3D dentro</span></div>
+        <p class="fuente">Medido el 30 de agosto de 2026 sobre esta misma página, en un móvil de gama media con la red y el procesador limitados. Se repite con <code>puertas.py</code>.</p>
+      </div>
+
+    <p class="aviso"><b>Y el argumento comercial es ese último número.</b> Con fotos, cada variante de producto, cada cambio de etiqueta y cada vista nueva es una sesión de estudio.</p>
+  </div></section>
+
+  <section class="fx-cierre">
+    <div class="fx-ancho">
+      <p class="sello">Lo que se usó aquí</p>
+      <h2>E-commerce, 3D y conversión</h2>
+      <ul class="fx-skills">
+        <li>Diseño web</li><li>UX/UI</li><li>Desarrollo</li><li>E-commerce</li>
+        <li>3D / WebGL</li><li>Motion</li><li>CRO</li><li>Identidad ligera</li>
+      </ul>
+
+      <div class="fx-acciones">
+        <a class="fx-btn" href="/#contacto">Pide la Foto del Día 0 — gratis</a>
+        <a class="fx-btn hueco" href="index.html">Ver los otros cinco</a>
+      </div>
+
+      <a class="fx-siguiente" href="#">
+        <span class="et">Siguiente caso</span>
+        <span class="tit">—</span>
+      </a>
+
+      <div class="fx-pie">
+        <a href="index.html">Todos los proyectos</a>
+        <a href="/">Faro Digital</a>
+        <span>Proyecto de muestra · la marca Aura Skincare no existe</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+/* La tienda. Vanilla y sin estado global: todo vive en el propio DOM.
+   Son ~50 lineas porque no hace falta mas — y porque una demo de tienda que
+   necesitara un framework contradiria el argumento de la pagina. */
+(function () {
+  "use strict";
+  var raiz = document.getElementById("tienda");
+  if (!raiz) return;
+
+  var RUTAS = ["/tienda", "/tienda", "/serum-reparador", "/carrito", "/pago", "/pedido-confirmado"];
+  var pants = raiz.querySelectorAll(".pant");
+  var pasos = raiz.querySelectorAll(".pasos button");
+  var ruta = document.getElementById("tRuta");
+  var carro = document.getElementById("tCarro"), num = document.getElementById("tNum");
+  var elegido = { nom: "Sérum reparador", det: "30 ml · noche", eur: 48 };
+
+  function eur(n) { return n.toFixed(2).replace(".", ",") + " €"; }
+
+  function ver(i) {                                   // i: 1..5
+    pants.forEach(function (p) {
+      p.setAttribute("data-activa", p.getAttribute("data-pant") === String(i) ? "si" : "no");
+    });
+    pasos.forEach(function (b) {
+      if (b.getAttribute("data-paso") === String(i)) b.setAttribute("aria-current", "step");
+      else b.removeAttribute("aria-current");
+    });
+    ruta.textContent = RUTAS[i] || RUTAS[0];
+  }
+
+  function pintar() {
+    document.getElementById("tPrecio").textContent = elegido.eur + " €";
+    document.getElementById("tNombre").textContent = elegido.nom + " · " + elegido.det;
+    document.getElementById("tCarNom").textContent = elegido.nom;
+    document.getElementById("tCarDet").textContent = elegido.det + " · 1 unidad";
+    document.getElementById("tCarEur").textContent = eur(elegido.eur);
+    document.getElementById("tTotal").textContent = eur(elegido.eur);
+    document.getElementById("tTotal2").textContent = eur(elegido.eur);
+  }
+
+  raiz.addEventListener("click", function (e) {
+    var pr = e.target.closest("[data-prod]");
+    if (pr) {
+      elegido = { nom: pr.getAttribute("data-nom"), det: pr.getAttribute("data-det"),
+                  eur: parseFloat(pr.getAttribute("data-eur")) };
+      pintar(); ver(2); return;
+    }
+    var b = e.target.closest("[data-ir]");
+    if (b) {
+      var d = b.getAttribute("data-ir");
+      if (d === "0") { num.textContent = "0"; carro.setAttribute("data-lleno", "no"); ver(1); }
+      else if (d === "1") ver(2);
+      else if (d === "2") { num.textContent = "1"; carro.setAttribute("data-lleno", "si"); ver(3); }
+      else if (d === "3") ver(4);
+      else if (d === "4") ver(5);
+      return;
+    }
+    var pa = e.target.closest("[data-paso]");
+    if (pa) ver(parseInt(pa.getAttribute("data-paso"), 10));
+  });
+
+  pintar();
+})();
+</script>
+<script src="assets/_marco/faro-marco.js" defer></script>
+<script src="assets/_marco/bote-aura.js" defer></script>
+
+<script>
+/* ---- El puntero hace de camara -------------------------------------------
+   El mundo entero gira, y cada pieza recorre mas o menos camino segun su Z:
+   +130 px la de delante, −80 px la del fondo. Ese desajuste ES el paralaje —
+   no hay que programarlo, lo hace la perspectiva.
+
+   🔴 Tres decisiones que separan esto de un efecto barato:
+
+     · Interpolacion, no asignacion. Poner el angulo directo en cada
+       `pointermove` copia el temblor de la mano; se persigue el objetivo a un
+       11 % por fotograma y sale con inercia.
+     · Solo con puntero fino. En tactil no existe «pasar por encima».
+     · El bucle muere al volver a cero: un movimiento continuo que nadie ha
+       pedido no es vida, es bateria.                                        */
+(function () {
+  "use strict";
+  var esc = document.querySelector(".esc-v");
+  if (!esc) return;
+
+  /* El foco: al pasar por una fila de la carta se enciende su pieza. Funciona
+     con raton y con teclado, y en tactil no estorba porque solo se activa al
+     enfocar. */
+  document.querySelectorAll(".carta .v-fila").forEach(function (f) {
+    var p = f.getAttribute("data-prod");
+    ["pointerenter", "focus"].forEach(function (ev) {
+      f.addEventListener(ev, function () { esc.setAttribute("data-foco", p); });
+    });
+    ["pointerleave", "blur"].forEach(function (ev) {
+      f.addEventListener(ev, function () { esc.removeAttribute("data-foco"); });
+    });
+  });
+
+  if (!matchMedia("(hover:hover) and (pointer:fine)").matches) return;
+  if (matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+
+  var mundo = esc.querySelector(".mundo");
+  var TOPE_Y = 7.0, TOPE_X = 4.6, SEGUIR = 0.11;
+  var ox = 0, oy = 0, x = 0, y = 0, vivo = false, corriendo = false;
+
+  function paso() {
+    x += (ox - x) * SEGUIR;
+    y += (oy - y) * SEGUIR;
+    mundo.style.setProperty("--ry", x.toFixed(3) + "deg");
+    mundo.style.setProperty("--rx", y.toFixed(3) + "deg");
+    if (vivo || Math.abs(ox - x) > 0.01 || Math.abs(oy - y) > 0.01) {
+      requestAnimationFrame(paso);
+    } else { corriendo = false; }
+  }
+  function arrancar() { if (!corriendo) { corriendo = true; requestAnimationFrame(paso); } }
+
+  esc.addEventListener("pointerenter", function () { vivo = true; arrancar(); });
+  esc.addEventListener("pointermove", function (e) {
+    var c = esc.getBoundingClientRect();
+    ox =  ((e.clientX - c.left) / c.width  - 0.5) * 2 * TOPE_Y;
+    oy = -((e.clientY - c.top)  / c.height - 0.5) * 2 * TOPE_X;
+  });
+  esc.addEventListener("pointerleave", function () { vivo = false; ox = 0; oy = 0; arrancar(); });
+})();
+</script>
+
+<script src="assets/_marco/vitrina-3d.js" defer></script>
+<script src="/assets/gestos.js" defer></script>
+</body>
+</html>

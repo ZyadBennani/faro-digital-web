@@ -1,0 +1,284 @@
+/* ==========================================================================
+   PROFUNDIDAD v2 — el lenguaje del héroe, extendido a toda la página.
+
+   🔴 POR QUÉ HAY UNA v2, Y EL FALLO ERA MÍO
+   La v1 definía bien los tokens y luego los aplicaba a `.alt`, `.method` y las
+   tarjetas. Pero la portada tiene **cuatro secciones sin ninguna clase**, así
+   que la capa no llegaba a la mayor parte de la página. Zyad, el 2-sep:
+   *«no hay nada cambiado»*. Tenía razón.
+
+       No era sutil. Era que no llegaba.
+
+   La v2 apunta a la ESTRUCTURA —`section`, `nth-of-type`— y no a nombres de
+   clase que la mitad de los bloques no tienen.
+
+   EL LENGUAJE, QUE NO SE INVENTA AQUÍ
+   El héroe ya lo tiene escrito: un faro, **su haz**, y **su reflejo comprimido
+   en el agua** (`.faro-reflejo`, con su regla de que un reflejo del mismo
+   tamaño que el objeto es un espejo, no agua). El resto de la web estaba plana
+   porque no participaba de eso.
+
+   Así que la profundidad de esta hoja son cuatro gestos, y los cuatro son el
+   mismo gesto del héroe a menor escala:
+
+       1. UNA LUZ, y siempre desde el mismo sitio  → sombras y filetes
+       2. EL HAZ que recorre la página al bajar    → el fondo respira
+       3. EL REFLEJO bajo cada pieza               → «el agua», en pequeño
+       4. EL PAPEL con tres alturas                → medido con CIEDE2000
+
+   ESTE ARCHIVO SÍ SE EDITA A MANO. `base.css` y `motion.css` se generan desde
+   `marca.tokens.json` y se pierden si se tocan; esta capa va encima de los dos.
+   ========================================================================== */
+
+:root{
+  /* ── Los tres papeles ──────────────────────────────────────────────────
+     Medidos con CIEDE2000 contra el papel de marca (#F5EFE4), no elegidos a
+     ojo. Misma escala que se usó en los seis casos del portfolio:
+     ΔE ≤ 1 imperceptible · 1-2 solo se ve al lado · > 4 es otro color.
+
+       --p-papel-hunde  #EAE0CE  ΔE 4,32   banda que retrocede
+       --p-papel        #F5EFE4  ΔE 0      el papel de marca
+       --p-papel-sube   #FCF9F4  ΔE 3,40   superficie que se eleva
+
+     🔴 v3 · LOS PRIMEROS VALORES ERAN ΔE 1,07 y 1,35 — «solo se ve al lado».
+     Estaban elegidos con la regla de la imperceptibilidad, y el encargo era el
+     contrario: que SE VEA y sea sutil.
+
+         Sutil no es imperceptible. Sutil es que se note y no se cante.
+
+     Entre hundido y elevado hay ahora **ΔE 7,7**, que es la profundidad que se
+     percibe. Siguen siendo el mismo beige: ninguno se lee como otro color. */
+  --p-papel-hunde:#EAE0CE;
+  --p-papel:      #F5EFE4;
+  --p-papel-sube: #FCF9F4;
+
+  /* ── Una luz, un solo origen ───────────────────────────────────────────
+     Todas caen desde arriba, ninguna lleva desplazamiento lateral. Lo que hace
+     que un conjunto de sombras se lea como profundidad y no como decoración es
+     la COHERENCIA DEL ÁNGULO, no la intensidad.
+
+     Doble capa a propósito: la corta define el borde, la larga da la distancia
+     al suelo. Con una sola, o el borde queda duro o el objeto flota sin apoyo. */
+  --p-sombra-1: 0 1px 2px rgba(23,33,28,.07), 0 3px 8px  -1px rgba(23,33,28,.06);
+  --p-sombra-2: 0 2px 5px rgba(23,33,28,.10), 0 14px 30px -6px rgba(23,33,28,.16);
+  --p-sombra-3: 0 5px 10px rgba(23,33,28,.12), 0 28px 58px -10px rgba(23,33,28,.22);
+
+  /* La arista de luz: 1 px de blanco arriba. Es lo que hace que algo parezca
+     un objeto y no un rectángulo pintado. */
+  --p-luz:       inset 0 1px 0 rgba(255,255,255,.75);
+  --p-luz-oscuro:inset 0 1px 0 rgb(226 217 198/.12);
+}
+
+/* ══ 1 · EL GRANO ═══════════════════════════════════════════════════════════
+   Lo que separa «beige plano» de «papel». Textura generada, sin una sola
+   petición de red: data-URI de menos de 1 KB.
+
+   🔴 Del 3 % al 5 % y del 5 % al 7 %: por debajo no se veía, y una textura
+   que no se ve no es sutil — es que no está.
+   `pointer-events:none` no es opcional — sin eso, esta capa se come los clics. */
+body::after{
+  content:"";
+  position:fixed; inset:0; z-index:9999;
+  pointer-events:none;
+  opacity:.07;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:160px 160px;
+}
+
+/* ══ 2 · EL HAZ ════════════════════════════════════════════════════════════
+   La idea de la que cuelga todo lo demás. El héroe tiene un faro con su haz; el
+   resto de la web no participaba de eso y por eso se leía como otra web pegada
+   debajo.
+
+   Aquí el haz sigue existiendo, muy tenue: el papel es un poco más claro arriba,
+   por donde entra la luz. No es un efecto — es el territorio de la marca
+   aplicado al fondo: *ponemos luz en lo que ya tienes y no se ve.*
+
+/* 🔴 2-sep-2026 · LA PRIMERA VERSIÓN DEL HAZ DEJÓ 171 BLOQUES DE TEXTO
+   ILEGIBLES, y la puerta lo cazó antes de producción.
+
+   Era una capa FIJA por encima de la página, con `body > * { z-index:1 }` para
+   que el contenido quedara delante. Y ahí está el error: en las páginas donde
+   el texto no es hijo directo de `body` —la mitad del sitio— esa regla no le
+   alcanza, así que el haz le pasaba por encima. Contraste 1,17 sobre un texto
+   que antes estaba perfecto.
+
+       Una capa que se pone encima del contenido depende de que TODO el
+       contenido sepa defenderse. Un fondo no depende de nadie.
+
+   La v2 del haz no es una capa: es el FONDO del body, con `background-attachment:
+   fixed`. Se queda quieto mientras la página sube —el mismo efecto de que la luz
+   está en la sala y no en el papel— y **no puede taparle nada a nadie**, porque
+   está detrás por definición y no por una regla que hay que acordarse de poner. */
+/* 🔴 v3 · EL HAZ ERA FONDO DEL BODY Y NO SE VEÍA NUNCA, porque cada sección
+   lo tapa con su propio color. Un fondo de body solo asoma donde no hay nada
+   encima, y aquí casi siempre hay algo.
+
+       Un fondo que está tapado no es sutil: es que no está.
+
+   Ahora la luz vive DENTRO de cada banda clara: más arriba, menos abajo. Eso
+   es lo que hace que una banda tenga volumen en vez de ser un rectángulo de
+   color plano — y se ve en todas, no solo donde había un hueco. */
+
+/* ══ 3 · LAS BANDAS ═════════════════════════════════════════════════════════
+   🔴 AQUÍ ESTABA EL FALLO DE LA v1: se apuntaba a `.alt`, y cuatro de las
+   secciones de la portada no tienen clase ninguna.
+
+       Apuntar a nombres de clase falla en cuanto la mitad de los bloques
+       no los tiene. La estructura sí está siempre.
+
+   Se excluyen las tres oscuras por nombre —esas tienen su propio tratamiento
+   más abajo— y el resto alterna por posición. */
+/* 🔴 SEGUNDO INTENTO, Y LA LECCIÓN VALE MÁS QUE EL EFECTO.
+   La primera versión pintaba `section:nth-of-type(2n)` en TODO el sitio. En la
+   portada quedaba bien; en las landings dejó **171 bloques de texto ilegible**,
+   porque allí las secciones pares son `.pantalla.oscura` y les puse un beige
+   debajo de un texto crema. Contraste 1,05.
+
+       Un pintado estructural no puede saber el tono de cada página.
+       Y una regla global que necesita saberlo, no puede ser global.
+
+   Así que deja de ser automático y pasa a pedirse: solo actúa donde el `body`
+   lo declara. Se activa página a página, después de mirarla. */
+body[data-profundidad~="bandas"] section:not(.hero):not(.method):not(.sangre){
+  background-image:linear-gradient(to bottom,
+    rgba(255,255,255,.55) 0%,
+    rgba(255,255,255,0) 38%,
+    rgba(23,33,28,.020) 100%);
+}
+body[data-profundidad~="bandas"] section:not(.hero):not(.method):not(.sangre):nth-of-type(2n){
+  background-color:var(--p-papel-hunde);
+}
+/* Una banda que se hunde tiene que decir dónde empieza. Dos filetes de 1 px
+   —sombra arriba, luz abajo— y el escalón se lee sin dibujar una línea. */
+body[data-profundidad~="bandas"] section:not(.hero):not(.method):not(.sangre){
+  box-shadow:
+    inset 0 1px 0 rgba(23,33,28,.09),
+    inset 0 -1px 0 rgba(255,255,255,.75);
+}
+
+/* ══ 4 · LA BARRA QUE SE DESPEGA ════════════════════════════════════════════
+   Arriba del todo la barra está apoyada en la página; en cuanto el contenido
+   empieza a pasar por debajo, se despega. Es la señal más barata que existe de
+   que hay dos planos, y hoy no estaba. */
+.faro-barra{ transition:box-shadow var(--m-rapido,240ms) var(--m-estandar,ease); }
+@supports (animation-timeline: scroll()){
+  @keyframes p-despegar{
+    from{ box-shadow:0 0 0 rgba(23,33,28,0); }
+    to  { box-shadow:0 1px 0 rgba(23,33,28,.10), 0 12px 26px -10px rgba(23,33,28,.42); }
+  }
+  .faro-barra{
+    animation:p-despegar linear both;
+    animation-timeline:scroll();
+    animation-range:0 140px;   /* despega en los primeros 140 px y ahí se queda */
+  }
+}
+
+/* ══ 5 · LAS SUPERFICIES QUE SE ELEVAN ══════════════════════════════════════
+   Tarjetas de caso, planes de precio y testimonios. Y ahora también cualquier
+   caja con borde de la página: eran justo las que se quedaban planas. */
+.work-card,
+.plan,
+.t-card{
+  background:var(--p-papel-sube);
+  border-radius:10px;
+  box-shadow:var(--p-sombra-2), var(--p-luz);
+  transition:
+    box-shadow var(--m-rapido,240ms) var(--m-estandar,ease),
+    transform  var(--m-rapido,240ms) var(--m-estandar,ease);
+}
+.plan.destacado, .plan[data-destacado]{ box-shadow:var(--p-sombra-3), var(--p-luz); }
+
+/* 2 px al pasar. Ni uno más: por encima de 3 px deja de leerse como «esto se
+   puede pulsar» y empieza a leerse como una animación. */
+@media (hover:hover){
+  .work-card:hover, .plan:hover, .t-card:hover{
+    transform:translateY(-2px);
+    box-shadow:var(--p-sombra-3), var(--p-luz);
+  }
+}
+/* El foco de teclado NO se toca: los dos aros de luminancia opuesta del marco
+   son lo que garantiza que se vea sobre claro y sobre oscuro. */
+.work-card:focus-within, .plan:focus-within, .t-card:focus-within{
+  box-shadow:var(--p-sombra-3), var(--p-luz);
+}
+
+/* ══ 6 · EL REFLEJO — «el agua», en pequeño ═════════════════════════════════
+   El gesto del héroe, a escala de tarjeta. Y con su misma regla, que ya está
+   escrita en `.faro-reflejo`:
+
+       Un reflejo del mismo tamaño que el objeto es un espejo.
+       Lo que dice «agua» es que esté COMPRIMIDO.
+
+   Por eso mide el 19 % de la imagen y no la mitad. Y se desvanece hacia abajo,
+   porque una superficie con movimiento pierde la imagen enseguida. */
+.work-card .thumb{ position:relative; }
+.work-card .thumb::after{
+  content:""; position:absolute; left:0; right:0; top:100%; height:19%;
+  pointer-events:none; z-index:1;
+  background:inherit;
+  background-size:cover; background-position:center bottom;
+  transform:scaleY(-1);
+  -webkit-mask-image:linear-gradient(to top, transparent 0%, rgba(0,0,0,.30) 100%);
+          mask-image:linear-gradient(to top, transparent 0%, rgba(0,0,0,.30) 100%);
+  opacity:.62;
+}
+
+/* ══ 7 · LAS IMÁGENES, DENTRO DE LA TARJETA ═════════════════════════════════
+   Un filete interior muy tenue las mete dentro en vez de dejarlas apoyadas
+   encima como una pegatina. */
+.work-card .thumb picture,
+.work-card .thumb img{
+  border-radius:8px 8px 0 0;
+}
+.work-card .thumb{
+  box-shadow:inset 0 0 0 1px rgba(23,33,28,.06);
+}
+
+/* ══ 8 · LAS BANDAS OSCURAS ═════════════════════════════════════════════════
+   Sobre oscuro no hay sombra que valga: lo que da volumen es una viñeta muy
+   leve, que hunde los bordes y empuja el centro hacia delante. Al 5 % es
+   invisible a la vista y perfectamente medible en píxeles. */
+.method, .sangre{ position:relative; }
+.method::after, .sangre::after{
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
+  background:radial-gradient(120% 80% at 50% 38%, transparent 52%, rgba(0,0,0,.05) 100%);
+}
+.method > *, .sangre > *{ position:relative; z-index:1; }
+
+/* ══ 9 · EL PARALAJE MÍNIMO ═════════════════════════════════════════════════
+   6 px de desfase entre la imagen de una tarjeta y su texto. No se percibe
+   como movimiento: se percibe como que la imagen está un poco más lejos. */
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    @keyframes p-alejar{ from{ transform:translateY(6px); } to{ transform:translateY(-6px); } }
+    .work-card .thumb picture{
+      display:block;
+      animation:p-alejar linear both;
+      animation-timeline:view();
+      animation-range:entry 0% exit 100%;
+    }
+  }
+}
+
+/* ══ 10 · QUIEN NO QUIERE MOVIMIENTO, NO LO TIENE ═══════════════════════════
+   El relieve se queda —es información, no movimiento— y desaparece todo lo
+   que se mueve. */
+@media (prefers-reduced-motion: reduce){
+  .work-card, .plan, .t-card{ transition:none; }
+  .work-card:hover, .plan:hover, .t-card:hover{ transform:none; }
+  .work-card .thumb picture{ animation:none; }
+  .faro-barra{ animation:none; box-shadow:0 1px 0 rgba(23,33,28,.06); }
+}
+
+/* ══ 11 · IMPRESIÓN ═════════════════════════════════════════════════════════
+   Ni grano ni haz ni sombras en papel: en una impresora el grano es suciedad
+   y la sombra es tinta gris. */
+@media print{
+  body::after{ display:none; }
+  body{ background-image:none; }
+  .work-card, .plan, .t-card{ box-shadow:none; background:#fff; }
+  .work-card .thumb::after{ display:none; }
+  .method::after, .sangre::after{ display:none; }
+  section{ box-shadow:none !important; background:#fff !important; }
+}

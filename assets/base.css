@@ -1,0 +1,529 @@
+/* ==========================================================================
+   ARCHIVO GENERADO — no se edita a mano.
+   Sale de Marca/marca.tokens.json con Marca/generar-base.py.
+
+   Si añades aquí un tamaño de letra, lo pierdes en la siguiente generación —
+   y, mientras dura, el sitio vuelve a tener dos escalas y nadie se entera,
+   porque cada página seguirá pasando su propio criterio.
+   ========================================================================== */
+
+/* ── LAS FUENTES, Y UNA SOLA RUTA ───────────────────────────────────────────
+   Servidas desde nuestro dominio: cargar fonts.googleapis.com transfiere la IP
+   de cada visitante a un tercero, y eso es RGPD en una web europea.
+
+   🔴 Y hasta el 30-ago se descargaban DOS VECES. El portfolio tenía su propia
+      copia en `/portfolio/assets/_marco/fuentes/`, con su propio @font-face y
+      hasta con otro rango de pesos (400-600 en vez de 400-700). Dos copias del
+      mismo archivo no son un problema de KB: son dos definiciones de la misma
+      familia, y la que gana depende de qué CSS cargue después.
+   -------------------------------------------------------------------------- */
+@font-face{
+  font-family:'Frank Ruhl Libre'; font-style:normal; font-weight:500 700; font-display:swap;
+  /* Ruta RELATIVA a esta hoja, no absoluta. En produccion resuelve igual
+     —base.css vive en /assets/— y ademas hace que el especimen y cualquier
+     pagina se vean con las fuentes de verdad abriendolos con doble clic, sin
+     servidor. Una ruta absoluta obliga a montar un servidor para mirar algo. */
+  src:url(fuentes/FrankRuhlLibre-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'Frank Ruhl Libre'; font-style:normal; font-weight:500 700; font-display:swap;
+  /* Ruta RELATIVA a esta hoja, no absoluta. En produccion resuelve igual
+     —base.css vive en /assets/— y ademas hace que el especimen y cualquier
+     pagina se vean con las fuentes de verdad abriendolos con doble clic, sin
+     servidor. Una ruta absoluta obliga a montar un servidor para mirar algo. */
+  src:url(fuentes/FrankRuhlLibre-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family:'Work Sans'; font-style:normal; font-weight:400 700; font-display:swap;
+  /* Ruta RELATIVA a esta hoja, no absoluta. En produccion resuelve igual
+     —base.css vive en /assets/— y ademas hace que el especimen y cualquier
+     pagina se vean con las fuentes de verdad abriendolos con doble clic, sin
+     servidor. Una ruta absoluta obliga a montar un servidor para mirar algo. */
+  src:url(fuentes/WorkSans-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'Work Sans'; font-style:normal; font-weight:400 700; font-display:swap;
+  /* Ruta RELATIVA a esta hoja, no absoluta. En produccion resuelve igual
+     —base.css vive en /assets/— y ademas hace que el especimen y cualquier
+     pagina se vean con las fuentes de verdad abriendolos con doble clic, sin
+     servidor. Una ruta absoluta obliga a montar un servidor para mirar algo. */
+  src:url(fuentes/WorkSans-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ── LA ESCALA ──────────────────────────────────────────────────────────────
+   Seis pasos en el SITIO, no por pagina. Una pagina que necesita un septimo esta usando mal uno de los seis.
+
+   Medido el 2026-08-30 sobre produccion con jurado.MEDIR: el portfolio ya compartia estos seis en sus 7 paginas; la home tenia otros seis sin un solo valor en comun. 12 tamanos en el sitio entero, solape cero. Se adopta la del portfolio y se mueve la home.
+   -------------------------------------------------------------------------- */
+:root{
+  /* ── LOS SEIS PASOS ─────────────────────────────────────────────────
+     Seis en el SITIO, no por página. El nombre dice el trabajo, no el
+     tamaño: si un día el título mide otra cosa, sigue siendo el título. */
+  --f-display: clamp(3.1rem, 1.5rem + 5.6vw, 7rem);           /* 104.6 px a 1440 · H1 */
+  --f-titulo:  clamp(2.3rem, 1.3rem + 3.4vw, 4.5rem);         /* 69.8 px a 1440 · H2 */
+  --f-cifra:   clamp(1.9rem, 1.2rem + 1.9vw, 2.75rem);        /* 44 px a 1440 · H3 y el dato grande del bloque de resultados */
+  --f-lede:    clamp(1.2rem, 1rem + 0.7vw, 1.62rem);          /* 25.9 px a 1440 · Entradilla, cita, bajada de titular */
+  --f-cuerpo:  clamp(1rem, 0.96rem + 0.18vw, 1.12rem);        /* 17.9 px a 1440 · Texto corrido */
+  --f-sello:   0.8rem;                                        /* 12.8 px a 1440 · TODA etiqueta, kicker, pie y nota */
+
+  /* Interlineado y tracking van con su paso: separarlos es cómo se
+     acaba con un titular de 105 px a interlineado de párrafo. */
+  --f-display-alto:1.02; --f-display-track:-0.02em;
+  --f-titulo-alto:1.1; --f-titulo-track:-0.01em;
+  --f-cifra-alto:0.95; --f-cifra-track:-0.01em;
+  --f-lede-alto:1.35; --f-lede-track:0em;
+  --f-cuerpo-alto:1.6; --f-cuerpo-track:0em;
+  --f-sello-alto:1.2; --f-sello-track:0.13em;
+
+  --f-familia-display:'Frank Ruhl Libre', Georgia, 'Times New Roman', serif;
+  --f-familia-texto:'Work Sans', Helvetica, Arial, sans-serif;
+  --f-peso-display:500;
+
+  /* ── ALIAS ────────────────────────────────────────────────────────────
+     Las 8 paginas ya escriben `--t-*` (home) y `--fx-*` (portfolio). base.css publica los seis pasos como `--f-*` y ademas los dos juegos de alias, asi que la consolidacion no obliga a reescribir ni una regla. Los alias se retiran pagina a pagina, no de golpe. */
+  /* home */
+  --t-display:   var(--f-display);
+  --t-titulo:    var(--f-titulo);
+  --t-sub:       var(--f-lede);
+  --t-cuerpo:    var(--f-cuerpo);
+  --t-menor:     var(--f-cuerpo);
+  --t-sello:     var(--f-sello);
+  /* portfolio */
+  --fx-display:  var(--f-display);
+  --fx-titulo:   var(--f-titulo);
+  --fx-cifra:    var(--f-cifra);
+  --fx-lede:     var(--f-lede);
+  --fx-cuerpo:   var(--f-cuerpo);
+  --fx-sello:    var(--f-sello);
+  --fx-pie:      var(--f-sello);
+  /* `--t-menor` (14 px) NO tiene escalon propio: era el septimo tamano de la home y su trabajo —nav, botones, listas secundarias— lo hace el cuerpo. Fundirlo hacia arriba es lo mismo que ya se hizo con `--fx-pie`. */
+
+  /* ── ESPACIO ──────────────────────────────────────────────────────────
+     Una escala de espacio de seis pasos, del mismo tipo que la de letra y por el mismo motivo. */
+  --e-xs:  8px;
+  --e-s:   16px;
+  --e-m:   26px;
+  --e-l:   44px;
+  --e-xl:  72px;
+  --e-xxl: 116px;
+  --e-margen:clamp(20px, 5vw, 96px);
+  --e-texto-max:68ch;
+  --e-pagina-max:1120px;
+}
+
+:root{ --f-oro:#C9A667; --f-verde:#12291F; }
+/* ── LAS TRES SUPERFICIES ───────────────────────────────────────────────
+   TRES superficies y ninguna mas. Cada una trae su fondo y sus DOS tintas: la principal y la suave. Un bloque elige superficie, no colores sueltos — asi el contraste no depende de que alguien se acuerde.
+
+   🔴 La web tenia TRES cremas de fondo: la home en #E2D9C6, el portfolio en #F5EFE4 y Aura en #FDFAF8. #E2D9C6 es el color de LINEA usado como superficie, y #FDFAF8 no esta en la paleta. Papel es #F5EFE4 en el sitio entero. */
+:root, [data-superficie="papel"]{
+  --f-fondo:#F5EFE4; --f-tinta:#17211C;
+  --f-suave:color-mix(in srgb, #17211C 68%, transparent);
+  --f-linea:#E2D9C6;
+  --acento-texto:#12291F;   /* Superficie por defecto de todo el sitio. */
+}
+[data-superficie="papel-2"]{
+  --f-fondo:#E2D9C6; --f-tinta:#17211C;
+  --f-suave:color-mix(in srgb, #17211C 68%, transparent);
+  --f-linea:color-mix(in srgb, #17211C 14%, transparent);
+  --acento-texto:#12291F;   /* Banda alterna sobre papel: separa dos secciones claras sin meter una linea ni una sombra. */
+}
+[data-superficie="tinta"]{
+  --f-fondo:#12291F; --f-tinta:#F5EFE4;
+  --f-suave:#E2D9C6;
+  --f-linea:color-mix(in srgb, #E2D9C6 22%, transparent);
+  --acento-texto:#C9A667;   /* Autoridad: hero, cifras, cierre. Es la UNICA superficie donde el oro escribe (6,70:1). */
+}
+[data-superficie]{ background:var(--f-fondo); color:var(--f-tinta); }
+:root{ --f-suave-pct:68%; }   /* El texto secundario es la tinta de su superficie AL 68 % */
+
+
+/* ── LA CABECERA, UNA SOLA ──────────────────────────────────────────────────
+   El 30-ago-2026 el sitio tenía DOS, y un jurado externo lo puso como la razón
+   número uno para responder «no» a la pregunta de si las páginas son del mismo
+   sitio. Medidas las dos:
+
+                       portada                     los siete casos
+     símbolo           medallón circular crema     símbolo suelto, sin fondo
+     wordmark          Frank Ruhl 700, 20 px       Work Sans 600, 12,8 px, VERSALES
+     navegación        cuatro enlaces              ninguna  (un caso sin salida)
+     alto              74 px                       56 px
+     fondo             rgba(250,247,240,.92)       la superficie del caso al 82 %
+
+   Y ese `rgba(250,247,240,.92)` no está en la paleta: es un crema inventado
+   para la barra, el cuarto del sitio.
+
+       Dos cabeceras no son dos decisiones de diseño: es una decisión
+       tomada dos veces sin mirar la otra.
+
+   Lo que se unifica: el símbolo (el oficial, en `currentColor`, sin medallón —
+   la variante de círculo es de avatar y favicon, lo dice el sistema de marca),
+   la receta del wordmark, el tamaño de los enlaces, el alto y el fondo.
+
+   🔴 LO QUE **NO** SE UNIFICA, Y ES A PROPÓSITO: el color. La portada va en el
+   verde de Faro y cada caso en el color de su cliente — es la regla de Bureau
+   que adoptamos el 30-ago, y por eso la píldora es verde en la portada y del
+   caso en un caso. Que dos cosas se parezcan no quiere decir que tengan que
+   ser iguales.
+   -------------------------------------------------------------------------- */
+:root{ --f-barra-alto:60px; }
+
+.faro-barra{
+  height:var(--f-barra-alto); display:flex; align-items:center;
+  position:sticky; top:0; z-index:90;
+  gap:clamp(14px, 2.4vw, 30px); padding-inline:var(--e-margen);
+  background:color-mix(in srgb, var(--f-fondo) 84%, transparent);
+  backdrop-filter:saturate(1.4) blur(14px);
+  -webkit-backdrop-filter:saturate(1.4) blur(14px);
+  border-bottom:1px solid var(--f-linea);
+}
+/* 🔴 Sin `color:inherit` aquí. `.faro-barra a` (0,1,1) gana a `.faro-accion`
+   (0,1,0) por especificidad, no por orden, así que la píldora salía con la
+   tinta de la página encima de su propio fondo verde: 1,4:1, ilegible.
+       Una regla de conjunto que fija color pisa a la de la pieza aunque
+       la pieza se escriba después. El conjunto pone lo común; el color,
+       cada parte. */
+.faro-barra a{ text-decoration:none; }
+.faro-marca{ color:inherit; }
+
+/* El bloque de marca: símbolo + wordmark, que es la variante horizontal —
+   la de cabeceras, según el sistema de marca. */
+.faro-marca{
+  display:inline-flex; align-items:center; gap:10px; flex:none;
+  font-family:var(--f-familia-display); font-weight:var(--f-peso-display);
+  font-size:var(--f-cuerpo); letter-spacing:.02em; line-height:1;
+}
+.faro-marca svg{ width:auto; height:1.35em; flex:none; }
+
+/* Los enlaces, en el paso de etiqueta: en una cabecera compiten con el
+   wordmark si son del mismo tamaño, y el wordmark tiene que ganar. */
+.faro-nav{
+  display:flex; gap:clamp(12px, 1.8vw, 26px); margin-left:auto;
+  font-family:var(--f-familia-texto); font-size:var(--f-sello);
+  font-weight:600; letter-spacing:var(--f-sello-track); text-transform:uppercase;
+}
+/* 🔴 `nowrap`: sin él, «Qué hacemos» se parte en dos líneas y rompe la altura
+   de la barra entera. Un enlace de menú no se parte nunca — si no cabe, sobra
+   un enlace o sobra una palabra, pero no se parte. */
+/* 🔴 EL GRIS SE DERIVA DEL COLOR DE LA BARRA, no de la raíz. La primera
+   versión usaba `--f-suave`, que es la tinta OSCURA al 68 % — y en los dos
+   casos de portada oscura (Verbena y Brasa) eso dejaba el menú a **1,05:1**:
+   invisible. Lo cazó la puerta de contraste a los dos minutos de escribirlo,
+   que es exactamente para lo que está.
+
+       Un color secundario no es un valor: es una relación con el color
+       que tiene al lado. Si se fija, deja de ser secundario en cuanto
+       cambia el fondo.
+
+   `currentColor` es la tinta que la barra ya ha heredado de su superficie, así
+   que esto funciona igual en papel y en tinta sin una regla por superficie. */
+.faro-nav a{ white-space:nowrap;
+  color:color-mix(in srgb, currentColor var(--f-suave-pct, 68%), transparent);
+  transition:color var(--m-rapido, 240ms) var(--m-estandar, ease); }
+.faro-nav a:hover{ color:currentColor; }
+
+/* La acción. El relleno, nunca la tinta: un acento sobre fondo claro es
+   grafismo, no texto — es la misma regla del oro, aplicada al color de cada
+   caso. */
+.faro-accion{
+  flex:none; font-family:var(--f-familia-texto); font-size:var(--f-sello);
+  font-weight:600; letter-spacing:var(--f-sello-track); text-transform:uppercase;
+  padding:8px 16px; border-radius:100px;
+  /* 🔴 LA ACCIÓN ES ORO EN LAS OCHO, y esto cierra la última diferencia que el
+     jurado le veía a la cabecera: «píldora verde en la portada, dorada en el
+     resto». El oro es el acento ÚNICO de la marca, y en relleno —nunca en
+     tinta— es donde funciona: #12291F sobre #C9A667 da 6,70:1. Además es la
+     misma píldora que ya lleva el CTA del hero, así que la portada deja de
+     tener dos formas de decir lo mismo.
+     Dentro de un caso manda su color, que es la regla de Bureau. */
+  background:var(--caso-acento, var(--f-oro)); color:var(--f-verde);
+  transition:background var(--m-rapido, 240ms) var(--m-estandar, ease);
+}
+.faro-accion:hover{ background:var(--f-tinta); }
+
+/* 🔴 EN ESTRECHO LA BARRA SE PARTE EN DOS FILAS, NO SE ESCONDE EL MENÚ.
+   La primera versión escondía la navegación por debajo de 560 px, y eso
+   deshace un arreglo del 20-ago-2026: la web NO TENÍA navegación en móvil
+   —el CSS llamaba a un botón que no existía en el HTML— y costó encontrarlo.
+   Volver a esconderla sería repetir el mismo fallo con mejores modales.
+
+       Un arreglo que costó encontrarse no se deshace por un problema
+       de anchura. Se busca una anchura que quepa.
+
+   Y tampoco caben en una fila: a 768 px la marca, cuatro enlaces y la píldora
+   suman 816 px. Se parte en dos filas —marca y acción arriba, menú debajo—,
+   que son dos y no las TRES que tenía la portada, criticadas por ocupar el
+   19 % de la pantalla del móvil. */
+/* 🔵 B13 · 4-sep-2026 — LA CABECERA MÓVIL PASA A LOGO + ACCIÓN + HAMBURGUESA.
+   Lo de arriba describe la solución anterior: los cinco enlaces siempre a la
+   vista, envueltos en una segunda fila. Funcionaba, pero el jurado a ciegas la
+   penalizó dos veces: la fila de enlaces deja «DEMOS» solo al final, y la
+   cabecera se come el 13,6 % de la pantalla antes de que empiece la página.
+
+       Los cinco enlaces caben, pero caber no es lo mismo que ordenar.
+
+   Esto NO deshace el arreglo del 20-ago. Aquel fallo fue que el CSS escondía la
+   navegación llamando a un `#menuToggle` **que no existía en el HTML**. Aquí el
+   botón está escrito, tiene `aria-expanded` y `aria-controls`, y el CSS solo
+   esconde la navegación bajo `html.js`: sin JavaScript los cinco enlaces se ven
+   enteros. La diferencia entre las dos situaciones es exactamente esa. */
+@media (max-width:900px){
+  .faro-barra{ height:auto; flex-wrap:wrap; padding-block:10px; row-gap:6px; }
+  .faro-nav{ order:3; width:100%; margin-left:0; flex-wrap:wrap;
+             justify-content:space-between; column-gap:0; row-gap:4px; }
+
+  /* Con JavaScript: los enlaces viven detrás del botón. Sin él, se quedan
+     donde estaban y la cabecera vuelve a su comportamiento anterior. */
+  html.js .faro-nav{ display:none; }
+  html.js .faro-barra.abierta .faro-nav{
+    display:flex; flex-direction:column; align-items:flex-start;
+    justify-content:flex-start; row-gap:2px; padding-block:10px 4px;
+  }
+  html.js .faro-barra.abierta .faro-nav a{ padding-block:9px; width:100%; }
+
+  .faro-menu{
+    order:2; flex:none; display:inline-flex; align-items:center; gap:8px;
+    margin-left:auto;
+    font-family:var(--f-familia-texto); font-size:var(--f-sello);
+    font-weight:600; letter-spacing:var(--f-sello-track); text-transform:uppercase;
+    color:inherit; background:none; border:0; padding:8px 2px; cursor:pointer;
+  }
+  .faro-menu-barras{
+    width:18px; height:2px; background:currentColor; border-radius:2px;
+    position:relative;
+  }
+  .faro-menu-barras::before, .faro-menu-barras::after{
+    content:''; position:absolute; left:0; width:18px; height:2px;
+    background:currentColor; border-radius:2px;
+    transition:transform var(--m-rapido, 240ms) var(--m-estandar, ease),
+               opacity var(--m-rapido, 240ms) var(--m-estandar, ease);
+  }
+  .faro-menu-barras::before{ top:-6px; }
+  .faro-menu-barras::after{ top:6px; }
+  .faro-menu[aria-expanded="true"] .faro-menu-barras{ background:transparent; }
+  .faro-menu[aria-expanded="true"] .faro-menu-barras::before{ transform:translateY(6px) rotate(45deg); }
+  .faro-menu[aria-expanded="true"] .faro-menu-barras::after{ transform:translateY(-6px) rotate(-45deg); }
+}
+/* En escritorio no hay hamburguesa: los cinco enlaces están a la vista. */
+@media (min-width:901px){ .faro-menu{ display:none; } }
+/* Por debajo de 480 el wordmark cede su sitio: el símbolo solo ya identifica,
+   y lo que no puede faltar es la acción. */
+@media (max-width:480px){
+  .faro-marca{ font-size:0; gap:0; }
+  .faro-marca svg{ height:24px; }
+  .faro-accion{ padding-inline:13px; }
+  /* B13 · a 360 px el símbolo (14) + la píldora (231) + el botón con su palabra
+     (75) suman 320 justos, y con los dos huecos de 14 se van a 348 sobre 320
+     disponibles: la barra se partía en dos filas y subía al 11 % del viewport.
+     La palabra «Menú» son 45 de esos píxeles y el icono ya dice lo mismo, así
+     que aquí se va y el nombre accesible lo pone el `aria-label` del botón. */
+  .faro-menu-txt{ position:absolute; width:1px; height:1px; overflow:hidden;
+                  clip-path:inset(50%); white-space:nowrap; }
+}
+
+/* B13 · a 320 px la fila se pasa por 15 px exactos: símbolo 14 + píldora 231 +
+   botón 22 = 267, más dos huecos de 14 = 295 sobre 280 disponibles. Se recuperan
+   18 apretando el hueco (14→8, doce) y el aire lateral de la píldora (13→10,
+   seis). No se toca el texto del botón, que es la oferta. */
+@media (max-width:359px){
+  .faro-barra{ column-gap:8px; }
+  .faro-accion{ padding-inline:10px; }
+}
+
+
+/* ── EL TERCER ACTO ─────────────────────────────────────────────────────────
+   Un caso de agencia cuenta tres cosas: qué era, qué hicimos, y QUÉ PASÓ. Las
+   ocho páginas contaban las dos primeras y ninguna la tercera — el diagnóstico
+   del 30-ago lo dice sin rodeos: *sin prueba no hay precio*.
+
+   🔴 Y al ir a escribirla apareció algo peor que la ausencia: cuatro de los
+   seis casos ya publicaban cifras, y varias eran RESULTADOS INVENTADOS para
+   clientes que no existen — «Top 3 en el mapa», «−15 % de reservas que no se
+   presentan». En una cifra grande, una hipótesis se lee como un hecho.
+
+       Una cifra grande es una promesa de que alguien la midió.
+       Si no la midió nadie, no es una cifra: es un adjetivo con dígitos.
+
+   Lo que sí se puede medir de un proyecto de muestra es el trabajo: lo que
+   pesa, lo que tarda y lo que hace. Eso es verificable, es repetible con
+   `puertas.py`, y es justamente el argumento de Faro. Los objetivos del
+   proyecto siguen contados en prosa, que es donde una hipótesis no engaña.
+
+   El bloque está hecho para recibir cifras REALES en cuanto las haya: se
+   cambian los tres números y la línea de fuente, y no se toca nada más.
+
+   (Aquí iba el nombre del primer cliente con resultados. Se quitó el
+   11-sep-2026: este archivo se sirve en abierto y nadie ha pedido permiso
+   para nombrar a una clienta real en la web. El nombre no aportaba nada al
+   comentario; el dato de cuándo se rellena, sí.)
+   -------------------------------------------------------------------------- */
+.faro-resultados{
+  display:grid; gap:var(--e-l) var(--e-m);
+  grid-template-columns:repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  padding-block:var(--e-xl);
+  border-top:1px solid var(--f-linea);
+}
+.faro-resultados .cifra{
+  font-family:var(--f-familia-display); font-weight:var(--f-peso-display);
+  font-size:var(--f-display); line-height:.92;
+  letter-spacing:var(--f-display-track);
+  color:var(--caso-tinta, var(--f-tinta));
+  display:block; margin:0 0 .18em;
+}
+.faro-resultados .pie{
+  display:block; font-size:var(--f-cuerpo); line-height:1.45;
+  color:var(--caso-suave, var(--f-suave)); max-width:26ch;
+}
+/* La fuente y la fecha ocupan toda la fila: son de las tres cifras, no de una.
+   Una cifra sin fuente es la que hay que creerse; con fuente es la que se
+   puede comprobar, y esa es la diferencia que vende. */
+.faro-resultados .fuente{
+  grid-column:1 / -1; font-size:var(--f-sello);
+  letter-spacing:var(--f-sello-track); text-transform:uppercase;
+  color:var(--caso-suave, var(--f-suave)); margin:0;
+}
+
+
+/* ── LOS TRES GESTOS DE FARO ────────────────────────────────────────────────
+   El sistema tenía GRAMÁTICA —duraciones, curvas, escalonado— y no tenía
+   GESTOS. Es la diferencia entre saber conjugar y tener una manera de hablar:
+   ninguna de las ocho páginas tenía un movimiento que un jurado recordara.
+
+       Un catálogo de efectos no es un lenguaje. Tres gestos repetidos
+       en todas las páginas, sí.
+
+   Son tres, se repiten en las ocho, y salen de los tokens. Ninguno añade una
+   librería y ninguno es imprescindible: si el navegador no puede, la página se
+   queda en su estado de reposo, que es el que funciona.
+
+   1 · CABECERA QUE SE CONDENSA — con `animation-timeline: scroll()`, que es
+       nativo y cuesta 0 KB de JavaScript. Donde no exista, la barra se queda
+       como está y no pasa nada.
+   2 · FILA QUE ENSEÑA LO SUYO — al señalar una fila del índice aparece su
+       miniatura y el número se aparta. Es la navegación, no un adorno.
+   3 · TITULAR QUE SE ESCRIBE — cada línea sube por detrás de su máscara. El
+       reparto en líneas lo hace `gestos.js`, porque depende del ancho.
+   -------------------------------------------------------------------------- */
+
+/* ── 1 · la cabecera se condensa ───────────────────────────────────────────── */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 901px) {
+    @keyframes faro-condensa{
+      to{
+        height:46px;
+        background:color-mix(in srgb, var(--f-fondo) 92%, transparent);
+        box-shadow:0 1px 0 var(--f-linea), 0 10px 30px -18px var(--f-tinta);
+      }
+    }
+    .faro-barra{
+      animation:faro-condensa linear both;
+      animation-timeline:scroll();
+      animation-range:0 220px;
+    }
+  }
+}
+
+/* ── 2 · la fila enseña lo suyo ────────────────────────────────────────────── */
+.g-fila{ position:relative; }
+.g-fila .g-num{
+  display:inline-block;
+  transition:transform var(--m-rapido, 240ms) var(--m-estandar, ease),
+             color var(--m-rapido, 240ms) var(--m-estandar, ease);
+}
+.g-fila:hover .g-num, .g-fila:focus-visible .g-num{ transform:translateX(-4px); }
+.g-vista{
+  position:fixed; z-index:60; width:230px; aspect-ratio:16/10;
+  border-radius:3px; overflow:hidden; pointer-events:none;
+  opacity:0; transform:translate(-50%, -50%) scale(.96);
+  transition:opacity var(--m-rapido, 240ms) var(--m-estandar, ease),
+             transform var(--m-rapido, 240ms) var(--m-estandar, ease);
+  box-shadow:0 24px 60px -30px var(--f-tinta);
+}
+.g-vista img{ width:100%; height:100%; object-fit:cover; display:block; }
+.g-vista[data-viva]{ opacity:1; transform:translate(-50%, -50%) scale(1); }
+/* 🔴 En táctil no existe «señalar», y una miniatura que persigue un dedo tapa
+   justo lo que se quiere tocar. Ahí no aparece: la fila ya lleva su barra de
+   color, que es la pista que funciona sin ratón. */
+@media (hover: none), (prefers-reduced-motion: reduce){ .g-vista{ display:none; } }
+
+/* ── 3 · el titular se escribe ─────────────────────────────────────────────── */
+.g-titular .g-linea{ display:block; overflow:hidden; }
+.g-titular .g-linea > span{
+  display:block;
+  transform:translateY(102%);
+  transition:transform var(--m-lento, 900ms) var(--m-entrada, ease);
+  transition-delay:calc(var(--i, 0) * 70ms);
+}
+.g-titular[data-visto] .g-linea > span{ transform:none; }
+/* Sin JavaScript no hay líneas que repartir y el titular está entero: el estado
+   de reposo es el que se publica. */
+html.sin-js .g-titular .g-linea > span{ transform:none; }
+@media (prefers-reduced-motion: reduce){
+  .g-titular .g-linea{ overflow:visible; }
+  .g-titular .g-linea > span{ transform:none; transition:opacity 200ms linear; }
+}
+
+/* ── LAS RECETAS ────────────────────────────────────────────────────────────
+   Una receta de H1 y una de cuerpo, y las dos salen de la escala. Es lo que
+   hacía que Aura pareciera otra web: su H1 era Work Sans 600 a 110 px cuando
+   el resto del sitio titula en Frank Ruhl Libre.
+   -------------------------------------------------------------------------- */
+body{
+  margin:0;
+  font-family:var(--f-familia-texto);
+  font-size:var(--f-cuerpo); line-height:var(--f-cuerpo-alto);
+  color:var(--f-tinta); background:var(--f-fondo);
+  -webkit-font-smoothing:antialiased;
+}
+h1, .f-display{
+  font-family:var(--f-familia-display); font-weight:var(--f-peso-display);
+  font-size:var(--f-display); line-height:var(--f-display-alto);
+  letter-spacing:var(--f-display-track);
+  /* Reparte las líneas en vez de dejar una palabra sola abajo. */
+  text-wrap:balance; margin:0;
+}
+h2, .f-titulo{
+  font-family:var(--f-familia-display); font-weight:var(--f-peso-display);
+  font-size:var(--f-titulo); line-height:var(--f-titulo-alto);
+  letter-spacing:var(--f-titulo-track); text-wrap:balance; margin:0;
+}
+h3, .f-cifra{
+  font-family:var(--f-familia-display); font-weight:var(--f-peso-display);
+  font-size:var(--f-cifra); line-height:var(--f-cifra-alto);
+  letter-spacing:var(--f-cifra-track); margin:0;
+}
+.f-lede{ font-size:var(--f-lede); line-height:var(--f-lede-alto); }
+.f-sello{
+  font-size:var(--f-sello); line-height:var(--f-sello-alto);
+  letter-spacing:var(--f-sello-track); text-transform:uppercase;
+  font-weight:600; color:var(--acento-texto);
+}
+p, li{ text-wrap:pretty; }
+p{ max-width:var(--e-texto-max); }
+a{ color:inherit; }
+*{ box-sizing:border-box; }
+
+/* ── FOCO, SELECCIÓN Y BARRA DE SCROLL ──────────────────────────────────────
+   Venían de `superficie.css`, que este archivo sustituye. El foco se dibuja
+   con `currentColor`: así se ve sobre las tres superficies sin excepciones, y
+   por eso no hay una regla por superficie que alguien pueda olvidar.
+   -------------------------------------------------------------------------- */
+:focus-visible{ outline:2px solid currentColor; outline-offset:3px; }
+::selection{ background:#C9A667; color:#12291F; text-shadow:none; }
+::-moz-selection{ background:#C9A667; color:#12291F; text-shadow:none; }
+
+html{ scrollbar-color:#C9A667 transparent; scrollbar-width:thin; }
+::-webkit-scrollbar{ width:10px; height:10px; }
+::-webkit-scrollbar-track{ background:transparent; }
+::-webkit-scrollbar-thumb{
+  background:#C9A667; border-radius:100px;
+  border:3px solid transparent; background-clip:content-box;
+}
+::-webkit-scrollbar-thumb:hover{ background:#12291F; background-clip:content-box; }
+[data-superficie="tinta"], [data-tono="oscuro"]{ scrollbar-color:#E2D9C6 transparent; }
+
+.fx-saltar:focus, .skip:focus{ background:#C9A667; color:#12291F; }

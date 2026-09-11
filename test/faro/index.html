@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script>document.documentElement.classList.add('js')</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Faro Digital — Webs y presencia local para pymes y negocios de Barcelona</title>
+<meta name="description" content="Webs que miden y presencia local para pymes y negocios locales de Barcelona. Diagnóstico gratis, precios publicados y un método por fases.">
+<meta name="theme-color" content="#192622">
+
+<!-- `/test/faro` · fila B15 · 04-sep-2026. Página de prueba, no indexable.
+     Es la página del test B11 (`/test/kaito`, archivada) con una sola diferencia:
+     el vídeo de la portada lo sustituye la PIEZA FIRMA, un shader del mar que
+     responde al ratón en escritorio y al scroll en móvil. Todo lo demás —copy,
+     rejilla, escala de cinco tamaños, secciones, cierre y pie— es idéntico.
+     Stack de Faro: HTML/CSS/JS a mano, sin librerías. -->
+
+<!-- El poster es el LCP. Se precarga con prioridad alta ANTES que fuentes y vídeo.
+     Un <link rel=preload> admite media queries; el atributo poster de <video> no
+     admite ni srcset ni fetchpriority, por eso el poster es un <picture> real
+     debajo del vídeo (ver decisión 2 en NOTAS-paso-1.md). -->
+<!-- B15 · el poster es la MISMA textura que dibuja el shader (faro-w / faro-m):
+     cuando el canvas se enciende no cambia ni un píxel, y si nunca se enciende
+     lo que queda es la pieza quieta. -->
+<!-- v3 · el poster es el PRIMER FOTOGRAMA EXACTO del bucle de calma (escritorio, 1280×728) o del bucle móvil (540×720):
+     cuando el bucle arranca no cambia ni un píxel, y con prefers-reduced-motion es lo que queda. -->
+<link rel="preload" as="image" type="image/webp" href="media/olas/poster-calma.webp" fetchpriority="high" media="(min-width: 768px)">
+<link rel="preload" as="image" type="image/webp" href="media/olas/poster-calma-m.webp" fetchpriority="high" media="(max-width: 767px)">
+<link rel="preload" as="font" type="font/woff2" href="../../assets/fuentes/FrankRuhlLibre-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="../../assets/fuentes/WorkSans-latin.woff2" crossorigin>
+
+<link rel="stylesheet" href="../../assets/fuentes.css">
+<link rel="stylesheet" href="../../assets/motion.css">
+<link rel="stylesheet" href="faro.css">
+</head>
+<body>
+
+<!-- v2 · 1.1 · LA ESCENA, FIJA DETRÁS DE TODA LA PÁGINA.
+     En la v1 este bloque vivía dentro del hero y desaparecía en la tercera
+     pantalla. Ahora es el primer hijo del body, `position: fixed`, y las
+     secciones pasan por delante del faro hasta el pie. El faro está siempre en
+     el mismo sitio de la pantalla. Por debajo de 1024 px vuelve a comportarse
+     como la v1 (ver el bloque «MENOS DE 1024 px» de faro.css). -->
+<div class="escena-fondo" aria-hidden="true">
+  <!-- El zoom de entrada va en una capa de dentro, y el marco recorta. Con la
+       animación puesta en el propio marco, por debajo de 769 px —donde el marco
+       es absoluto y ya no lo contiene el hero— el `scale(1.06)` sacaba la foto
+       de la pantalla y dejaba de 7 a 17 px de barra horizontal. -->
+  <div class="escena-zoom hero-zoom">
+    <picture class="hero-poster">
+      <!-- v3 · el primer fotograma exacto de cada bucle. Es el LCP, el fallback de
+           todo y lo único que se ve con prefers-reduced-motion (poster fijo, sin vídeo). -->
+      <source media="(max-width: 767px)" srcset="media/olas/poster-calma-m.webp" type="image/webp">
+      <source srcset="media/olas/poster-calma.webp" type="image/webp">
+      <img src="media/poster-hero.jpg" width="1280" height="728" fetchpriority="high" decoding="async" alt="">
+    </picture>
+    <!-- v3 · EL LIENZO (2D). Fijo detrás de toda la página desde 768 px: cada
+         fotograma nuevo mezcla los dos bucles (calma y tormenta, globalAlpha =
+         mezcla) dentro de la máscara del mar, y fuera deja la foto fija del faro.
+         Lo dibuja `pieza.js`; sin canvas 2D o con el primer frame > 80 ms se
+         queda el poster. -->
+    <canvas class="pieza" width="1280" height="728" aria-hidden="true"></canvas>
+
+    <!-- v3 · MÓVIL (< 768 px): un solo bucle fijo detrás de la página, sin lienzo.
+         Las fuentes solo coinciden por debajo de 768 px y con movimiento normal:
+         en escritorio y con reduced-motion no se descarga ni un byte. Lo arranca
+         `pieza.js` después del LCP. El scroll manda solo el velo de encima
+         (oscurecido lineal de 0 a 25 %). -->
+    <video class="mar-movil" muted playsinline loop autoplay preload="none" width="540" height="720" tabindex="-1" aria-hidden="true">
+      <source src="media/olas/calma-m.webm" type="video/webm" media="(max-width: 767px) and (prefers-reduced-motion: no-preference)">
+      <source src="media/olas/calma-m.mp4" type="video/mp4" media="(max-width: 767px) and (prefers-reduced-motion: no-preference)">
+    </video>
+    <div class="mar-velo" aria-hidden="true"></div>
+  </div>
+</div>
+
+<main class="pagina">
+
+<!-- La escena: 200vh de recorrido. El hero y la capa de oferta son DOS elementos
+     sticky superpuestos sobre el fondo fijo: los textos del hero se desvanecen
+     en los primeros 60 vh y los cuatro bloques aparecen alrededor del faro. En
+     ≤ 768 px nada es sticky: el hero es una pantalla y la oferta va debajo. -->
+<div class="escena">
+
+<section class="hero" id="hero">
+
+  <!-- Los textos del hero, en su rejilla. Es lo que se desvanece con el scroll.
+       La cabecera NO está aquí: es fija y vive al final del body. -->
+  <div class="hero-textos">
+    <h1 class="hero-h1">
+      <span class="hero-reveal hero-reveal-1" style="--k-retardo:.25s">Un solo sistema.</span>
+      <span class="hero-reveal" style="--k-retardo:.42s">Todos los ángulos.</span>
+    </h1>
+
+    <p class="hero-bajada hero-fade" style="--k-retardo:.7s">Tu web, tu ficha de Google, tu Instagram y tus reseñas, mirados desde fuera.</p>
+
+    <div class="hero-nota hero-ui hero-fade" style="--k-retardo:.85s">
+      <span>Sin accesos. Sin compromiso.</span>
+      <span>Barcelona</span>
+    </div>
+  </div>
+
+</section>
+
+<!-- Sección 2: la oferta, alrededor del faro. Sin tarjetas, sin fondo, sin overlay.
+     Los cuatro bloques y su texto son los de «Qué ofrecemos» de la home, exactos. -->
+<section class="oferta" id="servicios" aria-labelledby="oferta-titulo">
+  <!-- v3 · la franja móvil con el poster del hero se fue: el mar fijo pasa por detrás también en móvil. -->
+
+  <h2 class="oferta-titulo" id="oferta-titulo" style="--k-i:0">Qué ofrecemos</h2>
+
+  <ol class="oferta-bloques">
+    <li class="bloque" style="--k-i:0">
+      <span class="bloque-etiqueta hero-ui">01</span>
+      <h3 class="bloque-titular">Foto del Día 0</h3>
+      <p class="bloque-texto">Tu web, tu ficha de Google, tu Instagram y tus reseñas, mirados desde fuera. Te lo contamos en 20 minutos. <b>Gratis.</b></p>
+    </li>
+    <li class="bloque" style="--k-i:1">
+      <span class="bloque-etiqueta hero-ui">02</span>
+      <h3 class="bloque-titular">Web que mide</h3>
+      <p class="bloque-texto">Rápida, con página por servicio y la reserva dentro. Sin banner de cookies, y midiendo desde el primer día.</p>
+    </li>
+    <li class="bloque" style="--k-i:2">
+      <span class="bloque-etiqueta hero-ui">03</span>
+      <h3 class="bloque-titular">Presencia Local</h3>
+      <p class="bloque-texto">Tu ficha de Google trabajando, las reseñas al día y contenido cada mes. Con un informe de números.</p>
+    </li>
+    <li class="bloque" style="--k-i:3">
+      <span class="bloque-etiqueta hero-ui">04</span>
+      <h3 class="bloque-titular">Diagnóstico + Plan</h3>
+      <p class="bloque-texto"><b>Los ocho canales</b>, no solo la web. Con un plan priorizado: qué se hace primero, quién y cuándo.</p>
+    </li>
+  </ol>
+</section>
+
+<!-- Testigo del scroll: a 160vh del inicio. Cuando entra por abajo del viewport
+     (a 60 vh de scroll, cuando acaban de desvanecerse los textos del hero) los
+     bloques aparecen en cascada. Es lo que observa kaito.js. -->
+<div class="escena-marca" aria-hidden="true"></div>
+
+<!-- v2 · 1.1 · El degradado de 20 vh que cerraba la escena sigue en el DOM
+     porque por debajo de 1024 px la v1 lo necesita: ahí el fondo sí se acaba.
+     A partir de 1024 px el CSS lo apaga — ya no hay «después del vídeo». -->
+<div class="escena-degradado" aria-hidden="true"></div>
+
+</div>
+
+<!-- ======================= SECCIÓN 3 · MÉTODO ======================= -->
+<!-- v2 · 1.2 · dos columnas de mar vacío: .col-a en 1-5, .col-b en 8-12, y la
+     cabecera a un lado u otro según `cab-izq` / `cab-der`. El orden del DOM es
+     el de siempre (cabecera, luego 1-2-3-4-5): las columnas solo lo COLOCAN.
+     Por debajo de 1024 px un `.col` es un <div> y no hace nada: la página
+     vuelve sola a la pila de la v1. -->
+<section class="seccion cab-izq" id="metodo" aria-labelledby="t-metodo">
+  <div class="seccion-cab" style="--k-i:0">
+    <span class="kicker hero-ui">EL MÉTODO</span>
+    <h2 class="seccion-titulo" id="t-metodo">OAE-360 — un método, cinco fases</h2>
+  </div>
+  <div class="col col-a">
+    <ol class="filas">
+      <li class="fila fila-fase" style="--k-i:1"><span class="num hero-ui">1</span><h3 class="t-fila">Objetivos</h3><p class="parrafo suave">Qué necesita el negocio.</p></li>
+      <li class="fila fila-fase" style="--k-i:2"><span class="num hero-ui">2</span><h3 class="t-fila">Auditoría 360</h3><p class="parrafo suave">Dónde está hoy, canal por canal.</p></li>
+      <li class="fila fila-fase" style="--k-i:3"><span class="num hero-ui">3</span><h3 class="t-fila">Mapa de oportunidades</h3><p class="parrafo suave">Qué se hace primero y por qué.</p></li>
+    </ol>
+  </div>
+  <div class="col col-b">
+    <ol class="filas" start="4">
+      <li class="fila fila-fase" style="--k-i:4"><span class="num hero-ui">4</span><h3 class="t-fila">Plan de acción</h3><p class="parrafo suave">Cómo se ejecuta y cómo se mide.</p></li>
+      <li class="fila fila-fase" style="--k-i:5"><span class="num hero-ui">5</span><h3 class="t-fila">Ejecución</h3><p class="parrafo suave">Mes a mes.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ======================= SECCIÓN 4 · TRABAJO ======================= -->
+<section class="seccion cab-der" id="trabajo" aria-labelledby="t-trabajo">
+  <div class="seccion-cab" style="--k-i:0">
+    <span class="kicker hero-ui">TRABAJO</span>
+    <h2 class="seccion-titulo" id="t-trabajo">Seis proyectos</h2>
+  </div>
+  <!-- Las seis filas las genera un script desde cada Portfolio/Caso-*.html
+       (cifras) y la tarjeta de la home (etiqueta, titular, miniatura, enlace). -->
+  <div class="col col-a">
+    <ol class="filas">
+      <li class="fila fila-caso" style="--k-i:0">
+        <div class="caso-num"><span class="hero-ui">01</span><span class="hero-ui caso-tag">Proyecto de muestra · Servicios locales</span></div>
+        <img class="caso-foto" src="media/casos/verbena-480.webp" width="480" height="300" loading="lazy" decoding="async" alt="Verbena, peluquería y bienestar — portada del proyecto de muestra">
+        <div class="caso-cuerpo"><h3 class="t-fila">De un local con encanto y cero visibilidad, a una marca con dos motivos para reservar</h3><a class="enlace hero-ui" href="/portfolio/Caso-1-Local-Verbena.html">Ver el proyecto →</a></div>
+        <ul class="caso-cifras">
+          <li><span class="cifra">202 KB</span> <span class="micro">pesa la página entera, con su portada animada dentro</span></li>
+          <li><span class="cifra">1,0 s</span> <span class="micro">tarda en pintarse el titular en un móvil de gama media</span></li>
+          <li><span class="cifra">0</span> <span class="micro">recursos de terceros: ni una fuente, ni un script, ni un píxel de fuera</span></li>
+        </ul>
+      </li>
+      <li class="fila fila-caso" style="--k-i:1">
+        <div class="caso-num"><span class="hero-ui">02</span><span class="hero-ui caso-tag">Proyecto de muestra · E-commerce</span></div>
+        <img class="caso-foto" src="media/casos/aura-480.webp" width="480" height="300" loading="lazy" decoding="async" alt="Aura Skincare — landing de producto del proyecto de muestra">
+        <div class="caso-cuerpo"><h3 class="t-fila">Rediseñar una página de producto alrededor de una sola decisión</h3><a class="enlace hero-ui" href="/portfolio/caso-2-ecommerce-aura">Ver el proyecto →</a></div>
+        <ul class="caso-cifras">
+          <li><span class="cifra">5</span> <span class="micro">pantallas de tienda funcionando dentro de esta página, no en un vídeo</span></li>
+          <li><span class="cifra">21</span> <span class="micro">controles que se pueden tocar sin salir del caso</span></li>
+          <li><span class="cifra">2,0 s</span> <span class="micro">tarda en pintarse el titular en un móvil de gama media, con el 3D dentro</span></li>
+        </ul>
+      </li>
+      <li class="fila fila-caso" style="--k-i:2">
+        <div class="caso-num"><span class="hero-ui">03</span><span class="hero-ui caso-tag">Demo · Datos y automatización</span></div>
+        <img class="caso-foto" src="media/casos/casalumen-480.webp" width="480" height="300" loading="lazy" decoding="async" alt="Casa Lumen — panel de analítica del proyecto de muestra">
+        <div class="caso-cuerpo"><h3 class="t-fila">Cuatro tiendas, cuatro hojas de cálculo distintas — y ninguna decisión compartida</h3><a class="enlace hero-ui" href="/portfolio/Caso-3-Datos-Casa-Lumen.html">Ver el proyecto →</a></div>
+        <ul class="caso-cifras">
+          <li><span class="cifra">184 KB</span> <span class="micro">pesa la página entera, panel incluido</span></li>
+          <li><span class="cifra">1,8 s</span> <span class="micro">tarda en pintarse el titular en un móvil de gama media</span></li>
+          <li><span class="cifra">0</span> <span class="micro">imágenes: todo lo que se ve está dibujado por el navegador</span></li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+  <div class="col col-b">
+    <ol class="filas" start="4">
+      <li class="fila fila-caso" style="--k-i:3">
+        <div class="caso-num"><span class="hero-ui">04</span><span class="hero-ui caso-tag">Proyecto de muestra · B2B · EN · ES · FR</span></div>
+        <img class="caso-foto" src="media/casos/meridian-480.webp" width="480" height="300" loading="lazy" decoding="async" alt="Meridian Advisory Group — web corporativa del proyecto de muestra">
+        <div class="caso-cuerpo"><h3 class="t-fila">Una web anticuada que hacía parecer poco fiable a una consultora solvente</h3><a class="enlace hero-ui" href="/portfolio/Caso-4-B2B-Meridian.html">Ver el proyecto →</a></div>
+        <ul class="caso-cifras">
+          <li><span class="cifra">8</span> <span class="micro">controles que se pueden tocar para ver el antes y el después</span></li>
+          <li><span class="cifra">191 KB</span> <span class="micro">pesa la página entera</span></li>
+          <li><span class="cifra">1,7 s</span> <span class="micro">tarda en pintarse el titular en un móvil de gama media</span></li>
+        </ul>
+      </li>
+      <li class="fila fila-caso" style="--k-i:4">
+        <div class="caso-num"><span class="hero-ui">05</span><span class="hero-ui caso-tag">Proyecto de muestra · Local SEO · Hospitality</span></div>
+        <img class="caso-foto" src="media/casos/brasa-480.webp" width="480" height="300" loading="lazy" decoding="async" alt="Brasa &amp; Sal — web del grupo de restauración, proyecto de muestra">
+        <div class="caso-cuerpo"><h3 class="t-fila">Tres restaurantes excelentes, compitiendo entre ellos en Google sin querer</h3><a class="enlace hero-ui" href="/portfolio/Caso-5-Multilocal-Brasa-Sal.html">Ver el proyecto →</a></div>
+        <ul class="caso-cifras">
+          <li><span class="cifra">3</span> <span class="micro">locales que se cambian sin recargar, en el selector de la página</span></li>
+          <li><span class="cifra">295 KB</span> <span class="micro">pesa la página entera, con la portada de brasas dentro</span></li>
+          <li><span class="cifra">2,0 s</span> <span class="micro">tarda en pintarse el titular en un móvil de gama media</span></li>
+        </ul>
+      </li>
+      <li class="fila fila-caso" style="--k-i:5">
+        <div class="caso-num"><span class="hero-ui">06</span><span class="hero-ui caso-tag">Proyecto de muestra · Contenido · Marca</span></div>
+        <img class="caso-foto" src="media/casos/sobremesa-480.webp" width="480" height="300" loading="lazy" decoding="async" alt="Sobremesa — marca y contenido del restaurante, proyecto de muestra">
+        <div class="caso-cuerpo"><h3 class="t-fila">Lleno los viernes, vacío el resto de la semana</h3><a class="enlace hero-ui" href="/portfolio/Caso-6-Contenido-Sobremesa.html">Ver el proyecto →</a></div>
+        <ul class="caso-cifras">
+          <li><span class="cifra">23</span> <span class="micro">piezas de contenido reales dentro de la página, no descritas</span></li>
+          <li><span class="cifra">329 KB</span> <span class="micro">pesa la página entera, con las 23 piezas</span></li>
+          <li><span class="cifra">2,0 s</span> <span class="micro">tarda en pintarse el titular en un móvil de gama media</span></li>
+        </ul>
+      </li>
+    </ol>
+    <p class="dos-enlaces" style="--k-i:7">
+      <a class="enlace hero-ui" href="/portfolio/">Ver el portfolio completo (6 casos) →</a>
+      <a class="enlace hero-ui" href="/levels.html">Los tres niveles de web, con demos que funcionan →</a>
+    </p>
+  </div>
+</section>
+
+<!-- ======================= SECCIÓN 5 · PRECIOS ======================= -->
+<section class="seccion cab-izq" id="precios" aria-labelledby="t-precios">
+  <div class="seccion-cab" style="--k-i:0">
+    <span class="kicker hero-ui">PRECIOS</span>
+    <h2 class="seccion-titulo" id="t-precios">Los precios, publicados</h2>
+  </div>
+
+  <div class="col col-a">
+  <div class="grupo">
+    <div class="grupo-cab" style="--k-i:1">
+      <h3 class="hero-ui grupo-nombre">Tu web, una vez</h3>
+      <span class="micro">Una web de agencia en Barcelona va de 1.300 € a 6.000 €.</span>
+    </div>
+    <ol class="filas">
+      <li class="fila fila-plan" style="--k-i:2">
+        <div class="plan-nom"><span class="hero-ui">Presencia</span></div>
+        <p class="parrafo plan-para">Para el que necesita existir bien y que le encuentren.</p>
+        <div class="plan-precio"><span class="t-fila">890 €</span></div>
+        <ul class="plan-lista parrafo suave"><li>Una página larga, pensada para el móvil</li><li>Tu ficha de Google conectada</li><li>Medición desde el primer día, sin cookies</li></ul>
+      </li>
+      <li class="fila fila-plan" style="--k-i:3">
+        <div class="plan-nom"><span class="hero-ui">Catálogo</span><span class="micro">La más elegida</span></div>
+        <p class="parrafo plan-para">Para el que tiene carta, servicios o tarifas.</p>
+        <div class="plan-precio"><span class="t-fila">1.290 €</span></div>
+        <ul class="plan-lista parrafo suave"><li>Todo lo de Presencia</li><li><b>Una página por servicio, generada desde un solo listado</b>: cambias un precio y se actualizan la web, la carta en PDF y las plataformas</li><li>Reserva integrada</li><li>Datos que los buscadores con IA saben leer</li></ul>
+      </li>
+      <li class="fila fila-plan" style="--k-i:4">
+        <div class="plan-nom"><span class="hero-ui">Motor</span></div>
+        <p class="parrafo plan-para">Para el que quiere que la web le traiga clientes.</p>
+        <div class="plan-precio"><span class="t-fila">1.790 €</span></div>
+        <ul class="plan-lista parrafo suave"><li>Todo lo de Catálogo</li><li>Landings de campaña</li><li>El contenido inicial escrito</li><li><b>Tres meses de ajustes</b> con los datos delante</li></ul>
+      </li>
+    </ol>
+    <ol class="filas tiras">
+      <li class="fila fila-tira" style="--k-i:5">
+        <p class="tira-t">Antes de nada, la <b>Foto del Día 0</b> — gratis</p>
+        <p class="parrafo suave">Miramos tu web, tu ficha de Google, tu Instagram y tus reseñas desde fuera, y te lo contamos en 20 minutos.</p>
+        <a class="enlace hero-ui tira-accion" href="#contacto">Pídela</a>
+      </li>
+      <li class="fila fila-tira" style="--k-i:6">
+        <p class="tira-t">¿Prefieres el mapa entero antes de decidir?</p>
+        <p class="parrafo suave">El <b>Diagnóstico + Plan</b> son los ocho canales auditados y un plan priorizado, con responsable y fecha por acción.</p>
+        <span class="t-fila tira-accion">690 €</span>
+      </li>
+    </ol>
+  </div>
+  </div>
+
+  <div class="col col-b">
+  <div class="grupo">
+    <div class="grupo-cab" style="--k-i:0">
+      <h3 class="hero-ui grupo-nombre">Y cada mes, si quieres</h3>
+      <span class="micro">Una pyme española paga entre 400 € y 1.500 € al mes de agencia.</span>
+    </div>
+    <ol class="filas">
+      <li class="fila fila-plan" style="--k-i:1">
+        <div class="plan-nom"><span class="hero-ui">Al día</span></div>
+        <p class="parrafo plan-para">Que tu ficha y tus reseñas no se queden atrás.</p>
+        <div class="plan-precio"><span class="t-fila">300 €</span><span class="hero-ui">al mes</span></div>
+        <ul class="plan-lista parrafo suave"><li>Tu ficha de Google trabajada</li><li>Motor de reseñas: pedirlas y responderlas</li><li>Informe mensual</li></ul>
+      </li>
+      <li class="fila fila-plan" style="--k-i:2">
+        <div class="plan-nom"><span class="hero-ui">En marcha</span><span class="micro">La más elegida</span></div>
+        <p class="parrafo plan-para">Que además haya algo nuevo cada semana.</p>
+        <div class="plan-precio"><span class="t-fila">600 €</span><span class="hero-ui">al mes</span></div>
+        <ul class="plan-lista parrafo suave"><li>Todo lo de Al día</li><li><b>Cuatro piezas de contenido al mes</b></li><li>Recordatorios de cita por WhatsApp</li><li><b>Tu visibilidad en buscadores con IA, medida cada mes</b></li></ul>
+      </li>
+      <li class="fila fila-plan" style="--k-i:3">
+        <div class="plan-nom"><span class="hero-ui">A fondo</span></div>
+        <p class="parrafo plan-para">Que no tengas que acordarte de nada.</p>
+        <div class="plan-precio"><span class="t-fila">900 €</span><span class="hero-ui">al mes</span></div>
+        <ul class="plan-lista parrafo suave"><li>Todo lo de En marcha</li><li><b>Ocho piezas al mes</b></li><li>Mantenimiento de la web</li><li>Posicionamiento local y revisión trimestral con los datos</li></ul>
+      </li>
+    </ol>
+  </div>
+
+  <p class="micro precios-pie" style="--k-i:4">Precios sin IVA · los servicios mensuales tienen permanencia de 3 meses y después se cancelan avisando con 30 días.</p>
+  </div>
+</section>
+
+<!-- ============== SECCIÓN 6 · CIERRE + PIE, UN SOLO VÍDEO (paso 4) ==============
+     Un contenedor, un vídeo de fondo, y dentro las dos zonas: sin línea entre
+     ellas y sin overlay. El vídeo no descarga nada (preload="none") hasta que
+     kaito.js lo arranca al acercarse al viewport. -->
+<div class="cierre-escena">
+
+  <!-- v3 · el cierre ya no tiene fondo propio: el mar fijo pasa por detrás. -->
+
+<section class="seccion cierre cab-izq" id="contacto" aria-labelledby="t-cierre">
+  <div class="seccion-cab" style="--k-i:0">
+    <h2 class="seccion-titulo" id="t-cierre">Empecemos por tu Foto del Día 0</h2>
+    <p class="parrafo cierre-intro">Dinos qué negocio tienes y dónde está. Lo miramos como lo ve alguien que aún no te conoce.</p>
+  </div>
+  <div class="col col-a">
+  <ul class="cierre-preguntas">
+    <li style="--k-i:1"><span class="hero-ui k">Qué recibes</span><span class="t-fila">Una página con tres huecos concretos</span><span class="micro">Siete comprobaciones, y <b>la captura de lo que ChatGPT responde hoy cuando le preguntan por un negocio como el tuyo</b>.</span></li>
+    <li style="--k-i:2"><span class="hero-ui k">Cuánto tarda</span><span class="t-fila">Dos días laborables</span><span class="micro">Con fecha antes de empezar.</span></li>
+    <li style="--k-i:3"><span class="hero-ui k">Qué pasa después</span><span class="t-fila">Te llamamos 20 minutos</span><span class="micro">Para explicártelo. Si no te encaja, no volvemos a escribir.</span></li>
+    <li style="--k-i:4"><span class="hero-ui k">Qué necesitamos de ti</span><span class="t-fila">Ni una contraseña</span><span class="micro">Todo con <b>información pública</b>: lo mismo que ve cualquier cliente tuyo.</span></li>
+  </ul>
+  </div>
+
+  <div class="col col-b">
+  <div class="cierre-pie">
+    <p class="parrafo" style="--k-i:5"><b>Gratis y sin compromiso.</b> Preferimos empezar enseñando algo, no pidiéndolo.</p>
+    <!-- El formulario real vive en la home (Formspree, recibe contactos reales):
+         esta página de prueba enlaza y no lo reconstruye. -->
+    <!-- B12·4: «Día 0 →» no se parte nunca, así el CTA no deja «0 →» huérfano. -->
+    <a class="enlace cierre-cta" href="/#contacto" style="--k-i:6">Pedir mi Foto del&nbsp;Día&nbsp;0&nbsp;→</a>
+    <p class="micro" style="--k-i:7"><b>Sin accesos. Sin compromiso.</b> Respondemos en dos días laborables. No te apuntamos a ninguna lista.</p>
+  </div>
+  </div>
+</section>
+
+<!-- El pie, dentro del mismo contenedor y sobre el mismo vídeo: sin línea
+     divisoria con el cierre. Tres intenciones, texto y enlaces de la home.
+     Sin línea de copyright y sin repetir la letra pequeña de precios. -->
+<footer class="pie">
+  <div class="col col-b">
+  <div class="pie-tres">
+    <div style="--k-i:0">
+      <h3 class="t-fila">Quiero empezar</h3>
+      <p class="parrafo suave">La Foto del Día 0 es gratis y no pide ni una contraseña.</p>
+      <a class="enlace hero-ui pie-accion" href="#contacto">Pídela aquí arriba →</a>
+    </div>
+    <div style="--k-i:1">
+      <h3 class="t-fila">Solo quiero el precio</h3>
+      <p class="parrafo suave">Está publicado, sin pedir el correo ni «consultar disponibilidad».</p>
+      <a class="enlace hero-ui pie-accion" href="#precios">Ver el tarifario →</a>
+    </div>
+    <div style="--k-i:2">
+      <h3 class="t-fila">Vengo a otra cosa</h3>
+      <p class="parrafo suave">Colaboraciones, prensa, o probar las herramientas sin hablar con nadie.</p>
+      <a class="enlace hero-ui pie-accion" href="mailto:zyadbennani2000@gmail.com">Escríbeme →</a>
+    </div>
+  </div>
+  <div class="pie-legal" style="--k-i:3">
+    <p class="micro"><a class="enlace" href="/privacidad">Privacidad</a> · <a class="enlace" href="/#contacto">Contacto</a></p>
+    <p class="micro">Esta web no usa cookies y no las necesita.</p>
+  </div>
+  </div>
+</footer>
+
+</div>
+
+</main>
+
+<!-- Cabecera: marca, píldora, enlace y «Menú». Fija en escritorio sobre toda la
+     página (ronda 2 + spec paso 3); en móvil, en la parte alta del hero. Vive al
+     final del body para pintarse por encima de todo sin juegos de z-index. -->
+<header class="hero-arriba">
+  <a class="hero-marca hero-ui hero-fade" href="#hero" style="--k-retardo:1s">Faro Digital</a>
+  <nav class="hero-nav hero-fade" aria-label="Secciones" style="--k-retardo:1s">
+    <a class="hero-ui" href="#servicios">Qué hacemos</a>
+    <a class="hero-ui" href="#metodo">Método</a>
+    <a class="hero-ui" href="#trabajo">Trabajo</a>
+    <a class="hero-ui" href="#precios">Precios</a>
+  </nav>
+  <!-- B12·1 y 4: en móvil este enlace parte en dos líneas, y «Día 0 — gratis»
+       no se separa nunca: si no, la segunda línea empieza por un «0» suelto. -->
+  <a class="hero-cta hero-ui hero-fade" href="#contacto" style="--k-retardo:1s">Pide tu Foto del&nbsp;Día&nbsp;0&nbsp;—&nbsp;gratis</a>
+  <button class="hero-menu hero-ui hero-fade" type="button" aria-expanded="false" aria-controls="menuMovil" style="--k-retardo:1s">Menú</button>
+</header>
+
+<!-- Menú móvil: los mismos cuatro enlaces y la misma oferta. Sin animación. -->
+<nav class="menu-movil" id="menuMovil" aria-label="Secciones" hidden>
+  <a class="hero-ui" href="#servicios">Qué hacemos</a>
+  <a class="hero-ui" href="#metodo">Método</a>
+  <a class="hero-ui" href="#trabajo">Trabajo</a>
+  <a class="hero-ui" href="#precios">Precios</a>
+  <a class="hero-ui menu-movil-cta" href="#contacto">Pide tu Foto del Día 0 — gratis</a>
+</nav>
+
+<script src="faro.js" defer></script>
+<!-- La pieza firma. Se carga aparte para que su fallo no arrastre al resto
+     de la página, y arranca después del LCP. La construye la sección 2. -->
+<script src="pieza.js" defer></script>
+</body>
+</html>

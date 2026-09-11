@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="es" class="js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Privacidad — Faro Digital</title>
+<meta name="description" content="Qué datos recoge Faro Digital, para qué, cuánto tiempo y qué puedes hacer con ellos. Esta web no usa cookies.">
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://faro-digital.pages.dev/privacidad">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Faro Digital">
+<meta property="og:url" content="https://faro-digital.pages.dev/privacidad">
+<meta property="og:title" content="Privacidad — Faro Digital">
+<meta property="og:description" content="Qué datos recogemos, para qué y qué puedes hacer con ellos. Esta web no usa cookies.">
+<meta property="og:image" content="https://faro-digital.pages.dev/assets/logo-og.png">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="/assets/base.css">
+<link rel="stylesheet" href="/assets/motion.css">
+<link rel="stylesheet" href="/assets/profundidad.css">
+<style>
+  :root{
+    --forest:#1E3A2E; --forest-deep:#12291F; --sand:#C9A667; --cream:#F5EFE4;
+    --papel:#F5EFE4; --ink:#17211C; --ink-soft:#5B6155; --line:#E2D9C6;
+    --t-display: clamp(2.4rem, 1.7rem + 2.2vw, 3.6rem);
+    --t-titulo:  clamp(1.25rem, 1rem + .7vw, 1.55rem);
+    --t-sub:     1.15rem;
+    --t-cuerpo:  1rem;
+    --t-menor:   .875rem;
+    --t-sello:   .75rem;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; min-height:100svh; display:flex; flex-direction:column;
+    background:var(--papel); color:var(--ink);
+    font-family:'Work Sans',Helvetica,Arial,sans-serif; line-height:1.62;
+  }
+  a{ color:var(--forest); text-underline-offset:.18em; }
+  .wrap{ width:100%; max-width:760px; margin:0 auto; padding:0 clamp(22px,5vw,40px); }
+
+  header{ padding:22px 0; border-bottom:1px solid var(--line); }
+  .brand{ display:inline-flex; align-items:center; gap:10px; text-decoration:none;
+    font-family:'Frank Ruhl Libre',Georgia,serif; font-weight:700;
+    font-size:var(--t-sub); letter-spacing:1px; color:var(--forest-deep); }
+  .brand svg{ width:26px; height:26px; }
+
+  main{ flex:1; padding:clamp(40px,7vh,72px) 0 clamp(48px,8vh,88px); }
+  .sello{ font-size:var(--t-sello); font-weight:700; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--forest); margin:0 0 16px; }
+  h1{ font-family:'Frank Ruhl Libre',Georgia,serif; font-weight:500;
+    font-size:var(--t-display); line-height:1.04; letter-spacing:-.02em;
+    margin:0; color:var(--forest-deep); text-wrap:balance; }
+  .lede{ font-size:var(--t-sub); color:var(--ink-soft); margin:20px 0 0; max-width:52ch; }
+  .fecha{ font-size:var(--t-menor); color:var(--ink-soft); margin-top:10px; }
+
+  h2{ font-family:'Frank Ruhl Libre',Georgia,serif; font-weight:500;
+    font-size:var(--t-titulo); color:var(--forest-deep); margin:38px 0 10px;
+    padding-top:22px; border-top:1px solid var(--line); }
+  p{ margin:0 0 12px; }
+  ul{ margin:0 0 12px; padding-left:20px; }
+  li{ margin-bottom:6px; }
+  strong{ color:var(--forest-deep); }
+
+  .destacado{ background:#FBF7EE; border-left:3px solid var(--sand);
+    border-radius:0 6px 6px 0; padding:16px 20px; margin:22px 0; }
+  .destacado p:last-child{ margin-bottom:0; }
+
+  table{ width:100%; border-collapse:collapse; margin:14px 0 18px;
+    font-size:var(--t-menor); table-layout:fixed; }
+  td{ border-bottom:1px solid var(--line); padding:9px 4px; vertical-align:top;
+      overflow-wrap:anywhere; }
+  td:first-child{ color:var(--ink-soft); width:38%; }
+  
+  @media (max-width:420px){
+    table, tbody, tr, td{ display:block; width:auto; }
+    tr{ border-bottom:1px solid var(--line); padding:8px 0; }
+    td{ border:0; padding:1px 0; }
+    td:first-child{ width:auto; font-size:var(--t-sello);
+      letter-spacing:.1em; text-transform:uppercase; }
+  }
+
+  footer{ padding:22px 0 30px; border-top:1px solid var(--line);
+    font-size:var(--t-menor); color:var(--ink-soft); }
+  footer a{ color:var(--ink-soft); }
+</style>
+</head>
+<body data-tono="claro">
+
+<header><div class="wrap">
+  <a class="brand" href="/">
+    <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="150" cy="150" r="150" fill="#12291F"/>
+      <line x1="150" y1="123" x2="100" y2="92" stroke="#C9A667" stroke-width="9" stroke-linecap="round"/>
+      <line x1="150" y1="123" x2="200" y2="92" stroke="#C9A667" stroke-width="9" stroke-linecap="round"/>
+      <path d="M150 133 L168 175 L132 175 Z" fill="#F5EFE4"/>
+      <path d="M141 175 L159 175 L169 238 L131 238 Z" fill="#F5EFE4"/>
+      <rect x="122" y="238" width="56" height="12" rx="2" fill="#F5EFE4"/>
+      <circle cx="150" cy="123" r="10" fill="#C9A667"/>
+    </svg>
+    FARO DIGITAL
+  </a>
+</div></header>
+
+<main><div class="wrap">
+  <p class="sello">Privacidad</p>
+  <h1>Qué datos recogemos y qué hacemos con ellos</h1>
+  <p class="lede">Escrito para que se entienda leyéndolo una vez. Si algo no queda claro,
+     escribe y te lo explico.</p>
+  <p class="fecha">Última actualización: 1 de septiembre de 2026</p>
+
+  <div class="destacado">
+    <p><strong>Esta web no usa cookies.</strong> Ni de análisis, ni de publicidad, ni de
+       terceros. Por eso no verás el aviso de cookies que sale en casi todas partes: aquí
+       no hay nada que aceptar.</p>
+    <p>Sí medimos qué se pulsa —cuántas personas abren el formulario, por ejemplo— pero
+       <strong>sin recoger un solo dato que identifique a nadie</strong>. Ni IP, ni
+       navegador, ni identificador. Solo <em>qué pasó</em> y <em>en qué página</em>.</p>
+  </div>
+
+  <h2>Quién trata tus datos</h2>
+  <table>
+    <tr><td>Responsable</td><td><strong>Zyad Bennani</strong>, que opera como Faro Digital</td></tr>
+    <tr><td>Dónde</td><td>Barcelona, España</td></tr>
+    <tr><td>Contacto</td><td><a href="mailto:zyadbennani2000@gmail.com">zyadbennani2000@gmail.com</a></td></tr>
+  </table>
+
+  <h2>Qué datos y de dónde salen</h2>
+  <p>Solo los que escribes tú en el formulario de contacto de esta web:</p>
+  <ul>
+    <li><strong>Nombre</strong> y <strong>email</strong> — hacen falta para contestarte.</li>
+    <li><strong>Tu negocio o tu web</strong> y <strong>tu mensaje</strong> — opcionales.
+        Sirven para que la respuesta valga algo.</li>
+  </ul>
+  <p>No compramos listas, no te añadimos a ninguna base de datos y no obtenemos datos
+     tuyos de terceros.</p>
+
+  <h2>Para qué los usamos</h2>
+  <ul>
+    <li><strong>Contestar a lo que preguntas</strong> y, si lo pides, preparar tu Foto del
+        Día 0 y llamarte para explicártela.</li>
+    <li><strong>Nada más.</strong> No se usan para publicidad, no se perfilan y no se toman
+        decisiones automatizadas sobre ti.</li>
+  </ul>
+
+  <h2>Con qué derecho</h2>
+  <p>Con <strong>tu consentimiento</strong> (art. 6.1.a del RGPD), que das al marcar la
+     casilla del formulario, y para <strong>atender tu solicitud</strong> antes de un
+     posible contrato (art. 6.1.b). Puedes retirar el consentimiento cuando quieras,
+     escribiendo al correo de arriba; hacerlo no afecta a lo hecho hasta entonces.</p>
+
+  <h2>Cuánto tiempo los guardamos</h2>
+  <ul>
+    <li>Si <strong>no llegamos a trabajar juntos</strong>: hasta un año desde el último
+        mensaje, por si retomas la conversación. Después se borran.</li>
+    <li>Si <strong>acabamos trabajando juntos</strong>: mientras dure la relación y
+        después el tiempo que exijan las obligaciones fiscales y contables.</li>
+    <li>Puedes pedir que se borren antes, y se borran.</li>
+  </ul>
+
+  <h2>Quién más los ve</h2>
+  <p><strong>Nadie a quien no haga falta.</strong> Concretamente:</p>
+  <ul>
+    <li><strong>Cloudflare</strong>, que aloja esta web y por donde pasa el formulario.</li>
+    <li>El <strong>proveedor de correo</strong>, para que el mensaje llegue.</li>
+  </ul>
+  <p>Los dos pueden tratar datos fuera del Espacio Económico Europeo. Cuando ocurre, se
+     ampara en las <strong>cláusulas contractuales tipo</strong> aprobadas por la Comisión
+     Europea. No se ceden datos a nadie más, ni se venden, ni se comparten con anunciantes.</p>
+
+  <h2>Qué puedes hacer</h2>
+  <p>Escribiendo a <a href="mailto:zyadbennani2000@gmail.com">zyadbennani2000@gmail.com</a>
+     puedes pedir en cualquier momento:</p>
+  <ul>
+    <li><strong>Acceder</strong> a lo que tenemos tuyo.</li>
+    <li><strong>Rectificarlo</strong> si está mal.</li>
+    <li><strong>Borrarlo.</strong></li>
+    <li><strong>Oponerte</strong> a que lo usemos, o <strong>limitar</strong> ese uso.</li>
+    <li><strong>Llevártelo</strong> en un formato que puedas reutilizar.</li>
+  </ul>
+  <p>Se contesta en un mes como máximo, y normalmente el mismo día. Y si crees que no se
+     ha hecho bien, puedes reclamar ante la <strong>Agencia Española de Protección de
+     Datos</strong> (<a href="https://www.aepd.es" rel="noopener">aepd.es</a>).</p>
+
+  <h2>Seguridad</h2>
+  <p>La web va por HTTPS, los datos viajan cifrados y solo tiene acceso a ellos quien
+     escribe estas líneas. No es una promesa de infalibilidad —nadie puede hacerla— pero
+     sí de que no hay más manos de las necesarias.</p>
+
+  <h2>Si esto cambia</h2>
+  <p>Se cambia aquí y se cambia la fecha de arriba. Si el cambio es de los que afectan a
+     lo que ya nos diste, te escribimos.</p>
+</div></main>
+
+<footer><div class="wrap">
+  Faro Digital · Barcelona ·
+  <a href="/">Inicio</a> ·
+  <a href="/#contacto">Contacto</a> ·
+  <a href="mailto:zyadbennani2000@gmail.com">zyadbennani2000@gmail.com</a>
+</div></footer>
+
+<script src="/assets/medicion.js" defer></script>
+</body>
+</html>

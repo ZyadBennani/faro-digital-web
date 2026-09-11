@@ -9,33 +9,36 @@
 {"@context":"https://schema.org","@type":"WebApplication",
  "name":"Revisión instantánea y gratuita de tu web",
  "description":"Pega una URL y recibe al momento una revisión técnica del sitio: metadatos, datos estructurados, adaptación a móvil y medición.",
- "url":"https://faro-digital.netlify.app/check.html",
+ "url":"https://faro-digital.pages.dev/check.html",
  "applicationCategory":"BusinessApplication",
  "operatingSystem":"Any (web browser)",
  "inLanguage":"es",
  "offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},
- "provider":{"@type":"Organization","name":"Faro Digital","url":"https://faro-digital.netlify.app/"}}
+ "provider":{"@type":"Organization","name":"Faro Digital","url":"https://faro-digital.pages.dev/"}}
 </script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Revisa tu web en 10 segundos — comprobaciones reales, sin adivinar con IA. Y si quieres ir más a fondo, pide la auditoría 360° completa.">
-<link rel="canonical" href="https://faro-digital.netlify.app/check">
+<link rel="canonical" href="https://faro-digital.pages.dev/check">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Faro Digital">
-<meta property="og:url" content="https://faro-digital.netlify.app/check">
+<meta property="og:url" content="https://faro-digital.pages.dev/check">
 <meta property="og:title" content="Revisión instantánea y gratuita de tu web — Faro Digital">
 <meta property="og:description" content="Revisa tu web en 10 segundos — comprobaciones reales. Y si quieres ir más a fondo, pide la auditoría 360° completa.">
-<meta property="og:image" content="https://faro-digital.netlify.app/assets/logo-og.png">
+<meta property="og:image" content="https://faro-digital.pages.dev/assets/logo-og.png">
 <meta property="og:locale" content="es_ES">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Revisión instantánea y gratuita de tu web — Faro Digital">
-<meta name="twitter:image" content="https://faro-digital.netlify.app/assets/logo-og.png">
+<meta name="twitter:image" content="https://faro-digital.pages.dev/assets/logo-og.png">
 <style>
   :root{
     --forest:#1E3A2E; --forest-deep:#12291F; --sand:#C9A667; --cream:#F5EFE4;
+    
+    --acento-texto:var(--forest-deep);
     --ink-soft:#5B6155; --line:rgba(30,58,46,.14); --paper-raised:#FFFFFF;
     --good:#3E6B52; --bad:#A8603E;
   }
+  header, .hero, footer, button.cta{--acento-texto:var(--sand);}
   *{box-sizing:border-box;}
   body{margin:0; background:var(--cream); color:var(--forest); font-family:'Work Sans',Helvetica,Arial,sans-serif; line-height:1.55; -webkit-font-smoothing:antialiased;}
   h1,h2{font-family:'Frank Ruhl Libre',Georgia,'Times New Roman',serif; margin:0; letter-spacing:-.01em;}
@@ -48,7 +51,7 @@
   header nav a{font-size:14px; font-weight:600; text-decoration:none; color:var(--forest); border-bottom:1px solid var(--forest);}
 
   .hero{padding:48px 0 8px; text-align:center;}
-  .eyebrow{font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--sand); font-weight:700;}
+  .eyebrow{font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--acento-texto); font-weight:700;}
   .hero h1{font-size:clamp(28px,4.5vw,42px); line-height:1.15; margin-top:16px;}
   .hero p{font-size:17px; color:var(--ink-soft); margin-top:16px; max-width:52ch; margin-left:auto; margin-right:auto;}
 
@@ -72,10 +75,6 @@
   .check-row.show{opacity:1; transform:translateY(0);}
   .check-row:last-child{border-bottom:none;}
 
-  /* 🔴 DOS GRUPOS, NO CATORCE FILAS SEGUIDAS. Las 5 comprobaciones GEO son lo
-     único que ninguna de las 6 agencias del barrio enseña (Benchmark §B4), y
-     mezcladas entre las 9 de SEO clásico se leen como «más de lo mismo».
-     Separarlas es lo que hace visible el argumento. */
   .grupo-cab{display:flex; align-items:baseline; justify-content:space-between; gap:12px;
              margin:26px 0 2px; padding-top:18px; border-top:1px solid var(--line); flex-wrap:wrap;}
   .grupo-cab:first-child{margin-top:8px; padding-top:0; border-top:none;}
@@ -100,8 +99,7 @@
   footer{margin-top:80px; padding:28px 0 40px; border-top:1px solid var(--line); text-align:center; font-size:13px; color:var(--ink-soft);}
 </style>
 <style>
-/* Accesibilidad — pasada de Fase A, 2026-08-19. Hay personas a las que el
-   movimiento les provoca mareo de verdad. Ver Sistema-Web-Capacidades.md 7.4. */
+
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{
     animation-duration:.01ms!important;
@@ -112,6 +110,7 @@
 }
 </style>
 <link rel="stylesheet" href="assets/fuentes.css">
+<link rel="stylesheet" href="assets/profundidad.css">
 </head>
 <body>
 
@@ -155,7 +154,7 @@
 </div>
 
 <footer>
-  <div class="wrap">© Faro Digital — <a href="/">faro-digital.netlify.app</a></div>
+  <div class="wrap">© Faro Digital — <a href="/">faro-digital.pages.dev</a></div>
 </footer>
 
 <script>
@@ -182,7 +181,7 @@
     checksList.innerHTML = '';
 
     try {
-      const res = await fetch('/.netlify/functions/check-site?url=' + encodeURIComponent(value));
+      const res = await fetch('/api/check?url=' + encodeURIComponent(value));
       const data = await res.json();
 
       if (!data.ok) {

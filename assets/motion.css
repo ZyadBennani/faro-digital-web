@@ -1,0 +1,113 @@
+/* ==========================================================================
+   ARCHIVO GENERADO — no se edita a mano.
+   Sale de Marca/marca.tokens.json con Marca/generar-movimiento.py.
+   Si cambias algo aquí, lo pierdes en la siguiente generación y, peor,
+   la web y los reels dejan de moverse igual.
+   ========================================================================== */
+
+/* Nada se mueve sin una razon escrita. Si no se puede decir en una frase que informacion aporta el movimiento, se quita. */
+:root{
+  /* Duraciones. Cada escalón tiene un trabajo; no se elige por gusto. */
+  --m-instantaneo:     120ms;   /* Estados de un control: pulsado, activo, marcado. Por debajo de ~ */
+  --m-rapido:          240ms;   /* Hover, foco, chips, cambios de color. Lo que acompana al raton. */
+  --m-base:            480ms;   /* Revelados de bloque, tarjetas, entradas al entrar en pantalla. */
+  --m-lento:           900ms;   /* Hero, titulares, lo que abre una pagina. */
+  --m-cinematografico: 1400ms;   /* UNA VEZ por pagina como mucho. Si hay dos, ninguna es especial. */
+
+  /* Salidas al 0,6x: Las salidas van al 0,6x de su entrada. Una cosa que se va rapido no se echa de menos; una que se va  */
+  --m-salida-instantaneo: 72ms;
+  --m-salida-rapido:   144ms;
+  --m-salida-base:     288ms;
+  --m-salida-lento:    540ms;
+
+  /* Curvas. Tres, y ninguna más. */
+  --m-entrada:         cubic-bezier(.22, 1, .36, 1);
+  --m-estandar:        cubic-bezier(.2, .7, .2, 1);
+  --m-continua:        cubic-bezier(.65, 0, .35, 1);
+
+  --m-paso:          55ms;   /* escalonado entre hermanos */
+  --m-sube:          24px;   /* distancia de entrada */
+  --m-escala:        0.98;
+  --m-umbral:        0.15;    /* % visible para revelar; lo lee motion.js */
+}
+
+/* --------------------------------------------------------------------------
+   REVELADO AL ENTRAR EN PANTALLA — una sola vez, al 15 % visible.
+   Revelar cada vez que un bloque vuelve a entrar convierte el scroll hacia arriba en un parpadeo.
+
+   🔴 LA PAGINA TIENE QUE ANADIR `class="js"` AL <html>, y en el <head>,
+      antes de pintar. Sin eso estas reglas no se aplican nunca y el revelado
+      no ocurre. Lo caza `qa-web` como FALLO: *selector de clase que el HTML
+      no trae*. Una linea, y va la PRIMERA del head:
+
+         <script>document.documentElement.classList.add('js')</script>
+
+      Con `html.js` delante, sin JavaScript el bloque se ve ENTERO: el estado
+      final es el que se publica, no el que espera a que algo lo termine.
+
+   Se marca con [data-revelar]. Quien lo enciende es el observador de
+   `motion.js` o `animation-timeline: view()`; el estado final es el que
+   se publica, así que SIN JavaScript el bloque se ve entero. Esa es la
+   regla rectora del sistema y no se dobla ni aquí.
+   -------------------------------------------------------------------------- */
+html.js [data-revelar]{
+  opacity:0; transform:translateY(var(--m-sube)) scale(var(--m-escala));
+  transition:opacity var(--m-base) var(--m-entrada),
+             transform var(--m-base) var(--m-entrada);
+  transition-delay:calc(var(--m-indice, 0) * var(--m-paso));
+}
+html.js [data-revelar][data-visible]{ opacity:1; transform:none; }
+/* Del noveno hermano en adelante, sin retraso: Hasta 8 hermanos entran escalonados; del noveno en adelante, el bloque entero de */
+html.js [data-revelar]{ --m-tope:8; }
+
+/* --------------------------------------------------------------------------
+   TITULARES POR MÁSCARA. Un titular que aparece en opacidad se lee como una imagen que carga. Uno que sube por detras de una mascara se lee como algo que se escribe, y ese es el gesto que la marca ya usa en video.
+   -------------------------------------------------------------------------- */
+.m-titular{ display:block; overflow:hidden; }
+.m-titular > span{ display:block; }
+html.js .m-titular > span{
+  transform:translateY(100%); transition:transform var(--m-lento) var(--m-entrada);
+  transition-delay:calc(var(--m-indice, 0) * 70ms);
+}
+html.js .m-titular[data-visible] > span{ transform:none; }
+
+/* --------------------------------------------------------------------------
+   LOS SEIS ESTADOS DE TODO LO TOCABLE. Todo lo tocable tiene los mismos seis, con el mismo vocabulario: boton
+   -------------------------------------------------------------------------- */
+a, button, [role="button"], input, select, textarea, summary{
+  transition:color var(--m-rapido) var(--m-estandar),
+             background-color var(--m-rapido) var(--m-estandar),
+             border-color var(--m-rapido) var(--m-estandar),
+             transform var(--m-instantaneo) var(--m-estandar);
+}
+a:active, button:active, [role="button"]:active{ transform:translateY(1px); }
+/* El foco de teclado no se apaga nunca: se redibuja. */
+:focus-visible{ outline:2px solid currentColor; outline-offset:3px; border-radius:2px; }
+[aria-busy="true"]{ cursor:progress; opacity:.72; }
+
+/* --------------------------------------------------------------------------
+   TRANSICIÓN ENTRE DOCUMENTOS — nativa, 0 KB, y Firefox degrada a fundido.
+   -------------------------------------------------------------------------- */
+@view-transition{ navigation:auto; }
+::view-transition-old(root){ animation-duration:var(--m-salida-base); }
+::view-transition-new(root){ animation-duration:var(--m-base);
+                             animation-timing-function:var(--m-entrada); }
+
+/* --------------------------------------------------------------------------
+   Las escenas se quedan PARADAS EN SU ESTADO FINAL LEGIBLE, no ocultas. Apagar el movimiento no puede apagar la informacion.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion:reduce){
+  *, *::before, *::after{
+    animation-duration:200ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:200ms !important;
+    transition-delay:0ms !important;
+    animation-delay:0ms !important;
+    scroll-behavior:auto !important;
+  }
+  /* Nada oculto: el estado final es el legible. */
+  html.js [data-revelar]{ opacity:1 !important; transform:none !important; }
+  html.js .m-titular > span{ transform:none !important; }
+  @view-transition{ navigation:none; }
+}
+
