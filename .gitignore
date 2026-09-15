@@ -40,3 +40,15 @@ test/faro/media/_mascara-anterior/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# ── 15-sep-2026 ───────────────────────────────────────────────────────────────
+# Espejos de trabajo y carpetas de salida que no describen el sitio publicado.
+_Fuera-Repo/
+.claude/settings.local.json
+
+# Material audiovisual pesado. El material de origen de la pieza firma tiene copia
+# COMPLETA y versionada en el repo privado, verificada archivo a archivo el 15-sep:
+#   Marketing Digital\_Sistema\03-Recursos-Internos\Biblioteca-Referencias\Web\Material-Origen-Pieza-Firma\
+*.mov
+*.mkv
+*.psd
