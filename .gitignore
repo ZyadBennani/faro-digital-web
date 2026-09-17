@@ -52,3 +52,8 @@ _Fuera-Repo/
 *.mov
 *.mkv
 *.psd
+
+# Configuracion de Claude Code de ESTA maquina: rutas absolutas del disco de
+# Zyad, sin ningun valor para quien clone este repo publico. Los hooks viven en
+# el repo privado; aqui solo estorbarian apuntando a una ruta que no existe.
+.claude/
