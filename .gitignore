@@ -68,3 +68,36 @@ _Fuera-Repo/
 #      Calibracion interna: ni textura, ni publicacion, ni redistribucion.
 #      Misma regla que el material de Kling de la pieza firma.
 Renders/
+
+# --- Originales .glb de Sketchfab (sesion 2 de Aura, 17-sep-2026) ---------------
+# `test/aura-vitrina/_crudo/` es un ESPEJO DE TRABAJO de los .glb tal y como se
+# descargaron. No entra aqui por dos motivos:
+#   1. Al repo va solo la version comprimida, que es la que sirve la pagina.
+#   2. Los originales pesan 6,2 MB y se regeneran desde el repo privado:
+#      _Sistema\03-Recursos-Internos\Biblioteca-Referencias\Web\Aura-3D\
+#      — que es donde viven, con su LICENCIAS.md al lado.
+# Los tres modelos publicados son CC BY 4.0 y SI se pueden redistribuir; lo que
+# no se redistribuye es el original sin comprimir, por peso, no por derechos.
+test/aura-vitrina/_crudo/
+
+# Control negativo de la puerta de peso: los mismos tres modelos SIN comprimir.
+# Existen para que la puerta se pueda probar contra el caso que debe fallar
+# (L-0052). No se sirven, y los regenera `preparar.mjs`.
+test/aura-vitrina/modelos/_control/
+# node_modules del pipeline de preparacion: herramienta, no pieza.
+#
+# 🔴 SE EXCLUYE POR FORMA, NO POR RUTA EXACTA — y esto se aprendio el 18-sep
+# aqui mismo: la carpeta se instalo como `node_modules_tmp` antes de renombrarse,
+# la exclusion decia `node_modules/` a secas, y `git add -A` se llevo 71 MB en
+# 20.000 archivos. Un nombre casi igual no lo cubre una exclusion exacta.
+node_modules/
+node_modules_tmp/
+**/node_modules*/
+test/aura-vitrina/package.json
+test/aura-vitrina/package-lock.json
+
+# Notas de la sesion 1 de Aura que NOMBRAN a Truekind, la marca real cuya foto
+# de producto se uso como calibracion interna. `Renders/` ya esta excluido por
+# ese mismo motivo; esto cierra la otra puerta. El archivo se conserva en disco
+# —es el registro de la sesion— pero no viaja a un repositorio PUBLICO.
+test/aura-frasco/PROMPT-BIG-PROJECT.md

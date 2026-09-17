@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="es" data-superficie="papel">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vitrina Aura · tres frascos en 3D real</title>
+<link rel="stylesheet" href="../../assets/base.css">
+<link rel="stylesheet" href="../../assets/motion.css">
+<link rel="preload" as="image" href="poster.jpg">
+<style>
+  /* ── LA VITRINA, SESION 2 ────────────────────────────────────────────────
+     La composicion es la que Zyad aprobo en la sesion 1 (maqueta-vitrina.html):
+     tres frascos en linea sobre papel, lista de precios a la derecha en tinta,
+     una linea fina entre productos, el precio en el unico acento, un boton de
+     base.css sin sombra. Lo que cambia es que el estante ya no es un PNG:
+     es un lienzo, y los frascos son modelos reales que giran.
+
+     Lo que sigue sin haber, que es la mitad del trabajo:
+       · ni caja, ni fondo propio, ni borde. El papel del lienzo ES el de la
+         pagina, calibrado a 1/255 en la sesion 1.
+       · ni pedestal, ni desenfoque, ni particulas.
+       · ni dorado especular. El unico acento es #916445, y solo en el precio.
+       · ni «TOCA UN PRODUCTO PARA VERLO DE CERCA». Ver §PISTA abajo.
+     ---------------------------------------------------------------------- */
+  body{ margin:0; background:var(--f-fondo); color:var(--f-tinta);
+        font-family:var(--f-familia-texto); font-size:var(--f-cuerpo); }
+
+  .seccion{ max-width:var(--e-pagina-max); margin:0 auto; padding:0 var(--e-margen); }
+  .vitrina{ display:grid; grid-template-columns:1fr 316px; gap:var(--e-xl);
+            align-items:center; }
+
+  /* El estante. `aspect-ratio` fijo para que el hueco exista desde el primer
+     byte: sin el, la lista salta cuando entra el lienzo y eso es CLS. */
+  .estante{ position:relative; aspect-ratio:3/2; }
+  .estante > *{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+
+  /* El poster esta desde el primer byte y se queda si no hay WebGL2. No es un
+     placeholder: es la version de reserva de la pieza, y es un render de
+     reposo del mismo plato, no un dibujo aparte. */
+  #poster{ object-fit:contain; transition:opacity 420ms var(--m-estandar, ease); }
+  [data-vivo="si"] #poster{ opacity:0; pointer-events:none; }
+
+  /* 🔴 `touch-action:pan-y` ES LA REGLA DEL 29-AGO ESCRITA EN CSS.
+     El navegador se queda el desplazamiento vertical SIEMPRE, antes de que
+     ningun JavaScript opine. Un `preventDefault()` condicional llega tarde por
+     definicion: para saber si el gesto es horizontal hay que ver el primer
+     movimiento, y para entonces el navegador ya decidio. Esta linea es la que
+     hace que el scroll no se pueda bloquear ni por error. */
+  #lienzo{ touch-action:pan-y; opacity:0; transition:opacity 420ms var(--m-estandar, ease); }
+  [data-vivo="si"] #lienzo{ opacity:1; }
+  #lienzo:focus-visible{ outline:2px solid #916445; outline-offset:4px; }
+
+  .carta{ list-style:none; margin:0; padding:0; }
+  .carta li + li{ border-top:1px solid var(--f-linea); }
+  .fila{ width:100%; display:grid; grid-template-columns:1fr auto; gap:4px 16px;
+         align-items:baseline; padding:16px 0; background:none; border:0;
+         text-align:left; cursor:pointer; color:inherit; font:inherit;
+         transition:opacity var(--m-rapido) var(--m-estandar); }
+  /* 🔴 CADA CELDA CON SU FILA Y SU COLUMNA (L-0070). Con solo `grid-row` en el
+     precio, la colocacion automatica lo metia en la columna 1 y empujaba el
+     nombre a la 2: la lista salia «39 € ... VELO». En una rejilla, media
+     posicion escrita es peor que ninguna. */
+  .f-nom{ grid-column:1; grid-row:1;
+          font-family:var(--f-familia-display); font-weight:var(--f-peso-display);
+          font-size:1.18rem; letter-spacing:-.01em; }
+  .f-det{ grid-column:1; grid-row:2; font-size:var(--f-sello); letter-spacing:var(--f-sello-track);
+          text-transform:uppercase; color:var(--f-suave); }
+  .f-eur{ grid-column:2; grid-row:1 / span 2; align-self:center; justify-self:end;
+          font-family:var(--f-familia-display); font-size:1.18rem; font-weight:600;
+          color:#916445; font-variant-numeric:tabular-nums; }
+
+  /* El producto y su fila se encienden A LA VEZ: es la misma seleccion, no dos. */
+  .carta[data-sel] .fila{ opacity:.52; }
+  .carta[data-sel] .fila[aria-current]{ opacity:1; }
+  .carta[data-sel] .fila[aria-current] .f-nom{ text-decoration:underline;
+        text-decoration-color:#916445; text-underline-offset:6px;
+        text-decoration-thickness:1.5px; }
+
+  .pie{ display:flex; align-items:center; justify-content:space-between;
+        gap:20px; margin-top:var(--e-l); flex-wrap:wrap; }
+  .nota{ font-size:var(--f-sello); letter-spacing:var(--f-sello-track);
+         text-transform:uppercase; color:var(--f-suave); }
+  .btn{ font-family:var(--f-familia-texto); font-size:var(--f-sello);
+        letter-spacing:var(--f-sello-track); text-transform:uppercase; font-weight:600;
+        padding:12px 22px; border:0; border-radius:100px; cursor:pointer;
+        background:#916445; color:#FFF8F2;
+        transition:background var(--m-rapido) var(--m-estandar); }
+  .btn:hover{ background:var(--f-tinta); }
+
+  .rotulo{ font-family:var(--f-familia-display); font-weight:var(--f-peso-display);
+           font-size:var(--f-cifra); letter-spacing:-.01em; margin:0 0 6px; }
+  .sello{ font-size:var(--f-sello); letter-spacing:var(--f-sello-track);
+          text-transform:uppercase; color:var(--f-suave); margin:0 0 var(--e-l); }
+
+  /* Debajo de 720 px las dos columnas se deshacen: la fila de frascos ocupa el
+     ancho —mas baja, porque la camara se aleja sola— y la lista va debajo. */
+  @media (max-width:720px){
+    .vitrina{ grid-template-columns:1fr; gap:var(--e-m, 26px); }
+    .estante{ aspect-ratio:4/3; }
+    .pie{ margin-top:var(--e-m, 26px); }
+    .btn{ width:100%; }
+  }
+
+  /* Sin movimiento: la vitrina es el poster y la lista, y la seleccion por
+     fila sigue funcionando. No es una pagina degradada: es la misma pagina
+     sin la parte que se mueve. */
+  @media (prefers-reduced-motion:reduce){
+    #lienzo{ display:none; }
+    [data-vivo="si"] #poster{ opacity:1; }
+  }
+  .sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+</style>
+</head>
+<body>
+<div class="seccion" id="seccion">
+  <p class="sello">02 · La tienda</p>
+  <h2 class="rotulo">Toda la carta, con el precio delante</h2>
+
+  <div class="vitrina">
+    <div class="estante" id="estante">
+      <img id="poster" src="poster.jpg" width="1440" height="900"
+           alt="Los tres productos de Aura en línea sobre papel: VELO, ALBA y ROCÍO">
+      <canvas id="lienzo" aria-hidden="true"></canvas>
+    </div>
+
+    <ul class="carta" id="carta">
+      <li><button class="fila" data-p="crema"><span class="f-nom">VELO</span><span class="f-det">Crema · 50 ml</span><span class="f-eur">39 €</span></button></li>
+      <li><button class="fila" data-p="serum"><span class="f-nom">ALBA</span><span class="f-det">Sérum · 30 ml</span><span class="f-eur">48 €</span></button></li>
+      <li><button class="fila" data-p="bruma"><span class="f-nom">ROCÍO</span><span class="f-det">Bruma · 75 ml</span><span class="f-eur">32 €</span></button></li>
+    </ul>
+  </div>
+
+  <div class="pie">
+    <span class="nota">Envío gratis a partir de 40 €</span>
+    <button class="btn" id="anadir">Añadir a la bolsa</button>
+  </div>
+  <p class="sr" id="estado" aria-live="polite"></p>
+</div>
+
+<script type="module">
+import { Vitrina, MOV, hayWebGL2 } from './vitrina.js';
+import { AJUSTES } from './estudio.js';
+
+const estante = document.getElementById('estante');
+const lienzo  = document.getElementById('lienzo');
+const carta   = document.getElementById('carta');
+const estado  = document.getElementById('estado');
+const boton   = document.getElementById('anadir');
+
+const NOMBRES = { crema:'VELO', serum:'ALBA', bruma:'ROCÍO' };
+
+/* La seleccion en la LISTA es independiente de que haya 3D o no: es lo que
+   hace que la reserva siga siendo una tienda y no una foto. */
+let sel = null;
+function pintarLista(id){
+  sel = id;
+  if (id) carta.dataset.sel = id; else delete carta.dataset.sel;
+  carta.querySelectorAll('.fila').forEach(f => {
+    if (f.dataset.p === id) f.setAttribute('aria-current','true');
+    else f.removeAttribute('aria-current');
+  });
+  boton.textContent = id ? ('Añadir ' + NOMBRES[id] + ' a la bolsa') : 'Añadir a la bolsa';
+  estado.textContent = id ? (NOMBRES[id] + ' seleccionado') : '';
+}
+carta.querySelectorAll('.fila').forEach(f =>
+  f.addEventListener('click', () => elegir(f.dataset.p)));
+
+let vit = null;
+function elegir(id){
+  pintarLista(id);
+  if (vit) vit.seleccionar(id);
+}
+
+const sinMovimiento = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+async function arrancar(){
+  if (!hayWebGL2() || sinMovimiento) {
+    window.AURA_LISTO = true;
+    window.AURA_MODO = sinMovimiento ? 'reserva-movimiento' : 'reserva-sin-webgl';
+    return;                       // el poster ya esta puesto; la lista funciona
+  }
+  const familia = await (await fetch('./familia.json')).json();
+  const cfg = Object.assign({}, AJUSTES, { familia });
+  vit = new Vitrina(lienzo, cfg);
+  await vit.montar('./modelos/');
+
+  const medir = () => {
+    const r = estante.getBoundingClientRect();
+    vit.medida(Math.max(2, Math.round(r.width)), Math.max(2, Math.round(r.height)));
+  };
+  medir();
+  new ResizeObserver(medir).observe(estante);
+
+  /* § PISTA · sin instruccion escrita.
+     El elegido da un vaiven de 10 grados la primera vez que la seccion entra
+     en pantalla. Una vez. Si hay que escribir «toca un producto», es que la
+     interaccion no se entiende — y un cartel no la arregla, solo la tapa. */
+  elegir('serum');
+  new IntersectionObserver((e, o) => {
+    if (!e[0].isIntersecting) return;
+    vit.lanzarPista();
+    o.disconnect();
+  }, { threshold: 0.45 }).observe(estante);
+
+  /* ── EL BUCLE ────────────────────────────────────────────────────────────
+     Fuera de pantalla no se dibuja: un bucle de render invisible es bateria
+     regalada, y en movil es la diferencia entre una pagina y un radiador.
+
+     🔴 PERO CADA SENAL TIENE SU PROPIA VARIABLE, Y ESO NO ES UN DETALLE.
+     La primera version tenia DOS observadores —uno de pantalla, otro de
+     pestana— escribiendo la MISMA bandera `visible`. Gana el ultimo que
+     escribe: la pestana pasaba a segundo plano, ponia `false`, y al volver la
+     pagina el observador de pantalla ya no tenia por que disparar otra vez.
+     El bucle se quedaba parado para siempre.
+
+         Dos fuentes que escriben una bandera compartida no se turnan: se
+         pisan. Cada senal, su variable; la decision, una funcion que las lee.
+
+     Y lo peor es como FALLA: una vitrina congelada se ve exactamente igual
+     que su propio poster. No hay pantalla en rojo, no hay error en consola;
+     hay una foto bonita que no responde. Medido el 17-sep: 0 fotogramas en
+     1500 ms con la pagina delante. */
+  let enPantalla = true, pestanaViva = !document.hidden, corriendo = false;
+  const debeCorrer = () => enPantalla && pestanaViva;
+
+  function bucle(t){
+    if (!debeCorrer()){ corriendo = false; return; }   // se para DE VERDAD
+    vit.paso(t);
+    requestAnimationFrame(bucle);
+  }
+  function arrancar(){ if (corriendo || !debeCorrer()) return; corriendo = true; requestAnimationFrame(bucle); }
+
+  new IntersectionObserver(e => { enPantalla = e[0].isIntersecting; arrancar(); }, { threshold: 0 }).observe(estante);
+  document.addEventListener('visibilitychange', () => { pestanaViva = !document.hidden; arrancar(); });
+  /* Red de seguridad: dos eventos mas que devuelven la pagina al usuario y que
+     no siempre vienen acompanados de los de arriba (bfcache, cambio de app). */
+  window.addEventListener('pageshow', () => { pestanaViva = !document.hidden; arrancar(); });
+  window.addEventListener('focus', arrancar);
+
+  lienzo.tabIndex = 0;
+  lienzo.setAttribute('aria-hidden','true');   // la tienda accesible es la lista
+
+  window.AURA_BUCLE = () => ({ enPantalla, pestanaViva, corriendo });
+  arrancar();
+
+  estante.dataset.vivo = 'si';
+  document.body.dataset.vivo = 'si';
+  window.AURA = vit;
+  window.AURA_MOV = MOV;
+  window.AURA_MODO = 'vivo';
+  window.AURA_ELEGIR = elegir;
+  window.AURA_LISTO = true;
+}
+arrancar().catch(e => {
+  window.AURA_ERROR = String(e && e.stack || e);
+  window.AURA_MODO = 'reserva-error';
+  window.AURA_LISTO = true;
+  console.error(e);
+});
+</script>
+</body>
+</html>

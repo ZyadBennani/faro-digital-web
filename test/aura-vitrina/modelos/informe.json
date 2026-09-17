@@ -1,0 +1,89 @@
+{
+  "fecha": "2026-09-17",
+  "frascos": [
+    {
+      "id": "serum",
+      "archivo": "cosmetic_bottle_12.glb",
+      "kb_origen": 2276,
+      "tri_origen": 82432,
+      "cuerpo": {
+        "alto_modelo": 0.25809,
+        "r_ext_max": 0.04676,
+        "r_int_medio": 0.04374,
+        "pared_medida_pct": 6.46
+      },
+      "liquido_tri": 5152,
+      "escala": 30.9887,
+      "volumen_modelo": 0.0010081,
+      "alto_cm": 10.901,
+      "radio_cm": 1.449,
+      "base_en_cero": 0,
+      "vidrio_alto_cm": 7.998,
+      "tri_soldado": 87584,
+      "tri_final": 14276,
+      "kb_quantize": 203.8,
+      "kb_draco": 46.2,
+      "kb_quantize_gz": 148.9,
+      "kb_draco_gz": 43.4,
+      "kb_sin_comprimir": 262
+    },
+    {
+      "id": "crema",
+      "archivo": "cosmetic_bottle_3.glb",
+      "kb_origen": 564,
+      "tri_origen": 20352,
+      "cuerpo": {
+        "alto_modelo": 1.22754,
+        "r_ext_max": 0.26809,
+        "r_int_medio": 0.24574,
+        "pared_medida_pct": 8.34
+      },
+      "liquido_tri": 5152,
+      "escala": 7.1263,
+      "volumen_modelo": 0.1381611,
+      "alto_cm": 9.121,
+      "radio_cm": 1.91,
+      "base_en_cero": 0,
+      "vidrio_alto_cm": 8.748,
+      "tri_soldado": 25504,
+      "tri_final": 10998,
+      "kb_quantize": 156.8,
+      "kb_draco": 32.6,
+      "kb_quantize_gz": 110,
+      "kb_draco_gz": 29.7,
+      "kb_sin_comprimir": 201
+    },
+    {
+      "id": "bruma",
+      "archivo": "cosmetic_bottle_1.glb",
+      "kb_origen": 165,
+      "tri_origen": 4988,
+      "cuerpo": {
+        "alto_modelo": 0.75983,
+        "r_ext_max": 0.15181,
+        "r_int_medio": 0.14995,
+        "pared_medida_pct": 1.23
+      },
+      "liquido_tri": 5152,
+      "escala": 13.1961,
+      "volumen_modelo": 0.0326379,
+      "alto_cm": 16.108,
+      "radio_cm": 2.003,
+      "base_en_cero": 0,
+      "vidrio_alto_cm": 10.027,
+      "tri_soldado": 10140,
+      "tri_final": 8990,
+      "kb_quantize": 140.3,
+      "kb_draco": 24.6,
+      "kb_quantize_gz": 69.1,
+      "kb_draco_gz": 20.4,
+      "kb_sin_comprimir": 181
+    }
+  ],
+  "compresion": {
+    "quantize_gz": 328,
+    "draco_gz": 93.5,
+    "decodificador_draco_gz": 76.3,
+    "elegida": "DRACO"
+  }
+}

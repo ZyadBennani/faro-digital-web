@@ -1,0 +1,151 @@
+{
+  "_lee_esto_primero": [
+    "Los TRES FRASCOS DE AURA, sesion 2: modelos reales de Sketchfab, CC BY 4.0.",
+    "",
+    "El reparto de papeles (que malla es vidrio, cual tapon) NO es una heuristica:",
+    "se leyo en la hoja de contacto con las piezas pintadas de colores planos,",
+    "Renders/aura-s2/contacto-piezas.png. Un clasificador por nombre o por tamano",
+    "habria acertado a veces; esto se MIRO. Si se cambia un modelo, se vuelve a",
+    "mirar antes de tocar este archivo.",
+    "",
+    "La familia (nombres, precios, volumenes, colores de liquido) viene de la",
+    "sesion 1: test/aura-frasco/perfiles-aura.json. No se reinventa aqui."
+  ],
+  "_altura_como_se_decide": [
+    "La altura NO se elige a ojo: sale del volumen declarado. Se integra el",
+    "perfil interior del cuerpo, se multiplica por el nivel de llenado y se",
+    "resuelve la escala k que da los ml del producto. Por eso ROCIO (100 ml)",
+    "sale bastante mas alto que VELO (50 ml): es lo que mide un frasco de 100 ml",
+    "de esa silueta en una estanteria de verdad.",
+    "",
+    "ROCIO es de 75 ml, no de 100. Los 100 salieron de la sesion 1; el caso VIVO",
+    "de Aura dice 75 («Balsamo limpiador · 75 ml») y el encargo de la sesion 2 lo",
+    "repite: «30/50/75 ml». Manda lo que ya ve el cliente. Se ve en el ANTES del",
+    "comparativo, Renders/aura-s2/ANTES-DESPUES-1440.png."
+  ],
+  "vidrio": {
+    "transmission": 1.0,
+    "thickness": 3.2,
+    "ior": 1.5,
+    "roughness": 0.04,
+    "color": "#ffffff",
+    "attenuationColor": "#D8E7DC",
+    "attenuationDistance": 8.5,
+    "clearcoat": 0.0,
+    "envMapIntensity": 1.0,
+    "_atenuacion": "8,5 es el valor calibrado en la sesion 1. Se probo bajarlo a 3,6 para que el tinte verde se leyera en los cuerpos anchos: metio un velo amarillo-verdoso en el hueco vacio y empeoro los tres. Revertido. El frasco de ROCIO no se lee como vidrio por falta de tinte, se lee asi porque su SILUETA es la de un envase de plastico con vaporizador: cilindro recto, bomba y funda. Ningun material arregla una forma."
+  },
+  "tapon": {
+    "color": "#332C28",
+    "roughness": 0.55,
+    "metalness": 0.0,
+    "anillo": {
+      "color": "#916445",
+      "roughness": 0.26,
+      "metalness": 0.9
+    },
+    "envMapIntensity": 0.6
+  },
+  "frascos": [
+    {
+      "id": "serum",
+      "nombre": "ALBA",
+      "tipo": "Serum",
+      "volumen_ml": 30,
+      "volumen": "30 ml",
+      "precio": 48,
+      "detalle": "30 ml · noche",
+      "archivo": "cosmetic_bottle_12.glb",
+      "credito": "Iron_bound · CC BY 4.0",
+      "silueta": "cuentagotas: cuerpo corto y recto, capsula con pera. El icono del serum.",
+      "nivel_liquido": 0.7,
+      "pared_min": 0.055,
+      "tri_objetivo": 14000,
+      "piezas": {
+        "Material_43": "vidrio",
+        "Material_44": "tapon"
+      },
+      "liquido": {
+        "attenuationColor": "#6B3208",
+        "roughness": 0.08,
+        "ior": 1.45,
+        "mezcla_papel": 0.0
+      },
+      "etiqueta": {
+        "centro_rel": 0.4,
+        "alto_rel": 0.2,
+        "arco": 0.34
+      }
+    },
+    {
+      "id": "crema",
+      "nombre": "VELO",
+      "tipo": "Crema",
+      "volumen_ml": 50,
+      "volumen": "50 ml",
+      "precio": 39,
+      "detalle": "50 ml · pieles secas",
+      "archivo": "cosmetic_bottle_3.glb",
+      "credito": "Iron_bound · CC BY 4.0",
+      "silueta": "hombro redondo y tapa plana: el frasco mas ancho de los tres.",
+      "nivel_liquido": 0.62,
+      "pared_min": 0.055,
+      "tri_objetivo": 11000,
+      "piezas": {
+        "Base_Body": "vidrio",
+        "material": "tapon"
+      },
+      "liquido": {
+        "attenuationColor": "#EFE2CE",
+        "roughness": 0.36,
+        "ior": 1.42,
+        "mezcla_papel": 0.0
+      },
+      "etiqueta": {
+        "centro_rel": 0.34,
+        "alto_rel": 0.2,
+        "arco": 0.32
+      }
+    },
+    {
+      "id": "bruma",
+      "nombre": "ROCIO",
+      "nombre_tilde": "ROCÍO",
+      "tipo": "Bruma",
+      "volumen_ml": 75,
+      "volumen": "75 ml",
+      "precio": 32,
+      "detalle": "75 ml · fija el maquillaje",
+      "archivo": "cosmetic_bottle_1.glb",
+      "credito": "Iron_bound · CC BY 4.0",
+      "silueta": "alto y estrecho, vaporizador con sobretapa transparente.",
+      "_pared": [
+        "Este cuerpo es de PARED UNICA: 29 lados, y el rmin que devuelve la sonda",
+        "(0,1499 contra 0,1518) es la faceta del poligono, no un grosor. cos(pi/29)",
+        "= 0,9941, que da exactamente esos 0,1509. Asi que aqui el grosor de pared",
+        "se DECIDE (5,5 %, el que miden los otros dos) en vez de leerse. Dicho y",
+        "firmado: es la unica cifra de este archivo que no sale de una medida."
+      ],
+      "nivel_liquido": 0.68,
+      "pared_min": 0.055,
+      "tri_objetivo": 9000,
+      "piezas": {
+        "Material_26": "vidrio",
+        "Material_27": "anillo",
+        "Material_29": "tapon",
+        "Material_28": "sobretapa"
+      },
+      "liquido": {
+        "attenuationColor": "#9FC0BA",
+        "roughness": 0.04,
+        "ior": 1.33,
+        "mezcla_papel": 0.78
+      },
+      "etiqueta": {
+        "centro_rel": 0.28,
+        "alto_rel": 0.15,
+        "arco": 0.34
+      }
+    }
+  ]
+}

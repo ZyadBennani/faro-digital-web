@@ -1,0 +1,118 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<title>Contacto · candidatos Aura</title>
+<style>html,body{margin:0;background:#F5EFE4}canvas{display:block}</style>
+</head><body>
+<canvas id="c"></canvas>
+<script type="module">
+import * as THREE from './tres/three.module.min.js';
+import { GLTFLoader } from './tres/GLTFLoader.min.js';
+import { AJUSTES, PAPEL, construirEntorno, matVidrio, matTapon, texturaSombra } from './estudio.js';
+
+const CAND = ['cosmetic_bottle_1','cosmetic_bottle_3','cosmetic_bottle_12','free_3d_cosmetic_serum_bottle'];
+const PALETA = [0xC0392B, 0x2980B9, 0x27AE60, 0xF39C12, 0x8E44AD, 0x16A085];
+
+const lienzo = document.getElementById('c');
+const rend = new THREE.WebGLRenderer({ canvas: lienzo, antialias:true, alpha:false, preserveDrawingBuffer:true });
+rend.setPixelRatio(1);
+rend.toneMapping = THREE.ACESFilmicToneMapping;
+rend.toneMappingExposure = AJUSTES.camara.exposicion;
+rend.outputColorSpace = THREE.SRGBColorSpace;
+rend.shadowMap.enabled = true;
+rend.shadowMap.type = THREE.PCFSoftShadowMap;
+
+const esc = new THREE.Scene();
+esc.background = new THREE.Color(PAPEL);
+esc.environment = construirEntorno(rend, AJUSTES);
+
+// papel
+const papel = new THREE.Mesh(new THREE.PlaneGeometry(400,400),
+  new THREE.MeshStandardMaterial({ color: PAPEL, roughness: 0.92, metalness: 0 }));
+papel.rotation.x = -Math.PI/2; papel.receiveShadow = true; esc.add(papel);
+
+const dir = new THREE.DirectionalLight(0xfff2e2, AJUSTES.luz.clave_dir);
+const d3 = (a,e)=>{const A=a*Math.PI/180,E=e*Math.PI/180;return [Math.cos(A)*Math.cos(E),Math.sin(E),Math.sin(A)*Math.cos(E)];};
+const cd = d3(AJUSTES.entorno.clave_az, AJUSTES.entorno.clave_el);
+dir.position.set(cd[0]*60, cd[1]*60, cd[2]*60);
+dir.castShadow = true;
+dir.shadow.mapSize.set(512,512);          // L-0068: mapa PEQUENO = sombra blanda
+dir.shadow.radius = AJUSTES.luz.sombra_radio;
+const s = AJUSTES.luz.sombra_lado;
+Object.assign(dir.shadow.camera, {left:-s,right:s,top:s,bottom:-s,near:1,far:200});
+dir.shadow.camera.updateProjectionMatrix();
+esc.add(dir);
+
+const cam = new THREE.PerspectiveCamera(30, 1, 0.1, 500);
+
+const loader = new GLTFLoader();
+const cargar = (u) => new Promise((ok,err)=>loader.load(u, ok, undefined, err));
+
+// ── normalizar: altura objetivo, pivote en la base, centrado en XZ ────────────
+function normalizar(raiz, alturaObjetivo) {
+  raiz.updateWorldMatrix(true,true);
+  const caja = new THREE.Box3().setFromObject(raiz);
+  const t = caja.getSize(new THREE.Vector3());
+  const k = alturaObjetivo / t.y;
+  const g = new THREE.Group();
+  raiz.scale.setScalar(k);
+  raiz.position.set(
+    -(caja.min.x + t.x/2) * k,
+    -caja.min.y * k,
+    -(caja.min.z + t.z/2) * k
+  );
+  g.add(raiz);
+  g.userData.dims = [t.x*k, t.y*k, t.z*k];
+  return g;
+}
+
+window.CONTACTO = async function(modo, W, H) {
+  rend.setSize(W,H,false); cam.aspect = W/H; cam.updateProjectionMatrix();
+  // limpiar
+  for (const o of esc.children.filter(o=>o.userData.esCand)) esc.remove(o);
+
+  const ALTO = 8;              // cm de referencia para TODOS, para comparar siluetas
+  const PASO = 7.2;
+  const info = [];
+  let i = 0;
+  for (const nombre of CAND) {
+    const gltf = await cargar('_crudo/' + nombre + '.glb');
+    const g = normalizar(gltf.scene, ALTO);
+    const piezas = [];
+    let m = 0;
+    g.traverse(o => {
+      if (!o.isMesh) return;
+      const nm = o.material ? o.material.name : '?';
+      const cj = new THREE.Box3().setFromObject(o);
+      const sz = cj.getSize(new THREE.Vector3());
+      piezas.push({ malla:o.name, mat:nm,
+        alto:+sz.y.toFixed(2), ancho:+sz.x.toFixed(2),
+        y0:+(cj.min.y).toFixed(2), y1:+(cj.max.y).toFixed(2),
+        tris: o.geometry.index ? o.geometry.index.count/3 : o.geometry.attributes.position.count/3,
+        alpha: o.material && o.material.transparent ? o.material.opacity : 1 });
+      o.castShadow = true;
+      if (modo === 'piezas') {
+        o.material = new THREE.MeshStandardMaterial({ color: PALETA[m % PALETA.length], roughness:0.5, metalness:0 });
+      }
+      m++;
+    });
+    g.position.x = (i - (CAND.length-1)/2) * PASO;
+    g.userData.esCand = true;
+    esc.add(g);
+    info.push({ modelo:nombre, dims:g.userData.dims.map(v=>+v.toFixed(2)), piezas });
+    i++;
+  }
+
+  // encuadre: toda la fila
+  const anchoFila = PASO * CAND.length;
+  const fov = 2*Math.atan(24/(2*85))*180/Math.PI;
+  cam.fov = fov; cam.updateProjectionMatrix();
+  const dist = (anchoFila*0.62) / Math.tan(cam.fov*Math.PI/360 * cam.aspect);
+  const el = 9*Math.PI/180;
+  cam.position.set(0, ALTO*0.52 + dist*Math.sin(el), dist*Math.cos(el));
+  cam.lookAt(0, ALTO*0.45, 0);
+
+  rend.render(esc,cam);
+  return { png: lienzo.toDataURL('image/png'), info };
+};
+window.LISTO = true;
+</script></body></html>
