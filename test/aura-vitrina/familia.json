@@ -106,46 +106,78 @@
         "alto_rel": 0.2,
         "arco": 0.32
       }
-    },
-    {
-      "id": "bruma",
-      "nombre": "ROCIO",
-      "nombre_tilde": "ROCÍO",
-      "tipo": "Bruma",
-      "volumen_ml": 75,
-      "volumen": "75 ml",
-      "precio": 32,
-      "detalle": "75 ml · fija el maquillaje",
-      "archivo": "cosmetic_bottle_1.glb",
-      "credito": "Iron_bound · CC BY 4.0",
-      "silueta": "alto y estrecho, vaporizador con sobretapa transparente.",
-      "_pared": [
-        "Este cuerpo es de PARED UNICA: 29 lados, y el rmin que devuelve la sonda",
-        "(0,1499 contra 0,1518) es la faceta del poligono, no un grosor. cos(pi/29)",
-        "= 0,9941, que da exactamente esos 0,1509. Asi que aqui el grosor de pared",
-        "se DECIDE (5,5 %, el que miden los otros dos) en vez de leerse. Dicho y",
-        "firmado: es la unica cifra de este archivo que no sale de una medida."
-      ],
-      "nivel_liquido": 0.68,
-      "pared_min": 0.055,
-      "tri_objetivo": 9000,
-      "piezas": {
-        "Material_26": "vidrio",
-        "Material_27": "anillo",
-        "Material_29": "tapon",
-        "Material_28": "sobretapa"
-      },
-      "liquido": {
-        "attenuationColor": "#9FC0BA",
-        "roughness": 0.04,
-        "ior": 1.33,
-        "mezcla_papel": 0.78
-      },
-      "etiqueta": {
-        "centro_rel": 0.28,
-        "alto_rel": 0.15,
-        "arco": 0.34
-      }
     }
+  ],
+  "_rocio_archivado": [
+    "ROCIO sale de la familia en la sesion 3, y no por gusto.",
+    "",
+    "Zyad puntuo el diseno con un 6,5 y el encargo decia: sustituir ROCIO por otro",
+    "modelo CC BY del mismo autor con silueta de VIDRIO; si no lo hay, dejar dos",
+    "productos antes que uno de plastico.",
+    "",
+    "Se comprobaron LOS 16 frascos CC BY descargables de Iron_bound, uno a uno, en",
+    "Renders/aura-s3/CANDIDATOS-rocio.png: los dieciseis son dispensadores con",
+    "bomba o vaporizador. Ni uno tiene silueta de vidrio. El unico de la serie que",
+    "la tiene es el que ya usa VELO (Cosmetic Bottle 3), porque es el unico con",
+    "tapa de rosca lisa.",
+    "",
+    "SI HAY RECAMBIO, Y ESTA IDENTIFICADO — pero necesita a Zyad:",
+    "  Protein Supplement Jar · Iron_bound · CC BY 4.0 · 60.800 caras",
+    "  https://sketchfab.com/3d-models/protein-supplement-jar-252a7ae0ee194f03a0e545f0c44d0d0a",
+    "Es un TARRO ancho con tapa de rosca: la silueta de un balsamo en vidrio. Y",
+    "encaja con el caso vivo de Aura, que en su tercer producto pone exactamente",
+    "«Balsamo limpiador · 75 ml».",
+    "La descarga de Sketchfab pide cuenta (la API devuelve 401 sin credenciales),",
+    "asi que el archivo lo tiene que bajar Zyad. Con el .glb en `_crudo/`, volver",
+    "a meter el tercer producto es mover este bloque a `frascos`, ajustar `piezas`",
+    "mirando la hoja de contacto y correr `preparar.mjs`."
+  ],
+  "_rocio_definicion": {
+    "id": "bruma",
+    "nombre": "ROCIO",
+    "nombre_tilde": "ROCÍO",
+    "tipo": "Bruma",
+    "volumen_ml": 75,
+    "volumen": "75 ml",
+    "precio": 32,
+    "detalle": "75 ml · fija el maquillaje",
+    "archivo": "cosmetic_bottle_1.glb",
+    "credito": "Iron_bound · CC BY 4.0",
+    "silueta": "alto y estrecho, vaporizador con sobretapa transparente.",
+    "_pared": [
+      "Este cuerpo es de PARED UNICA: 29 lados, y el rmin que devuelve la sonda",
+      "(0,1499 contra 0,1518) es la faceta del poligono, no un grosor. cos(pi/29)",
+      "= 0,9941, que da exactamente esos 0,1509. Asi que aqui el grosor de pared",
+      "se DECIDE (5,5 %, el que miden los otros dos) en vez de leerse. Dicho y",
+      "firmado: es la unica cifra de este archivo que no sale de una medida."
+    ],
+    "nivel_liquido": 0.68,
+    "pared_min": 0.055,
+    "tri_objetivo": 9000,
+    "piezas": {
+      "Material_26": "vidrio",
+      "Material_27": "anillo",
+      "Material_29": "tapon",
+      "Material_28": "sobretapa"
+    },
+    "liquido": {
+      "attenuationColor": "#9FC0BA",
+      "roughness": 0.04,
+      "ior": 1.33,
+      "mezcla_papel": 0.78
+    },
+    "etiqueta": {
+      "centro_rel": 0.28,
+      "alto_rel": 0.15,
+      "arco": 0.34
+    }
+  },
+  "_altura_regla": [
+    "NINGUN frasco pasa de 1,4 veces la altura del mas bajo. Los ml no mandan",
+    "sobre la fila: en la sesion 2 ROCIO salia a 16,1 cm contra los 9,1 de VELO",
+    "—1,77 veces— porque la altura se derivaba del volumen declarado, y eso",
+    "desequilibraba la vitrina.",
+    "Con dos productos: VELO 9,12 y ALBA 10,90 -> 1,20. Dentro.",
+    "El comprobador esta en preparar.mjs y para el build si se pasa."
   ]
 }

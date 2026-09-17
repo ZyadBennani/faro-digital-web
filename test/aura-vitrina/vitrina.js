@@ -25,6 +25,9 @@ import {
   cargarFuentes, svgEtiqueta, texturaDesdeSVG, comprobarEtiqueta,
   texturaSombra, texturaCaustica, calcomanias, dirDeAngulos
 } from './estudio.js';
+import {
+  nivelarLiquido, crearChapoteo, colocarPlano, imperfectar, cargarEntornoHDRI
+} from './realismo.js';
 
 /* ── LOS NUMEROS DE LA INTERACCION, TODOS JUNTOS ──────────────────────────── */
 export const MOV = {
@@ -43,7 +46,11 @@ export const MOV = {
                        // menos papel vacio a los lados sin que se toquen
 };
 
-const ORDEN = ['crema', 'serum', 'bruma'];   // la fila, y la lista de precios
+/* 🔴 EL ORDEN SALE DE LA CONFIGURACION, NO DE UNA CONSTANTE ESCRITA AQUI.
+   Al quitar ROCIO de la familia, una lista fija en el codigo habria seguido
+   pidiendo un frasco que ya no existe — y el fallo no habria sido un error
+   limpio, sino un hueco en la fila. El tamano de la familia es un DATO. */
+const ORDEN_POR_DEFECTO = ['crema', 'serum', 'bruma'];
 const CURVA = t => t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;   // easeInOutCubic
 
 /* La camara esta fija a 9 grados sobre el horizonte (AJUSTES.camara.elevacion),
@@ -69,6 +76,11 @@ export class Vitrina {
     this.pista = { hecha: false, t0: 0 };
     this.listo = false;
     this.aviso = [];
+    /* Los interruptores de la sesion 3. Cada mejora se puede APAGAR, que es
+       lo unico que permite fotografiarla con y sin y demostrar que hace algo
+       (L-0052). El banco los mueve; la pagina los deja todos encendidos. */
+    this.op = { nivelado: true, ruido: true, hdri: true, dispersion: true };
+    this.chapoteo = {};
   }
 
   /* ── montaje ─────────────────────────────────────────────────────────── */
@@ -89,8 +101,28 @@ export class Vitrina {
 
     const esc = new THREE.Scene();
     esc.background = new THREE.Color(PAPEL);
-    esc.environment = construirEntorno(r, this.cfg);
     this.esc = esc;
+
+    /* ── EL ENTORNO ────────────────────────────────────────────────────
+       Primero se intenta el HDRI real (una habitacion de verdad, con sus
+       ventanas). Si no carga, se cae al entorno procedural de la sesion 1,
+       que no es un apano: es lo que estuvo publicado y funcionaba. Lo que
+       NO se hace es quedarse sin entorno, porque un objeto reflejante sin
+       nada que reflejar es plastico gris (L-0067). */
+    this.entornoProc = construirEntorno(r, this.cfg);
+    if (this.op.hdri && this.cfg.entornoHDRI) {
+      try {
+        const h = await cargarEntornoHDRI(r, this.cfg.entornoHDRI.archivo, this.cfg.entornoHDRI);
+        this.entornoHDRI = h.textura;
+        this.entornoInforme = h.informe;
+        if (!h.informe.ok)
+          this.aviso.push('entorno HDRI: maximo ' + h.informe.maximo_decodificado +
+                          ' contra ' + h.informe.maximo_esperado + ' esperado');
+      } catch (e) {
+        this.aviso.push('entorno HDRI no carga: ' + e.message + ' — se usa el procedural');
+      }
+    }
+    this.usarEntorno(this.op.hdri && !!this.entornoHDRI);
 
     /* ── EL PAPEL ───────────────────────────────────────────────────────────
        4000 de lado, no 400. Con 400 el borde del plano entraba en cuadro por
@@ -110,6 +142,23 @@ export class Vitrina {
     );
     papel.rotation.x = -Math.PI / 2;
     papel.receiveShadow = true;
+    /* 🔴 EL PAPEL TIENE SU PROPIO ENTORNO, Y EL PRODUCTO EL HDRI.
+       Al poner la habitacion real como entorno de la escena, el papel empezo a
+       recoger la ESTRUCTURA de su suelo: el especular de una superficie mate
+       depende del vector de reflexion, que cambia de un lado a otro del plano,
+       y un suelo de estudio de verdad no es uniforme. Resultado medido: la
+       costura con la pagina se abrio de 1/255 a 11/255 — la caja, otra vez.
+
+           En un plato, el fondo y el producto no hacen el mismo trabajo. El
+           producto tiene que reflejar la habitacion; el fondo tiene que ser
+           un fondo, y aqui ademas tiene que casar con la pagina al pixel.
+
+       Asi que el papel se queda con el entorno procedural, que es liso por
+       construccion, y el HDRI se lo llevan los frascos — que es donde se ve.
+       A rugosidad 0,94 la diferencia entre los dos no se distingue en el papel;
+       lo que si se distingue es el borde de una caja. */
+    papel.material.envMap = this.entornoProc;
+    papel.material.envMapIntensity = 1;
     esc.add(papel);
     this.papel = papel;
 
@@ -127,6 +176,7 @@ export class Vitrina {
     dir.shadow.camera.updateProjectionMatrix();
     dir.shadow.bias = -0.0009;
     esc.add(dir);
+    this.clave = dir;   // la calibracion del papel la mueve: ver calibrarPapel
 
     this.cam = new THREE.PerspectiveCamera(30, 1, 0.1, 600);
 
@@ -135,6 +185,19 @@ export class Vitrina {
     this.gestos();
     this.listo = true;
     return this;
+  }
+
+  /* Cambiar de entorno es UNA linea, y por eso el control negativo del §3
+     es posible: se fotografia con el HDRI y con el procedural sin recargar. */
+  usarEntorno(hdri) {
+    this.esc.environment = (hdri && this.entornoHDRI) ? this.entornoHDRI : this.entornoProc;
+    /* El HDRI trae su habitacion orientada como estaba la camara que la
+       fotografio. Se gira para que su ventana grande caiga donde esta la luz
+       clave de la escena — si no, el brillo del vidrio y la sombra del papel
+       apuntan a sitios distintos y el ojo lo nota aunque no sepa que mira. */
+    if (this.esc.environmentRotation)
+      this.esc.environmentRotation.set(0, (this.cfg.entornoHDRI && this.cfg.entornoHDRI.giro || 0) * Math.PI / 180, 0);
+    this.entornoActual = (hdri && this.entornoHDRI) ? 'hdri' : 'procedural';
   }
 
   async cargarFrascos(ruta) {
@@ -154,6 +217,16 @@ export class Vitrina {
       /* El .glb ya viene con la base en y=0, centrado en XZ y a escala real en
          cm: lo hizo preparar.mjs. Aqui no se re-escala nada, porque escalar dos
          veces es como se pierde de vista cual es el tamano de verdad. */
+      /* 🔴 EL NIVEL VIENE DEL .glb, NO SE VUELVE A CALCULAR AQUI.
+         `preparar.mjs` lo midio al tornear el liquido y lo dejo en
+         `asset.extras.nivel_y_cm`. Recalcularlo en el navegador seria tener
+         dos versiones del mismo numero, y el dia que una cambie dejaran de
+         coincidir sin que nadie se entere. */
+      const extras = (gltf.parser && gltf.parser.json && gltf.parser.json.asset &&
+                      gltf.parser.json.asset.extras) || {};
+      if (extras.nivel_y_cm === undefined)
+        this.aviso.push(def.id + ': el .glb no trae nivel_y_cm — correr preparar.mjs');
+
       let alto = 0, radio = 0;
       raiz.traverse(o => {
         if (!o.isMesh) return;
@@ -163,6 +236,7 @@ export class Vitrina {
         radio = Math.max(radio, Math.abs(b.max.x), Math.abs(b.min.x), Math.abs(b.max.z), Math.abs(b.min.z));
 
         const papel = o.material ? o.material.name : '';
+        o.userData.papel = papel;
         o.material = this.materialDe(papel, def);
         o.castShadow = (papel !== 'liquido');   // el liquido ya esta dentro del vidrio
         o.renderOrder = papel === 'vidrio' ? 2 : papel === 'liquido' ? 1 : 0;
@@ -172,6 +246,11 @@ export class Vitrina {
       g.userData.alto = alto;
       g.userData.radio = radio;
       g.userData.def = def;
+      g.userData.nivelY = extras.nivel_y_cm !== undefined
+        ? extras.nivel_y_cm : (alto * (def.nivel_liquido || 0.7));
+      g.userData.liquido = g.getObjectByName ? null : null;
+      raiz.traverse(o => { if (o.isMesh && o.userData.papel === 'liquido') g.userData.liquido = o; });
+      this.chapoteo[def.id] = crearChapoteo();
 
       await this.ponerEtiqueta(g, def, radio, alto);
 
@@ -193,10 +272,29 @@ export class Vitrina {
     }
   }
 
+  /* Los que hay, en el orden de la fila: los de la config que ademas se han
+     cargado. Si la familia crece o encoge, esto no hay que tocarlo. */
+  orden() {
+    const ids = (this.cfg.familia && this.cfg.familia.frascos || []).map(f => f.id);
+    const base = ids.length ? ids : ORDEN_POR_DEFECTO;
+    return ORDEN_POR_DEFECTO.filter(id => base.indexOf(id) >= 0 && this.frascos[id])
+      .concat(base.filter(id => ORDEN_POR_DEFECTO.indexOf(id) < 0 && this.frascos[id]));
+  }
+
   materialDe(papel, def) {
     const v = this.cfg.familia.vidrio, t = this.cfg.familia.tapon;
-    if (papel === 'vidrio')  return matVidrio(v, this.cfg);
-    if (papel === 'liquido') return matLiquido(def.liquido, v, this.cfg);
+    if (papel === 'vidrio') {
+      const m = matVidrio(v, this.cfg);
+      /* DISPERSION: el vidrio grueso separa el color en el canto, como un
+         prisma flojo. Llego en three r166 y va sobre `transmission`. Si esta
+         version no la trae, no se finge: se anota y se sigue. */
+      if (this.op.dispersion && 'dispersion' in m) m.dispersion = v.dispersion || 1.6;
+      else if (this.op.dispersion) this.aviso.push('r185 sin `dispersion` en MeshPhysicalMaterial');
+      if (this.op.ruido) imperfectar(m, { escala: 1.4, min: 0.02, max: 0.075,
+                                          ccMin: 0.055, ccMax: 0.165 });
+      return m;
+    }
+    if (papel === 'liquido') return nivelarLiquido(matLiquido(def.liquido, v, this.cfg));
     if (papel === 'anillo')  return matAnillo(t.anillo);
     if (papel === 'sobretapa') {
       /* La sobretapa de ROCIO es la unica pieza transparente que no es el
@@ -210,7 +308,12 @@ export class Vitrina {
         envMapIntensity: 1.1, side: THREE.DoubleSide, depthWrite: false
       });
     }
-    return matTapon(t);     // tapon, y cualquier papel no previsto
+    const mt = matTapon(t);
+    /* El tapon mate es donde MAS se nota el ruido: una superficie mate con
+       rugosidad constante devuelve un degradado perfecto que no existe en
+       ningun plastico inyectado. */
+    if (this.op.ruido) imperfectar(mt, { escala: 2.6, min: 0.40, max: 0.68 });
+    return mt;     // tapon, y cualquier papel no previsto
   }
 
   /* La etiqueta: SVG con la tipografia de base.css, sobre una banda cilindrica
@@ -271,6 +374,7 @@ export class Vitrina {
 
   /* ── colocacion: tres en linea, misma base ───────────────────────────── */
   colocar() {
+    const ORDEN = this.orden();
     let x = 0;
     const xs = {};
     for (let i = 0; i < ORDEN.length; i++) {
@@ -315,14 +419,33 @@ export class Vitrina {
            alto visible = 16,1 x 1,30 = 20,9 cm
            el mas alto, ya avanzado un 12 % = 16,1 x 1,136 = 18,3 cm
            margen que queda = 2,6 cm, medido, no estimado. */
-    const holgura = w / h < 1.15 ? 1.55 : 1.30;
-    const dAlto  = (this.altoFila * holgura * 0.5) / vT;
+    /* 🔴 LO QUE TIENE QUE CABER ES EL ESTADO MAS GRANDE, Y ESE NO ES EL DE
+       REPOSO. El elegido avanza un 12 % hacia la camara, o sea que se ve un
+       13,6 % mas grande — y ese aumento hay que descontarlo del encuadre, no
+       confiarlo al margen.
+
+       Se vio al quitar ROCIO: con dos frascos la fila es mas estrecha, la
+       camara se acerca hasta que manda la altura, y ALBA —ya avanzada— asomaba
+       por ARRIBA. La costura con la pagina salto de 1/255 a 39/255 y el punto
+       peor era (439,3): gris 184,180,172 en el borde superior. No era una caja:
+       era un frasco cortado. La medida dice donde, y donde es la mitad de la
+       respuesta.
+
+       Asi que el alto efectivo se calcula, no se estima: alto / (1 - avance). */
+    const altoEfectivo = this.altoFila / (1 - MOV.avance);
+    /* Y el margen cubre los DOS extremos del estado avanzado: el elegido no
+       solo se ve mas alto, tambien BAJA en pantalla —se acerca a una camara
+       que mira desde arriba—, y con el baja su base y su sombra. El salto al
+       cruzar el canto inferior del lienzo se midio en 36/255 justo debajo de
+       ALBA: no era una caja, era el frasco elegido saliendose por abajo. */
+    const holgura = w / h < 1.15 ? 1.62 : 1.45;
+    const dAlto  = (altoEfectivo * holgura * 0.5) / vT;
     const dAncho = (this.anchoFila * 1.22 * 0.5) / (vT * c.aspect);
     const d = Math.max(dAlto, dAncho);
     const el = this.cfg.camara.elevacion * Math.PI / 180;
     /* Se mira algo por debajo de la media altura: deja sitio a las sombras
        abajo, que es donde el ojo comprueba que el frasco esta apoyado. */
-    const mira = this.altoFila * 0.46;
+    const mira = altoEfectivo * 0.46;
     c.position.set(0, mira + d * Math.sin(el), d * Math.cos(el));
     c.lookAt(0, mira, 0);
     this.dist = d;
@@ -361,14 +484,44 @@ export class Vitrina {
     const gan = this.papel.userData.ganancia || [1, 1, 1];
     const base = new THREE.Color(PAPEL);
 
+    /* 🔴 SE CALIBRA CONTRA LO MISMO QUE SE MIDE.
+       La version anterior calibraba UN pixel —la esquina inferior izquierda— y
+       la puerta media DOCE puntos del borde. Con el entorno procedural daba
+       igual porque el papel era liso; con el HDRI el borde varia un poco y el
+       peor punto se quedaba en 3/255 mientras la esquina calibrada marcaba 1.
+
+           Calibrar en un punto y medir en doce reparte el error a favor del
+           punto que se calibro. Se calibra contra la MEDIA de los doce, que
+           centra el error y baja el peor.
+
+       Se saltan los puntos que no son papel: si un frasco o su sombra tocan un
+       borde, ese punto no dice nada del papel y contaminaria la media. */
+    const bordes = () => {
+      const W = this.rend.domElement.width, H = this.rend.domElement.height;
+      const p = [];
+      for (let i = 0; i < 5; i++) {
+        const x = Math.round(3 + (W - 7) * i / 4);
+        p.push([x, 3], [x, H - 4]);
+      }
+      for (let i = 1; i < 4; i++) {
+        const y = Math.round(3 + (H - 7) * i / 4);
+        p.push([3, y], [W - 4, y]);
+      }
+      return p;
+    };
+    const puntos = bordes();
     const lee = () => {
       this.rend.setRenderTarget(null);
       this.rend.render(this.esc, this.cam);
-      /* La ESQUINA INFERIOR IZQUIERDA: papel puro, lejos de los frascos y de
-         sus sombras, y ademas es un pixel que toca el borde del lienzo — el
-         sitio exacto donde se veria la costura con la pagina. */
-      gl.readPixels(3, 3, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, buf);
-      return [buf[0] / 255, buf[1] / 255, buf[2] / 255];
+      let r = 0, g = 0, b = 0, n = 0;
+      for (const [x, y] of puntos) {
+        gl.readPixels(x, y, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, buf);
+        // un punto muy por debajo del papel es un frasco o su sombra: no cuenta
+        if (buf[0] < 150) continue;
+        r += buf[0]; g += buf[1]; b += buf[2]; n++;
+      }
+      if (!n) { gl.readPixels(3, 3, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, buf); return [buf[0]/255, buf[1]/255, buf[2]/255]; }
+      return [r / n / 255, g / n / 255, b / n / 255];
     };
     const aplicar = () => {
       m.color.setRGB(Math.min(1, base.r * gan[0]), Math.min(1, base.g * gan[1]), Math.min(1, base.b * gan[2]));
@@ -385,7 +538,57 @@ export class Vitrina {
       m.needsUpdate = true;
     };
 
+    /* ═══════════════════════════════════════════════════════════════════════
+       🔴 PRIMERO SE CALIBRA CON LUZ, Y SOLO DESPUES CON PINTURA.
+
+       Con el entorno procedural de la sesion 1 el papel salia casi a su color
+       con albedo 1, y la emisiva se quedaba en 0,006. Al cambiar a un HDRI de
+       un plato de fotografia DE VERDAD, el suelo de esa habitacion es oscuro:
+       el papel se quedo corto, el bucle subio la emisiva a **0,24**, y pasaron
+       las dos cosas que L-0068 predice — la sombra se lavo y, como la emision
+       es uniforme, la caida de luz desaparecio y volvio a verse la CAJA.
+
+           Un fondo que se ilumina solo no se puede ensombrecer. Si el papel
+           brilla por emision, la sombra del frasco no tiene nada que apagar.
+
+       Asi que el bucle ahora tiene dos etapas. La primera mueve la LUZ CLAVE,
+       que es la que proyecta la sombra: mas luz sobre el papel es mas papel Y
+       mas sombra, las dos cosas a la vez, que es lo que pasa en un plato. La
+       segunda afina con el albedo, que no puede pasar de 1. La emisiva queda
+       como ultimo recurso y sigue saliendo en el informe con su aviso.
+       ═══════════════════════════════════════════════════════════════════════ */
     let desvio = 1, leido = [0, 0, 0];
+
+    /* 🔴 LA ETAPA DE LUZ APUNTA AL CANAL MAS CORTO, NO A LA LUMINANCIA.
+       La primera version subia la clave hasta cuadrar la LUMINANCIA, y ahi
+       paraba. Pero el albedo de la etapa 2 solo puede BAJAR —esta topado en 1—,
+       asi que cualquier canal que quedara corto se quedaba corto para siempre:
+       el papel salia #EFEDE4 contra #F5EFE4 y la costura con la pagina se
+       abria a 13/255, o sea la caja otra vez.
+
+           Si el ajuste fino solo puede restar, el ajuste grueso tiene que
+           pasarse por arriba en todos los canales, no quedarse en la media.
+
+       Asi que la luz sube hasta que NINGUN canal se queda corto, con un pelin
+       de sobra, y la etapa 2 recorta los que sobran. */
+    for (let k = 0; k < 9; k++) {
+      aplicar();
+      leido = lee();
+      let peor = 0;
+      for (let i = 0; i < 3; i++)
+        peor = Math.max(peor, leido[i] > 0.02 ? obj[i] / leido[i] : 1.4);
+      if (peor <= 1.012) break;                       // ya sobra en los tres
+      const nueva = Math.min(60, Math.max(0.5, this.clave.intensity * Math.pow(peor * 1.005, 1.5)));
+      if (Math.abs(nueva - this.clave.intensity) < 1e-3) break;
+      this.clave.intensity = nueva;
+    }
+    /* La emisiva ya no tiene que tapar ningun agujero: la luz llega. Se pone a
+       cero ANTES de la etapa 2 para que el bucle no la herede de una pasada
+       anterior — una calibracion que arrastra el estado de la anterior mide dos
+       cosas mezcladas. */
+    for (let i = 0; i < 3; i++) gan[i] = Math.min(gan[i], 1);
+
+    // etapa 2 · el albedo, por canal, para clavar el tono
     for (let k = 0; k < (pasos || 10); k++) {
       aplicar();
       leido = lee();
@@ -401,7 +604,9 @@ export class Vitrina {
     this.papelInforme = {
       leido: hex(leido), objetivo: '#F5EFE4', desvio_255: +(desvio * 255).toFixed(1),
       albedo: +Math.max(m.color.r, m.color.g, m.color.b).toFixed(3),
-      emisiva: +Math.max(m.emissive.r, m.emissive.g, m.emissive.b).toFixed(3)
+      emisiva: +Math.max(m.emissive.r, m.emissive.g, m.emissive.b).toFixed(3),
+      clave: +this.clave.intensity.toFixed(2),
+      entorno: this.entornoActual
     };
     if (this.papelInforme.emisiva > 0.05)
       this.aviso.push('emisiva ' + this.papelInforme.emisiva + ' — LAVA LA SOMBRA (L-0068)');
@@ -497,7 +702,7 @@ export class Vitrina {
     const lim = limitesInclinacion(this.cfg.camara.elevacion);
     this.giro.incl = Math.max(lim.min * Math.PI/180, Math.min(lim.max * Math.PI/180, this.giro.incl));
 
-    for (const id of ORDEN) {
+    for (const id of this.orden()) {
       const c = this.frascos[id];
       if (!c) continue;
       const esSel = id === this.sel;
@@ -552,6 +757,15 @@ export class Vitrina {
       c.userData.p = c.userData.p === undefined ? 0 : c.userData.p;
       c.userData.p += (objP - c.userData.p) * MOV.lerp;
       this.aplicarPresencia(c, c.userData.p);
+
+      /* EL LIQUIDO SE NIVELA. Se hace despues de mover y girar el frasco y
+         antes de dibujar, porque el plano depende de la matriz del frasco
+         YA colocado: hacerlo antes lo dejaria un fotograma por detras. */
+      if (f.userData.liquido) {
+        this.inclinacionLiquido = colocarPlano(
+          f.userData.liquido, f, f.userData.nivelY,
+          this.chapoteo[id], this.op.nivelado);
+      }
 
       /* las dos sombras siguen al frasco, y se aflojan cuando se inclina:
          un frasco en la mano no deja la misma marca que uno apoyado. */

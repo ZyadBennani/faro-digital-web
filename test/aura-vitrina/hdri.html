@@ -1,0 +1,112 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<title>Herramienta · HDRI → equirect compacto</title>
+<style>html,body{margin:0;background:#111;color:#eee;font:13px system-ui}canvas{max-width:100%}</style>
+</head><body>
+<canvas id="c"></canvas>
+<pre id="log"></pre>
+<script type="module">
+/* ═══════════════════════════════════════════════════════════════════════════
+   HERRAMIENTA, NO PIEZA. Convierte el .hdr de Poly Haven (1024x512, 1,6 MB) en
+   un equirectangular compacto que quepa en el presupuesto de la seccion.
+
+   POR QUE NO SE SIRVE EL .hdr TAL CUAL: 1,6 MB para una seccion cuyo
+   presupuesto entero son 1,4 MB. El .hdr ya esta comprimido con RLE y encima
+   gzip no le saca casi nada, asi que servirlo es pagar el doble del resto de la
+   pieza junta por el fondo de los reflejos.
+
+   POR QUE PNG-RGBE Y NO JPEG: en RGBE el canal alfa es un EXPONENTE. Un solo
+   bit mal en ese canal multiplica o divide el pixel por dos. JPEG es con
+   perdida: destrozaria justo el canal que no admite perdida. PNG es sin
+   perdida y ademas sus filtros predicen bien un cielo, que es casi todo
+   gradiente suave.
+
+   El rango alto se CONSERVA, y eso es lo que importa: un entorno de 8 bits sin
+   valores por encima de 1 no puede dar un reflejo mas brillante que el papel, y
+   sin ese reflejo el vidrio es plastico gris (L-0067).
+   ═══════════════════════════════════════════════════════════════════════════ */
+import * as THREE from './tres/three.module.min.js';
+import { RGBELoader } from './_herramientas-RGBELoader.min.js';
+
+const log = (s) => { document.getElementById('log').textContent += s + '\n'; };
+
+new RGBELoader().setDataType(THREE.FloatType).load('_crudo/brown_photostudio_02_1k.hdr', (tex) => {
+  const W0 = tex.image.width, H0 = tex.image.height;
+  const src = tex.image.data;                       // Float32Array RGBA
+  log('origen: ' + W0 + 'x' + H0);
+
+  let maxSrc = 0;
+  for (let i = 0; i < src.length; i += 4) maxSrc = Math.max(maxSrc, src[i], src[i+1], src[i+2]);
+  log('maximo del original: ' + maxSrc.toFixed(1));
+
+  const salidas = {};
+  for (const [W, H] of [[512, 256], [384, 192], [256, 128]]) {
+    /* Remuestreo por CAJA, en lineal. Promediar en lineal y no en sRGB es lo
+       que conserva la energia: una ventana pequena y muy brillante tiene que
+       seguir aportando lo mismo despues de encoger, o el reflejo se apaga. */
+    const kx = W0 / W, ky = H0 / H;
+    const dst = new Float32Array(W * H * 4);
+    for (let y = 0; y < H; y++) {
+      const y0 = Math.floor(y * ky), y1 = Math.min(H0, Math.floor((y + 1) * ky));
+      for (let x = 0; x < W; x++) {
+        const x0 = Math.floor(x * kx), x1 = Math.min(W0, Math.floor((x + 1) * kx));
+        let r = 0, g = 0, b = 0, n = 0;
+        for (let j = y0; j < y1; j++) for (let i = x0; i < x1; i++) {
+          const o = (j * W0 + i) * 4;
+          r += src[o]; g += src[o+1]; b += src[o+2]; n++;
+        }
+        const o = (y * W + x) * 4;
+        dst[o] = r/n; dst[o+1] = g/n; dst[o+2] = b/n; dst[o+3] = 1;
+      }
+    }
+    let maxDst = 0;
+    for (let i = 0; i < dst.length; i += 4) maxDst = Math.max(maxDst, dst[i], dst[i+1], dst[i+2]);
+
+    /* RGBE: mantisa en RGB, exponente en alfa. Reconstruccion exacta salvo
+       redondeo de mantisa (8 bits), que en un fondo de reflejos no se ve. */
+    const c = document.createElement('canvas');
+    c.width = W; c.height = H;
+    const ctx = c.getContext('2d');
+    const img = ctx.createImageData(W, H);
+    for (let i = 0, p = 0; i < dst.length; i += 4, p += 4) {
+      const m = Math.max(dst[i], dst[i+1], dst[i+2]);
+      if (m < 1e-8) { img.data[p] = img.data[p+1] = img.data[p+2] = 0; img.data[p+3] = 0; continue; }
+      let e = Math.ceil(Math.log2(m));
+      e = Math.max(-128, Math.min(127, e));
+      const f = 255 / Math.pow(2, e);
+      img.data[p]   = Math.min(255, Math.round(dst[i]   * f));
+      img.data[p+1] = Math.min(255, Math.round(dst[i+1] * f));
+      img.data[p+2] = Math.min(255, Math.round(dst[i+2] * f));
+      img.data[p+3] = e + 128;
+    }
+    ctx.putImageData(img, 0, 0);
+    salidas[W + 'x' + H] = { url: c.toDataURL('image/png'), max: +maxDst.toFixed(2), W: W, H: H };
+    log(W + 'x' + H + '  max ' + maxDst.toFixed(1) + '  png ' +
+        Math.round(salidas[W+'x'+H].url.length * 0.75 / 1024) + ' KB aprox');
+  }
+
+  /* control de ida y vuelta: se decodifica lo escrito y se compara con el
+     original remuestreado. Un codificador que nadie decodifica es una
+     suposicion (L-0065). */
+  const prueba = salidas['512x256'];
+  const im = new Image();
+  im.onload = () => {
+    const c2 = document.createElement('canvas');
+    c2.width = prueba.W; c2.height = prueba.H;
+    const x2 = c2.getContext('2d', { willReadFrequently: true });
+    x2.drawImage(im, 0, 0);
+    const d = x2.getImageData(0, 0, prueba.W, prueba.H).data;
+    let maxDec = 0;
+    for (let i = 0; i < d.length; i += 4) {
+      const s = Math.pow(2, d[i+3] - 128) / 255;
+      maxDec = Math.max(maxDec, d[i]*s, d[i+1]*s, d[i+2]*s);
+    }
+    log('ida y vuelta 512x256: maximo decodificado ' + maxDec.toFixed(2) +
+        ' contra ' + prueba.max + ' escrito  → desvio ' +
+        (100*Math.abs(maxDec - prueba.max)/prueba.max).toFixed(2) + ' %');
+    window.HDRI = salidas;
+    window.HDRI_LISTO = true;
+  };
+  im.src = prueba.url;
+}, undefined, (e) => { log('ERROR: ' + e); window.HDRI_ERROR = String(e); window.HDRI_LISTO = true; });
+</script></body></html>

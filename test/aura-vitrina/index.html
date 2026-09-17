@@ -47,7 +47,33 @@
      definicion: para saber si el gesto es horizontal hay que ver el primer
      movimiento, y para entonces el navegador ya decidio. Esta linea es la que
      hace que el scroll no se pueda bloquear ni por error. */
-  #lienzo{ touch-action:pan-y; opacity:0; transition:opacity 420ms var(--m-estandar, ease); }
+  /* ── EL LIENZO SE DISUELVE EN LA PAGINA ──────────────────────────────
+     🔴 NO ES UNA VINETA. Una vineta OSCURECE los bordes y dibuja justo la
+     caja que esta pieza lleva tres sesiones quitando. Esto es una MASCARA:
+     el 4 % exterior del lienzo se vuelve transparente y deja ver la pagina,
+     que es del mismo color por definicion. La costura deja de depender de
+     que dos numeros coincidan — deja de haber dos superficies.
+
+     Hacia falta porque la SOMBRA PROYECTADA llega al borde: la clave esta a
+     26 grados, la sombra es larga, y al cruzar el canto del canvas se cortaba
+     en seco contra el fondo de la pagina. Medido: -11/255 en la banda
+     exterior. En una foto de verdad la sombra tambien sale de cuadro, pero
+     alli hay un marco; aqui el marco no puede existir.
+
+     🔴 Y LA MASCARA ES ELIPTICA, NO RECTANGULAR. Con un desvanecido recto del
+     4 % el salto en el canto bajaba a 1/255 —medido— y el rectangulo SE SEGUIA
+     INTUYENDO: el charco de luz del plato llega a +16/255 en el centro, y lo
+     unico que lo devolvia al color de la pagina era una mascara con cuatro
+     lados rectos. O sea que la forma del degradado la dibujaba la mascara.
+
+         Un lienzo con cantos rectos siempre puede dibujar una caja, por
+         suave que sea el canto. Uno sin cantos rectos, no.
+
+     La elipse no tiene una sola linea recta, asi que no hay rectangulo que
+     percibir: el charco se apaga con la forma de un charco. */
+  #lienzo{ touch-action:pan-y; opacity:0; transition:opacity 420ms var(--m-estandar, ease);
+           -webkit-mask-image:radial-gradient(ellipse 74% 70% at 50% 46%, #000 34%, rgba(0,0,0,.72) 62%, rgba(0,0,0,.28) 82%, transparent 100%);
+           mask-image:radial-gradient(ellipse 74% 70% at 50% 46%, #000 34%, rgba(0,0,0,.72) 62%, rgba(0,0,0,.28) 82%, transparent 100%); }
   [data-vivo="si"] #lienzo{ opacity:1; }
   #lienzo:focus-visible{ outline:2px solid #916445; outline-offset:4px; }
 
@@ -109,6 +135,33 @@
     #lienzo{ display:none; }
     [data-vivo="si"] #poster{ opacity:1; }
   }
+  /* ── GRANO ────────────────────────────────────────────────────────────
+     1,5 % sobre el lienzo, y solo sobre el lienzo. Un render limpio es
+     limpio de una forma que ninguna camara consigue: el grano es lo que
+     hace que el ojo deje de buscarle el borde a la imagen sintetica.
+
+     Va en CSS y no en un paso de post-proceso a proposito: no toca el bucle
+     de render, no cuesta un fotograma, y se apaga quitando una clase — que
+     es lo que necesita el control con y sin. Es estatico; un grano animado
+     a 60 fps se lee como ruido de video, no como pelicula.
+
+     `mix-blend-mode: overlay` y no `opacity`: el grano tiene que oscurecer
+     las zonas claras y aclarar las oscuras, no velar la imagen entera. */
+  /* 🔴 0,055 Y NO 0,015, Y EL NUMERO SALE DE UNA MEDIDA.
+     «Grano al 1,5 %» son 3,8 puntos sobre 255. Con `opacity:.015` sobre un
+     ruido de +-45 la amplitud que llegaba a pantalla era de 0,26 puntos: un
+     0,1 %, diez veces menos de lo pedido. El control negativo lo canto con un
+     pico de 1/255 — o sea, indistinguible de no tener grano.
+     La opacidad de un `mix-blend-mode` NO es la amplitud del efecto: hay que
+     medir lo que sale, no lo que se escribe. */
+  /* El grano lleva LA MISMA mascara: si el lienzo se disuelve y el grano no,
+     el borde lo dibuja el grano — el mismo fallo cambiado de capa. */
+  .grano{ -webkit-mask-image:radial-gradient(ellipse 74% 70% at 50% 46%, #000 34%, rgba(0,0,0,.72) 62%, rgba(0,0,0,.28) 82%, transparent 100%);
+          mask-image:radial-gradient(ellipse 74% 70% at 50% 46%, #000 34%, rgba(0,0,0,.72) 62%, rgba(0,0,0,.28) 82%, transparent 100%);
+          position:absolute; inset:0; pointer-events:none; opacity:.055;
+          mix-blend-mode:overlay; background-repeat:repeat;
+          background-size:128px 128px; z-index:2; }
+  [data-grano="no"] .grano{ display:none; }
   .sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 </style>
 </head>
@@ -122,12 +175,12 @@
       <img id="poster" src="poster.jpg" width="1440" height="900"
            alt="Los tres productos de Aura en línea sobre papel: VELO, ALBA y ROCÍO">
       <canvas id="lienzo" aria-hidden="true"></canvas>
+      <div class="grano" id="grano" aria-hidden="true"></div>
     </div>
 
     <ul class="carta" id="carta">
       <li><button class="fila" data-p="crema"><span class="f-nom">VELO</span><span class="f-det">Crema · 50 ml</span><span class="f-eur">39 €</span></button></li>
       <li><button class="fila" data-p="serum"><span class="f-nom">ALBA</span><span class="f-det">Sérum · 30 ml</span><span class="f-eur">48 €</span></button></li>
-      <li><button class="fila" data-p="bruma"><span class="f-nom">ROCÍO</span><span class="f-det">Bruma · 75 ml</span><span class="f-eur">32 €</span></button></li>
     </ul>
   </div>
 
@@ -148,7 +201,34 @@ const carta   = document.getElementById('carta');
 const estado  = document.getElementById('estado');
 const boton   = document.getElementById('anadir');
 
-const NOMBRES = { crema:'VELO', serum:'ALBA', bruma:'ROCÍO' };
+const NOMBRES = { crema:'VELO', serum:'ALBA' };
+
+/* El grano se dibuja aqui y se incrusta como data-URI: 128x128 de ruido
+   monocromo. Generarlo cuesta 4 ms una vez y evita un archivo mas. */
+(function grano(){
+  const S = 128, c = document.createElement('canvas');
+  c.width = c.height = S;
+  const x = c.getContext('2d'), d = x.createImageData(S, S);
+  /* 🔴 EL RUIDO VA CENTRADO EN 128, Y ESTO COSTO UNA CAJA.
+     Estaba en 110-200, o sea media 155. En `mix-blend-mode: overlay` todo lo
+     que pasa de 128 ACLARA, asi que un ruido con la media por encima no anade
+     grano: anade un BRILLO CONSTANTE. Medido sobre la captura compuesta: el
+     lienzo entero salia +2/255 mas claro que la pagina, uniforme, con el borde
+     del canvas marcandolo — la caja que esta pieza lleva tres sesiones
+     quitando, dibujada por el grano que venia a quitar el aspecto sintetico.
+
+         Un ruido sin media cero no es ruido: es un ruido mas un sesgo, y el
+         sesgo es lo unico que se ve de lejos.
+
+     83-173: misma amplitud, media exactamente 128, aporte neto cero. */
+  for (let i = 0; i < S*S; i++) {
+    const v = 128 + (Math.random() - 0.5) * 90;
+    d.data[i*4] = d.data[i*4+1] = d.data[i*4+2] = v;
+    d.data[i*4+3] = 255;
+  }
+  x.putImageData(d, 0, 0);
+  document.getElementById('grano').style.backgroundImage = 'url(' + c.toDataURL('image/png') + ')';
+})();
 
 /* La seleccion en la LISTA es independiente de que haya 3D o no: es lo que
    hace que la reserva siga siendo una tienda y no una foto. */
@@ -180,10 +260,23 @@ async function arrancar(){
     window.AURA_MODO = sinMovimiento ? 'reserva-movimiento' : 'reserva-sin-webgl';
     return;                       // el poster ya esta puesto; la lista funciona
   }
-  const familia = await (await fetch('./familia.json')).json();
+  const [familia, entorno] = await Promise.all([
+    (await fetch('./familia.json')).json(),
+    fetch('./entorno.json').then(r => r.ok ? r.json() : null).catch(() => null)
+  ]);
   const cfg = Object.assign({}, AJUSTES, { familia });
+  if (entorno) cfg.entornoHDRI = entorno;
   vit = new Vitrina(lienzo, cfg);
   await vit.montar('./modelos/');
+
+  /* 🔴 LA PROPORCION DEL LIENZO DEPENDE DE CUANTOS PRODUCTOS HAY.
+     El encuadre lo manda la ALTURA del frasco mas alto, asi que el ancho
+     visible sale de multiplicar esa altura por la proporcion del lienzo. Con
+     3:2 y tres frascos la fila llenaba bien; al quedarse en dos, la misma
+     proporcion dejaba a los productos ocupando el 35 % del ancho y el resto
+     papel vacio. Una proporcion fija en el CSS es una decision tomada para un
+     numero de productos que puede cambiar — y cambio. */
+  estante.style.aspectRatio = (familia.frascos.length <= 2) ? '6 / 5' : '3 / 2';
 
   const medir = () => {
     const r = estante.getBoundingClientRect();

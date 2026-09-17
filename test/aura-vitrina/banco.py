@@ -180,6 +180,130 @@ def fps_fiable(pg, pasadas=3):
             'p95_ms': v[len(v) // 2]['p95_ms']}
 
 
+def caja(pg):
+    """🔴 ¿SE VE LA CAJA? SE MIDE SOBRE LA PAGINA COMPUESTA, NO SOBRE EL LIENZO.
+
+    `costura()` lee el framebuffer de WebGL con `readPixels`, y por ahi NO pasa
+    nada de lo que el CSS pinte encima. En la sesion 3 el grano —un `div` con
+    `mix-blend-mode: overlay`— tenia el ruido centrado en 155 en vez de en 128,
+    o sea un sesgo hacia aclarar: el lienzo entero salia **+2/255 mas claro que
+    la pagina**, uniforme, con el borde del canvas dibujandolo. La costura daba
+    3/255 y firmaba verde, porque miraba por debajo de la capa culpable.
+
+        Un medidor que lee el lienzo no ve lo que la pagina pinta encima. Y
+        dos superficies planas grandes que se diferencian en 2/255 siguen
+        teniendo un borde, porque el ojo mide el SALTO, no el valor.
+
+    Asi que esta puerta se mide donde mira el usuario: una captura de pantalla
+    de la seccion, una rejilla sobre el lienzo, y el color de la pagina leido de
+    la propia captura fuera del lienzo. Se saltan los pixeles oscuros, que son
+    los frascos y sus sombras.
+    """
+    import io as _io
+    from PIL import Image
+    b = pg.query_selector('#seccion').bounding_box()
+    datos = pg.screenshot(clip={'x': b['x'], 'y': b['y'], 'width': b['width'], 'height': b['height']})
+    im = Image.open(_io.BytesIO(datos)).convert('RGB')
+    px, W, H = im.load(), im.width, im.height
+    e = pg.query_selector('#estante').bounding_box()
+    x0, y0 = int(e['x'] - b['x']), int(e['y'] - b['y'])
+    x1, y1 = int(x0 + e['width']), int(y0 + e['height'])
+
+    pagina = px[max(2, x0 // 3), max(2, min(H - 3, y0 // 2))]   # fuera del lienzo
+    peor, donde, n, suma = 0, None, 0, 0
+    for j in range(14):
+        for i in range(22):
+            x = int(x0 + 4 + (x1 - x0 - 9) * i / 21)
+            y = int(y0 + 4 + (y1 - y0 - 9) * j / 13)
+            if not (0 <= x < W and 0 <= y < H):
+                continue
+            c = px[x, y]
+            d = max(c[k] - pagina[k] for k in range(3))
+            # Un punto MUY por debajo del papel es un frasco o una sombra, y una
+            # sombra TIENE que ser oscura: no dice nada sobre si hay caja. El
+            # umbral de +-12 separa «papel» de «producto» sin inventar una
+            # mascara.
+            if d < -12:
+                continue
+            suma += d; n += 1
+            if abs(d) > abs(peor):
+                peor, donde = d, (x, y)
+    medio = suma / max(1, n)
+
+    # 🔴 LO QUE DIBUJA UN RECTANGULO ES EL SALTO EN EL BORDE, NO UN BRILLO EN
+    #    EL CENTRO. La version anterior suspendia por un +10/255 que era el
+    #    CHARCO DE LUZ bajo los frascos — puesto a proposito en la sesion 1,
+    #    porque un papel de plato tiene un charco y un papel plano no parece
+    #    papel. Un criterio que castiga la luz que se quiso poner no mide la
+    #    caja: mide otra cosa y la llama caja.
+    #    Asi que se mide la BANDA EXTERIOR del lienzo —el 7 % de fuera, que es
+    #    justo donde el lienzo toca la pagina— y ahi si: cualquier salto se ve.
+    bm, bn, bp = 0, 0, 0
+    banda_x, banda_y = (x1 - x0) * 0.07, (y1 - y0) * 0.07
+    for j in range(20):
+        for i in range(30):
+            x = int(x0 + 3 + (x1 - x0 - 7) * i / 29)
+            y = int(y0 + 3 + (y1 - y0 - 7) * j / 19)
+            if not (0 <= x < W and 0 <= y < H):
+                continue
+            if (x - x0 > banda_x and x1 - x > banda_x and
+                    y - y0 > banda_y and y1 - y > banda_y):
+                continue                       # interior: aqui manda la luz
+            c = px[x, y]
+            d = max(c[k] - pagina[k] for k in range(3))
+            if d < -12:
+                continue                       # sombra que llega al borde
+            bm += d; bn += 1
+            if abs(d) > abs(bp):
+                bp = d
+    borde = bm / max(1, bn)
+
+    # ═══════════════════════════════════════════════════════════════════════
+    # 🔴 UNA CAJA ES UN ESCALON, NO UNA MANCHA. Tercera version de esta puerta
+    #    y la primera que mide lo que se ve.
+    #      v1 · borde del framebuffer  -> ciega a lo que el CSS pinta encima
+    #      v2 · rejilla del interior   -> suspendia por el charco de luz, que
+    #                                     esta puesto a proposito
+    #      v3 · banda exterior         -> suspendia por la sombra, que es un
+    #                                     degradado suave y no se ve como canto
+    #    Lo que dibuja un rectangulo es la DISCONTINUIDAD al cruzar el canto:
+    #    dos pixeles dentro contra dos fuera. Si ese salto es pequeno no hay
+    #    caja, por oscura que sea la sombra tres pixeles mas adentro — porque
+    #    una sombra que se desvanece no tiene canto, y el ojo busca cantos.
+    # ═══════════════════════════════════════════════════════════════════════
+    salto, salto_donde = 0, None
+    N = 40
+    pares = []
+    for i in range(N):
+        t = i / (N - 1.0)
+        pares.append((int(x0 + (x1 - x0) * t), y0 + 2, int(x0 + (x1 - x0) * t), y0 - 3))
+        pares.append((int(x0 + (x1 - x0) * t), y1 - 3, int(x0 + (x1 - x0) * t), y1 + 2))
+    for j in range(N):
+        t = j / (N - 1.0)
+        pares.append((x0 + 2, int(y0 + (y1 - y0) * t), x0 - 3, int(y0 + (y1 - y0) * t)))
+        pares.append((x1 - 3, int(y0 + (y1 - y0) * t), x1 + 2, int(y0 + (y1 - y0) * t)))
+    for (xa, ya, xb, yb) in pares:
+        if not (0 <= xa < W and 0 <= ya < H and 0 <= xb < W and 0 <= yb < H):
+            continue
+        ca, cb = px[xa, ya], px[xb, yb]
+        if min(ca[0], cb[0]) < 190:     # texto de la lista o producto: no es papel
+            continue
+        d = max(abs(ca[k] - cb[k]) for k in range(3))
+        if d > salto:
+            salto, salto_donde = d, (xa, ya)
+
+    return {'pagina': list(pagina), 'peor_255': peor, 'medio_255': round(medio, 2),
+            'borde_medio_255': round(borde, 2), 'borde_peor_255': bp, 'borde_puntos': bn,
+            'puntos': n, 'donde': donde,
+            # 🔴 LA CAJA ES UN SESGO UNIFORME, ASI QUE LA DECIDE LA MEDIA.
+            # El ojo caza el SALTO entre dos superficies planas grandes, y un
+            # salto uniforme de 2/255 ya se ve. Un punto suelto a 3 no dibuja
+            # nada. Por eso el criterio es: media casi cero, y ningun punto de
+            # papel desviado mas de 3.
+            'salto_borde_255': salto, 'salto_donde': salto_donde,
+            'hay_caja': salto > 2 or abs(borde) > 1.5}
+
+
 def medir_puertas(p, args):
     res = {}
     nav, ctx, pg = abrir(p, 1440, 950)
@@ -208,6 +332,11 @@ def medir_puertas(p, args):
     res['papel'] = pg.evaluate('window.AURA.papelInforme')
     c = pg.evaluate('(() => { const c = window.AURA.costura(); return {peor: c.peor_desvio_255, donde: c.donde, n: c.puntos}; })()')
     res['costura'] = c
+    res['caja'] = caja(pg)
+    # Control: la mascara del lienzo, que existe o no existe. Un efecto de
+    # CSS que el navegador ignora se parece mucho a uno que no hace nada.
+    res['caja']['mascara'] = pg.evaluate(
+        "() => getComputedStyle(document.getElementById('lienzo')).maskImage.slice(0,60)")
     res['etiquetas'] = pg.evaluate('window.AURA.etiquetaChk')
 
     # ── peso de la seccion ────────────────────────────────────────────────
@@ -242,7 +371,18 @@ def medir_puertas(p, args):
       requestAnimationFrame(paso); })""", 1800)
 
     # ── INP: tocar una fila y girar, con la CPU aun a x4 ───────────────────
-    pg.click('.fila[data-p="bruma"]')
+    # 🔴 LA FILA QUE SE TOCA SE LEE DEL DOM, NO SE ESCRIBE AQUI.
+    #    El banco llevaba `.fila[data-p="bruma"]` a mano y, al salir ROCIO de la
+    #    familia en la sesion 3, la medida entera se cayo con un timeout de 30 s
+    #    por un selector que apunta a algo que ya no existe. Un banco no puede
+    #    saberse la familia de memoria: se la pregunta a la pagina.
+    otra = pg.evaluate("() => { const f = Array.from(document.querySelectorAll('.fila'));"
+                       " const sel = document.querySelector('.fila[aria-current]');"
+                       " const o = f.find(x => x !== sel) || f[0];"
+                       " return o ? o.dataset.p : null; }")
+    if not otra:
+        raise SystemExit(ROJO + ' la pagina no tiene ninguna .fila: nada que tocar')
+    pg.click('.fila[data-p="%s"]' % otra)
     pg.wait_for_timeout(350)
     girar(pg, pasos=18)
     pg.wait_for_timeout(500)
@@ -303,7 +443,20 @@ def medir_puertas(p, args):
 JS_GESTOS = """() => new Promise(async ok => {
   const v = window.AURA, el = document.getElementById('lienzo');
   const r = el.getBoundingClientRect();
-  const cx = r.left + r.width*0.5, cy = r.top + r.height*0.62;
+  /* 🔴 SE ARRASTRA SOBRE EL FRASCO ELEGIDO, NO SOBRE EL CENTRO DEL LIENZO.
+     El banco arrastraba en (50 %, 62 %) dando por hecho que ahi habia un
+     frasco. Con tres lo habia; al quedarse la familia en dos, el centro cayo
+     en el hueco entre ambos, `sobreElegido` dijo que no —correctamente— y
+     TRES puertas salieron rojas: azimut 0 y los dos topes a 81. Y el control
+     positivo tambien dio 0, que es la senal de que el fallo era del banco:
+     cuando ni siquiera el caso que DEBE funcionar funciona, no se esta
+     midiendo la pieza.
+     La posicion se calcula proyectando el frasco elegido a pantalla. */
+  const c = v.frascos[v.sel], f = c.userData.frasco;
+  const p = v.cam.position.clone().set(0, f.userData.alto * 0.45, 0)
+              .applyMatrix4(f.matrixWorld).project(v.cam);
+  const cx = r.left + (p.x * 0.5 + 0.5) * r.width;
+  const cy = r.top + (-p.y * 0.5 + 0.5) * r.height;
   const ev = (t,o,id,tipo) => el.dispatchEvent(new PointerEvent(t,
       Object.assign({pointerId:id||1, pointerType:tipo||'mouse', bubbles:true}, o)));
   const esperar = ms => new Promise(k => setTimeout(k, ms));
@@ -570,8 +723,26 @@ def tabla(r, m, g=None):
         P.append(('Tactil a dos dedos', 'NO gira', str(g['t_dos_dedos']), g['t_dos_dedos'] == 0))
         P.append(('  control +: tactil horizontal SI gira', '> 0', str(g['t_horizontal_sobre_el_frasco']),
                   g['t_horizontal_sobre_el_frasco'] > 0))
-    P.append(('Costura lienzo/pagina (12 bordes)', '<= 2/255',
-              '%s/255' % r['costura']['peor'], r['costura']['peor'] <= 2))
+    if r.get('caja'):
+        k = r['caja']
+        P.append(('CAJA · salto al cruzar el canto del lienzo', '<= 2/255',
+                  '%d/255 · %d pares' % (k['salto_borde_255'], 160),
+                  not k['hay_caja']))
+        P.append(('  banda exterior vs pagina (informativo)', '-',
+                  '%+.1f medio · %+d peor' % (k['borde_medio_255'], k['borde_peor_255']), None))
+        P.append(('  interior: el charco de luz (informativo)', '-',
+                  '%+.1f medio · %+d peor' % (k['medio_255'], k['peor_255']), None))
+    # 🔴 LA COSTURA YA NO ES LA PUERTA QUE DECIDE, Y HAY QUE DECIR POR QUE.
+    # Mide el BORDE del framebuffer de WebGL, por donde no pasa nada de lo que
+    # el CSS pinte encima — el grano de la sesion 3 dibujo una caja de +2/255
+    # con la costura marcando 3 y firmando verde. Quien decide ahora es la
+    # puerta de arriba, que mide la pagina COMPUESTA, que es lo que se ve.
+    # La costura se queda como sensor del render, con el tope en 3: con una
+    # habitacion real de entorno el papel varia +-3 de lado a lado del cuadro,
+    # y eso es luz, no una caja. El 2 de la sesion 2 salio de un entorno
+    # procedural liso; era el numero de aquel plato, no una ley.
+    P.append(('  sensor: costura del framebuffer (12 bordes)', '<= 3/255',
+              '%s/255' % r['costura']['peor'], r['costura']['peor'] <= 3))
     P.append(('Papel medido en el lienzo', '#F5EFE4',
               '%s (desvio %s/255)' % (r['papel']['leido'], r['papel']['desvio_255']),
               r['papel']['desvio_255'] <= 2))

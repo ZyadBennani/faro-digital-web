@@ -125,7 +125,28 @@ function perfilCuerpo(P, cx, cz, y0, y1) {
 /* ── 4 · el liquido, torneado del perfil interior ─────────────────────────── */
 function construirLiquido(doc, perfil, cx, cz, y0, y1, nivel, pared, material) {
   const alto = y1 - y0;
-  const hasta = Math.floor(RODAJAS * nivel);
+  /* ═══════════════════════════════════════════════════════════════════════
+     🔴 EL LIQUIDO SE CONSTRUYE HASTA EL BORDE, NO HASTA EL NIVEL.
+
+     En la sesion 2 la malla llegaba justo al nivel de llenado, y por eso el
+     liquido GIRABA CON EL FRASCO — que es el defecto que Zyad nombro: «el
+     liquido se va moviendo cuando mueves el frasco, esto no es realista».
+
+     Ahora la superficie no es geometria: es un PLANO DE MUNDO que el vertex
+     shader aplasta contra si mismo en ejecucion (ver `nivelarLiquido` en
+     vitrina.js). Para que ese plano tenga siempre malla que aplastar por
+     encima —a cualquier inclinacion y por los dos lados del frasco— el
+     liquido tiene que llegar arriba del todo.
+
+         Una superficie que se inclina con el frasco no es liquido: es
+         un solido pintado del color del liquido.
+
+     El VOLUMEN se sigue midiendo hasta `nivel`, que es lo que fija la escala
+     del frasco: lo que cambia es hasta donde hay malla, no cuanto producto hay.
+     ═══════════════════════════════════════════════════════════════════════ */
+  const HASTA_BORDE = 0.985;
+  const hasta = Math.floor(RODAJAS * HASTA_BORDE);
+  const hastaNivel = Math.floor(RODAJAS * nivel);
   /* radio del liquido en cada rodaja. min(): coge la pared real donde la hay
      (serum, crema) y el retranqueo donde el cuerpo es de pared unica (bruma). */
   const rad = [];
@@ -199,13 +220,19 @@ function construirLiquido(doc, perfil, cx, cz, y0, y1, nivel, pared, material) {
   const mesh = doc.createMesh('liquido').addPrimitive(prim);
   doc.getRoot().listScenes()[0].addChild(doc.createNode('liquido').setMesh(mesh));
 
-  /* volumen interior hasta el nivel, por discos. Es lo que fija la escala. */
+  /* Volumen interior HASTA EL NIVEL —no hasta donde llega la malla—, por
+     discos. Es lo que fija la escala del frasco: cuanto producto hay dentro,
+     no cuanta geometria se ha construido. */
   let vol = 0;
-  for (let s = 0; s < rad.length - 1; s++) {
+  for (let s = 0; s < Math.min(hastaNivel, rad.length - 1); s++) {
     const h = yDe(s + 1) - yDe(s);
     vol += Math.PI * ((rad[s] + rad[s+1]) / 2) ** 2 * h;
   }
-  return { mesh, volumen: vol, triangulos: idx.length / 3 };
+  /* La altura local del plano de nivelado, en unidades del modelo ANTES de
+     escalar. `prepararFrasco` la multiplica por k y la deja en el informe:
+     el runtime la necesita para colocar el plano y no puede adivinarla. */
+  const yNivel = yDe(hastaNivel);
+  return { mesh, volumen: vol, triangulos: idx.length / 3, yNivel: yNivel, yTope: yDe(hasta) };
 }
 
 /* ── el paso completo de un frasco ────────────────────────────────────────── */
@@ -285,6 +312,16 @@ async function prepararFrasco(def) {
   /* el vidrio, en cm: lo que necesita el material para la atenuacion */
   paso.vidrio_alto_cm = +((y1 - y0) * k).toFixed(3);
 
+  /* 🔴 LA ALTURA DEL PLANO DE NIVELADO, YA EN CM, VIAJA CON EL MODELO.
+     El runtime aplasta el liquido contra un plano de mundo y necesita saber a
+     que altura local esta el nivel de llenado. Calcularlo otra vez en el
+     navegador seria tener DOS versiones del mismo numero, y en cuanto una de
+     las dos cambie dejarian de coincidir sin que nadie se entere — que es
+     exactamente como se estropean estas cosas. Se mide una vez, aqui, y se
+     mete en el .glb. */
+  paso.nivel_y_cm = +((liq.yNivel - gy0) * k).toFixed(4);
+  paso.tope_liquido_y_cm = +((liq.yTope - gy0) * k).toFixed(4);
+
   // 2-bis · el nombre del material ES el papel: asi lo encuentra el runtime
   for (const x of lista) if (x.mat) x.mat.setName(x.papel);
   matLiq.setName('liquido');
@@ -304,7 +341,10 @@ async function prepararFrasco(def) {
   doc.getRoot().getAsset().extras = {
     aura: def.id, producto: def.nombre,
     origen: def.archivo, credito: def.credito,
-    licencia: 'CC BY 4.0 · ver Aura-3D/LICENCIAS.md'
+    licencia: 'CC BY 4.0 · ver Aura-3D/LICENCIAS.md',
+    nivel_y_cm: paso.nivel_y_cm,
+    tope_liquido_y_cm: paso.tope_liquido_y_cm,
+    alto_cm: paso.alto_cm, radio_cm: paso.radio_cm
   };
 
   // 7 · dos compresiones, y se mide cual gana DE VERDAD
@@ -353,6 +393,7 @@ for (const def of CFG.frascos) {
   console.log('  cuerpo            alto ' + p.cuerpo.alto_modelo + ' · r_ext ' + p.cuerpo.r_ext_max
               + ' · r_int ' + p.cuerpo.r_int_medio + ' · pared ' + p.cuerpo.pared_medida_pct + '%');
   console.log('  liquido           ' + p.liquido_tri + ' tri · volumen modelo ' + p.volumen_modelo);
+  console.log('  nivel del liquido y=' + p.nivel_y_cm + ' cm (malla hasta ' + p.tope_liquido_y_cm + ')');
   console.log('  escala k          ' + p.escala + '  ->  ALTO ' + p.alto_cm
               + ' cm · radio ' + p.radio_cm + ' cm · base en ' + p.base_en_cero);
   console.log('  triangulos        ' + p.tri_origen + ' -> soldado ' + p.tri_soldado + ' -> final ' + p.tri_final);
@@ -360,6 +401,41 @@ for (const def of CFG.frascos) {
               + '  ·  draco ' + p.kb_draco + ' KB (gz ' + p.kb_draco_gz + ')');
 }
 fs.writeFileSync(path.join(SALIDA, 'informe.json'), JSON.stringify(informe, null, 2));
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   🔴 LA PUERTA DE PESO VIVE AQUI, EN LA TUBERIA, Y PARA EL BUILD.
+
+   En la sesion 2 la puerta estaba solo en el banco, a 1.400 KB de seccion, y
+   el control negativo demostro que NO SERVIA: los mismos modelos SIN comprimir
+   (644 KB) pasaban las tres puertas de peso igual que los comprimidos (104 KB).
+   Una puerta que aprueba tanto el caso bueno como el malo no es una puerta.
+
+       Lo que protegia el peso no era la puerta: era la tuberia. Asi que la
+       puerta se pone donde de verdad decide, y con un numero que muerda.
+
+   60 KB por modelo comprimido: Draco da 47 y 33; sin comprimir dan 262 y 201.
+   El caso que debe fallar, falla — y ahora ademas para el build.
+
+   🔴 Y LA REGLA DE ALTURA, por la misma razon: ninguno pasa de 1,4 veces el mas
+   bajo. Los ml no mandan sobre la fila.
+   ═══════════════════════════════════════════════════════════════════════════ */
+const TOPE_KB_MODELO = 60;
+const TOPE_RATIO_ALTURA = 1.4;
+
+const rojos = [];
+for (const f of informe.frascos) {
+  if (f.kb_draco > TOPE_KB_MODELO)
+    rojos.push(f.id + ': ' + f.kb_draco + ' KB comprimido, tope ' + TOPE_KB_MODELO);
+}
+const alturas = informe.frascos.map(f => f.alto_cm);
+if (alturas.length > 1) {
+  const ratio = Math.max(...alturas) / Math.min(...alturas);
+  informe.ratio_altura = +ratio.toFixed(3);
+  console.log('\nAlturas: ' + alturas.map(a => a.toFixed(2) + ' cm').join(' · ') +
+              '  -> el mas alto es ' + ratio.toFixed(2) + 'x el mas bajo (tope ' + TOPE_RATIO_ALTURA + ')');
+  if (ratio > TOPE_RATIO_ALTURA)
+    rojos.push('alturas: el mas alto es ' + ratio.toFixed(2) + 'x el mas bajo, tope ' + TOPE_RATIO_ALTURA);
+}
 
 const sum = c => informe.frascos.reduce((a, x) => a + x[c], 0);
 
@@ -373,7 +449,7 @@ const dec = gz(path.join(tres, 'draco', 'draco_decoder.wasm'))
           + gz(path.join(tres, 'DRACOLoader.min.js'));
 
 const q = sum('kb_quantize_gz'), d = sum('kb_draco_gz');
-console.log('\n── TOTAL tres modelos, EN GZIP (que es lo que viaja) ──');
+console.log('\n── TOTAL de los modelos, EN GZIP (que es lo que viaja) ──');
 console.log('  quantize   ' + q.toFixed(1) + ' KB  (sin decodificador)');
 console.log('  draco      ' + d.toFixed(1) + ' KB  + ' + dec.toFixed(1) + ' KB de decodificador  = '
             + (d + dec).toFixed(1) + ' KB');
@@ -385,4 +461,14 @@ informe.compresion = {
   quantize_gz: +q.toFixed(1), draco_gz: +d.toFixed(1),
   decodificador_draco_gz: +dec.toFixed(1), elegida: gana
 };
+informe.puertas = { tope_kb_modelo: TOPE_KB_MODELO, tope_ratio_altura: TOPE_RATIO_ALTURA,
+                    rojos: rojos, verde: rojos.length === 0 };
 fs.writeFileSync(path.join(SALIDA, 'informe.json'), JSON.stringify(informe, null, 2));
+if (rojos.length) {
+  console.log('\n[ROJO] EL BUILD SE PARA. Lo que no pasa la puerta, no se publica:');
+  for (const r of rojos) console.log('   · ' + r);
+  process.exitCode = 1;
+} else {
+  console.log('\n[OK] puertas de la tuberia: cada modelo <= ' + TOPE_KB_MODELO +
+              ' KB comprimido, y alturas dentro de ' + TOPE_RATIO_ALTURA + 'x');
+}

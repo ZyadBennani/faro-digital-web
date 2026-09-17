@@ -1,12 +1,14 @@
 {
-  "fecha": "2026-09-17T22:03:23",
+  "fecha": "2026-09-17T23:09:52",
   "three": "r185",
   "papel": {
-    "leido": "#F5EFE4",
+    "leido": "#F4EFE5",
     "objetivo": "#F5EFE4",
-    "desvio_255": 0,
-    "albedo": 1,
-    "emisiva": 0.012
+    "desvio_255": 0.8,
+    "albedo": 0.971,
+    "emisiva": 0,
+    "clave": 5.2,
+    "entorno": "hdri"
   },
   "camara": {
     "focal": 85,
@@ -62,7 +64,7 @@
       "origen": "cosmetic_bottle_12.glb",
       "credito": "Iron_bound · CC BY 4.0",
       "alto_cm": 10.901,
-      "radio_cm": 1.448,
+      "radio_cm": 1.449,
       "nivel_liquido": 0.7,
       "etiqueta": {
         "centro_rel": 0.4,
@@ -123,7 +125,7 @@
           "envMapIntensity": 0.55,
           "opacity": 1,
           "transparent": false,
-          "triangulos": 1102
+          "triangulos": 1314
         },
         "etiqueta": {
           "color": "#ffffff",
@@ -211,125 +213,6 @@
           "opacity": 1,
           "transparent": false,
           "triangulos": 2222
-        },
-        "etiqueta": {
-          "color": "#ffffff",
-          "transmission": 0,
-          "thickness": 0,
-          "ior": 1.5,
-          "roughness": 0.38,
-          "metalness": 0,
-          "clearcoat": 0,
-          "clearcoatRoughness": 0,
-          "attenuationColor": "#ffffff",
-          "attenuationDistance": Infinity,
-          "envMapIntensity": 0.5,
-          "opacity": 1,
-          "transparent": true,
-          "triangulos": 160
-        }
-      }
-    },
-    "bruma": {
-      "producto": "ROCIO",
-      "volumen": "75 ml",
-      "origen": "cosmetic_bottle_1.glb",
-      "credito": "Iron_bound · CC BY 4.0",
-      "alto_cm": 16.108,
-      "radio_cm": 1.993,
-      "nivel_liquido": 0.68,
-      "etiqueta": {
-        "centro_rel": 0.28,
-        "alto_rel": 0.15,
-        "arco": 0.34,
-        "comprobacion": {
-          "ok": true,
-          "tinta": 17773,
-          "anchoSVG": 553,
-          "anchoReal": 566,
-          "desvio": 2.4
-        }
-      },
-      "materiales": {
-        "Cylinder001_Material_#26_0": {
-          "color": "#ffffff",
-          "transmission": 1,
-          "thickness": 3.2,
-          "ior": 1.5,
-          "roughness": 0.04,
-          "metalness": 0,
-          "clearcoat": 1,
-          "clearcoatRoughness": 0.025,
-          "attenuationColor": "#d8e7dc",
-          "attenuationDistance": 8.5,
-          "envMapIntensity": 1,
-          "opacity": 1,
-          "transparent": true,
-          "triangulos": 1138
-        },
-        "Cylinder002_Material_#29_0": {
-          "color": "#332c28",
-          "transmission": 0,
-          "thickness": 0,
-          "ior": 1.5,
-          "roughness": 0.55,
-          "metalness": 0,
-          "clearcoat": 0,
-          "clearcoatRoughness": 0,
-          "attenuationColor": "#ffffff",
-          "attenuationDistance": Infinity,
-          "envMapIntensity": 0.6,
-          "opacity": 1,
-          "transparent": false,
-          "triangulos": 1800
-        },
-        "Cylinder003_Material_#28_0": {
-          "color": "#f2efea",
-          "transmission": 0,
-          "thickness": 0,
-          "ior": 1.5,
-          "roughness": 0.06,
-          "metalness": 0,
-          "clearcoat": 1,
-          "clearcoatRoughness": 0.03,
-          "attenuationColor": "#ffffff",
-          "attenuationDistance": Infinity,
-          "envMapIntensity": 1.1,
-          "opacity": 0.22,
-          "transparent": true,
-          "triangulos": 1040
-        },
-        "Object_Material_#27_0": {
-          "color": "#916445",
-          "transmission": 0,
-          "thickness": 0,
-          "ior": 1.5,
-          "roughness": 0.26,
-          "metalness": 0.9,
-          "clearcoat": 0,
-          "clearcoatRoughness": 0,
-          "attenuationColor": "#ffffff",
-          "attenuationDistance": Infinity,
-          "envMapIntensity": 1,
-          "opacity": 1,
-          "transparent": false,
-          "triangulos": 446
-        },
-        "liquido": {
-          "color": "#e6e6dc",
-          "transmission": 0,
-          "thickness": 0,
-          "ior": 1.33,
-          "roughness": 0.04,
-          "metalness": 0,
-          "clearcoat": 0.55,
-          "clearcoatRoughness": 0.08,
-          "attenuationColor": "#ffffff",
-          "attenuationDistance": Infinity,
-          "envMapIntensity": 0.55,
-          "opacity": 1,
-          "transparent": false,
-          "triangulos": 4566
         },
         "etiqueta": {
           "color": "#ffffff",
