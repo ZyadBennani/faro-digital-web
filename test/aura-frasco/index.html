@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="es" data-superficie="papel">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 🔴 BANCO. No es una pagina del sitio y no se publica en produccion. -->
+<meta name="robots" content="noindex,nofollow">
+<title>Banco · el frasco de Aura como objeto de luz</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23F5EFE4'/%3E%3Ccircle cx='8' cy='8' r='4' fill='%23916445'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/base.css">
+<style>
+  body{ margin:0; background:var(--f-fondo); color:var(--f-tinta);
+        font-family:var(--f-familia-texto); font-size:var(--f-cuerpo); }
+  .banco{ display:grid; grid-template-columns:1fr 318px; min-height:100vh; }
+  @media (max-width:900px){ .banco{ grid-template-columns:1fr; } }
+
+  /* El escenario NO tiene fondo propio: es el papel de la pagina. Una caja
+     alrededor del frasco es exactamente el error del 30-ago. */
+  .escenario{ position:relative; display:grid; place-items:center; padding:var(--e-margen); }
+  .escenario canvas{ display:block; width:100%; max-width:980px; height:auto; }
+
+  .reserva{ max-width:520px; text-align:center; }
+  .reserva img{ width:100%; height:auto; display:block; }
+  .reserva p{ color:var(--f-suave); font-size:var(--f-sello);
+              letter-spacing:var(--f-sello-track); text-transform:uppercase; }
+
+  .panel{ border-left:1px solid var(--f-linea); padding:22px 20px 60px;
+          background:var(--f-fondo); font-size:13px; }
+  .panel h1{ font-family:var(--f-familia-display); font-weight:500;
+             font-size:1.35rem; margin:0 0 4px; letter-spacing:-.01em; }
+  .panel .sub{ color:var(--f-suave); font-size:var(--f-sello);
+               letter-spacing:var(--f-sello-track); text-transform:uppercase; margin:0 0 18px; }
+  .panel h2{ font-family:var(--f-familia-texto); font-size:var(--f-sello);
+             letter-spacing:var(--f-sello-track); text-transform:uppercase;
+             font-weight:600; color:var(--f-suave); margin:22px 0 8px;
+             padding-top:12px; border-top:1px solid var(--f-linea); }
+  .fila{ display:grid; grid-template-columns:1fr 46px; gap:6px; align-items:center;
+         margin:5px 0; }
+  .fila label{ font-size:12px; }
+  .fila input[type=range]{ grid-column:1 / -1; width:100%; accent-color:#916445; margin:0; }
+  .fila output{ font-variant-numeric:tabular-nums; text-align:right; color:var(--f-suave); }
+  .sw{ display:flex; align-items:center; gap:8px; margin:8px 0; }
+  button{ font-family:var(--f-familia-texto); font-size:var(--f-sello);
+          letter-spacing:var(--f-sello-track); text-transform:uppercase; font-weight:600;
+          padding:9px 14px; border:0; border-radius:100px; cursor:pointer;
+          background:#916445; color:#FFF8F2; }
+  button.sec{ background:transparent; color:var(--f-tinta);
+              border:1px solid var(--f-linea); }
+  .botones{ display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+  .estado{ margin-top:16px; font-size:11.5px; line-height:1.55; color:var(--f-suave);
+           font-variant-numeric:tabular-nums; white-space:pre-wrap; }
+  .estado b{ color:var(--f-tinta); }
+  .mal{ color:#8E2C1E; font-weight:600; }
+</style>
+</head>
+<body>
+<div class="banco">
+
+  <div class="escenario">
+    <canvas id="lienzo" width="980" height="720" aria-label="Los tres frascos de Aura sobre papel"></canvas>
+    <!-- Reserva sin WebGL, desde el primer dia: poster estatico. Si el poster
+         aun no existe, se dice con palabras en vez de dejar un icono roto. -->
+    <div class="reserva" id="reserva" hidden>
+      <img id="poster" src="poster.jpg" alt="Los tres frascos de Aura sobre papel">
+      <p id="reservaTexto">Sin WebGL · imagen estatica</p>
+    </div>
+  </div>
+
+  <aside class="panel">
+    <h1>El frasco como objeto de luz</h1>
+    <p class="sub">Banco Aura · sesion 1</p>
+
+    <h2>Camara</h2>
+    <div class="fila"><label for="focal">Focal equivalente</label><output id="o_focal"></output>
+      <input type="range" id="focal" min="45" max="135" step="1"></div>
+    <div class="fila"><label for="elevacion">Elevacion sobre el horizonte</label><output id="o_elevacion"></output>
+      <input type="range" id="elevacion" min="4" max="16" step="0.5"></div>
+    <div class="fila"><label for="exposicion">Exposicion</label><output id="o_exposicion"></output>
+      <input type="range" id="exposicion" min="0.5" max="1.8" step="0.02"></div>
+
+    <h2>Luz de estudio</h2>
+    <div class="fila"><label for="clave_int">Clave · intensidad</label><output id="o_clave_int"></output>
+      <input type="range" id="clave_int" min="0" max="45" step="0.5"></div>
+    <div class="fila"><label for="clave_az">Clave · azimut</label><output id="o_clave_az"></output>
+      <input type="range" id="clave_az" min="-180" max="180" step="1"></div>
+    <div class="fila"><label for="clave_el">Clave · altura</label><output id="o_clave_el"></output>
+      <input type="range" id="clave_el" min="5" max="80" step="1"></div>
+    <div class="fila"><label for="clave_r">Clave · ancho de la ventana</label><output id="o_clave_r"></output>
+      <input type="range" id="clave_r" min="5" max="60" step="1"></div>
+    <div class="fila"><label for="contra_int">Contra fria</label><output id="o_contra_int"></output>
+      <input type="range" id="contra_int" min="0" max="20" step="0.1"></div>
+    <div class="fila"><label for="relleno">Relleno frontal</label><output id="o_relleno"></output>
+      <input type="range" id="relleno" min="0" max="3" step="0.05"></div>
+    <div class="fila"><label for="suelo">Papel reflejado en la base</label><output id="o_suelo"></output>
+      <input type="range" id="suelo" min="0" max="1.4" step="0.02"></div>
+    <div class="fila"><label for="contacto_op">Sombra de contacto</label><output id="o_contacto_op"></output>
+      <input type="range" id="contacto_op" min="0" max="1" step="0.02"></div>
+    <div class="fila"><label for="cau_int">Caustica</label><output id="o_cau_int"></output>
+      <input type="range" id="cau_int" min="0" max="1.4" step="0.02"></div>
+    <div class="fila"><label for="vineta">Caida de la luz sobre el papel</label><output id="o_vineta"></output>
+      <input type="range" id="vineta" min="0" max="0.5" step="0.005"></div>
+    <div class="fila"><label for="cielo">Techo del plato (0 = estudio oscuro)</label><output id="o_cielo"></output>
+      <input type="range" id="cielo" min="0" max="1.2" step="0.01"></div>
+    <div class="fila"><label for="bandera_int">Banderas negras (0 = negro total)</label><output id="o_bandera_int"></output>
+      <input type="range" id="bandera_int" min="0" max="1" step="0.01"></div>
+
+    <h2>Material</h2>
+    <div class="fila"><label for="rug">Vidrio · rugosidad</label><output id="o_rug"></output>
+      <input type="range" id="rug" min="0" max="0.4" step="0.005"></div>
+    <div class="fila"><label for="grosor">Vidrio · grosor (cm)</label><output id="o_grosor"></output>
+      <input type="range" id="grosor" min="0" max="6" step="0.1"></div>
+    <div class="fila"><label for="ior">Vidrio · indice de refraccion</label><output id="o_ior"></output>
+      <input type="range" id="ior" min="1" max="2.2" step="0.01"></div>
+    <div class="fila"><label for="aten">Vidrio · distancia de atenuacion</label><output id="o_aten"></output>
+      <input type="range" id="aten" min="1" max="60" step="0.5"></div>
+    <div class="sw"><input type="checkbox" id="papelEtiqueta"><label for="papelEtiqueta">Etiqueta de papel (por defecto: tinta sobre el vidrio)</label></div>
+    <div class="sw"><input type="checkbox" id="negativo"><label for="negativo"><b>Control negativo</b> · transmission 0, thickness 0</label></div>
+
+    <h2>Vitrina</h2>
+    <div class="botones">
+      <button class="sec" data-sel="">Reposo</button>
+      <button class="sec" data-sel="crema">VELO</button>
+      <button class="sec" data-sel="serum">ALBA</button>
+      <button class="sec" data-sel="bruma">ROCIO</button>
+    </div>
+
+    <h2>Salida</h2>
+    <div class="botones">
+      <button id="bRender">Render 2000 px</button>
+      <button class="sec" id="bJSON">Exportar JSON</button>
+      <button class="sec" id="bReset">Volver a los ajustes de fabrica</button>
+    </div>
+    <div class="estado" id="estado">arrancando…</div>
+  </aside>
+</div>
+
+<script type="module">
+import { Banco, ENCUADRES } from './escena.js';
+
+const est = document.getElementById('estado');
+const lienzo = document.getElementById('lienzo');
+
+function sinWebGL(motivo){
+  document.getElementById('reserva').hidden = false;
+  lienzo.hidden = true;
+  const img = document.getElementById('poster');
+  img.onerror = () => { img.hidden = true;
+    document.getElementById('reservaTexto').textContent = 'Sin WebGL · el poster estatico aun no esta generado'; };
+  est.innerHTML = '<span class="mal">' + motivo + '</span>';
+}
+
+/* La transmision de MeshPhysicalMaterial necesita WebGL2. Comprobarlo antes de
+   montar nada es la diferencia entre una reserva y una pagina en blanco. */
+const prueba = document.createElement('canvas').getContext('webgl2');
+if (!prueba) { sinWebGL('Este navegador no trae WebGL2: el vidrio no se puede renderizar.'); }
+else {
+  const datos = await (await fetch('./perfiles-aura.json')).json();
+  const banco = new Banco(lienzo, datos);
+  window.AURA = banco;
+  window.AURA_ENCUADRES = ENCUADRES;
+
+  const notas = await banco.montar();
+  banco.encuadrar('familia', 980, 720);
+  banco.ultimaCalibracion = banco.calibrarPapel(10);
+  banco.encuadrar('familia', 980, 720);
+
+  const C = banco.cfg;
+  const MANDOS = [
+    ['focal', C.camara, 'focal', ' mm'], ['elevacion', C.camara, 'elevacion', '°'],
+    ['exposicion', C.camara, 'exposicion', ''],
+    ['clave_int', C.entorno, 'clave_int', ''], ['clave_az', C.entorno, 'clave_az', '°'],
+    ['clave_el', C.entorno, 'clave_el', '°'], ['clave_r', C.entorno, 'clave_r', '°'],
+    ['contra_int', C.entorno, 'contra_int', ''], ['relleno', C.entorno, 'relleno', ''],
+    ['suelo', C.entorno, 'suelo', ''],
+    ['contacto_op', C.luz, 'contacto_op', ''], ['cau_int', C.luz, 'cau_int', ''],
+    ['vineta', C.luz, 'vineta', ''], ['cielo', C.entorno, 'cielo', ''],
+    ['bandera_int', C.entorno, 'bandera_int', ''],
+    ['rug', datos.vidrio, 'roughness', ''], ['grosor', datos.vidrio, 'thickness', ' cm'],
+    ['ior', datos.vidrio, 'ior', ''], ['aten', datos.vidrio, 'attenuationDistance', ' cm']
+  ];
+  const PESADOS = new Set(['clave_int','clave_az','clave_el','clave_r','contra_int','relleno','suelo',
+                           'cielo','bandera_int','rug','grosor','ior','aten']);
+
+  let pendiente = null, seleccion = null, encuadreVivo = 'familia';
+
+  /* 🔴 UN DESLIZADOR CUYO VALOR DE FABRICA NO CABE EN SU RANGO MIENTE DOS VECES:
+     ensena el tope en vez del valor real, y al primer roce fija el tope como
+     ajuste. Paso durante la sesion: clave_int por defecto 26 con el deslizador
+     topado en 20. Se comprueba al arrancar y se dice por pantalla. */
+  function comprobarRangos(){
+    const malos = [];
+    MANDOS.forEach(([id, obj, clave]) => {
+      const el = document.getElementById(id);
+      const v = obj[clave];
+      if (v < parseFloat(el.min) || v > parseFloat(el.max)) malos.push(id + '=' + v + ' fuera de [' + el.min + ',' + el.max + ']');
+    });
+    return malos;
+  }
+
+  function pintarValores(){
+    MANDOS.forEach(([id, obj, clave, u]) => {
+      document.getElementById(id).value = obj[clave];
+      document.getElementById('o_' + id).textContent = obj[clave] + u;
+    });
+  }
+
+  async function refrescar(pesado){
+    if (pesado) { await banco.rehacer(); banco.ultimaCalibracion = banco.calibrarPapel(6); }
+    else { banco.camara.fov = banco.fov(); banco.aplicarLuz(); banco.ultimaCalibracion = banco.calibrarPapel(4); }
+    banco.seleccion(seleccion);
+    banco.encuadrar(encuadreVivo, lienzo.width, lienzo.height);
+    banco.renderer.render(banco.escena, banco.camara);
+    informe();
+  }
+
+  MANDOS.forEach(([id, obj, clave, u]) => {
+    const el = document.getElementById(id);
+    el.addEventListener('input', () => {
+      obj[clave] = parseFloat(el.value);
+      document.getElementById('o_' + id).textContent = obj[clave] + u;
+      clearTimeout(pendiente);
+      pendiente = setTimeout(() => refrescar(PESADOS.has(id)), 90);
+    });
+  });
+
+  document.getElementById('papelEtiqueta').addEventListener('change', e => {
+    C.material.etiqueta_modo = e.target.checked ? 'papel' : 'impresa'; refrescar(true);
+  });
+  document.getElementById('negativo').addEventListener('change', e => {
+    C.material.control_negativo = e.target.checked; refrescar(true);
+  });
+  document.querySelectorAll('[data-sel]').forEach(b => {
+    b.addEventListener('click', () => { seleccion = b.dataset.sel || null; refrescar(false); });
+  });
+
+  document.getElementById('bRender').addEventListener('click', () => {
+    const r = banco.render('familia');
+    const a = document.createElement('a');
+    a.href = r.url; a.download = 'aura-familia.png'; a.click();
+  });
+  document.getElementById('bJSON').addEventListener('click', () => {
+    const j = JSON.stringify(banco.parametros(encuadreVivo), null, 2);
+    const a = document.createElement('a');
+    a.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(j);
+    a.download = 'parametros.json'; a.click();
+  });
+  document.getElementById('bReset').addEventListener('click', () => location.reload());
+
+  function informe(){
+    const p = banco.ultimaCalibracion || {};
+    const malas = banco.notas.filter(n => !n.ok);
+    const t0 = performance.now();
+    banco.renderer.render(banco.escena, banco.camara);
+    const ms = (performance.now() - t0).toFixed(1);
+    est.innerHTML =
+      '<b>Papel</b> ' + p.leido + ' vs ' + p.objetivo + ' · desvio ' + p.desvio + '/255\n' +
+      '<b>Etiquetas</b> ' + (malas.length
+        ? '<span class="mal">' + malas.length + ' con la fuente equivocada</span>'
+        : banco.notas.length + '/' + banco.notas.length + ' con Frank Ruhl Libre') + '\n' +
+      banco.notas.map(n => '  ' + n.etiqueta + ' · desvio ' + n.desvio + ' %').join('\n') + '\n' +
+      '<b>Fotograma</b> ' + ms + ' ms · ' + lienzo.width + '×' + lienzo.height + '\n' +
+      '<b>Control negativo</b> ' + (C.material.control_negativo ? '<span class="mal">ENCENDIDO</span>' : 'apagado') +
+      (window.AURA_RANGOS && window.AURA_RANGOS.length
+        ? ['', '<span class="mal">MANDOS FUERA DE RANGO: ' + window.AURA_RANGOS.join(' · ') + '</span>'].join('\n')
+        : '');
+  }
+
+  window.AURA_RANGOS = comprobarRangos();
+  pintarValores();
+  banco.renderer.render(banco.escena, banco.camara);
+  informe();
+  window.AURA_LISTO = true;
+}
+</script>
+</body>
+</html>

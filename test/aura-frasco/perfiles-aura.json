@@ -1,0 +1,398 @@
+{
+  "_lee_esto_primero": "Unidades = centimetros. 1.0 = 1 cm. Los perfiles son puntos de CONTROL: frasco.js los pasa por un spline Catmull-Rom y los remuestrea a ~150 puntos antes de darselos a LatheGeometry (96 segmentos). Cambiar un frasco es cambiar puntos de aqui, no tocar codigo.",
+  "_familia": "Misma base pesada (tapon de vidrio macizo de >1 cm en los tres), mismo tapon mate, misma etiqueta. Cambia el perfil y el color del liquido.",
+  "vidrio": {
+    "transmission": 1.0,
+    "thickness": 3.2,
+    "ior": 1.5,
+    "roughness": 0.04,
+    "color": "#ffffff",
+    "attenuationColor": "#D8E7DC",
+    "attenuationDistance": 8.5,
+    "clearcoat": 0.0,
+    "envMapIntensity": 1.0
+  },
+  "tapon": {
+    "color": "#332C28",
+    "roughness": 0.62,
+    "metalness": 0.0,
+    "anillo": {
+      "color": "#916445",
+      "roughness": 0.26,
+      "metalness": 0.9
+    }
+  },
+  "frascos": [
+    {
+      "id": "serum",
+      "nombre": "ALBA",
+      "tipo": "Serum",
+      "volumen": "30 ml",
+      "precio": 48,
+      "detalle": "30 ml · noche",
+      "tapon_tipo": "cuentagotas",
+      "exterior": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          1.2,
+          0.0
+        ],
+        [
+          1.58,
+          0.02
+        ],
+        [
+          1.7,
+          0.13
+        ],
+        [
+          1.7,
+          2.4
+        ],
+        [
+          1.7,
+          4.55
+        ],
+        [
+          1.67,
+          5.0
+        ],
+        [
+          1.52,
+          5.42
+        ],
+        [
+          1.2,
+          5.82
+        ],
+        [
+          0.88,
+          6.08
+        ],
+        [
+          0.71,
+          6.26
+        ],
+        [
+          0.67,
+          6.52
+        ],
+        [
+          0.67,
+          7.05
+        ],
+        [
+          0.6,
+          7.1
+        ],
+        [
+          0.0,
+          7.1
+        ]
+      ],
+      "interior": [
+        [
+          0.0,
+          1.28
+        ],
+        [
+          0.9,
+          1.28
+        ],
+        [
+          1.14,
+          1.34
+        ],
+        [
+          1.21,
+          1.48
+        ],
+        [
+          1.21,
+          4.6
+        ],
+        [
+          1.18,
+          4.98
+        ],
+        [
+          1.04,
+          5.38
+        ],
+        [
+          0.78,
+          5.78
+        ],
+        [
+          0.52,
+          6.06
+        ],
+        [
+          0.45,
+          6.3
+        ],
+        [
+          0.45,
+          7.1
+        ]
+      ],
+      "nivel_liquido": 4.05,
+      "liquido": {
+        "attenuationColor": "#6B3208",
+        "roughness": 0.08,
+        "ior": 1.45,
+        "mezcla_papel": 0.0
+      },
+      "tapon_geo": {
+        "radio": 0.8,
+        "alto": 1.12,
+        "base_y": 6.62,
+        "anillo_alto": 0.1
+      },
+      "pipeta": {
+        "radio": 0.17,
+        "hasta_y": 2.05
+      },
+      "etiqueta": {
+        "centro_y": 2.55,
+        "alto": 1.95,
+        "radio_extra": 0.012,
+        "arco": 0.62
+      }
+    },
+    {
+      "id": "crema",
+      "nombre": "VELO",
+      "tipo": "Crema",
+      "volumen": "50 ml",
+      "precio": 39,
+      "detalle": "50 ml · pieles secas",
+      "tapon_tipo": "tapa",
+      "exterior": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          1.7,
+          0.0
+        ],
+        [
+          2.26,
+          0.02
+        ],
+        [
+          2.42,
+          0.15
+        ],
+        [
+          2.44,
+          0.6
+        ],
+        [
+          2.44,
+          3.05
+        ],
+        [
+          2.42,
+          3.36
+        ],
+        [
+          2.34,
+          3.54
+        ],
+        [
+          2.2,
+          3.62
+        ],
+        [
+          0.0,
+          3.62
+        ]
+      ],
+      "interior": [
+        [
+          0.0,
+          1.16
+        ],
+        [
+          1.4,
+          1.16
+        ],
+        [
+          1.74,
+          1.24
+        ],
+        [
+          1.84,
+          1.4
+        ],
+        [
+          1.86,
+          3.1
+        ],
+        [
+          1.86,
+          3.62
+        ]
+      ],
+      "nivel_liquido": 2.55,
+      "liquido": {
+        "attenuationColor": "#EFE2CE",
+        "roughness": 0.36,
+        "ior": 1.42,
+        "mezcla_papel": 0.0
+      },
+      "tapon_geo": {
+        "radio": 2.46,
+        "alto": 0.78,
+        "base_y": 3.54,
+        "anillo_alto": 0.09
+      },
+      "etiqueta": {
+        "centro_y": 1.48,
+        "alto": 1.22,
+        "radio_extra": 0.012,
+        "arco": 0.52
+      }
+    },
+    {
+      "id": "bruma",
+      "nombre": "ROCIO",
+      "nombre_tilde": "ROCÍO",
+      "tipo": "Bruma",
+      "volumen": "100 ml",
+      "precio": 32,
+      "detalle": "100 ml · fija el maquillaje",
+      "tapon_tipo": "vaporizador",
+      "exterior": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          1.1,
+          0.0
+        ],
+        [
+          1.42,
+          0.02
+        ],
+        [
+          1.55,
+          0.14
+        ],
+        [
+          1.55,
+          3.2
+        ],
+        [
+          1.55,
+          6.3
+        ],
+        [
+          1.52,
+          6.72
+        ],
+        [
+          1.38,
+          7.1
+        ],
+        [
+          1.06,
+          7.46
+        ],
+        [
+          0.78,
+          7.66
+        ],
+        [
+          0.68,
+          7.8
+        ],
+        [
+          0.67,
+          8.16
+        ],
+        [
+          0.6,
+          8.2
+        ],
+        [
+          0.0,
+          8.2
+        ]
+      ],
+      "interior": [
+        [
+          0.0,
+          1.3
+        ],
+        [
+          0.78,
+          1.3
+        ],
+        [
+          1.0,
+          1.36
+        ],
+        [
+          1.09,
+          1.5
+        ],
+        [
+          1.09,
+          6.36
+        ],
+        [
+          1.06,
+          6.72
+        ],
+        [
+          0.92,
+          7.08
+        ],
+        [
+          0.66,
+          7.44
+        ],
+        [
+          0.48,
+          7.72
+        ],
+        [
+          0.45,
+          8.2
+        ]
+      ],
+      "nivel_liquido": 4.85,
+      "liquido": {
+        "attenuationColor": "#9FC0BA",
+        "roughness": 0.04,
+        "ior": 1.33,
+        "mezcla_papel": 0.9
+      },
+      "tapon_geo": {
+        "radio": 0.81,
+        "alto": 0.52,
+        "base_y": 7.8,
+        "anillo_alto": 0.16
+      },
+      "actuador": {
+        "radio": 0.73,
+        "alto": 1.24,
+        "base_y": 8.28
+      },
+      "etiqueta": {
+        "centro_y": 3.05,
+        "alto": 1.95,
+        "radio_extra": 0.012,
+        "arco": 0.66
+      }
+    }
+  ],
+  "_liquido_nota": "El liquido es materia SOLIDA, no un segundo cristal: en three.js dos materiales transmisivos anidados no se ven entre si. attenuationColor se reutiliza aqui como COLOR del liquido, y mezcla_papel lo acerca al papel para los liquidos casi transparentes (el agua de la bruma)."
+}

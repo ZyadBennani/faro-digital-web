@@ -57,3 +57,14 @@ _Fuera-Repo/
 # Zyad, sin ningun valor para quien clone este repo publico. Los hooks viven en
 # el repo privado; aqui solo estorbarian apuntando a una ruta que no existe.
 .claude/
+
+# --- Renders del banco de Aura (sesion 1, 17-sep-2026) --------------------------
+# Dos motivos, y el segundo es el que manda:
+#   1. Son PNG a 2000 px que se regeneran corriendo `test/aura-frasco/banco.py`.
+#   2. `COMPARATIVA.png` lleva dentro un recorte de TRUEKIND — fotografia de
+#      producto de una marca real — y este repositorio es PUBLICO. La captura de
+#      calibracion vive solo en el repo privado, en
+#      _Sistema/03-Recursos-Internos/Biblioteca-Referencias/Web/Aura-Calibracion/.
+#      Calibracion interna: ni textura, ni publicacion, ni redistribucion.
+#      Misma regla que el material de Kling de la pieza firma.
+Renders/
